@@ -13,7 +13,7 @@
 
 Se contrastaron las reglas JaCoCo de cada POM, Vitest/V8, JaCoCo Android, Checkstyle, ESLint/lint y los jobs del workflow con los resultados accesibles del HEAD. Una configuración de umbral se informa como gate, no como porcentaje ejecutado. Cuando no existe reporte cuantitativo actual de complejidad o cobertura, se declara no concluyente.
 
-No se ejecutaron suites pesadas. Los runs consultados fueron [push 33838233548](https://github.com/ffarinangog2/Entrega-final-del-PFC/actions/runs/33838233548) y [pull request 33838236394](https://github.com/ffarinangog2/Entrega-final-del-PFC/actions/runs/33838236394).
+No se ejecutaron suites pesadas. Los runs consultados fueron [push 33838233548](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/33838233548) y [pull request 33838236394](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/33838236394).
 
 ## Resultados del antecedente histórico
 

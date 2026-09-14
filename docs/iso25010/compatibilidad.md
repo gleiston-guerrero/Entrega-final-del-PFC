@@ -28,8 +28,8 @@ La suite actual contiene `auth.spec.ts`, `reservas-freddy.spec.ts` y `settings-t
 
 Para el HEAD auditado existen dos ejecuciones CI consultables:
 
-- push: [run 33838233548](https://github.com/ffarinangog2/Entrega-final-del-PFC/actions/runs/33838233548);
-- pull request: [run 33838236394](https://github.com/ffarinangog2/Entrega-final-del-PFC/actions/runs/33838236394).
+- push: [run 33838233548](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/33838233548);
+- pull request: [run 33838236394](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/33838236394).
 
 Ambas concluyeron con fallo. `Test web` y `Lint - backend and web` sí terminaron correctamente, pero fallaron jobs Backend y el job `integration` quedó omitido por sus dependencias. En consecuencia, el HEAD no aporta una ejecución Playwright verde en los tres motores. El resultado histórico 9/15 del 24/08/2026 no se atribuye al HEAD ni permite declarar compatibilidad total.
 

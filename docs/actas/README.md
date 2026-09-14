@@ -1,7 +1,7 @@
 # Registros retrospectivos de trabajo colaborativo
 
 Los cinco documentos de este directorio fueron creados conjuntamente por el
-commit [`1ce91ba05e8048fda75a8479d368684a2c338430`](https://github.com/ffarinangog2/Entrega-final-del-PFC/commit/1ce91ba05e8048fda75a8479d368684a2c338430): autoría a las
+commit [`1ce91ba05e8048fda75a8479d368684a2c338430`](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/commit/1ce91ba05e8048fda75a8479d368684a2c338430): autoría a las
 `2026-09-12T08:32:42Z` y consolidación a las `2026-09-12T08:33:13Z`
 (`03:32:42` y `03:33:13` en UTC-05:00). Por ello se denominan **registros
 retrospectivos**, no actas contemporáneas de reuniones en las fechas de los

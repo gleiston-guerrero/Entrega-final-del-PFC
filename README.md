@@ -84,7 +84,7 @@ Copie el ejemplo y complete los valores requeridos. `.env` contiene valores loca
 o reales y nunca debe versionarse:
 
 ```bash
-git clone https://github.com/ffarinangog2/Entrega-final-del-PFC.git
+git clone https://github.com/gleiston-guerrero/Entrega-final-del-PFC.git
 cd Entrega-final-del-PFC
 git switch feature/entrega-4
 cp .env.example .env
