@@ -178,9 +178,12 @@ ocho repeticiones centrales r2--r9 del despliegue SCLI evaluado?
 \textbf{Respuesta a PI1.} Sí. El análisis corregido delimita la población por
 identidad del request y utiliza las filas GET de Reservas/Solicitudes conservadas
 en los CSV raw. Para p95 obtiene media 45,500000 ms e IC95
-[27,304023; 63,695977] ms; para p99, media 371,250000 ms e IC95
-[66,911235; 675,588765] ms. Ambos límites superiores permanecen por debajo de
-500 ms y 750 ms, respectivamente. La selección no filtra respuestas por código
+[27,304023; 63,695977] ms; para p99, media 371,250000 ms, desviación muestral
+364,032475 ms e IC95 [66,911235; 675,588765] ms. La dispersión del p99 es
+elevada y su límite superior queda 74,411235 ms por debajo del umbral de
+750 ms; por ello el resultado se interpreta como cumplimiento acotado al
+escenario observado, no como un margen holgado ni generalizable. Ambos límites
+superiores permanecen por debajo de 500 ms y 750 ms, respectivamente. La selección no filtra respuestas por código
 HTTP, latencia ni éxito/fallo. Excluye \texttt{POST /api/v1/auth/login}
 exclusivamente porque pertenece a Auth y no a las consultas de solo lectura de
 Reservas/Solicitudes. Los valores corregidos y la decisión están en
@@ -718,6 +721,18 @@ repeticiones que no provienen del cambio evaluado. \textbf{Mitigación aplicada:
 protocolo previo, diez repeticiones nominales, conservación de r1 y r10 y uso
 uniforme de r2--r9 para el análisis central. \textbf{Riesgo residual:} no se
 aislaron por completo CPU, red, cachés ni pausas del runtime en el host.
+
+\textbf{Amenaza:} las preguntas PI1 y PI2 se formalizaron en el manuscrito
+después de ejecutadas las campañas, aunque el protocolo, la población y los
+umbrales de decisión ya estaban versionados previamente.
+\textbf{Efecto:} existe riesgo de sesgo retrospectivo al expresar preguntas de
+investigación con conocimiento de resultados ya observados.
+\textbf{Mitigación aplicada:} se conserva la cronología Git de los criterios
+previos, no se repitieron las campañas para favorecer las respuestas y las
+reglas permiten resultados negativos.
+\textbf{Riesgo residual:} las preguntas no fueron prerregistradas literalmente
+antes de la ejecución; por tanto, sus respuestas deben interpretarse como una
+formalización posterior aplicada a criterios experimentales preexistentes.
 
 \textbf{Amenaza:} la disponibilidad HTTP fue asimétrica entre estrategias
 ARBITER; Esc-3/S1 alcanzó 26,6875\% de respuestas 500, mientras Esc-3/S3 tuvo
