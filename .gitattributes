@@ -1,4 +1,9 @@
+* text=auto eol=lf
+
 experimentos/resultados/SHA256SUMS text eol=lf
 experimentos/resultados/raw/*.txt text eol=lf
 
 experimentos/resultados/arbiter/campaign/** binary
+
+# Evidencia experimental: preservar bytes originales y checksums
+experimentos/resultados/raw/** binary
