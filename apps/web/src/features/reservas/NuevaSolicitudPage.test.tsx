@@ -263,7 +263,8 @@ describe('NuevaSolicitudPage', () => {
   })
 
   it('asigna min con la fecha de hoy cuando fechaInicio está en el pasado', async () => {
-    const hoy = new Date().toISOString().slice(0, 10)
+    const ahora = new Date()
+    const hoy = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`
     const periodoPasadoInicio = {
       id: 'per-vigente',
       codigo: '2026-A',
