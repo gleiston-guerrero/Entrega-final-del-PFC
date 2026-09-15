@@ -2,6 +2,7 @@ package ec.edu.uteq.scli.api_gateway.contracts;
 
 import ec.edu.scli.contracts.RuntimeContractVerifier;
 import ec.edu.scli.contracts.RuntimeContractVerifier.Operation;
+import ec.edu.uteq.scli.api_gateway.routes.GatewayRouteCatalog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.gateway.server.mvc.common.MvcUtils;
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -108,6 +110,10 @@ class GatewayOpenApiRuntimeCompletenessTest {
                 .filter(operation -> operation.path().startsWith("/usuarios-service/"))).hasSize(34);
         assertThat(expected).hasSize(224);
         assertThat(gateway).hasSize(224);
+        assertThat(GatewayRouteCatalog.operationKeys())
+            .containsExactlyInAnyOrderElementsOf(gateway.stream()
+                .map(operation -> operation.method() + " " + operation.path())
+                .toList());
         List<Operation> runtime = probeAcceptedOperations(expected);
         RuntimeContractVerifier.assertMatches(runtime, gateway);
     }
@@ -125,14 +131,49 @@ class GatewayOpenApiRuntimeCompletenessTest {
 
     @Test
     void gatewayAceptaRutaFantasmaPeroContratoLaOmiteEsDetectado() throws Exception {
-        Operation aceptadaPorPrefijo = new Operation("GET", "/api/v1/laboratorios/fantasma");
-        List<Operation> runtime = probeAcceptedOperations(
-                Map.of(aceptadaPorPrefijo, "academico"));
-
-        assertThat(runtime).containsExactly(aceptadaPorPrefijo);
-        assertThat(RuntimeContractVerifier.compare(runtime, List.of()))
-                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/laboratorios/fantasma"))
+            .andExpect(status().isNotFound());
     }
+
+    @Test
+    void uuidInvalidoEsRechazadoPorMetadataOpenApi() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/laboratorios/no-es-uuid"))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void enumValidoSeAceptaYEnumInvalidoSeRechaza() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/solicitudes/estado/PENDIENTE"))
+            .andExpect(status().isNoContent());
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/solicitudes/estado/NO_EXISTE"))
+            .andExpect(status().isNotFound());
+    }
+
+        @Test
+        void metodoHttpIncorrectoEsRechazado() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/auth/login"))
+            .andExpect(status().isNotFound());
+        }
+
+            @Test
+            void catalogoIncompletoFallaContraOpenApi() throws IOException {
+            List<Operation> catalog = catalogOperations();
+            List<Operation> contract = RuntimeContractVerifier.openApiOperations(
+                RuntimeContractVerifier.repositoryFile("docs/openapi/api-gateway-openapi.json"));
+            assertThat(RuntimeContractVerifier.compare(catalog.subList(1, catalog.size()), contract))
+                .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
+            }
+
+            @Test
+            void catalogoConOperacionAdicionalFallaContraOpenApi() throws IOException {
+            List<Operation> catalog = catalogOperations();
+            List<Operation> contract = RuntimeContractVerifier.openApiOperations(
+                RuntimeContractVerifier.repositoryFile("docs/openapi/api-gateway-openapi.json"));
+            List<Operation> altered = new ArrayList<>(catalog);
+            altered.add(new Operation("GET", "/api/v1/fantasma"));
+            assertThat(RuntimeContractVerifier.compare(contract, altered))
+                .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
+            }
 
             @Test
     void gatewayAceptaRutaRealPeroContratoLaOmiteEsDetectado() throws Exception {
@@ -175,18 +216,29 @@ class GatewayOpenApiRuntimeCompletenessTest {
             Operation operation = entry.getKey();
             routedRequests.clear();
             MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(
-                            HttpMethod.valueOf(operation.method()), concretePath(operation.path())))
+                            HttpMethod.valueOf(operation.method()),
+                            GatewayRouteCatalog.examplePath(operation.method(), operation.path())))
                     .andReturn();
             if (result.getResponse().getStatus() == 204) {
                 runtime.add(operation);
                 assertThat(routedRequests)
                         .as("request transformada por el router para %s", operation)
                         .containsExactly(new RoutedRequest(
-                                operation.method(), expectedBackendPath(concretePath(operation.path())),
+                                operation.method(), expectedBackendPath(
+                                    GatewayRouteCatalog.examplePath(operation.method(), operation.path())),
                                 BACKEND_URLS.get(entry.getValue())));
             }
         }
         return runtime;
+    }
+
+    private static List<Operation> catalogOperations() {
+        return GatewayRouteCatalog.operationKeys().stream()
+                .map(key -> {
+                    int separator = key.indexOf(' ');
+                    return new Operation(key.substring(0, separator), key.substring(separator + 1));
+                })
+                .toList();
     }
 
     private static void addAliases(
@@ -211,26 +263,6 @@ class GatewayOpenApiRuntimeCompletenessTest {
             }
         }
         return gatewayPath;
-    }
-
-    private static String concretePath(String template) {
-        StringBuilder result = new StringBuilder();
-        int variable = 0;
-        for (int index = 0; index < template.length(); index++) {
-            char character = template.charAt(index);
-            if (character == '{') {
-                int close = template.indexOf('}', index);
-                if (close < 0) {
-                    throw new IllegalArgumentException("Path invalido: " + template);
-                }
-                result.append("00000000-0000-0000-0000-")
-                        .append(String.format("%012d", ++variable));
-                index = close;
-            } else {
-                result.append(character);
-            }
-        }
-        return result.toString();
     }
 
     private record RoutedRequest(String method, String path, String backend) {

@@ -11,9 +11,12 @@ RouterFunction reales, ejecutadas por ``mvn verify`` en cada modulo.
 from __future__ import annotations
 
 import argparse
+import base64
+import hashlib
 import json
 import re
 import sys
+import zlib
 from collections import Counter
 from pathlib import Path
 
@@ -260,6 +263,54 @@ def validate_doc(path: Path) -> tuple[dict | None, list[str]]:
 def operation_keys(doc):
     return {(method, route) for route, item in doc.get("paths", {}).items() for method in item if method in HTTP}
 
+def gateway_catalog_payload(document: dict) -> dict:
+    operations = []
+    for method, route in sorted(operation_keys(document), key=lambda item: (item[1], item[0])):
+        operation = document["paths"][route][method]
+        parameters = []
+        for parameter in operation.get("parameters", []):
+            if parameter.get("in") != "path":
+                continue
+            schema = parameter.get("schema", {})
+            if "$ref" in schema:
+                schema = document["components"]["schemas"][schema["$ref"].rsplit("/", 1)[-1]]
+            metadata = {"name": parameter["name"], "type": schema.get("type", "string")}
+            if "format" in schema:
+                metadata["format"] = schema["format"]
+            if "enum" in schema:
+                metadata["enum"] = schema["enum"]
+            parameters.append(metadata)
+        operations.append({"method": method.upper(), "path": route, "parameters": parameters})
+    raw = json.dumps(operations, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return {
+        "format": "deflate-base64-json-v1",
+        "source": "docs/openapi/api-gateway-openapi.json",
+        "sourceSha256": hashlib.sha256(
+            (DOCS / "api-gateway-openapi.json").read_bytes()
+        ).hexdigest(),
+        "operationCount": len(operations),
+        "payload": base64.b64encode(zlib.compress(raw, 9)).decode("ascii"),
+    }
+
+def validate_gateway_catalog(path: Path, gateway: dict) -> list[str]:
+    errors = []
+    try:
+        catalog = json.loads(path.read_text(encoding="utf-8"))
+        payload = zlib.decompress(base64.b64decode(catalog["payload"])).decode("utf-8")
+        operations = json.loads(payload)
+        actual = {(item["method"].lower(), item["path"]) for item in operations}
+        expected = operation_keys(gateway)
+        if actual != expected:
+            errors.append("Gateway: el catalogo runtime no coincide con OpenAPI")
+        if catalog.get("operationCount") != len(expected):
+            errors.append("Gateway: operationCount del catalogo no coincide")
+        expected_hash = hashlib.sha256((ROOT / "docs/openapi/api-gateway-openapi.json").read_bytes()).hexdigest()
+        if catalog.get("sourceSha256") != expected_hash:
+            errors.append("Gateway: el hash del catalogo no coincide con api-gateway-openapi.json")
+    except (OSError, KeyError, TypeError, ValueError, zlib.error) as exc:
+        errors.append(f"Gateway: catalogo runtime invalido: {exc}")
+    return errors
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--generate", action="store_true", help="regenera los cinco snapshots")
@@ -274,6 +325,8 @@ def main() -> int:
         for label, (_, filename, _, _) in SERVICES.items():
             (DOCS / filename).write_text(json.dumps(generated[label], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (DOCS / "api-gateway-openapi.json").write_text(json.dumps(gateway, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        catalog_path = ROOT / "services/api-gateway/src/main/resources/gateway-route-catalog.json"
+        catalog_path.write_text(json.dumps(gateway_catalog_payload(gateway), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     errors = []
     loaded = {}
     for label, (_, filename, _, _) in SERVICES.items():
@@ -291,6 +344,8 @@ def main() -> int:
     actual_gateway = operation_keys(gateway_doc or {})
     if expected_gateway != actual_gateway: errors.append("Gateway: deriva respecto de GatewayRoutes/contratos de servicio")
     if gateway_doc != gateway: errors.append("Gateway: el snapshot difiere de la composición determinista vigente")
+    errors += validate_gateway_catalog(
+        ROOT / "services/api-gateway/src/main/resources/gateway-route-catalog.json", gateway_doc or {})
     gateway_files = list((ROOT / "services/api-gateway").glob("src/main/java/**/GatewayRoutes.java"))
     if len(gateway_files) != 1:
         errors.append(f"Gateway: se esperaba un GatewayRoutes.java y se encontraron {len(gateway_files)}")
