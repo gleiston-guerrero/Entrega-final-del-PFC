@@ -263,6 +263,9 @@ def validate_doc(path: Path) -> tuple[dict | None, list[str]]:
 def operation_keys(doc):
     return {(method, route) for route, item in doc.get("paths", {}).items() for method in item if method in HTTP}
 
+def canonical_json_bytes(document: dict) -> bytes:
+    return (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
 def gateway_catalog_payload(document: dict) -> dict:
     operations = []
     for method, route in sorted(operation_keys(document), key=lambda item: (item[1], item[0])):
@@ -285,9 +288,7 @@ def gateway_catalog_payload(document: dict) -> dict:
     return {
         "format": "deflate-base64-json-v1",
         "source": "docs/openapi/api-gateway-openapi.json",
-        "sourceSha256": hashlib.sha256(
-            (DOCS / "api-gateway-openapi.json").read_bytes()
-        ).hexdigest(),
+        "sourceSha256": hashlib.sha256(canonical_json_bytes(document)).hexdigest(),
         "operationCount": len(operations),
         "payload": base64.b64encode(zlib.compress(raw, 9)).decode("ascii"),
     }
@@ -304,7 +305,7 @@ def validate_gateway_catalog(path: Path, gateway: dict) -> list[str]:
             errors.append("Gateway: el catalogo runtime no coincide con OpenAPI")
         if catalog.get("operationCount") != len(expected):
             errors.append("Gateway: operationCount del catalogo no coincide")
-        expected_hash = hashlib.sha256((ROOT / "docs/openapi/api-gateway-openapi.json").read_bytes()).hexdigest()
+        expected_hash = hashlib.sha256(canonical_json_bytes(gateway)).hexdigest()
         if catalog.get("sourceSha256") != expected_hash:
             errors.append("Gateway: el hash del catalogo no coincide con api-gateway-openapi.json")
     except (OSError, KeyError, TypeError, ValueError, zlib.error) as exc:
@@ -323,8 +324,8 @@ def main() -> int:
     if args.generate:
         DOCS.mkdir(parents=True, exist_ok=True)
         for label, (_, filename, _, _) in SERVICES.items():
-            (DOCS / filename).write_text(json.dumps(generated[label], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        (DOCS / "api-gateway-openapi.json").write_text(json.dumps(gateway, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            (DOCS / filename).write_bytes(canonical_json_bytes(generated[label]))
+        (DOCS / "api-gateway-openapi.json").write_bytes(canonical_json_bytes(gateway))
         catalog_path = ROOT / "services/api-gateway/src/main/resources/gateway-route-catalog.json"
         catalog_path.write_text(json.dumps(gateway_catalog_payload(gateway), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     errors = []
