@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import os
 import time
 from pathlib import Path
@@ -79,10 +80,30 @@ def record_request(
 
 @events.test_stop.add_listener
 def stop_request_evidence(environment: Any, **kwargs: Any) -> None:
-    del environment, kwargs
+    del kwargs
     global _stream, _writer, _rows_since_flush
     if _stream is not None:
         _stream.close()
+
+    final_stats = os.environ.get("LOCUST_FINAL_STATS")
+    if final_stats:
+        entries = sorted(
+            (
+                {
+                    "request_type": str(entry.method),
+                    "name": str(entry.name),
+                    "request_count": int(entry.num_requests),
+                    "failure_count": int(entry.num_failures),
+                }
+                for entry in environment.stats.entries.values()
+            ),
+            key=lambda row: (row["request_type"], row["name"]),
+        )
+        Path(final_stats).write_text(
+            json.dumps({"entries": entries}, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+
     _stream = None
     _writer = None
     _rows_since_flush = 0

@@ -327,6 +327,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
@@ -364,6 +366,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Enable KVM
         run: |
@@ -407,6 +411,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
@@ -463,6 +469,8 @@ jobs:
       - name: Set up Android SDK
         if: ${{ steps.signing.outputs.configured == 'true' }}
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         if: ${{ steps.signing.outputs.configured == 'true' }}

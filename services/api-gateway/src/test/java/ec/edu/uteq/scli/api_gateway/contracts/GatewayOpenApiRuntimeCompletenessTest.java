@@ -2,6 +2,7 @@ package ec.edu.uteq.scli.api_gateway.contracts;
 
 import ec.edu.scli.contracts.RuntimeContractVerifier;
 import ec.edu.scli.contracts.RuntimeContractVerifier.Operation;
+import ec.edu.uteq.scli.api_gateway.routes.GatewayRouteCatalog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.gateway.server.mvc.common.MvcUtils;
@@ -15,9 +16,12 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,38 +110,135 @@ class GatewayOpenApiRuntimeCompletenessTest {
                 .filter(operation -> operation.path().startsWith("/usuarios-service/"))).hasSize(34);
         assertThat(expected).hasSize(224);
         assertThat(gateway).hasSize(224);
-        RuntimeContractVerifier.assertMatches(expected.keySet(), gateway);
-
-        for (Operation operation : gateway) {
-            assertRouted(operation, expected.get(operation));
-        }
+        assertThat(GatewayRouteCatalog.operationKeys())
+            .containsExactlyInAnyOrderElementsOf(gateway.stream()
+                .map(operation -> operation.method() + " " + operation.path())
+                .toList());
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        RuntimeContractVerifier.assertMatches(runtime, gateway);
     }
 
     @Test
-    void backendPublicoNoCubiertoYGatewaySinBackendSonDetectados() {
-        Operation backendNotRouted = new Operation("GET", "/api/v1/nueva-familia");
-        Operation gatewayWithoutBackend = new Operation("GET", "/api/v1/fantasma");
+    void gatewayDocumentadoPeroNoAceptadoEsDetectado() throws Exception {
+        Map<Operation, String> expected = expectedOperations();
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        List<Operation> documentadoConFantasma = new java.util.ArrayList<>(runtime);
+        documentadoConFantasma.add(new Operation("GET", "/api/v1/fantasma"));
 
-        assertThat(RuntimeContractVerifier.compare(
-                List.of(backendNotRouted), List.of(gatewayWithoutBackend)))
-                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"))
+        assertThat(RuntimeContractVerifier.compare(runtime, documentadoConFantasma))
                 .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
     }
 
-    private void assertRouted(Operation operation, String expectedService) throws Exception {
-        assertThat(expectedService).as("backend de %s", operation).isNotNull();
-        routedRequests.clear();
-        String concretePath = concretePath(operation.path());
+    @Test
+    void gatewayAceptaRutaFantasmaPeroContratoLaOmiteEsDetectado() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/laboratorios/fantasma"))
+            .andExpect(status().isNotFound());
+    }
 
-        mockMvc.perform(MockMvcRequestBuilders.request(
-                        HttpMethod.valueOf(operation.method()), concretePath))
-                .andExpect(status().isNoContent());
+    @Test
+    void uuidInvalidoEsRechazadoPorMetadataOpenApi() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/laboratorios/no-es-uuid"))
+            .andExpect(status().isNotFound());
+    }
 
-        assertThat(routedRequests)
-                .as("request transformada por el router para %s", operation)
-                .containsExactly(new RoutedRequest(
-                        operation.method(), expectedBackendPath(concretePath),
-                        BACKEND_URLS.get(expectedService)));
+    @Test
+    void enumValidoSeAceptaYEnumInvalidoSeRechaza() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/solicitudes/estado/PENDIENTE"))
+            .andExpect(status().isNoContent());
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/solicitudes/estado/NO_EXISTE"))
+            .andExpect(status().isNotFound());
+    }
+
+        @Test
+        void metodoHttpIncorrectoEsRechazado() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/auth/login"))
+            .andExpect(status().isNotFound());
+        }
+
+            @Test
+            void catalogoIncompletoFallaContraOpenApi() throws IOException {
+            List<Operation> catalog = catalogOperations();
+            List<Operation> contract = RuntimeContractVerifier.openApiOperations(
+                RuntimeContractVerifier.repositoryFile("docs/openapi/api-gateway-openapi.json"));
+            assertThat(RuntimeContractVerifier.compare(catalog.subList(1, catalog.size()), contract))
+                .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
+            }
+
+            @Test
+            void catalogoConOperacionAdicionalFallaContraOpenApi() throws IOException {
+            List<Operation> catalog = catalogOperations();
+            List<Operation> contract = RuntimeContractVerifier.openApiOperations(
+                RuntimeContractVerifier.repositoryFile("docs/openapi/api-gateway-openapi.json"));
+            List<Operation> altered = new ArrayList<>(catalog);
+            altered.add(new Operation("GET", "/api/v1/fantasma"));
+            assertThat(RuntimeContractVerifier.compare(contract, altered))
+                .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
+            }
+
+            @Test
+    void gatewayAceptaRutaRealPeroContratoLaOmiteEsDetectado() throws Exception {
+        Map<Operation, String> expected = expectedOperations();
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        Operation rutaReal = runtime.get(0);
+        List<Operation> contratoIncompleto = runtime.stream()
+                .filter(operation -> !operation.equals(rutaReal))
+                .toList();
+
+        assertThat(RuntimeContractVerifier.compare(runtime, contratoIncompleto))
+                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"));
+    }
+
+    private Map<Operation, String> expectedOperations() throws IOException {
+        Map<Operation, String> canonical = new HashMap<>();
+        Map<String, List<Operation>> backendOperations = new HashMap<>();
+        for (Map.Entry<String, String> entry : CONTRACTS.entrySet()) {
+            List<Operation> operations = RuntimeContractVerifier.openApiOperations(
+                    RuntimeContractVerifier.repositoryFile(entry.getValue()));
+            backendOperations.put(entry.getKey(), operations);
+            for (Operation operation : operations) {
+                if (!isInternal(operation.path())) {
+                    String previous = canonical.put(operation, entry.getKey());
+                    assertThat(previous)
+                            .as("una operacion publica pertenece a un solo backend: %s", operation)
+                            .isNull();
+                }
+            }
+        }
+        Map<Operation, String> expected = new HashMap<>(canonical);
+        addAliases(expected, backendOperations.get("auth"), "auth", "/auth-service");
+        addAliases(expected, backendOperations.get("usuarios"), "usuarios", "/usuarios-service");
+        return expected;
+    }
+
+    private List<Operation> probeAcceptedOperations(Map<Operation, String> expected) throws Exception {
+        List<Operation> runtime = new ArrayList<>();
+        for (Map.Entry<Operation, String> entry : expected.entrySet()) {
+            Operation operation = entry.getKey();
+            routedRequests.clear();
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(
+                            HttpMethod.valueOf(operation.method()),
+                            GatewayRouteCatalog.examplePath(operation.method(), operation.path())))
+                    .andReturn();
+            if (result.getResponse().getStatus() == 204) {
+                runtime.add(operation);
+                assertThat(routedRequests)
+                        .as("request transformada por el router para %s", operation)
+                        .containsExactly(new RoutedRequest(
+                                operation.method(), expectedBackendPath(
+                                    GatewayRouteCatalog.examplePath(operation.method(), operation.path())),
+                                BACKEND_URLS.get(entry.getValue())));
+            }
+        }
+        return runtime;
+    }
+
+    private static List<Operation> catalogOperations() {
+        return GatewayRouteCatalog.operationKeys().stream()
+                .map(key -> {
+                    int separator = key.indexOf(' ');
+                    return new Operation(key.substring(0, separator), key.substring(separator + 1));
+                })
+                .toList();
     }
 
     private static void addAliases(
@@ -162,26 +263,6 @@ class GatewayOpenApiRuntimeCompletenessTest {
             }
         }
         return gatewayPath;
-    }
-
-    private static String concretePath(String template) {
-        StringBuilder result = new StringBuilder();
-        int variable = 0;
-        for (int index = 0; index < template.length(); index++) {
-            char character = template.charAt(index);
-            if (character == '{') {
-                int close = template.indexOf('}', index);
-                if (close < 0) {
-                    throw new IllegalArgumentException("Path invalido: " + template);
-                }
-                result.append("00000000-0000-0000-0000-")
-                        .append(String.format("%012d", ++variable));
-                index = close;
-            } else {
-                result.append(character);
-            }
-        }
-        return result.toString();
     }
 
     private record RoutedRequest(String method, String path, String backend) {

@@ -1,0 +1,37 @@
+{
+  "boundaries": {
+    "start_epoch": 1789471550.9807045,
+    "split_epoch": 1789472450.9807045,
+    "finish_epoch": 1789475151.322607,
+    "rules": {
+      "t_lt_900": "start <= timestamp < start + 900",
+      "t_gte_900": "start + 900 <= timestamp <= finish"
+    }
+  },
+  "t_lt_900": {
+    "get_total": 22369,
+    "get_success": 22369,
+    "http_401": 0,
+    "http_5xx": 0,
+    "requests_per_second": 24.854444444444443,
+    "refresh": 50
+  },
+  "t_gte_900": {
+    "get_total": 67363,
+    "get_success": 67363,
+    "http_401": 0,
+    "http_5xx": 0,
+    "requests_per_second": 24.946100320768153,
+    "refresh": 150
+  },
+  "prometheus_reservas": {
+    "valid_series": 1,
+    "total_get_activity": 89625.0,
+    "post_900_get_activity": 67361.0,
+    "interval_start_epoch": 1789471550.9807045,
+    "interval_split_epoch": 1789472450.9807045,
+    "interval_finish_epoch": 1789475151.322607,
+    "interval_covered": true,
+    "arrival_after_900": true
+  }
+}

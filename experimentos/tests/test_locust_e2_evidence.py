@@ -1,5 +1,6 @@
 import csv
 import importlib.util
+import json
 import os
 import sys
 import tempfile
@@ -59,6 +60,40 @@ class CorrectiveRequestEvidenceTest(unittest.TestCase):
             self.assertNotIn("Authorization", content)
             self.assertNotIn("accessToken", content)
             self.assertNotIn("refreshToken", content)
+
+
+    def test_writes_exact_final_locust_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            request_log = Path(temporary) / "locust_requests.csv"
+            final_stats = Path(temporary) / "locust-final-stats.json"
+
+            entry = types.SimpleNamespace(
+                method="GET",
+                name="GET /api/v1/reservas",
+                num_requests=101,
+                num_failures=0,
+            )
+            environment = types.SimpleNamespace(
+                stats=types.SimpleNamespace(entries={("reservas", "GET"): entry})
+            )
+
+            with patch.dict(
+                os.environ,
+                {
+                    "LOCUST_REQUEST_LOG": str(request_log),
+                    "LOCUST_FINAL_STATS": str(final_stats),
+                },
+            ):
+                module.start_request_evidence(environment)
+                module.stop_request_evidence(environment)
+
+            payload = json.loads(final_stats.read_text(encoding="utf-8"))
+            self.assertEqual(1, len(payload["entries"]))
+            self.assertEqual(101, payload["entries"][0]["request_count"])
+            self.assertEqual(
+                "GET /api/v1/reservas",
+                payload["entries"][0]["name"],
+            )
 
 
 if __name__ == "__main__":

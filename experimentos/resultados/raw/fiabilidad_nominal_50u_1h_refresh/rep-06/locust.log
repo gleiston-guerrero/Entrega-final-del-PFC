@@ -1,0 +1,1415 @@
+[2026-09-15 07:55:02,369] pfc-pruebas-e1/INFO/locust.main: Run time limit set to 3600 seconds
+[2026-09-15 07:55:02,370] pfc-pruebas-e1/INFO/locust.main: Starting Locust 2.31.6
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+[2026-09-15 07:55:02,370] pfc-pruebas-e1/INFO/locust.runners: Ramping to 50 users at a rate of 10.00 per second
+[2026-09-15 07:55:02,886] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,299] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,384] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,457] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,486] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,488] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,497] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,538] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,595] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:03,628] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,311] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,362] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           13  13(100.00%) |    962     111    1247   1100 |    0.00        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        13  13(100.00%) |    962     111    1247   1100 |    0.00        0.00
+
+[2026-09-15 07:55:04,420] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,422] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,433] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,433] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,434] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,434] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,435] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,439] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,441] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,442] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,445] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,452] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,453] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,454] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,454] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,455] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,456] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,460] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,461] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,462] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,464] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,483] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,605] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,612] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,669] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,685] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,691] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,693] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,696] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:04,733] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,437] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,440] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,442] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,445] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,446] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,447] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,450] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,450] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,452] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,454] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,456] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,457] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,459] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,461] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,462] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,464] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,466] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,467] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,468] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,470] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,472] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,476] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,476] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,477] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,478] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,479] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,482] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,482] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,485] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,485] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,486] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,488] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,490] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,490] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,491] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,492] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:05,493] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           83  83(100.00%) |    337      32    1353     72 |    1.00        1.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        83  83(100.00%) |    337      32    1353     72 |    1.00        1.00
+
+[2026-09-15 07:55:06,385] pfc-pruebas-e1/INFO/locust.runners: All users spawned: {"ReservasUser": 50} (50 total users)
+[2026-09-15 07:55:06,418] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,424] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,431] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,433] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,443] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,472] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,475] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,475] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,476] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,477] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,477] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,478] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,482] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,482] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,483] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,484] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,484] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,485] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,486] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,488] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,488] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,489] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,490] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,491] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,492] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,492] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,494] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,496] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,497] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,497] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,500] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,502] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,503] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,507] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,509] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,511] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,511] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,512] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,515] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,516] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,517] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,518] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,518] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 07:55:06,522] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |    5.50        5.50
+
+KeyboardInterrupt
+2026-09-15T07:56:50Z
+[2026-09-15 07:56:50,269] pfc-pruebas-e1/INFO/locust.main: writing html report to file: /home/ubuntu/ORA_entrega_F/experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06/locust-report.html
+[2026-09-15 07:56:50,271] pfc-pruebas-e1/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                          133 133(100.00%) |    244      30    1353     85 |   32.04       32.04
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       133 133(100.00%) |    244      30    1353     85 |   32.04       32.04
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+POST     POST /api/v1/auth/login                                                                85     94    110    110   1100   1200   1300   1300   1400   1400   1400    133
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             85     94    110    110   1100   1200   1300   1300   1400   1400   1400    133
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+4                  POST POST /api/v1/auth/login: Login falló con HTTP 401                                              
+129                POST POST /api/v1/auth/login: Login falló con HTTP 423                                              
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

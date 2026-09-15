@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from experimentos.analizar_iso25010 import read_efficiency_population
+from experimentos.analizar_iso25010 import (
+    analyze_scenario,
+    build_corrective_document_blocks,
+    read_corrective_reliability_population,
+    read_efficiency_population,
+)
 
 
 FIELDNAMES = [
@@ -113,6 +118,223 @@ class EfficiencyPopulationTest(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "distribución raw combinable"):
                 read_efficiency_population(root, [2])
+
+
+class CorrectiveReliabilityPopulationTest(unittest.TestCase):
+    EVENT_FIELDS = [
+        "request_type",
+        "name",
+        "response_time_ms",
+        "status_code",
+    ]
+
+    def write_events(
+        self,
+        root: Path,
+        repetition: int,
+        events: list[dict[str, str]],
+        attempt: int = 1,
+    ) -> None:
+        dirname = (
+            f"rep-{repetition:02d}"
+            if attempt == 1
+            else f"rep-{repetition:02d}-attempt-{attempt:02d}"
+        )
+        target = (
+            root
+            / "fiabilidad_nominal_50u_1h_refresh"
+            / dirname
+        )
+        target.mkdir(parents=True)
+
+        with (target / "locust_requests.csv").open(
+            "w", encoding="utf-8", newline=""
+        ) as file:
+            writer = csv.DictWriter(file, fieldnames=self.EVENT_FIELDS)
+            writer.writeheader()
+            writer.writerows(events)
+
+    def test_reconstructs_business_population_from_raw_events(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            self.write_events(
+                root,
+                2,
+                [
+                    {
+                        "request_type": "GET",
+                        "name": "GET /api/v1/reservas",
+                        "response_time_ms": "10",
+                        "status_code": "200",
+                    },
+                    {
+                        "request_type": "GET",
+                        "name": "GET /api/v1/reservas/{id}",
+                        "response_time_ms": "20",
+                        "status_code": "401",
+                    },
+                    {
+                        "request_type": "GET",
+                        "name": "GET /api/v1/reservas",
+                        "response_time_ms": "30",
+                        "status_code": "500",
+                    },
+                    {
+                        "request_type": "POST",
+                        "name": "POST /api/v1/auth/login",
+                        "response_time_ms": "999",
+                        "status_code": "500",
+                    },
+                ],
+            )
+
+            result = read_corrective_reliability_population(
+                root,
+                [{"_repetition": "2", "intento": "1"}],
+            )[2]
+
+            self.assertEqual(result["total_requests"], 3)
+            self.assertEqual(result["http_401"], 1)
+            self.assertEqual(result["http_5xx"], 1)
+            self.assertAlmostEqual(
+                result["failure_rate_percent"],
+                100.0 / 3.0,
+            )
+            self.assertEqual(result["p95_ms"], 30.0)
+            self.assertEqual(result["p99_ms"], 30.0)
+
+    def test_document_blocks_are_generated_from_ten_raw_repetitions(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rows = []
+
+            for repetition in range(1, 11):
+                self.write_events(
+                    root,
+                    repetition,
+                    [
+                        {
+                            "request_type": "GET",
+                            "name": "GET /api/v1/reservas",
+                            "response_time_ms": str(repetition),
+                            "status_code": "200",
+                        }
+                    ],
+                )
+                rows.append(
+                    {
+                        "_repetition": str(repetition),
+                        "intento": "1",
+                    }
+                )
+
+            blocks = build_corrective_document_blocks(root, rows)
+
+            self.assertIn(
+                "Las diez repeticiones correctivas suman 10 GET de negocio",
+                blocks["markdown"],
+            )
+            self.assertIn(
+                "con 0 HTTP 401 y 0 HTTP 5xx",
+                blocks["markdown"],
+            )
+            self.assertIn(
+                "| Tasa HTTP 5xx | 8 | 0,000000 %",
+                blocks["markdown"],
+            )
+            self.assertIn(
+                "| p95 GET negocio | 8 | 5,500000 ms",
+                blocks["markdown"],
+            )
+            self.assertIn(
+                "| p99 GET negocio | 8 | 5,500000 ms",
+                blocks["markdown"],
+            )
+            self.assertIn(
+                "Media 0,000000\\%; IC95 [0,000000; 0,000000]\\%",
+                blocks["latex"],
+            )
+
+    def test_document_blocks_require_all_ten_raw_repetitions(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rows = []
+
+            for repetition in range(1, 10):
+                self.write_events(
+                    root,
+                    repetition,
+                    [
+                        {
+                            "request_type": "GET",
+                            "name": "GET /api/v1/reservas",
+                            "response_time_ms": "5",
+                            "status_code": "200",
+                        }
+                    ],
+                )
+                rows.append(
+                    {
+                        "_repetition": str(repetition),
+                        "intento": "1",
+                    }
+                )
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "se requieren las repeticiones raw 1..10",
+            ):
+                build_corrective_document_blocks(root, rows)
+
+
+    def test_analyzer_rejects_csv_raw_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rows = []
+
+            for repetition in range(1, 11):
+                if 2 <= repetition <= 9:
+                    self.write_events(
+                        root,
+                        repetition,
+                        [
+                            {
+                                "request_type": "GET",
+                                "name": "GET /api/v1/reservas",
+                                "response_time_ms": "5",
+                                "status_code": "200",
+                            }
+                        ],
+                    )
+
+                rows.append(
+                    {
+                        "escenario": "fiabilidad_nominal_50u_1h_refresh",
+                        "_repetition": str(repetition),
+                        "repeticion": str(repetition),
+                        "intento": "1",
+                        "usuarios": "50",
+                        "duracion": "1h",
+                        "total_requests": "999" if repetition == 2 else "1",
+                        "failures": "0",
+                        "failure_rate_percent": "0",
+                        "p95_ms": "5",
+                        "p99_ms": "5",
+                        "valida": "si",
+                        "observacion": "test",
+                    }
+                )
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "total_requests no coincide con raw",
+            ):
+                analyze_scenario(
+                    "fiabilidad_nominal_50u_1h_refresh",
+                    rows,
+                    root,
+                )
 
 
 if __name__ == "__main__":
