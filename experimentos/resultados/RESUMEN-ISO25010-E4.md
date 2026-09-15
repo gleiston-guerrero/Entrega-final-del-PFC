@@ -77,47 +77,46 @@ como métricas intercambiables.
 
 ## Fiabilidad nominal, 50 usuarios, 1 hora
 
-Las diez repeticiones oficiales finalizaron y son válidas. Se ejecutaron sobre
-`feature/entrega-4`, Git SHA
-`061a1050a94e1bd30d81b30c47c7e818005a33bb`, con Locust 2.31.6 y Python 3.12.3.
-Todas conservaron `status=completed`, `duration_completed=true`,
-`environment_consistent=true`, `evidence_complete=true` y
-`execution_completed=true`. Cada ventana duró aproximadamente 3.600 segundos.
+La campaña histórica se conserva como antecedente metodológico. Fue ejecutada
+sobre el SHA `061a1050a94e1bd30d81b30c47c7e818005a33bb` y produjo
+668.367 respuestas HTTP 401 debido a la ausencia de renovación del JWT.
+Sus raws no se eliminan ni se reinterpretan como campaña correctiva.
 
-El código real de salida de Locust fue 1 en las diez repeticiones y se conserva en
-`metadata.json`. Esto no invalida las ventanas: completaron la hora y los fallos HTTP
-son resultados reales. El análisis estadístico usa exclusivamente r2–r9; r1 y r10
-se conservan, pero se excluyen según el protocolo.
+La campaña correctiva oficial se ejecutó sobre el SHA
+`b94b7af7ebab2510c16eae0c70593664763de1e7`. Completó diez repeticiones
+válidas de una hora con 50 usuarios y `spawn-rate` 10 usuarios/s.
 
-Resultados reproducibles de `python3 experimentos/analizar_iso25010.py
-experimentos/resultados/iso25010.csv`:
+Las diez repeticiones correctivas suman 896.964 GET de negocio, con
+0 HTTP 401 y 0 HTTP 5xx. El análisis estadístico principal utiliza r2–r9;
+r1 y r10 se conservan, pero se excluyen de medias e IC95 según el
+prerregistro.
 
-| Métrica | n | Media | s muestral | IC95 | Decisión |
+Los resultados son reproducibles mediante
+`python3 experimentos/analizar_iso25010.py experimentos/resultados/iso25010-correctiva.csv`.
+El analizador reconstruye las métricas directamente desde los
+`locust_requests.csv` raw y verifica su coincidencia con el CSV consolidado.
+
+| Métrica | n | Media | s muestral | IC95 | Interpretación |
 | --- | ---: | ---: | ---: | --- | --- |
-| Tasa HTTP 5xx | 8 | 0,061315 % | 0,035011 % | [0,032045; 0,090585] % | CUMPLE `<1 %` |
-| p95 Locust | 8 | 28,750000 ms | 3,150964 ms | [26,115729; 31,384271] ms | CUMPLE `<500 ms` |
-| p99 Locust | 8 | 115,625000 ms | 26,521891 ms | [93,452144; 137,797856] ms | CUMPLE `<750 ms` |
+| Tasa HTTP 5xx | 8 | 0,000000 % | 0,000000 % | [0,000000; 0,000000] % | **CUMPLE** `<1 %` |
+| p95 GET negocio | 8 | 6,680642 ms | 0,177173 ms | [6,532522; 6,828763] ms | INFORMATIVO |
+| p99 GET negocio | 8 | 9,849009 ms | 0,489360 ms | [9,439893; 10,258124] ms | INFORMATIVO |
 
-El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. La tasa del CSV es
-`100 × HTTP 5xx / total_requests`; el conteo 5xx es la suma exacta de
-`Occurrences` con estado 5xx en `locust_failures.csv`. Los percentiles y el total
-proceden de la fila `Aggregated` de `locust_stats.csv`.
+El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. La métrica primaria es
+`100 × HTTP 5xx / GET de negocio`. p95 y p99 se calculan sobre la distribución
+raw completa de GET de negocio, sin excluir observaciones por código HTTP,
+éxito, fallo o latencia. Login y refresh se contabilizan por separado.
 
-Locust también registró entre 66.476 y 67.008 respuestas HTTP 401 por repetición.
-Estos fallos masivos no se ocultan: están conservados en `locust_failures.csv` y su
-conteo consta en `observacion` de cada fila. El criterio preregistrado de fiabilidad
-mide exclusivamente HTTP 5xx, por lo que los 401 no se suman a `failures`.
+Los contadores finales exactos de Locust registran 899.464 requests al incluir
+tráfico de sesión y 0 fallos. Para E2, el denominador oficial permanece en los
+896.964 GET de negocio.
 
-En r1, Locust observó 49 respuestas HTTP 500, mientras que la consulta
-`increase()` de Prometheus produjo aproximadamente 4,0093 y un porcentaje de
-0,016860 %. La discrepancia se conserva explícitamente en el CSV y en los
-artefactos raw; no se corrigió ni sustituyó ninguna medición. En r2–r10, el conteo
-entero de Locust coincide estrechamente con el resultado fraccional de Prometheus.
-Los porcentajes de Prometheus usan el denominador observado por el servicio y no
-son intercambiables con la tasa calculada sobre las solicitudes de Locust.
+Los intentos inválidos o abortados permanecen preservados en sus directorios
+originales y no se reutilizan como observaciones oficiales.
 
-Este resultado permite decidir el criterio acotado de tasa HTTP 5xx. No demuestra
-por sí solo una disponibilidad temporal mayor o igual que 99,5 %.
+El resultado permite decidir el criterio acotado de HTTP 5xx y **E2 CUMPLE**
+en el escenario correctivo medido. No demuestra por sí solo una disponibilidad
+temporal mayor o igual que 99,5 %.
 
 ## Consolidación oficial E3: seguridad, mantenibilidad y compatibilidad
 

@@ -205,23 +205,28 @@ observada de respuestas HTTP 5xx permanece por debajo del umbral previamente
 declarado de 1\,\% en las ocho repeticiones centrales r2--r9 del despliegue
 SCLI evaluado, y qué comportamiento operacional adicional registra Locust?
 
-\textbf{Respuesta a PI2.} Sí para el indicador formal acotado: la tasa 5xx
-media fue 0,061315\,\%, con IC95 [0,032045; 0,090585]\,\%; el límite superior
-permanece por debajo de 1\,\%. En la misma campaña, p95 tuvo media 28,750000 ms
-e IC95 [26,115729; 31,384271] ms, y p99 media 115,625000 ms e IC95
-[93,452144; 137,797856] ms. Sin embargo, Locust registró entre 66\,476 y
-67\,008 respuestas HTTP 401 por repetición, un hallazgo operacional
-desfavorable que impide describir la carga como funcionalmente sana. Los 401
-no se suman al indicador 5xx porque el protocolo define \texttt{failures} como
-respuestas 5xx; tampoco permiten inferir disponibilidad temporal ni explicar
-causalmente el comportamiento. El CSV y
+\textbf{Respuesta a PI2.} Sí para el indicador formal acotado en la
+campaña correctiva. Las diez repeticiones válidas sumaron 896\,964 GET de
+negocio, con 0 respuestas HTTP 401 y 0 respuestas HTTP 5xx. Sobre r2--r9,
+la tasa 5xx tuvo media 0,000000\,\%, desviación muestral 0,000000\,\% e
+IC95 [0,000000; 0,000000]\,\%; por tanto, el límite superior permanece por
+debajo del 1\,\% prerregistrado.
+
+Como métricas descriptivas, p95 tuvo media 6,680642 ms e IC95
+[6,532522; 6,828763] ms, y p99 media 9,849009 ms e IC95
+[9,439893; 10,258124] ms. Estos percentiles no constituyen criterios nuevos
+de aceptación E2. La campaña histórica con 668\,367 HTTP 401 permanece
+publicada como antecedente del defecto de renovación que motivó la corrección.
+La tasa 5xx no se interpreta como disponibilidad temporal. El CSV
+\path{../../experimentos/resultados/iso25010-correctiva.csv} y
 \path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md} contienen los
-conteos y estadísticos; el criterio está en
-\path{../../experimentos/protocolo-e4.md}; y los conteos por estado se
-preservan en
-\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h/rep-01/locust_failures.csv}
-hasta \path{../rep-10/locust_failures.csv}, junto con
-\texttt{locust\_stats.csv} y \texttt{metadata.json} de cada repetición.
+conteos y estadísticos. El prerregistro correctivo está en
+\path{../../experimentos/protocolo-e2-fiabilidad-correctiva.md} y la evidencia
+raw oficial en
+\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/}.
+Cada repetición válida conserva \texttt{locust\_requests.csv},
+\texttt{locust-final-stats.json}, \texttt{metadata.json} y su manifiesto
+SHA-256.
 
 \subsubsection{Proveniencia e integridad}
 
@@ -330,26 +335,43 @@ central ni sustituye el escenario nominal ISO.
 \subsection{Fiabilidad nominal y alcance de la disponibilidad}
 \label{subsec:fiabilidad-disponibilidad}
 
-Se completaron las diez repeticiones independientes de una hora con 50 usuarios;
-el análisis central usa r2--r9 conforme al protocolo. La tasa HTTP 5xx media fue
-0,061315\,\%, con desviación muestral 0,035011\,\% e IC95
-[0,032045; 0,090585]\,\%, por lo que cumple el criterio acotado menor que
-1\,\%. P95 presentó media 28,750000 ms e IC95 [26,115729; 31,384271] ms;
-p99, media 115,625000 ms e IC95 [93,452144; 137,797856] ms.
+La campaña correctiva completó diez repeticiones válidas independientes de una
+hora con 50 usuarios y \texttt{spawn-rate} 10 usuarios/s sobre el SHA
+\texttt{b94b7af7ebab2510c16eae0c70593664763de1e7}. El análisis central utiliza
+r2--r9 conforme al prerregistro.
 
-Las diez ventanas terminaron la hora y conservaron evidencia completa, aunque
-Locust devolvió código 1 por los fallos HTTP observados. Entre ellos hubo de
-66\,476 a 67\,008 respuestas 401 por repetición. Este hallazgo se conserva y
-se considera operacionalmente desfavorable, pero no se incorpora a
-\texttt{failures}: esa columna y el criterio preregistrado cuentan
-exclusivamente respuestas HTTP 5xx.
+Las diez repeticiones contienen 896\,964 GET de negocio, con 0 respuestas
+HTTP 401 y 0 respuestas HTTP 5xx. Los contadores finales de Locust, incluyendo
+login y refresh, suman 899\,464 requests con 0 fallos.
 
-La tasa HTTP 5xx y la disponibilidad no son equivalentes. Para concluir que la
-disponibilidad es al menos 99,5\% se requiere una observación temporal válida y el
-indicador explícito de tiempo apto frente a tiempo total definido por el
-protocolo. En consecuencia, la tasa 5xx sí es concluyente para su criterio
-acotado, mientras la disponibilidad temporal permanece \textbf{no concluyente};
-el informe no afirma 99,5\% ni la deduce de la tasa de errores.
+Sobre r2--r9, la tasa HTTP 5xx tuvo media 0,000000\,\%, desviación muestral
+0,000000\,\% e IC95 [0,000000; 0,000000]\,\%. El límite superior del IC95 es
+menor que 1\,\%, por lo que \textbf{E2 cumple} el criterio acotado
+prerregistrado.
+
+Como métricas descriptivas, p95 presentó media 6,680642 ms, desviación
+muestral 0,177173 ms e IC95 [6,532522; 6,828763] ms. P99 presentó media
+9,849009 ms, desviación muestral 0,489360 ms e IC95
+[9,439893; 10,258124] ms. El prerregistro establece que estos percentiles son
+informativos y no constituyen criterios adicionales de aceptación E2.
+
+Los percentiles se reconstruyen directamente desde
+\texttt{locust\_requests.csv} sobre todos los GET de negocio, sin excluir
+observaciones por código HTTP, éxito, fallo o latencia. Login y refresh se
+contabilizan por separado y quedan fuera de la población de percentiles de
+negocio. Los intentos inválidos o abortados permanecen preservados y no se
+incorporan a r2--r9.
+
+La campaña histórica permanece publicada como antecedente metodológico. En ella
+la ausencia de renovación de sesión produjo 668\,367 respuestas HTTP 401 y
+debilitó la carga efectiva después del TTL. Ese resultado histórico no se
+elimina ni se reinterpreta como si hubiese utilizado refresh.
+
+La tasa HTTP 5xx y la disponibilidad temporal no son equivalentes. Para afirmar
+una disponibilidad de al menos 99,5\,\% sería necesario operacionalizar tiempo
+apto frente a tiempo total. En consecuencia, E2 sí es concluyente para su
+criterio acotado de errores, mientras la disponibilidad temporal permanece
+\textbf{no concluyente}.
 
 \subsection{Experimento de arbitraje concurrente S0--S4}
 \label{subsec:arbiter-resultados}
@@ -540,7 +562,7 @@ solo características con evidencia disponible.
     \hline
     Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Media 371,25 ms; SD 364,03 ms; IC95 [66,91; 675,59] ms & CUMPLE \\
     \hline
-    Fiabilidad acotada & HTTP 5xx nominal, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,061315\%; IC95 [0,032045; 0,090585]\% en r2--r9 & CUMPLE en escenario \\
+    Fiabilidad acotada & HTTP 5xx correctivo, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,000000\%; IC95 [0,000000; 0,000000]\% en r2--r9 & CUMPLE en escenario \\
     \hline
     Disponibilidad & Tiempo apto/tiempo total & $\geq99,5\%$ & Diez horas ejecutadas, sin indicador temporal operacionalizado & NO CONCLUYENTE \\
     \hline
@@ -648,9 +670,10 @@ manifiesto hace detectables alteraciones en el conjunto experimental.
 
 Las limitaciones impiden una conclusión total. El p99 de eficiencia presenta
 gran dispersión aunque cumple su umbral previo; la rampa contiene un máximo
-superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña de
-fiabilidad registró decenas de miles de 401 por repetición y la disponibilidad
-no fue demostrada. A ello se suman el panel Mobile proxy, falta de rollback automático,
+superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña histórica de
+fiabilidad registró decenas de miles de 401 por repetición; la campaña
+correctiva registró 0 HTTP 401 y 0 HTTP 5xx, aunque la disponibilidad temporal
+no fue operacionalizada. A ello se suman el panel Mobile proxy, falta de rollback automático,
 ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
 persistidos para todos los componentes. Estas restricciones se documentan como
 amenazas a la generalización, no se ocultan mediante promedios o extrapolaciones.
@@ -744,10 +767,12 @@ de doble adjudicación no operacionaliza disponibilidad ni corrección total.
 
 \textbf{Amenaza:} la tasa 5xx no operacionaliza tiempo disponible.
 \textbf{Efecto:} el cumplimiento del umbral de errores podría interpretarse
-erróneamente como disponibilidad. \textbf{Mitigación aplicada:} se completaron
-diez ventanas de una hora, pero se reporta la tasa 5xx separada de los 401 y no
-se calcula disponibilidad. \textbf{Riesgo residual:} el tiempo apto frente al
-tiempo total sigue siendo desconocido.
+erróneamente como disponibilidad. \textbf{Mitigación aplicada:} la campaña
+correctiva completó diez ventanas válidas de una hora con 0 HTTP 401 y
+0 HTTP 5xx; la campaña histórica con 401 permanece publicada por separado y
+no se calcula disponibilidad a partir de ninguna de las dos.
+\textbf{Riesgo residual:} el tiempo apto frente al tiempo total sigue siendo
+desconocido.
 
 \subsubsection{Validez externa}
 
@@ -835,7 +860,7 @@ posteriormente se presenta en la Sección~\ref{sec:contratos-openapi}.
     \hline
     D6.2 & Dashboard de seis paneles & JSON canónico; latencia Mobile solo proxy de Gateway & Dashboard & PARCIAL \\
     \hline
-    D7.1 & Experimento ISO 25010 & Eficiencia y fiabilidad 10/10; p95 y p99 de eficiencia cumplen; disponibilidad no operacionalizada & ISO/experimentos & PARCIAL \\
+    D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 CUMPLE $<1\%$; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
     \hline
     D7.2 & Experimento ARBITER & 130 planificadas; 123 completadas; 99 muestras analíticas válidas & ARBITER/oráculo & PARCIAL \\
     \hline
@@ -859,10 +884,13 @@ lo que no se afirma cumplimiento global ni se atribuyen al HEAD cifras de un
 reporte anterior.
 
 La eficiencia nominal cumple los criterios p95 y p99 y no registró HTTP 5xx en
-las muestras centrales; la rampa muestra picos de cola. La campaña de fiabilidad cumple el criterio acotado de
-5xx, aunque registró entre 66\,476 y 67\,008 respuestas 401 por repetición. Ese
-resultado no prueba disponibilidad de 99,5\%. La conclusión profesional es
-parcial para la evaluación ISO completa.
+las muestras centrales; la rampa muestra picos de cola. La campaña correctiva
+de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
+0,000000\,\% e IC95 [0,000000; 0,000000]\,\%, con 0 HTTP 401 y 0 HTTP 5xx
+en las diez repeticiones válidas. Los 401 de la campaña histórica permanecen
+como antecedente del defecto corregido. Este resultado no demuestra
+disponibilidad de 99,5\,\%; la conclusión profesional sigue siendo parcial
+para la evaluación ISO completa.
 
 El experimento ARBITER confirmó la utilidad del control negativo: S0 presentó
 dobles adjudicaciones en las 16 muestras analíticas de contención. No se
