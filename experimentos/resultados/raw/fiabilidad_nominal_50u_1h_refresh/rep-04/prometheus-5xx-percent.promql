@@ -1,0 +1,1 @@
+100 * sum(increase(http_server_requests_seconds_count{job="reservas-solicitudes-service",status=~"5.."}[1h])) / clamp_min(sum(increase(http_server_requests_seconds_count{job="reservas-solicitudes-service"}[1h])), 1)
