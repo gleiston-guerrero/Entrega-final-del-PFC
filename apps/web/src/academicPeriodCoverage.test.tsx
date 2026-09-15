@@ -2,7 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AcademicPeriodProvider } from './academicPeriod'
 import { useAcademicPeriod } from './academicPeriodContext'
-import { AuthContext, type AuthContextValue } from './auth'
+import { AuthContext } from './auth'
+import type { AuthContextValue } from './auth/context'
 import * as academico from './services/academicoApi'
 import { ApiError } from './services/apiClient'
 import { generarIdempotencyKey } from './utils/idempotency'
@@ -21,7 +22,11 @@ const periodo = {
 }
 
 const auth: AuthContextValue = {
-  usuario: { id: 'u-1', nombre: 'Usuario', roles: [] } as AuthContextValue['usuario'],
+  usuario: {
+    id: 'u-1', perfilId: 'perfil-1', username: 'usuario', nombres: 'Usuario',
+    apellidos: 'Prueba', emailInstitucional: 'usuario@test.local', roles: [],
+    permisos: [], tiposPerfil: [],
+  },
   isAuthenticated: true,
   isLoading: false,
   login: vi.fn(),
