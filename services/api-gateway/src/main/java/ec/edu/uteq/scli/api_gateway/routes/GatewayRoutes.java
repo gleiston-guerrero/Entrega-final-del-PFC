@@ -18,7 +18,7 @@ public class GatewayRoutes {
         public RouterFunction<ServerResponse> authApiRoute(
                         @Value("${AUTH_SERVICE_URL:http://auth-service:8081}") String authServiceUrl) {
                 return route("auth_api")
-                                .route(request -> esRutaAuth(request.path()), http())
+                            .route(request -> acepta(request) && esRutaAuth(request.path()), http())
                                 .before(uri(authServiceUrl))
                                 .build();
         }
@@ -27,7 +27,7 @@ public class GatewayRoutes {
     public RouterFunction<ServerResponse> authServiceRoute(
             @Value("${AUTH_SERVICE_URL:http://auth-service:8081}") String authServiceUrl) {
         return route("auth_service")
-                .route(request -> request.path().startsWith("/auth-service/"), http())
+            .route(request -> acepta(request) && request.path().startsWith("/auth-service/"), http())
                 .before(uri(authServiceUrl))
                 .before(stripPrefix(1))
                 .build();
@@ -37,7 +37,7 @@ public class GatewayRoutes {
     public RouterFunction<ServerResponse> usuariosServiceRoute(
             @Value("${USUARIOS_SERVICE_URL:http://usuarios-service:8082}") String usuariosServiceUrl) {
         return route("usuarios_service")
-                .route(request -> esRutaUsuariosLegacy(request.path()), http())
+            .route(request -> acepta(request) && esRutaUsuariosLegacy(request.path()), http())
                 .before(uri(usuariosServiceUrl))
                 .before(stripPrefix(1))
                 .build();
@@ -47,7 +47,7 @@ public class GatewayRoutes {
     public RouterFunction<ServerResponse> usuariosApiRoute(
             @Value("${USUARIOS_SERVICE_URL:http://usuarios-service:8082}") String usuariosServiceUrl) {
         return route("usuarios_api")
-                .route(request -> esRutaUsuarios(request.path()), http())
+            .route(request -> acepta(request) && esRutaUsuarios(request.path()), http())
                 .before(uri(usuariosServiceUrl))
                 .build();
     }
@@ -57,7 +57,7 @@ public class GatewayRoutes {
             @Value("${RESERVAS_SOLICITUDES_SERVICE_URL:http://reservas-solicitudes-service:8084}")
             String reservasSolicitudesServiceUrl) {
         return route("reservas_solicitudes_service")
-                .route(request -> esRutaReservas(request.path()), http())
+            .route(request -> acepta(request) && esRutaReservas(request.path()), http())
                 .before(uri(reservasSolicitudesServiceUrl))
                 .build();
     }
@@ -67,13 +67,17 @@ public class GatewayRoutes {
                         @Value("${ACADEMICO_SERVICE_URL:http://academico-laboratorios-service:8083}")
                         String academicoServiceUrl) {
                 return route("academico_service")
-                                .route(request -> esRutaAcademica(request.path()), http())
+                    .route(request -> acepta(request) && esRutaAcademica(request.path()), http())
                                 .before(uri(academicoServiceUrl))
                                 .build();
         }
 
     private boolean esRutaReservas(String path) {
         return esRutaReservasCanonica(path);
+    }
+
+    private static boolean acepta(org.springframework.web.servlet.function.ServerRequest request) {
+        return GatewayRouteCatalog.accepts(request.method().name(), request.path());
     }
 
     static boolean esRutaAuth(String path) {
