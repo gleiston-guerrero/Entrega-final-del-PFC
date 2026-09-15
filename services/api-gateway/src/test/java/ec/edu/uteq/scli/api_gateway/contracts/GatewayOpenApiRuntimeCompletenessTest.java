@@ -15,9 +15,12 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -106,38 +108,85 @@ class GatewayOpenApiRuntimeCompletenessTest {
                 .filter(operation -> operation.path().startsWith("/usuarios-service/"))).hasSize(34);
         assertThat(expected).hasSize(224);
         assertThat(gateway).hasSize(224);
-        RuntimeContractVerifier.assertMatches(expected.keySet(), gateway);
-
-        for (Operation operation : gateway) {
-            assertRouted(operation, expected.get(operation));
-        }
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        RuntimeContractVerifier.assertMatches(runtime, gateway);
     }
 
     @Test
-    void backendPublicoNoCubiertoYGatewaySinBackendSonDetectados() {
-        Operation backendNotRouted = new Operation("GET", "/api/v1/nueva-familia");
-        Operation gatewayWithoutBackend = new Operation("GET", "/api/v1/fantasma");
+    void gatewayDocumentadoPeroNoAceptadoEsDetectado() throws Exception {
+        Map<Operation, String> expected = expectedOperations();
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        List<Operation> documentadoConFantasma = new java.util.ArrayList<>(runtime);
+        documentadoConFantasma.add(new Operation("GET", "/api/v1/fantasma"));
 
-        assertThat(RuntimeContractVerifier.compare(
-                List.of(backendNotRouted), List.of(gatewayWithoutBackend)))
-                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"))
+        assertThat(RuntimeContractVerifier.compare(runtime, documentadoConFantasma))
                 .anyMatch(problem -> problem.startsWith("EXTRA_IN_CONTRACT"));
     }
 
-    private void assertRouted(Operation operation, String expectedService) throws Exception {
-        assertThat(expectedService).as("backend de %s", operation).isNotNull();
-        routedRequests.clear();
-        String concretePath = concretePath(operation.path());
+    @Test
+    void gatewayAceptaRutaFantasmaPeroContratoLaOmiteEsDetectado() throws Exception {
+        Operation aceptadaPorPrefijo = new Operation("GET", "/api/v1/laboratorios/fantasma");
+        List<Operation> runtime = probeAcceptedOperations(
+                Map.of(aceptadaPorPrefijo, "academico"));
 
-        mockMvc.perform(MockMvcRequestBuilders.request(
-                        HttpMethod.valueOf(operation.method()), concretePath))
-                .andExpect(status().isNoContent());
+        assertThat(runtime).containsExactly(aceptadaPorPrefijo);
+        assertThat(RuntimeContractVerifier.compare(runtime, List.of()))
+                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"));
+    }
 
-        assertThat(routedRequests)
-                .as("request transformada por el router para %s", operation)
-                .containsExactly(new RoutedRequest(
-                        operation.method(), expectedBackendPath(concretePath),
-                        BACKEND_URLS.get(expectedService)));
+            @Test
+    void gatewayAceptaRutaRealPeroContratoLaOmiteEsDetectado() throws Exception {
+        Map<Operation, String> expected = expectedOperations();
+        List<Operation> runtime = probeAcceptedOperations(expected);
+        Operation rutaReal = runtime.get(0);
+        List<Operation> contratoIncompleto = runtime.stream()
+                .filter(operation -> !operation.equals(rutaReal))
+                .toList();
+
+        assertThat(RuntimeContractVerifier.compare(runtime, contratoIncompleto))
+                .anyMatch(problem -> problem.startsWith("MISSING_IN_CONTRACT"));
+    }
+
+    private Map<Operation, String> expectedOperations() throws IOException {
+        Map<Operation, String> canonical = new HashMap<>();
+        Map<String, List<Operation>> backendOperations = new HashMap<>();
+        for (Map.Entry<String, String> entry : CONTRACTS.entrySet()) {
+            List<Operation> operations = RuntimeContractVerifier.openApiOperations(
+                    RuntimeContractVerifier.repositoryFile(entry.getValue()));
+            backendOperations.put(entry.getKey(), operations);
+            for (Operation operation : operations) {
+                if (!isInternal(operation.path())) {
+                    String previous = canonical.put(operation, entry.getKey());
+                    assertThat(previous)
+                            .as("una operacion publica pertenece a un solo backend: %s", operation)
+                            .isNull();
+                }
+            }
+        }
+        Map<Operation, String> expected = new HashMap<>(canonical);
+        addAliases(expected, backendOperations.get("auth"), "auth", "/auth-service");
+        addAliases(expected, backendOperations.get("usuarios"), "usuarios", "/usuarios-service");
+        return expected;
+    }
+
+    private List<Operation> probeAcceptedOperations(Map<Operation, String> expected) throws Exception {
+        List<Operation> runtime = new ArrayList<>();
+        for (Map.Entry<Operation, String> entry : expected.entrySet()) {
+            Operation operation = entry.getKey();
+            routedRequests.clear();
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(
+                            HttpMethod.valueOf(operation.method()), concretePath(operation.path())))
+                    .andReturn();
+            if (result.getResponse().getStatus() == 204) {
+                runtime.add(operation);
+                assertThat(routedRequests)
+                        .as("request transformada por el router para %s", operation)
+                        .containsExactly(new RoutedRequest(
+                                operation.method(), expectedBackendPath(concretePath(operation.path())),
+                                BACKEND_URLS.get(entry.getValue())));
+            }
+        }
+        return runtime;
     }
 
     private static void addAliases(
