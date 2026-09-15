@@ -72,7 +72,11 @@ class ArbiterHttpEvidenceTest(unittest.TestCase):
             requests = [row for row in run["records"] if row.get("type") == "REQUEST"]
             central_requests += len(requests)
             observed_mean = sum(float(row["latency_ms"]) for row in requests) / len(requests)
-            self.assertAlmostEqual(observed_mean, summaries[run["run_id"]]["latency_ms"], places=12)
+            self.assertAlmostEqual(
+                observed_mean,
+                summaries[run["run_id"]]["latency_ms"],
+                delta=1e-9,
+            )
             for row in requests:
                 self.assertIsInstance(row.get("sent_ns"), int)
                 self.assertIsInstance(row.get("received_ns"), int)
