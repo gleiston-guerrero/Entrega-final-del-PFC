@@ -191,4 +191,45 @@ describe('MainPage', () => {
       'En revisión',
     )
   })
+
+  it('muestra los paneles de administración para un administrador institucional', () => {
+    usuario = { perfilId: 'perfil-admin', roles: ['ADMINISTRADOR'], permisos: [] }
+
+    render(<MemoryRouter><MainPage /></MemoryRouter>)
+
+    expect(screen.getByText('Resumen administrativo global')).toBeInTheDocument()
+    expect(screen.getByText('Monitoreo global')).toBeInTheDocument()
+  })
+
+  it('muestra los laboratorios del piso para un administrador de piso', () => {
+    usuario = { perfilId: 'perfil-piso', roles: ['ADMINISTRADOR_PISO'], permisos: [] }
+
+    render(<MemoryRouter><MainPage /></MemoryRouter>)
+
+    expect(screen.getByText('Laboratorios globales')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Operación de mi piso' })).toBeInTheDocument()
+  })
+
+  it('muestra el inicio genérico para un rol sin panel específico', () => {
+    usuario = { perfilId: 'perfil-otro', roles: ['AUDITOR'], permisos: [] }
+
+    render(<MemoryRouter><MainPage /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { name: 'Bienvenido a SCLI' })).toBeInTheDocument()
+  })
+
+  it('muestra estado vacío y error al cargar el horario docente', async () => {
+    vi.mocked(academico.obtenerHorariosDocente).mockResolvedValue([])
+    vi.mocked(operational.obtenerMiHorarioDocente).mockResolvedValue([])
+    vi.mocked(academico.obtenerMaterias).mockResolvedValue([])
+    vi.mocked(academico.obtenerLaboratorios).mockResolvedValue([])
+
+    render(<MemoryRouter><MainPage /></MemoryRouter>)
+
+    expect(await screen.findByText('No tiene clases asignadas en el periodo actual.')).toBeInTheDocument()
+
+    vi.mocked(academico.obtenerDocentePorPerfil).mockRejectedValue(new Error('horario no disponible'))
+    render(<MemoryRouter><MainPage /></MemoryRouter>)
+    expect(await screen.findByRole('alert')).toHaveTextContent('horario no disponible')
+  })
 })
