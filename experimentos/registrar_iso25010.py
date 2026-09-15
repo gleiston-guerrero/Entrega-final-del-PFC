@@ -62,6 +62,7 @@ RELIABILITY_EVIDENCE = {
 }
 CORRECTIVE_EVIDENCE = RELIABILITY_EVIDENCE | {
     "locust_requests.csv",
+    "locust-final-stats.json",
     "phase-summary.json",
     "gateway-service.log",
     "phase-boundaries.json",
@@ -74,21 +75,49 @@ CORRECTIVE_EVIDENCE = RELIABILITY_EVIDENCE | {
 
 
 def request_population(evidence_dir: Path) -> dict[str, int | bool]:
-    with (evidence_dir / "locust_stats.csv").open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        rows = list(csv.DictReader(stream))
-
     counts: dict[tuple[str, str], int] = {}
-    for row in rows:
-        key = (row.get("Type", ""), row.get("Name", ""))
-        if key == ("", "Aggregated"):
-            continue
+    final_stats = evidence_dir / "locust-final-stats.json"
+
+    if final_stats.is_file():
         try:
-            count = int(row.get("Request Count", "0"))
-        except ValueError as error:
-            raise ValueError(f"Request Count inválido para {key}") from error
-        counts[key] = counts.get(key, 0) + count
+            payload = json.loads(final_stats.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise ValueError("Snapshot final de Locust ausente o corrupto") from error
+
+        entries = payload.get("entries")
+        if not isinstance(entries, list):
+            raise ValueError("Snapshot final de Locust sin entries válidas")
+
+        for row in entries:
+            if not isinstance(row, dict):
+                raise ValueError("Entrada inválida en snapshot final de Locust")
+            key = (
+                str(row.get("request_type", "")),
+                str(row.get("name", "")),
+            )
+            count = row.get("request_count")
+            if (
+                isinstance(count, bool)
+                or not isinstance(count, int)
+                or count < 0
+            ):
+                raise ValueError(f"Request Count final inválido para {key}")
+            counts[key] = counts.get(key, 0) + count
+    else:
+        with (evidence_dir / "locust_stats.csv").open(
+            encoding="utf-8-sig", newline=""
+        ) as stream:
+            rows = list(csv.DictReader(stream))
+
+        for row in rows:
+            key = (row.get("Type", ""), row.get("Name", ""))
+            if key == ("", "Aggregated"):
+                continue
+            try:
+                count = int(row.get("Request Count", "0"))
+            except ValueError as error:
+                raise ValueError(f"Request Count inválido para {key}") from error
+            counts[key] = counts.get(key, 0) + count
 
     business_get_count = sum(counts.get(key, 0) for key in BUSINESS_REQUESTS)
     login_count = counts.get(("POST", "POST /api/v1/auth/login"), 0)

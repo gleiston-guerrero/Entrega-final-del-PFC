@@ -232,6 +232,7 @@ printf 'git_branch=%s\ngit_sha=%s\nhost=%s\nprometheus_url=%s\npython=%s\nlocust
 start_epoch="$(date -u +%s.%N)"
 start_iso="$($python_command -c 'import sys; from datetime import datetime,timezone; print(datetime.fromtimestamp(float(sys.argv[1]),timezone.utc).isoformat())' "$start_epoch")"
 export LOCUST_REQUEST_LOG="$evidence_dir/locust_requests.csv"
+export LOCUST_FINAL_STATS="$evidence_dir/locust-final-stats.json"
 metadata_patch "{\"status\":\"running\",\"started_at_utc\":\"$start_iso\",\"locust_version\":$("$python_command" -c 'import json,sys; print(json.dumps(sys.argv[1]))' "$locust_version"),\"deployment_fingerprint_before\":$("$python_command" -c 'import json,sys; print(json.dumps(sys.argv[1]))' "$deployment_before")}"
 
 set +e
