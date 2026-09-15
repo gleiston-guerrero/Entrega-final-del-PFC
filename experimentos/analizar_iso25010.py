@@ -54,6 +54,16 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help="Raíz de evidencia raw; por defecto, el directorio raw junto al CSV.",
     )
+    parser.add_argument(
+        "--emit-markdown",
+        action="store_true",
+        help="Emite el bloque Markdown E2 reconstruido directamente desde raw.",
+    )
+    parser.add_argument(
+        "--emit-latex",
+        action="store_true",
+        help="Emite la fila LaTeX E2 reconstruida directamente desde raw.",
+    )
     return parser.parse_args()
 
 
@@ -205,6 +215,162 @@ def read_efficiency_population(
     return measurements
 
 
+def read_corrective_reliability_population(
+    raw_root: Path, rows: list[dict[str, str]]
+) -> dict[int, dict[str, float | int | str]]:
+    """Reconstruye la población correctiva directamente desde locust_requests.csv."""
+
+    business_names = {
+        "GET /api/v1/reservas",
+        "GET /api/v1/reservas/{id}",
+    }
+
+    measurements: dict[int, dict[str, float | int | str]] = {}
+
+    def percentile_nearest_rank(values: list[float], q: float) -> float:
+        ordered = sorted(values)
+        if not ordered:
+            raise ValueError("No existen observaciones para calcular percentiles")
+        rank = math.ceil(q * len(ordered))
+        return ordered[rank - 1]
+
+    for row in rows:
+        repetition = int(row["_repetition"])
+        attempt_text = row.get("intento", "").strip()
+        attempt = int(attempt_text) if attempt_text else 1
+
+        dirname = (
+            f"rep-{repetition:02d}"
+            if attempt == 1
+            else f"rep-{repetition:02d}-attempt-{attempt:02d}"
+        )
+
+        events_path = (
+            raw_root
+            / "fiabilidad_nominal_50u_1h_refresh"
+            / dirname
+            / "locust_requests.csv"
+        )
+
+        response_times: list[float] = []
+        http_5xx = 0
+        http_401 = 0
+
+        with events_path.open(encoding="utf-8-sig", newline="") as csv_file:
+            reader = csv.DictReader(csv_file)
+            required = {
+                "request_type",
+                "name",
+                "response_time_ms",
+                "status_code",
+            }
+            missing = required.difference(reader.fieldnames or [])
+            if missing:
+                raise ValueError(
+                    f"{events_path}: faltan columnas: {', '.join(sorted(missing))}"
+                )
+
+            for line_number, event in enumerate(reader, start=2):
+                if (
+                    event["request_type"] != "GET"
+                    or event["name"] not in business_names
+                ):
+                    continue
+
+                try:
+                    response_time = float(event["response_time_ms"])
+                    status_code = int(event["status_code"])
+                except ValueError as error:
+                    raise ValueError(
+                        f"{events_path}:{line_number}: evento inválido"
+                    ) from error
+
+                response_times.append(response_time)
+
+                if status_code == 401:
+                    http_401 += 1
+                if 500 <= status_code <= 599:
+                    http_5xx += 1
+
+        if not response_times:
+            raise ValueError(
+                f"{events_path}: no contiene GET de negocio"
+            )
+
+        measurements[repetition] = {
+            "attempt": attempt,
+            "directory": dirname,
+            "total_requests": len(response_times),
+            "http_401": http_401,
+            "http_5xx": http_5xx,
+            "failure_rate_percent": 100.0 * http_5xx / len(response_times),
+            "p95_ms": percentile_nearest_rank(response_times, 0.95),
+            "p99_ms": percentile_nearest_rank(response_times, 0.99),
+            "source": str(events_path),
+        }
+
+    return measurements
+
+
+def format_decimal_es(value: float) -> str:
+    return f"{value:.6f}".replace(".", ",")
+
+
+def format_integer_es(value: int) -> str:
+    return f"{value:,}".replace(",", ".")
+
+
+def build_corrective_document_blocks(
+    raw_root: Path, rows: list[dict[str, str]]
+) -> dict[str, str]:
+    """Genera bloques documentales directamente desde los eventos raw E2."""
+
+    population = read_corrective_reliability_population(raw_root, rows)
+
+    if set(population) != EXPECTED_REPETITIONS:
+        raise ValueError(
+            "fiabilidad correctiva: se requieren las repeticiones raw 1..10"
+        )
+
+    selected = [population[r] for r in sorted(ANALYZED_REPETITIONS)]
+
+    failure_rates = [
+        float(item["failure_rate_percent"]) for item in selected
+    ]
+    p95_values = [float(item["p95_ms"]) for item in selected]
+    p99_values = [float(item["p99_ms"]) for item in selected]
+
+    failure_mean, failure_sd, failure_low, failure_high = summarize(failure_rates)
+    p95_mean, p95_sd, p95_low, p95_high = summarize(p95_values)
+    p99_mean, p99_sd, p99_low, p99_high = summarize(p99_values)
+
+    total_get = sum(int(item["total_requests"]) for item in population.values())
+    total_401 = sum(int(item["http_401"]) for item in population.values())
+    total_5xx = sum(int(item["http_5xx"]) for item in population.values())
+
+    markdown = f"""Las diez repeticiones correctivas suman {format_integer_es(total_get)} GET de negocio, con {total_401} HTTP 401 y {total_5xx} HTTP 5xx.
+
+| Métrica | n | Media | s muestral | IC95 | Interpretación |
+| --- | ---: | ---: | ---: | --- | --- |
+| Tasa HTTP 5xx | 8 | {format_decimal_es(failure_mean)} % | {format_decimal_es(failure_sd)} % | [{format_decimal_es(failure_low)}; {format_decimal_es(failure_high)}] % | **CUMPLE** `<1 %` |
+| p95 GET negocio | 8 | {format_decimal_es(p95_mean)} ms | {format_decimal_es(p95_sd)} ms | [{format_decimal_es(p95_low)}; {format_decimal_es(p95_high)}] ms | INFORMATIVO |
+| p99 GET negocio | 8 | {format_decimal_es(p99_mean)} ms | {format_decimal_es(p99_sd)} ms | [{format_decimal_es(p99_low)}; {format_decimal_es(p99_high)}] ms | INFORMATIVO |"""
+
+    latex = (
+        "Fiabilidad acotada & HTTP 5xx correctivo, 50 usuarios/1 h "
+        "& IC95 superior $<1\\%$ "
+        f"& Media {format_decimal_es(failure_mean)}\\%; "
+        f"IC95 [{format_decimal_es(failure_low)}; "
+        f"{format_decimal_es(failure_high)}]\\% en r2--r9 "
+        "& CUMPLE en escenario \\\\"
+    )
+
+    return {
+        "markdown": markdown,
+        "latex": latex,
+    }
+
+
 def analyze_scenario(
     scenario: str, rows: list[dict[str, str]], raw_root: Path
 ) -> None:
@@ -235,6 +401,69 @@ def analyze_scenario(
             )
 
     print(f"{scenario}: 8 muestras válidas (repeticiones 2..9)")
+    if scenario == "fiabilidad_nominal_50u_1h_refresh":
+        corrective_population = read_corrective_reliability_population(
+            raw_root, selected
+        )
+
+        repetitions = [int(row["_repetition"]) for row in selected]
+
+        for row in selected:
+            repetition = int(row["_repetition"])
+            raw = corrective_population[repetition]
+
+            csv_total = int(row["total_requests"])
+            csv_failures = int(row["failures"])
+            csv_p95 = float(row["p95_ms"])
+            csv_p99 = float(row["p99_ms"])
+
+            if csv_total != raw["total_requests"]:
+                raise ValueError(
+                    f"{scenario} r{repetition}: total_requests no coincide con raw"
+                )
+            if csv_failures != raw["http_5xx"]:
+                raise ValueError(
+                    f"{scenario} r{repetition}: HTTP 5xx no coincide con raw"
+                )
+            if not math.isclose(csv_p95, raw["p95_ms"], abs_tol=1e-6):
+                raise ValueError(
+                    f"{scenario} r{repetition}: p95 no coincide con raw"
+                )
+            if not math.isclose(csv_p99, raw["p99_ms"], abs_tol=1e-6):
+                raise ValueError(
+                    f"{scenario} r{repetition}: p99 no coincide con raw"
+                )
+
+        failure_rates = [
+            float(corrective_population[r]["failure_rate_percent"])
+            for r in repetitions
+        ]
+        p95_values = [
+            float(corrective_population[r]["p95_ms"])
+            for r in repetitions
+        ]
+        p99_values = [
+            float(corrective_population[r]["p99_ms"])
+            for r in repetitions
+        ]
+
+        print(
+            "  procedencia oficial correctiva: locust_requests.csv raw; "
+            "GET de negocio completos, sin filtrar por estado, éxito o latencia"
+        )
+
+        for repetition in repetitions:
+            measurement = corrective_population[repetition]
+            print(
+                f"  r{repetition:02d}: attempt={measurement['attempt']}; "
+                f"n={measurement['total_requests']}; "
+                f"401={measurement['http_401']}; "
+                f"5xx={measurement['http_5xx']}; "
+                f"p95={measurement['p95_ms']:.6f} ms; "
+                f"p99={measurement['p99_ms']:.6f} ms; "
+                f"fuente={measurement['source']}"
+            )
+
     if scenario == EFFICIENCY_SCENARIO:
         repetitions = [int(row["_repetition"]) for row in selected]
         population = read_efficiency_population(raw_root, repetitions)
@@ -267,8 +496,20 @@ def analyze_scenario(
         print_summary("historical_aggregated_p99_ms", historical_p99_values, 750.0, "ms")
 
     print_summary("failure_rate_percent", failure_rates, 1.0, "%")
-    print_summary("p95_ms", p95_values, 500.0, "ms")
-    print_summary("p99_ms", p99_values, 750.0, "ms")
+    if scenario == "fiabilidad_nominal_50u_1h_refresh":
+        print_descriptive_summary("p95_ms", p95_values, "ms")
+        print_descriptive_summary("p99_ms", p99_values, "ms")
+    else:
+        print_summary("p95_ms", p95_values, 500.0, "ms")
+        print_summary("p99_ms", p99_values, 750.0, "ms")
+
+
+def print_descriptive_summary(name: str, values: list[float], unit: str) -> None:
+    mean, standard_deviation, lower, upper = summarize(values)
+    print(
+        f"  {name}: media={mean:.6f} {unit}; s={standard_deviation:.6f} {unit}; "
+        f"IC95=[{lower:.6f}, {upper:.6f}] {unit}; INFORMATIVO"
+    )
 
 
 def print_summary(name: str, values: list[float], threshold: float, unit: str) -> None:
@@ -288,6 +529,27 @@ def main() -> int:
             print("SIN DATOS: la plantilla no contiene escenarios")
             return 0
         raw_root = args.raw_root or args.csv_path.parent / "raw"
+
+        if args.emit_markdown or args.emit_latex:
+            scenario = "fiabilidad_nominal_50u_1h_refresh"
+            rows = scenarios.get(scenario)
+            if rows is None:
+                raise ValueError(
+                    "La emisión documental requiere el escenario "
+                    "fiabilidad_nominal_50u_1h_refresh"
+                )
+
+            blocks = build_corrective_document_blocks(raw_root, rows)
+
+            if args.emit_markdown:
+                print(blocks["markdown"])
+            if args.emit_markdown and args.emit_latex:
+                print()
+            if args.emit_latex:
+                print(blocks["latex"])
+
+            return 0
+
         for scenario, rows in sorted(scenarios.items()):
             analyze_scenario(scenario, rows, raw_root)
     except (OSError, ValueError) as error:

@@ -1,25 +1,35 @@
 # Cierre metodológico E2: fiabilidad, sesión y alcance de la evidencia
 
-**Fecha de cierre documental:** 2026-09-13 (America/Guayaquil)
+**Fecha de cierre documental:** 2026-09-15 (America/Guayaquil)
 **Alcance:** consolidación trazable de evidencia ya producida; no se ejecutaron
 nuevas repeticiones ni se modificaron raws o resultados históricos.
 
 ## Dictamen
 
-La campaña histórica conserva las diez repeticiones de una hora. Durante su
-análisis se detectó que el generador de carga no renovaba el JWT de acceso de
-900 s, causando HTTP 401 a partir de aproximadamente 15 minutos. Este hallazgo
-se conserva y no se excluye de los raws.
+La campaña histórica conserva sus diez repeticiones de una hora y el defecto
+observado de expiración del JWT: 668.367 respuestas HTTP 401 sobre 889.868 GET
+de negocio. Esa evidencia permanece como antecedente y no se reinterpreta como
+si hubiese utilizado renovación de sesión.
 
-La causa fue corregida mediante renovación preventiva y fallback de refresh.
-La corrección fue verificada mediante un smoke de más de 15 minutos y una
-repetición completa de una hora con tráfico autenticado sostenido.
+La causa fue corregida mediante el mecanismo real de
+`POST /api/v1/auth/refresh`, sin modificar el TTL productivo. Después del smoke
+técnico se ejecutó la campaña correctiva completa: diez repeticiones válidas de
+una hora, 50 usuarios y `spawn-rate` 10 usuarios/s, sobre el SHA experimental
+`b94b7af7ebab2510c16eae0c70593664763de1e7`.
 
-Estas afirmaciones no convierten la campaña histórica en una campaña con
-refresh ni convierten los intentos correctivos fallidos en repeticiones válidas.
-La evidencia disponible permite defender el cálculo histórico acotado de HTTP
-5xx y la eficacia técnica de la renovación. No permite afirmar que existen diez
-repeticiones correctivas completas ni calcular un nuevo IC95 correctivo.
+Las diez repeticiones correctivas contienen 896.964 GET de negocio, con
+0 HTTP 401 y 0 HTTP 5xx. El análisis prerregistrado r2--r9 produce una tasa
+HTTP 5xx media de 0,000000 %, desviación muestral 0,000000 % e IC95
+[0,000000; 0,000000] %, por lo que E2 CUMPLE el criterio de límite superior
+menor que 1 %.
+
+Como métricas descriptivas, p95 presenta media 6,680642 ms e IC95
+[6,532522; 6,828763] ms; p99 presenta media 9,849009 ms e IC95
+[9,439893; 10,258124] ms. Estos percentiles no constituyen un criterio nuevo
+de aceptación E2.
+
+Los intentos fallidos o abortados permanecen preservados por separado y no se
+reclasifican como observaciones válidas.
 
 ## Clasificación de la evidencia
 
@@ -59,39 +69,38 @@ alteró la configuración JWT productiva.
 
 ### Evidencia correctiva
 
-El smoke dispone de una selección canónica versionable en
-`evidencia-e2/smoke-refresh-25m/`, copiada byte a byte desde
-`resultados/raw/fiabilidad_nominal_50u_1h_refresh_smoke/`. Su manifiesto local
-verifica los siete archivos seleccionados. Las carpetas de r1 y los intentos de
-r2 no están incorporadas a este checkout; sus campos se limitan al registro de
-ejecución aportado para este cierre y no se completan con valores supuestos.
+La campaña oficial se conserva en:
 
-| Evidencia | Duración | Refresh | HTTP 401 | Estado preservado | Uso permitido |
-|---|---:|---:|---:|---|---|
-| Histórica r1–r10 | 10 × ~1 h | No | 668.367 | Completa, afectada por expiración | Diagnóstico y estadística histórica acotada de 5xx |
-| Smoke correctivo ([`evidencia-e2/smoke-refresh-25m/`](evidencia-e2/smoke-refresh-25m/)) | 1.500 s / 25 min | 50 correctos, 0 fallidos | 0 | Válido como smoke técnico | Demuestra renovación y sesión autenticada más allá del TTL; no entra en r1–r10 ni en IC95 |
-| Correctiva r1 (`raw/fiabilidad_nominal_50u_1h_refresh/rep-01/`) | 1 h; 88.248 GET de negocio | Sí | No revalidable en este checkout | `execution_completed=true` y manifiesto válido según su registro | Evidencia correctiva de una hora; una sola muestra, no un nuevo estudio de diez repeticiones |
-| Correctiva r2, intento 1 (`rep-02/`) | No disponible en este checkout | No determinado aquí | No determinado aquí | Inválido y conservado | Trazabilidad del intento; no entra en resultados oficiales |
-| Correctiva r2, intento 2 (`rep-02-attempt-02/`) | No disponible en este checkout | No determinado aquí | No determinado aquí | Inválido y conservado | Trazabilidad del intento; no entra en resultados oficiales |
-| Correctiva r2, intento 3 (`rep-02-attempt-03/`) | ~1 h; 87.546 GET de negocio | Sí | No revalidable en este checkout | Inválido por falso negativo instrumental y conservado | Diagnóstico del harness; no se reclasifica ni entra en resultados oficiales |
+`resultados/raw/fiabilidad_nominal_50u_1h_refresh/`
 
-El intento 3 de r2 completó la duración y mantuvo el entorno, pero el validador
-`validate_prometheus_arrival()` exigía que una serie HTTP de negocio cubriera
-desde `start + 15 s`. Una serie de contador etiquetada por método/URI puede nacer
-en el primer request de negocio y no necesariamente al inicio de la ventana; esa
-condición produjo un falso negativo instrumental. El intento permanece inválido
-y su `phase-summary` no se reconstruye retroactivamente.
+Las diez repeticiones válidas corresponden a:
 
-### Limitaciones restantes
+| Rep. | Directorio válido | Intento | GET negocio | HTTP 401 | HTTP 5xx | p95 ms | p99 ms |
+|---:|---|---:|---:|---:|---:|---:|---:|
+| r1 | `rep-01-attempt-03` | 3 | 89.658 | 0 | 0 | 6,620457 | 9,827799 |
+| r2 | `rep-02` | 1 | 89.685 | 0 | 0 | 6,704423 | 10,300085 |
+| r3 | `rep-03` | 1 | 89.689 | 0 | 0 | 6,443099 | 9,093202 |
+| r4 | `rep-04-attempt-03` | 3 | 89.691 | 0 | 0 | 7,060784 | 10,711798 |
+| r5 | `rep-05` | 1 | 89.726 | 0 | 0 | 6,684224 | 9,806598 |
+| r6 | `rep-06-attempt-02` | 2 | 89.721 | 0 | 0 | 6,664765 | 9,655038 |
+| r7 | `rep-07` | 1 | 89.624 | 0 | 0 | 6,710125 | 9,970236 |
+| r8 | `rep-08` | 1 | 89.718 | 0 | 0 | 6,600037 | 9,677521 |
+| r9 | `rep-09` | 1 | 89.732 | 0 | 0 | 6,577682 | 9,577590 |
+| r10 | `rep-10` | 1 | 89.720 | 0 | 0 | 6,831006 | 10,226293 |
 
-- Solo existe una repetición correctiva de una hora declarada válida. No hay
-  diez repeticiones correctivas válidas y no se calcula una media o IC95 nuevo.
-- El smoke es una comprobación técnica y está excluido del análisis estadístico.
-- El intento 3 de r2 no se reutiliza como observación oficial aunque su fallo
-  conocido sea instrumental.
-- Los artefactos de r1 y r2 no están presentes en este checkout; su incorporación
-  futura deberá preservar rutas, intentos y manifiestos originales para permitir
-  verificación independiente.
+El total oficial es de 896.964 GET de negocio. Los contadores finales de
+Locust, incluyendo tráfico de sesión, registran 899.464 requests y 0 fallos.
+
+Cada repetición válida conserva `metadata.json`, eventos raw,
+`locust-final-stats.json`, estadísticas, logs y manifiesto SHA-256. Los
+resultados oficiales se reconstruyen desde `locust_requests.csv`, sin depender
+de snapshots periódicos incompletos de `locust_stats.csv`.
+
+Los intentos inválidos o abortados permanecen preservados en directorios
+separados. No se eliminan, renombran ni reclasifican como repeticiones válidas.
+
+El smoke correctivo permanece separado y no forma parte de r1--r10 ni del
+análisis estadístico r2--r9.
 
 ### Selección canónica del smoke
 
@@ -122,23 +131,31 @@ reducción de carga de negocio efectiva después del TTL. No se transforman en
 
 ### 2. HTTP 5xx
 
-Para cada repetición se calculó `100 × GET con estado 5xx / GET de negocio`.
-Sobre las repeticiones centrales r2–r9:
+Para cada repetición, la métrica primaria prerregistrada es:
 
-| Métrica | n | Media | s muestral | IC95 | Umbral | Decisión matemática |
-|---|---:|---:|---:|---|---:|---|
-| Tasa HTTP 5xx histórica | 8 | 0,061349491 % | 0,035030537 % | [0,032063230 %; 0,090635753 %] | <1 % | CUMPLE |
+`100 × GET de negocio con estado 5xx / GET de negocio`.
 
-Los valores por repetición central son 0,022421776 %, 0,043802999 %,
-0,052873149 %, 0,102206997 %, 0,064156677 %, 0,108823694 %,
-0,083047157 % y 0,013463480 %. El cociente es matemáticamente reproducible,
-pero la inferencia experimental queda limitada porque los 401 redujeron durante
-gran parte de la hora las operaciones que alcanzaron el servicio objetivo.
+La campaña histórica permanece publicada como antecedente metodológico. Su
+interpretación quedó limitada por la expiración del JWT y la aparición masiva
+de HTTP 401 después del TTL.
 
-El análisis histórico publicado que utilizó la fila `Aggregated` incluía además
-los 50 logins por repetición en el denominador. Se conserva en los documentos
-históricos; no es el valor adoptado aquí para la población formal de GET de
-negocio.
+La campaña correctiva elimina ese defecto observado. Sobre las repeticiones
+centrales r2--r9:
+
+| Métrica | n | Media | s muestral | IC95 | Interpretación |
+|---|---:|---:|---:|---|---|
+| Tasa HTTP 5xx | 8 | 0,000000 % | 0,000000 % | [0,000000; 0,000000] % | CUMPLE `<1 %` |
+| p95 GET negocio | 8 | 6,680642 ms | 0,177173 ms | [6,532522; 6,828763] ms | INFORMATIVO |
+| p99 GET negocio | 8 | 9,849009 ms | 0,489360 ms | [9,439893; 10,258124] ms | INFORMATIVO |
+
+El límite superior del IC95 de HTTP 5xx es 0,000000 %, por debajo del 1 %
+prerregistrado; por tanto, E2 cumple su criterio acotado en el escenario
+correctivo medido.
+
+p95 y p99 se reconstruyen directamente desde `locust_requests.csv` sobre todos
+los GET de negocio, sin excluir observaciones por código HTTP, éxito, fallo o
+latencia. Son métricas descriptivas y no constituyen nuevos criterios de
+aceptación E2.
 
 ### 3. Población business GET
 
@@ -157,45 +174,53 @@ No se filtra un GET por responder 200, 401, 500 u otro código.
 
 ## Amenazas a la validez y acciones correctivas
 
-La expiración del JWT constituye una amenaza de validez interna y de constructo:
-el generador siguió emitiendo GET durante una hora, pero después del TTL muchos
-fueron rechazados en autenticación y no sometieron a Reservas/Solicitudes a la
-misma carga de negocio que antes del minuto 15. Por ello, una tasa 5xx baja no
-equivale por sí sola a una prueba completa de disponibilidad sostenida durante
-una hora.
+La campaña histórica sufrió una amenaza de validez interna y de constructo:
+después del TTL de 900 s una proporción elevada de GET fue rechazada por
+autenticación antes de alcanzar la operación de negocio esperada.
 
-La acción correctiva implementó el mecanismo real de refresh sin modificar el
-TTL. El smoke demostró 50 refresh correctos, cero fallos de refresh, cero 401 y
-continuidad de GET después de t=900 s. La r1 correctiva añadió una ventana
-completa con 88.248 GET de negocio y estado de ejecución válido. Esta evidencia
-demuestra que la corrección de sesión funciona más allá del TTL, pero no se usa
-para fabricar las ocho muestras centrales que exigiría un nuevo IC95.
+La campaña correctiva aplicó el mecanismo real de refresh sin modificar el TTL.
+Las diez repeticiones oficiales válidas completaron aproximadamente una hora,
+mantuvieron tráfico autenticado y registraron 0 HTTP 401 y 0 HTTP 5xx sobre
+896.964 GET de negocio.
 
-No se regeneraron, editaron, eliminaron ni ocultaron datos históricos. Los
-intentos fallidos siguen separados por número de intento y no se renombran ni se
-sobrescriben.
+Esto elimina, para el escenario correctivo medido, el defecto de sesión
+observado en la campaña histórica. Sin embargo, persisten amenazas de validez
+externa: la ejecución corresponde a una infraestructura, dataset y patrón de
+carga controlados.
+
+Además, la tasa HTTP 5xx no operacionaliza tiempo apto frente a tiempo total.
+Por ello, el cumplimiento de E2 no permite inferir por sí solo una
+disponibilidad de 99,5 %.
+
+El smoke permanece excluido del análisis estadístico. Los intentos correctivos
+no válidos se conservan para auditoría y no forman parte de r2--r9.
 
 ## Afirmaciones defendibles y límites
 
 Se puede defender que:
 
-1. la campaña histórica consta de diez ejecuciones completas de una hora y sus
-   conteos son reproducibles desde los raws;
-2. su tasa histórica de HTTP 5xx sobre GET cumple matemáticamente el umbral
-   preregistrado, con la media e IC95 indicados;
-3. la campaña histórica sufrió un defecto de renovación que produjo 668.367
-   HTTP 401 y debilitó la carga efectiva sobre el servicio durante gran parte de
-   cada hora;
-4. la causa fue identificada y corregida mediante refresh real;
-5. el smoke y una repetición correctiva completa aportan evidencia real de que
-   la sesión renovada mantiene tráfico autenticado más allá de 900 s.
+1. la campaña histórica conserva diez ejecuciones completas de una hora y sus
+   conteos siguen reproducibles desde los raws;
+2. la campaña histórica sufrió un defecto de renovación que produjo 668.367
+   HTTP 401 y debilitó la carga efectiva después del TTL;
+3. la causa fue identificada y corregida mediante el mecanismo real de refresh;
+4. la campaña correctiva contiene diez repeticiones oficiales válidas de una
+   hora ejecutadas sobre el SHA
+   `b94b7af7ebab2510c16eae0c70593664763de1e7`;
+5. las diez repeticiones correctivas suman 896.964 GET de negocio, con
+   0 HTTP 401 y 0 HTTP 5xx;
+6. en r2--r9 la tasa HTTP 5xx tiene media 0,000000 % e IC95
+   [0,000000; 0,000000] %, por lo que E2 cumple el criterio `<1 %`;
+7. p95 y p99 correctivos se reconstruyen desde los eventos raw y se reportan
+   únicamente como métricas descriptivas;
+8. los intentos fallidos o abortados permanecen preservados y no se utilizan
+   como muestras oficiales.
 
 No se debe afirmar que:
 
 1. las diez repeticiones históricas utilizaron refresh;
-2. existen diez repeticiones correctivas completas;
-3. el smoke o los intentos inválidos forman parte de r2–r9;
-4. existe un nuevo IC95 correctivo;
-5. la tasa histórica de 5xx demuestra por sí sola una hora completa de carga de
-   negocio sostenida o disponibilidad integral del sistema;
-6. los HTTP 401 fueron eliminados, irrelevantes o ajenos a los GET intentados.
+2. el smoke o los intentos inválidos forman parte de r2--r9;
+3. p95 o p99 constituyen un nuevo criterio de aceptación E2;
+4. cero HTTP 5xx equivale por sí solo a una disponibilidad de 99,5 %;
+5. los resultados observados en esta VM garantizan idéntico comportamiento en
+   cualquier infraestructura, dataset o patrón de carga futuro.

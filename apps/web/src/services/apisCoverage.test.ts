@@ -11,6 +11,20 @@ vi.mock('./apiClient', async (importOriginal) => {
 
 const mockRequest = vi.mocked(apiRequest)
 
+type RequestExpectation = [path: string, method?: string, body?: string]
+
+function expectRequests(expected: RequestExpectation[]) {
+  expect(mockRequest).toHaveBeenCalledTimes(expected.length)
+  for (const [path, method = 'GET', body] of expected) {
+    const call = mockRequest.mock.calls.find(([calledPath, init]) =>
+      calledPath === path && (init?.method ?? 'GET') === method && (body === undefined || init?.body === body),
+    )
+    expect(call, `missing request ${method} ${path}`).toBeDefined()
+    expect(call?.[1]?.method ?? 'GET').toBe(method)
+    if (body !== undefined) expect(call?.[1]?.body).toBe(body)
+  }
+}
+
 describe('cobertura exhaustiva de endpoints de servicios', () => {
   beforeEach(() => {
     mockRequest.mockReset()
@@ -19,7 +33,10 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
 
   it('cubre funciones CRUD de academicoApi', async () => {
     await academico.obtenerDocentesPlanificacion()
-    await academico.obtenerPeriodos()
+    expect(await academico.obtenerLaboratorios()).toEqual(['item'])
+    expect(await academico.obtenerDocentes()).toEqual(['item'])
+    expect(await academico.obtenerMaterias()).toEqual(['item'])
+    expect(await academico.obtenerPeriodos()).toEqual(['item'])
     await academico.crearPeriodo({
       codigo: '2026-1',
       nombre: 'P1',
@@ -40,13 +57,13 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
       ppaNombre: 'PPA Uno',
       cicloAcademico: 1,
     })
-    await academico.obtenerCarreras()
-    await academico.obtenerPisos()
-    await academico.obtenerCampus()
-    await academico.obtenerEquipos()
-    await academico.obtenerTiposEquipo()
-    await academico.obtenerBloques()
-    await academico.obtenerFacultades()
+    expect(await academico.obtenerCarreras()).toEqual(['item'])
+    expect(await academico.obtenerPisos()).toEqual(['item'])
+    expect(await academico.obtenerCampus()).toEqual(['item'])
+    expect(await academico.obtenerEquipos()).toEqual(['item'])
+    expect(await academico.obtenerTiposEquipo()).toEqual(['item'])
+    expect(await academico.obtenerBloques()).toEqual(['item'])
+    expect(await academico.obtenerFacultades()).toEqual(['item'])
     await academico.crearLaboratorio({ pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })
     await academico.actualizarLaboratorio('l-1', { pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })
     await academico.cambiarEstadoLaboratorio('l-1', 'DISPONIBLE')
@@ -70,7 +87,24 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await academico.crearMateria({ carreraId: 'c1', codigo: 'MAT1', nombre: 'Materia 1', numeroHoras: 4, nivel: 1 })
     await academico.actualizarMateria('m-1', { carreraId: 'c1', codigo: 'MAT1', nombre: 'Materia 1', numeroHoras: 4, nivel: 1 })
 
-    expect(mockRequest).toHaveBeenCalled()
+    await academico.obtenerOcupacionHistorica(15)
+    expectRequests([
+      ['/api/v1/docentes/planificacion'], ['/api/v1/laboratorios?size=100'], ['/api/v1/docentes?size=100'], ['/api/v1/materias?size=100'], ['/api/v1/periodos-lectivos?size=100'],
+      ['/api/v1/periodos-lectivos', 'POST', JSON.stringify({ codigo: '2026-1', nombre: 'P1', fechaInicio: '2026-01-01', fechaFin: '2026-06-30', estado: 'ACTIVO', ppaCodigo: 'PPA1', ppaNombre: 'PPA Uno', cicloAcademico: 1 })],
+      ['/api/v1/periodos-lectivos/p-1', 'PUT', JSON.stringify({ codigo: '2026-1', nombre: 'P1', fechaInicio: '2026-01-01', fechaFin: '2026-06-30', estado: 'ACTIVO', ppaCodigo: 'PPA1', ppaNombre: 'PPA Uno', cicloAcademico: 1 })],
+      ['/api/v1/carreras?size=100'], ['/api/v1/pisos?size=100'], ['/api/v1/campus?size=100'], ['/api/v1/equipos?size=100'], ['/api/v1/tipos-equipo?size=100'], ['/api/v1/bloques?size=100'], ['/api/v1/facultades?size=100'],
+      ['/api/v1/laboratorios', 'POST', JSON.stringify({ pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })],
+      ['/api/v1/laboratorios/l-1', 'PUT', JSON.stringify({ pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })],
+      ['/api/v1/laboratorios/l-1/estado', 'PATCH', JSON.stringify({ estado: 'DISPONIBLE' })],
+      ['/api/v1/equipos', 'POST', JSON.stringify({ laboratorioId: 'l1', tipoEquipoId: 't1', codigoInventario: 'EQ1', numeroSerie: 'S1', marca: 'M', modelo: 'Mod', procesador: 'i7', memoriaRam: '16GB', almacenamiento: '512GB', direccionIp: '1.1.1.1', direccionMac: 'AA:BB:CC', observacion: 'Obs' })],
+      ['/api/v1/equipos/e-1', 'PUT', JSON.stringify({ laboratorioId: 'l1', tipoEquipoId: 't1', codigoInventario: 'EQ1', numeroSerie: 'S1', marca: 'M', modelo: 'Mod', procesador: 'i7', memoriaRam: '16GB', almacenamiento: '512GB', direccionIp: '1.1.1.1', direccionMac: 'AA:BB:CC', observacion: 'Obs' })],
+      ['/api/v1/equipos/e-1/estado', 'PATCH', JSON.stringify({ estado: 'OPERATIVO' })],
+      ['/api/v1/campus', 'POST', JSON.stringify({ codigo: 'C1', nombre: 'Campus 1', direccion: 'Dir' })], ['/api/v1/campus/c-1', 'PUT', JSON.stringify({ codigo: 'C1', nombre: 'Campus 1', direccion: 'Dir' })],
+      ['/api/v1/pisos', 'POST', JSON.stringify({ bloqueId: 'b1', numero: 1, descripcion: 'Piso 1' })], ['/api/v1/pisos/p-1', 'PUT', JSON.stringify({ bloqueId: 'b1', numero: 1, descripcion: 'Piso 1' })],
+      ['/api/v1/carreras', 'POST', JSON.stringify({ facultadId: 'f1', codigo: 'CAR1', nombre: 'Carrera 1', descripcion: 'Desc' })], ['/api/v1/carreras/c-1', 'PUT', JSON.stringify({ facultadId: 'f1', codigo: 'CAR1', nombre: 'Carrera 1', descripcion: 'Desc' })],
+      ['/api/v1/materias', 'POST', JSON.stringify({ carreraId: 'c1', codigo: 'MAT1', nombre: 'Materia 1', numeroHoras: 4, nivel: 1 })], ['/api/v1/materias/m-1', 'PUT', JSON.stringify({ carreraId: 'c1', codigo: 'MAT1', nombre: 'Materia 1', numeroHoras: 4, nivel: 1 })],
+      ['/api/v1/laboratorios/metricas/ocupacion?rangoMinutos=15'],
+    ])
   })
 
   it('cubre funciones de operationalApi para planificacion, asistencias, notificaciones e incidentes', async () => {
@@ -78,6 +112,7 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await operational.iniciarPlanificacion('per-1')
     await operational.enviarPlanificacionCompleta('plan-1')
     await operational.retirarPlanificacionCompleta('plan-1')
+    await operational.resetPlanificacionDemo('plan-1')
     await operational.obtenerDisponibilidadPlanificacion({
       planificacionId: 'plan-1', periodoId: 'per-1', dia: 'LUNES', horaInicio: '07:00', horaFin: '09:00',
     })
@@ -123,12 +158,24 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await operational.crearSolicitudCambio('plan-1', { bloqueId: 'b-1', tipo: 'LABORATORIO', motivo: 'Cambio' })
     await operational.aprobarSolicitudCambio('plan-1', 'sol-1')
     await operational.rechazarSolicitudCambio('plan-1', 'sol-1', 'No procede')
+    await operational.listarSolicitudesRetiro('plan-1')
+    await operational.crearSolicitudRetiro('plan-1', 'Retiro')
+    await operational.aprobarSolicitudRetiro('plan-1', 'retiro-1')
+    await operational.rechazarSolicitudRetiro('plan-1', 'retiro-1', 'No procede')
 
     await operational.listarIncidentes()
     await operational.crearIncidente({ laboratorioEquipo: 'EQ1', descripcion: 'Fallo', prioridad: 'ALTA', fecha: '2026-01-01' })
     await operational.actualizarIncidente('inc-1', 'RESUELTO')
 
-    expect(mockRequest).toHaveBeenCalled()
+    expectRequests([
+      ['/api/v1/planificaciones-agregadas'], ['/api/v1/planificaciones-agregadas', 'POST', JSON.stringify({ periodoId: 'per-1' })], ['/api/v1/planificaciones-agregadas/plan-1/enviar', 'POST'], ['/api/v1/planificaciones-agregadas/plan-1/retirar', 'POST'], ['/api/v1/planificaciones-agregadas/plan-1/reset-demo', 'POST'],
+      ['/api/v1/planificaciones-agregadas/disponibilidad?planificacionId=plan-1&periodoId=per-1&dia=LUNES&horaInicio=07%3A00&horaFin=09%3A00'], ['/api/v1/planificaciones-agregadas/plan-1/revisiones/mi-piso/aprobar', 'POST'], ['/api/v1/planificaciones-agregadas/plan-1/revisiones/mi-piso/rechazar', 'POST', JSON.stringify({ observacion: 'Motivo rechazo' })], ['/api/v1/planificaciones-agregadas/plan-1/revisiones/mi-piso/proponer-cambio', 'POST', JSON.stringify({ bloqueId: 'b-1', observacion: 'Obs' })],
+      ['/api/v1/planificaciones'], ['/api/v1/planificaciones', 'POST', JSON.stringify({ periodoId: 'per-1', carreraId: 'c-1', materiaId: 'm-1', docenteId: null, laboratorioId: 'l-1', diaSemana: 'LUNES', horaInicio: '07:00', horaFin: '09:00', observacion: '' })], ['/api/v1/planificaciones/b-1', 'PATCH', JSON.stringify({ periodoId: 'per-1', carreraId: 'c-1', materiaId: 'm-1', docenteId: null, laboratorioId: 'l-1', diaSemana: 'LUNES', horaInicio: '07:00', horaFin: '09:00', observacion: '' })], ['/api/v1/planificaciones/b-1/enviar', 'POST'], ['/api/v1/planificaciones/b-1/aceptar', 'POST', JSON.stringify({ detalle: 'ok' })], ['/api/v1/planificaciones/b-1/rechazar', 'POST', JSON.stringify({ observacion: 'Rechazo bloque' })], ['/api/v1/planificaciones/b-1/proponer-alternativa', 'POST', JSON.stringify({ observacion: 'Propuesta' })],
+      ['/api/v1/asistencias/sesiones', 'POST', JSON.stringify({ reservaId: 'res-1' })], ['/api/v1/asistencias/sesiones', 'POST', JSON.stringify({ bloqueId: 'bloq-1' })], ['/api/v1/asistencias/mis-clases-hoy'], ['/api/v1/asistencias/mi-horario?periodoId=per-1'], ['/api/v1/asistencias/mi-horario'], ['/api/v1/asistencias/mi-horario-docente?periodoId=per-1'], ['/api/v1/asistencias/mi-horario-docente'], ['/api/v1/asistencias/sesiones/ses-1'], ['/api/v1/asistencias/sesiones/ses-1/cerrar', 'POST'], ['/api/v1/asistencias/sesiones/ses-1/registros'], ['/api/v1/asistencias/sesiones/ses-1/registros', 'POST', JSON.stringify({ token: 'tok-1' })], ['/api/v1/asistencias/historial?periodoId=per-1'], ['/api/v1/asistencias/historial'], ['/api/v1/asistencias/sesiones/abiertas'], ['/api/v1/asistencias/sesiones/ses-1/registro-propio', 'POST'],
+      ['/api/v1/notificaciones'], ['/api/v1/notificaciones/no-leidas'], ['/api/v1/notificaciones/not-1/leer', 'POST'], ['/api/v1/notificaciones/leer-todas', 'POST'], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-cambio'], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-cambio', 'POST', JSON.stringify({ bloqueId: 'b-1', tipo: 'LABORATORIO', motivo: 'Cambio' })], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-cambio/sol-1/aprobar', 'POST', JSON.stringify({ observacion: '' })], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-cambio/sol-1/rechazar', 'POST', JSON.stringify({ observacion: 'No procede' })],
+      ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-retiro'], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-retiro', 'POST', JSON.stringify({ motivo: 'Retiro' })], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-retiro/retiro-1/aprobar', 'POST', JSON.stringify({ observacion: '' })], ['/api/v1/planificaciones-agregadas/plan-1/solicitudes-retiro/retiro-1/rechazar', 'POST', JSON.stringify({ observacion: 'No procede' })],
+      ['/api/v1/incidentes?tamanio=100'], ['/api/v1/incidentes', 'POST', JSON.stringify({ laboratorioEquipo: 'EQ1', descripcion: 'Fallo', prioridad: 'ALTA', fecha: '2026-01-01' })], ['/api/v1/incidentes/inc-1/estado', 'PATCH', JSON.stringify({ estado: 'RESUELTO' })],
+    ])
   })
 
   it('cubre funciones de contexto y administradores en usuariosApi', async () => {
@@ -165,7 +212,26 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await usuarios.obtenerAsociacionRol('perf-1')
     await usuarios.actualizarAsociacionRol('perf-1', { rol: 'ADMIN', pisoId: 'p1', carreraId: null })
 
-    expect(fetchSpy).toHaveBeenCalled()
+    expect(fetchSpy).toHaveBeenCalledTimes(16)
+    const requests = fetchSpy.mock.calls.map(([url, init]) => ({ url, method: init?.method ?? 'GET', body: init?.body }))
+    expect(requests).toEqual([
+      { url: '/api/v1/perfiles/p-1', method: 'GET', body: undefined },
+      { url: '/api/v1/perfiles/p-1', method: 'PUT', body: expect.any(String) },
+      { url: '/api/v1/perfiles/p-1/estado', method: 'PATCH', body: JSON.stringify({ activo: true }) },
+      { url: '/api/v1/perfiles/me', method: 'GET', body: undefined },
+      { url: '/api/v1/perfiles/me', method: 'PATCH', body: JSON.stringify({ emailPersonal: 'p@b.com', telefono: '0999', direccion: 'Dir', fotoUrl: null }) },
+      { url: '/api/v1/perfiles/administracion-usuarios/p-1', method: 'PUT', body: expect.any(String) },
+      { url: '/api/v1/estudiantes/mi-contexto', method: 'GET', body: undefined },
+      { url: '/api/v1/estudiantes/mi-contexto', method: 'POST', body: JSON.stringify({ carreraId: 'c1', periodoId: 'p1', nivel: 2 }) },
+      { url: '/api/v1/estudiantes/mis-contextos', method: 'GET', body: undefined },
+      { url: '/api/v1/estudiantes/perfil/perf-1/contextos', method: 'GET', body: undefined },
+      { url: '/api/v1/estudiantes/perfil/perf-1/contextos', method: 'POST', body: JSON.stringify({ carreraId: 'c1', periodoId: 'p1', nivel: 2 }) },
+      { url: '/api/v1/docentes/doc-1/resumen', method: 'GET', body: undefined },
+      { url: '/api/v1/administradores?size=100', method: 'GET', body: undefined },
+      { url: '/api/v1/administradores/adm-1', method: 'PUT', body: expect.any(String) },
+      { url: '/api/v1/perfiles/perf-1/asociacion-rol', method: 'GET', body: undefined },
+      { url: '/api/v1/perfiles/perf-1/asociacion-rol', method: 'PUT', body: JSON.stringify({ rol: 'ADMIN', pisoId: 'p1', carreraId: null }) },
+    ])
     fetchSpy.mockRestore()
   })
 })

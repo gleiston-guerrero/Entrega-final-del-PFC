@@ -1,0 +1,16 @@
+Evidencia: /home/ubuntu/ORA_entrega_F/experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04
+Comando: /home/ubuntu/ORA_entrega_F/.venv-load/bin/python3 -m locust -f /home/ubuntu/ORA_entrega_F/tests/load/locustfile_e2_correctiva.py --headless --host http://localhost:8080 --users 50 --spawn-rate 10 --run-time 1h --csv /home/ubuntu/ORA_entrega_F/experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04/locust --csv-full-history --html /home/ubuntu/ORA_entrega_F/experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04/locust-report.html 
+curl: (23) Failure writing output to destination
+curl: (23) Failure writing output to destination
+curl: (22) The requested URL returned error: 503
+experimentos/ejecutar_iso25010.sh: line 260: printf: write error: No space left on device
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+OSError: [Errno 28] No space left on device
+ERROR: Expecting value: line 30 column 37 (char 8191)
+Código real de Locust: 120
+Ejecución experimental completada: false

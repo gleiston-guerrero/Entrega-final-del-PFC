@@ -1,0 +1,3 @@
+Method,Name,Error,Occurrences
+POST,POST /api/v1/auth/login,CatchResponseError('Login falló con HTTP 401'),4
+POST,POST /api/v1/auth/login,CatchResponseError('Login falló con HTTP 423'),143
