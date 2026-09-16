@@ -376,3 +376,8 @@ producidos por ejecuciones trazables y artefactos verificables.
 - Conservar fuera de Git los HTML e historiales Locust completos que permanecen en la VM; los artefactos canónicos seleccionados y sus hashes sí están versionados.
 - Unificar Node 20/22.22.2 en CI.
 - Incorporar wrapper Maven al servicio académico o documentar Maven localmente.
+
+## Licencia
+
+Este proyecto se distribuye bajo la licencia **MIT**. Consulte el archivo
+[LICENSE](LICENSE) para conocer los términos completos.
