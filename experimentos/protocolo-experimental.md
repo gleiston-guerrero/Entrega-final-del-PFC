@@ -2,12 +2,17 @@
 
 ## Objetivo
 
-Comparar, en un subpaso posterior, la línea base implementada con pandas y el
+Comparar la línea base implementada con pandas y el
 pipeline distribuido implementado con PySpark. La comparación deberá utilizar
 los mismos datos de entrada, transformaciones y resultado lógico.
 
-Este documento define el protocolo y la estructura de registro. No ejecuta
-experimentos ni contiene resultados.
+Este documento define el protocolo y la estructura de registro. No contiene
+resultados. **Evidencia experimental pendiente de ejecución real (#17, IVÁN).**
+Los comandos del protocolo 1.1 están en [spark/README.md](../spark/README.md).
+Se reutiliza `run_comparison.py`: cinco grados Spark (1,2,4,6,8), cinco
+repeticiones medidas y un warmup por tratamiento/grado. Ambos motores escriben
+Parquet; el tiempo incluye el proceso completo y su cierre. Cada lote se guarda
+en un directorio UUID nuevo, con configuración, procedencia y registros crudos.
 
 ## Tratamientos
 
@@ -22,7 +27,7 @@ definidos en el Paso 4.
 
 ### Variable independiente
 
-Motor de procesamiento: pandas o PySpark.
+Motor de procesamiento y grado de paralelismo local de PySpark.
 
 ### Variables dependientes
 
@@ -46,8 +51,8 @@ Motor de procesamiento: pandas o PySpark.
 
 1. Preparar una instantánea identificable del conjunto de datos.
 2. Registrar el entorno y las versiones utilizadas.
-3. Ejecutar las iteraciones de calentamiento sin incorporarlas a los
-   resultados.
+3. Ejecutar las iteraciones de calentamiento y conservarlas con `warmup=true`,
+   excluyéndolas del resumen estadístico.
 4. Alternar el orden de los tratamientos para reducir el sesgo producido por
    cachés y orden de ejecución.
 5. Ejecutar el número configurado de repeticiones para cada tratamiento.
@@ -55,8 +60,10 @@ Motor de procesamiento: pandas o PySpark.
    `metrics/metric-schema.json`.
 7. Conservar también las ejecuciones fallidas, indicando su estado y error.
 
-La recolección real, el cálculo de estadísticos, los gráficos y la comparación
-final pertenecen a los siguientes subpasos.
+`analyze_speedup.py` valida el lote y produce resumen y figura desde registros
+reales. Calcula media, desviación muestral, speedup contra pandas y contra
+Spark(1), eficiencia respecto de Spark(1) y ajuste restringido de Amdahl sobre
+tiempos normalizados Spark. No se generan resultados hasta ejecutar el lote real.
 
 ## Condiciones de validez
 
@@ -71,7 +78,7 @@ final pertenecen a los siguientes subpasos.
 
 ## Almacenamiento
 
-Los registros futuros se guardarán en `experimentos/metrics/results/`. Cada
+Los registros se guardarán en `experimentos/metrics/results/<UUID>/`. Cada
 registro deberá cumplir el esquema JSON y conservar un identificador único de
 ejecución, el tratamiento, el conjunto de datos, el entorno y las mediciones
 capturadas.

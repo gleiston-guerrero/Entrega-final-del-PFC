@@ -1179,7 +1179,10 @@ ventana con \texttt{groupby(...).transform('sum')} y la discretización con
 \texttt{pandas.cut} usando los mismos límites de intervalo que el
 \texttt{Bucketizer} de Spark, de modo que ambos tratamientos son
 funcionalmente equivalentes y comparables bajo el mismo conjunto de datos.
-Ambos scripts exportan su resultado en formato Parquet. El
+La línea base pandas exporta un archivo Parquet sin índice; el pipeline Spark
+materializa un directorio Parquet mediante una acción terminal explícita.
+La corrección \#17 incorpora esta escritura y el protocolo reproducible;
+la evidencia experimental sigue pendiente de ejecución real. El
 Listado~\ref{lst:baseline} muestra la función equivalente de agregación por
 ventana en la línea base, que ilustra la correspondencia deliberada entre
 ambas implementaciones.
@@ -1204,23 +1207,15 @@ def agregar_participantes_por_periodo(
 
 \subsection{Configuración de lectura distribuida}
 
-La lectura JDBC del pipeline Spark se parametriza para leer en paralelo por
-particiones de la columna \texttt{id}, evitando que la extracción completa
-del clúster se sirva desde un único nodo lector. La configuración por
-defecto establece 16 particiones de lectura sobre el rango de
-identificadores del conjunto de datos, y la sesión de Spark se construye
-con \texttt{spark.sql.shuffle.partitions} ajustado explícitamente en lugar
-de usar el valor por defecto de 200 particiones, que resultaría
-sobredimensionado para un volumen de $10^5$ filas y produciría una sobrecarga
-de coordinación desproporcionada frente al trabajo útil por partición. La
-cadena de conexión y las credenciales se externalizan mediante las
-variables de entorno \texttt{RESERVAS\_JDBC\_URL},
-\texttt{RESERVAS\_DB\_USERNAME} y \texttt{RESERVAS\_DB\_PASSWORD}, con
-valores por defecto que apuntan a los tres puertos SQL locales del clúster
-E3 (\texttt{26261}, \texttt{26262}, \texttt{26263}), de modo que el
-controlador JDBC de PostgreSQL pueda alternar entre nodos si alguno no
-responde.
-
+La lectura JDBC actual no configura particiones de extracción. El protocolo
+local de la corrección \#17 varía \texttt{local[N]} y las particiones de
+\emph{shuffle} con cinco grados (1, 2, 4, 6 y 8), desactivando AQE.
+Las credenciales y conexiones se exigen mediante variables de entorno;
+no hay valores predeterminados. El procedimiento reproducible está en
+\texttt{spark/README.md}. Se calculan medias, desviaciones y aceleramiento
+contra pandas; Amdahl se estima sobre Spark(1)/Spark(N), separando el
+escalamiento del cambio de motor. La fracción serial es efectiva e incluye
+arranque, JDBC y escritura. No se dispone aún de evidencia experimental real.
 \subsection{Detalle de la transformación de combinación}
 
 La segunda transformación del pipeline --la combinación entre solicitudes

@@ -155,11 +155,13 @@ def construir_pipeline(fuentes: dict[str, pd.DataFrame]) -> pd.DataFrame:
 def exportar_parquet(
     datos: pd.DataFrame,
     destino: Path = SALIDA_PREDETERMINADA,
+    overwrite: bool = False,
 ) -> Path:
     """Escribe el resultado en spark/out sin incluir el índice de pandas."""
 
     destino.parent.mkdir(parents=True, exist_ok=True)
-    datos.to_parquet(destino, index=False)
+    with destino.open("wb" if overwrite else "xb") as output:
+        datos.to_parquet(output, index=False)
     return destino
 
 

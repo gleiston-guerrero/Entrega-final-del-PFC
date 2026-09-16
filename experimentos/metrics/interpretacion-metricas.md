@@ -2,15 +2,15 @@
 
 ## Archivos generados
 
-Al ejecutar `experimentos/run_comparison.py`, el directorio `experimentos/metrics/results/`
+Al ejecutar `experimentos/run_comparison.py`, el directorio `experimentos/metrics/results/<UUID>/`
 contendrá:
 
 - un JSON por repetición, que conserva la observación completa y su entorno;
 - `comparacion.json`, con todas las repeticiones medidas del lote;
 - `comparacion.csv`, con las mismas observaciones en formato tabular.
 
-Las plantillas versionadas están vacías. El automatizador las reemplaza
-únicamente cuando se ejecutan experimentos reales.
+Las plantillas históricas están vacías y se conservan. El automatizador crea
+un lote nuevo únicamente cuando se ejecutan experimentos reales.
 
 ## Comparación válida
 
@@ -21,9 +21,9 @@ Se deben comparar observaciones de `pandas-baseline` y `pyspark-pipeline` que:
 - hayan procesado el mismo valor de `rows_processed`;
 - se hayan obtenido con condiciones de entorno equivalentes.
 
-Los calentamientos no aparecen en los archivos comparativos. Las ejecuciones
-fallidas o agotadas por tiempo sí se conservan, pero no deben mezclarse con las
-ejecuciones completadas al calcular resultados.
+Los calentamientos aparecen con `warmup=true` y se excluyen del análisis.
+Los fallos y timeouts se conservan; el análisis rechaza lotes incompletos o con
+fallos. Cada grado Spark debe contener todas las repeticiones configuradas.
 
 ## Campos principales
 

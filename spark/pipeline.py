@@ -1,12 +1,12 @@
 """Pipeline Spark para preparar el análisis del dominio de reservas.
 
 El módulo obtiene las fuentes desde CockroachDB por JDBC y construye las
-transformaciones iniciales del Paso 4. No ejecuta acciones, métricas ni
-exportaciones.
+transformaciones del Paso 4. La ejecución escribe todas las columnas en Parquet.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 from dataclasses import dataclass
 
@@ -50,10 +50,18 @@ class JdbcConfig:
         }
 
 
-def crear_sesion() -> SparkSession:
+def crear_sesion(paralelismo: int | None = None) -> SparkSession:
     """Crea la sesión sin ejecutar lecturas ni transformaciones."""
 
     builder = SparkSession.builder.appName("scli-reservas-pipeline")
+    if paralelismo is not None:
+        if paralelismo < 1:
+            raise ValueError("El paralelismo debe ser positivo")
+        builder = (builder.master(f"local[{paralelismo}]")
+                   .config("spark.default.parallelism", paralelismo)
+                   .config("spark.sql.shuffle.partitions", paralelismo)
+                   .config("spark.sql.adaptive.enabled", "false"))
+    builder = builder.config("spark.sql.session.timeZone", "UTC")
     jdbc_jar = os.getenv("POSTGRES_JDBC_JAR")
     if jdbc_jar:
         builder = builder.config("spark.jars", jdbc_jar)
@@ -165,17 +173,29 @@ def construir_pipeline(fuentes: dict[str, DataFrame]) -> DataFrame:
     return categorizar_numero_participantes(datos)
 
 
-def ejecutar_pipeline() -> None:
-    """Construye el plan lógico sin exportar resultados ni generar métricas ."""
+def exportar_parquet(datos: DataFrame, destino: str, overwrite: bool = False) -> None:
+    """Acción terminal: evalúa todas las transformaciones y escribe Parquet."""
 
-    spark = crear_sesion()
+    datos.write.mode("overwrite" if overwrite else "errorifexists").parquet(destino)
+
+
+def ejecutar_pipeline(destino: str, paralelismo: int | None = None,
+                      overwrite: bool = False) -> None:
+    """Lee, transforma y materializa; rechaza destinos existentes por defecto."""
+
+    spark = crear_sesion(paralelismo)
     try:
         jdbc = JdbcConfig.desde_entorno()
         fuentes = cargar_fuentes(spark, jdbc)
-        construir_pipeline(fuentes)
+        exportar_parquet(construir_pipeline(fuentes), destino, overwrite)
     finally:
         spark.stop()
 
 
 if __name__ == "__main__":
-    ejecutar_pipeline()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", required=True)
+    parser.add_argument("--parallelism", type=int)
+    parser.add_argument("--overwrite", action="store_true")
+    args = parser.parse_args()
+    ejecutar_pipeline(args.output, args.parallelism, args.overwrite)
