@@ -113,7 +113,8 @@ distingue de los contenedores efímeros por servicio.
 
 Vitest y React Testing Library validan el comportamiento observable de la SPA.
 La suite actual comprende 43 archivos de prueba y 296 casos, todos aprobados
-mediante \texttt{npm run test:coverage}. Las pruebas cubren autenticación,
+mediante la ejecución reproducible, desde la raíz del repositorio, de
+\texttt{cd apps/web \&\& npm ci \&\& npm run test:coverage}. Las pruebas cubren autenticación,
 rutas protegidas, cliente HTTP, renovación ante 401, APIs de dominio,
 formularios, reservas, administración y flujos por rol. Las pruebas de la capa
 de servicios verifican no solo que una función haya sido invocada, sino también
