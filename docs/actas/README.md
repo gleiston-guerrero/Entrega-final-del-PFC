@@ -35,3 +35,26 @@ sustituyen evidencia contemporánea de una reunión. Las decisiones y asignacion
 se presentan como consolidación retrospectiva realizada el 12/09/2026. No se
 retrofechan reuniones ni se deducen comentarios, aprobaciones o asistencia a
 partir de la autoría de código.
+
+## Actas contemporáneas
+
+ACTA-06 corresponde a una reunión contemporánea realizada el 15/09/2026.
+Estas actas son distintas de los cinco registros retrospectivos anteriores y no
+modifican ni reinterpretan su alcance probatorio.
+
+| Acta | Fecha | Hora | Participantes | Tema principal | Evidencia |
+|---|---|---|---|---|---|
+| [ACTA-06](ACTA-06.md) | 15/09/2026 | 21:58–22:45 UTC-05:00 | Isaías Urbina, Iván Villamarín | Cierre del punto #7, revisión cruzada del PR #10 y organización de pendientes | [Evidencias](evidencias/acta-06/) |
+
+### Evidencia asociada a ACTA-06
+
+La evidencia almacenada en [evidencias/acta-06/](evidencias/acta-06/) corresponde a elementos
+revisados durante la reunión:
+
+- [meet-revision-pr10.png](evidencias/acta-06/meet-revision-pr10.png): sesión activa de Google Meet durante la revisión
+  técnica del PR #10.
+- [pr10-aprobado-mergeado.png](evidencias/acta-06/pr10-aprobado-mergeado.png): aprobación de `iavillamarin98-pred`,
+  integración del PR #10 a `feature/entrega-4` y cierre de la solicitud.
+
+El ACTA-06 registra una reunión efectivamente realizada el 15/09/2026 y no se
+presenta como reconstrucción retrospectiva de actividades anteriores.
