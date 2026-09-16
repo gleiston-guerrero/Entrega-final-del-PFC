@@ -112,17 +112,28 @@ distingue de los contenedores efímeros por servicio.
 \label{subsec:pruebas-web}
 
 Vitest y React Testing Library validan el comportamiento observable de la SPA.
-El árbol actual contiene 31 archivos de prueba Web, que incluyen autenticación,
+La suite actual comprende 43 archivos de prueba y 296 casos, todos aprobados
+mediante \texttt{npm run test:coverage}. Las pruebas cubren autenticación,
 rutas protegidas, cliente HTTP, renovación ante 401, APIs de dominio,
-formularios, reservas, administración y flujos por rol. Vitest/V8 aplica en
-\texttt{vite.config.ts} un umbral de 70\% a statements, branches, functions y
-lines. Los valores exactos deben obtenerse del job y del reporte del SHA
-evaluado; no se trasladan cifras de un árbol anterior como evidencia actual.
+formularios, reservas, administración y flujos por rol. Las pruebas de la capa
+de servicios verifican no solo que una función haya sido invocada, sino también
+la ruta HTTP, el método, el cuerpo enviado y la forma de la respuesta cuando
+corresponde.
+
+La configuración de Vitest/V8 en \texttt{vite.config.ts} instrumenta el conjunto
+de fuentes de la aplicación, incluyendo archivos no ejercitados por las pruebas;
+por ello el reporte conserva explícitamente archivos con cobertura cero en lugar
+de excluirlos del denominador. Sobre el árbol integrado evaluado, la ejecución
+reproducible de \texttt{npm run test:coverage} produjo 81.89\% de statements,
+70.25\% de branches, 78.43\% de functions y 84.87\% de lines. Estos valores
+superan el umbral configurado de 70\% en las cuatro métricas y corresponden al
+reporte generado sobre el estado actual del repositorio, no a una medición
+trasladada desde un SHA anterior.
 
 El pipeline ejecuta \texttt{npm run test:coverage} y \texttt{npm run build}; por
 tanto, una promoción solo continúa si los umbrales configurados y el build se
-satisfacen. La configuración demuestra el criterio exigido, mientras el reporte
-de la ejecución demuestra su resultado para un SHA concreto.
+satisfacen. La configuración define el criterio de aceptación y el reporte de
+cada ejecución constituye la evidencia reproducible del resultado.
 
 \subsubsection{Compatibilidad E2E con Playwright}
 
