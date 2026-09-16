@@ -5,6 +5,7 @@ type: software
 version: "Entrega 4"
 date-released: 2026-09-03
 repository-code: "https://github.com/gleiston-guerrero/Entrega-final-del-PFC"
+license: MIT
 authors:
   - family-names: "Farinango"
     given-names: "Freddy"
