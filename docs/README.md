@@ -44,6 +44,8 @@ producido por el workflow de documentación.
 
 ## Evidencias visuales pendientes
 
-No hay capturas versionadas del dashboard real de Grafana ni del flujo QR en un
-dispositivo. Si se incorporan después, deben proceder de un entorno real, omitir
-secretos y datos personales, e identificar SHA, fecha, zona horaria y entorno.
+Existe una captura versionada del dashboard real de Grafana en
+`release/screenshots/panel-monitoreo.png`. Aún no hay una captura versionada del
+flujo QR en un dispositivo. Las evidencias visuales incorporadas deben proceder
+de un entorno real, omitir secretos y datos personales, e identificar SHA,
+fecha, zona horaria y entorno.
