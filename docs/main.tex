@@ -267,9 +267,9 @@ aprendizaje automático ligero). El marco metodológico para reportar la
 comparación de rendimiento se apoya en las guías de experimentación en
 ingeniería de software de Wohlin~\emph{et al.}~\cite{wohlin2012experimentation} y en las
 recomendaciones de Jain~\cite{jain1991performance} para el diseño experimental de
-sistemas de cómputo, si bien --como se explica en la
-Sección~\ref{sec:protocolo}-- la ejecución completa de ese protocolo queda
-pendiente para un ciclo posterior.
+sistemas de cómputo. Como se explica en la Sección~\ref{sec:protocolo}, el protocolo fue
+ejecutado en la corrección \#17 con Spark en $N=1,2,4,6,8$ y cinco
+repeticiones medidas por tratamiento y grado.
 
 Cooper~\emph{et al.}~\cite{taipalus2023dbms} introducen el benchmark YCSB
 (\emph{Yahoo! Cloud Serving Benchmark}), un marco de referencia ampliamente
@@ -1169,7 +1169,8 @@ funcionalmente equivalentes y comparables bajo el mismo conjunto de datos.
 La línea base pandas exporta un archivo Parquet sin índice; el pipeline Spark
 materializa un directorio Parquet mediante una acción terminal explícita.
 La corrección \#17 incorpora esta escritura y el protocolo reproducible;
-la evidencia experimental sigue pendiente de ejecución real. El
+la evidencia experimental fue ejecutada y sus resultados se presentan en la
+Sección~\ref{sec:protocolo}. El
 Listado~\ref{lst:baseline} muestra la función equivalente de agregación por
 ventana en la línea base, que ilustra la correspondencia deliberada entre
 ambas implementaciones.
@@ -1253,8 +1254,8 @@ independiente contra el clúster E3. La ejecución definitiva de la corrección
 \#17 procesó 90\,000 filas por ejecución, tras verificar la equivalencia
 funcional sobre las 20 columnas del resultado. El
 Listado~\ref{lst:orquestador} resume el orquestador experimental
-(\texttt{experiments/run\_comparison.py}) construido para automatizar esa
-comparación cuando se ejecute: alterna el orden de los dos tratamientos,
+(\texttt{experiments/run\_comparison.py}) utilizado para automatizar esa
+comparación: alterna el orden de los dos tratamientos,
 descarta una iteración de calentamiento, muestrea CPU y memoria del árbol
 de procesos con \texttt{psutil}, y registra una observación por repetición
 conforme al esquema JSON \texttt{experiments/metrics/metric-schema.json}.
