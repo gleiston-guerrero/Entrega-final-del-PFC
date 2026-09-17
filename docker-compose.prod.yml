@@ -274,6 +274,7 @@ services:
       - "127.0.0.1:${PROMETHEUS_PORT:-9090}:9090"
     volumes:
       - ./ops/prometheus:/etc/prometheus:ro
+      - cockroach-certs:/cockroach/cockroach-certs:ro
     restart: unless-stopped
     networks: [scli-network]
 
