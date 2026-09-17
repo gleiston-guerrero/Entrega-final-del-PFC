@@ -37,31 +37,29 @@ features/
 (Retrofit) — o una estrategia combinada local+remota — se implementa detrás de
 esa misma interfaz sin tocar el ViewModel ni la UI.
 
-## Notificaciones push (Firebase) — implementación parcial
+## Notificaciones push (Firebase) — validación E2E realizada
 
-El cliente recibe mensajes, presenta notificaciones y registra el token en el
-backend cuando existe una sesión autenticada. Reservas persiste esos dispositivos
-y dispone de un adaptador Firebase. La cadena completa **no funciona ni está
-validada E2E hasta que se agregue configuración real de Firebase**, que no se
-puede generar sin acceso al proyecto Firebase del equipo:
+El cliente Android recibe mensajes, presenta notificaciones y registra el token
+en el backend cuando existe una sesión autenticada. Reservas persiste esos
+dispositivos y usa el adaptador Firebase para enviar notificaciones mediante
+Firebase Admin SDK.
 
-1. Crear (o usar) un proyecto en [Firebase Console](https://console.firebase.google.com/)
-   y registrar una app Android con `applicationId` = `ec.edu.uteq.scli.mobile`.
-2. Descargar el `google-services.json` que genera Firebase Console y colocarlo
-   en `apps/mobile/app/google-services.json`. Por defecto queda en
-   `.gitignore` (no se commitea solo); si el equipo decide versionarlo hay que
-   sacarlo a propósito del `.gitignore` de esta carpeta.
-3. Habilitar **Firebase Cloud Messaging API (V1)** en Google Cloud Console
-   para ese mismo proyecto.
-4. El plugin `com.google.gms.google-services` en `app/build.gradle.kts` se
-   aplica automáticamente en cuanto detecta `google-services.json`; hasta
-   entonces el build sigue funcionando sin Firebase.
-5. Configurar en Reservas `FIREBASE_ENABLED=true` y proporcionar
-   `FIREBASE_CREDENTIALS_BASE64` mediante el gestor de secretos del entorno, sin
-   versionar el JSON de cuenta de servicio.
-6. Ejecutar un evento real soportado (actualización de incidente, solicitud o
-   planificación) y conservar evidencia de recepción en un dispositivo con
-   Play Services. La existencia de tests unitarios no reemplaza esta prueba E2E.
+La cadena FCM fue validada extremo a extremo con el cliente Android y el backend
+configurados con el mismo proyecto Firebase durante la prueba. La validación se
+ejecutó con un dispositivo Android físico y un evento real de cambio de estado
+de incidente.
+
+El flujo validado fue:
+
+`evento backend -> NotificacionService -> Firebase Admin SDK -> FCM -> dispositivo Android`
+
+La evidencia está versionada en `docs/evidencias/fcm-e2e.md` e incluye las
+capturas de permiso de notificaciones y recepción real de la notificación FCM en
+el dispositivo.
+
+`google-services.json`, las credenciales de Firebase Admin SDK y los tokens FCM
+permanecen fuera del repositorio. Las variables sensibles siguen
+proporcionándose mediante archivos ignorados por Git o variables de entorno.
 
 ## Settings del técnico
 
