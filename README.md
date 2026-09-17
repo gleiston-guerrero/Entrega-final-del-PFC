@@ -170,9 +170,11 @@ En Windows use `gradlew.bat`. CI ejecuta unitarias, lint y las pruebas
 del gate previo al APK. El APK debug se publica como artifact por SHA. El
 workflow también prepara un APK release firmado como artifact cuando los cuatro
 secrets de firma están configurados en un push autorizado; el procedimiento se
-documenta en [`apps/mobile/README.md`](apps/mobile/README.md). Firebase
-permanece pendiente de `google-services.json`,
-configuración FCM y emisor backend; no está completamente operativo.
+documenta en [`apps/mobile/README.md`](apps/mobile/README.md). Firebase/FCM fue
+validado extremo a extremo con un dispositivo Android físico. El cliente obtiene
+y registra el token FCM, el backend persiste el dispositivo y envía
+notificaciones mediante Firebase Admin SDK. La evidencia de recepción real se
+conserva en [`docs/evidencias/fcm-e2e.md`](docs/evidencias/fcm-e2e.md).
 
 El APK release firmado procedente del run `34688947156`, correspondiente al SHA
 `0b755310a0acf34da2456290a4f978475a8e17f9`, está incorporado en
@@ -369,7 +371,6 @@ producidos por ejecuciones trazables y artefactos verificables.
 
 ## Pendientes conocidos
 
-- Completar Firebase/FCM y su emisor backend.
 - Incorporar una métrica E2E móvil identificable, en lugar del proxy por URI del Gateway.
 - Elevar la cobertura Android: la campaña oficial E3 del SHA `fa7d75ec...`
   obtuvo 38,3407 % de líneas y **NO CUMPLE** el umbral documental de 70 %.
