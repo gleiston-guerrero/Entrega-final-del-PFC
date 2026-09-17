@@ -1,5 +1,5 @@
 {
-  "protocol_version": "1.0",
+  "protocol_version": "1.1",
   "treatments": [
     {
       "id": "pandas-baseline",
@@ -13,10 +13,12 @@
   "dataset": {
     "id": "reservas_db",
     "source": "cockroachdb-e3",
-    "snapshot_id": null
+    "snapshot_id": null,
+    "expected_total_rows": 410001
   },
   "execution": {
     "warmup_iterations": 1,
+    "parallelism_levels": [1, 2, 4, 6, 8],
     "measured_iterations": 5,
     "alternate_treatment_order": true,
     "timeout_seconds": 900

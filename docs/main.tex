@@ -394,26 +394,13 @@ que, en la práctica, el volumen de trabajo suele escalar junto con los
 recursos disponibles en lugar de permanecer fijo, lo que produce una
 estimación de \emph{speedup} escalado distinta y menos pesimista para
 cargas de trabajo que crecen con el tamaño del clúster~\cite{sun2023gustafson}.
-Como se explica en la Sección~\ref{sec:protocolo}, este proyecto no cuenta
-todavía con mediciones ejecutadas de $N$ y $t(N)$ que permitan ajustar $p$
-empíricamente; la Ecuación~\eqref{eq:amdahl} se documenta aquí como el marco
-que se aplicará cuando el protocolo experimental se ejecute.
-
-Para ilustrar la lectura de la Ecuación~\eqref{eq:amdahl} con valores
-hipotéticos --no medidos-- considérese un pipeline con $p=0.8$ de fracción
-paralelizable, un valor plausible para una carga dominada por
-combinaciones (\emph{joins}) y agregaciones sobre particiones
-independientes. El límite asintótico sería
-$S(\infty) = 1/(1-0.8) = 5$, y ya con $N=8$ núcleos se alcanzaría
-$S(8) = 1/(0.2 + 0.8/8) = 3.33$, es decir, el $66.7\,\%$ del \emph{speedup}
-máximo teórico. La pregunta obligatoria de la defensa (Anexo B, ítem 3 de
-la guía de la entrega) --con cuántos núcleos se alcanza el 90\,\% del
-\emph{speedup} máximo-- se resuelve despejando $N$ de
-$S(N) = 0.9 \cdot S(\infty)$ en la Ecuación~\eqref{eq:amdahl}, lo que para
-$p=0.8$ arroja $N \approx 36$ núcleos; valores de $p$ más altos reducen
-drásticamente ese requisito. Este cálculo se reproducirá con el $p$
-efectivamente estimado a partir de las mediciones del protocolo
-(Sección~\ref{sec:protocolo}) una vez ejecutado.
+El lote definitivo de la corrección \#17 permite ajustar la ley con tiempos
+reales. Para Spark, el ajuste OLS de $T(N)/T(1)$, con $f$ restringida a
+$[0,1]$ y Spark(1) como referencia, produjo una fracción serial efectiva
+$f=0.976585$ y una fracción paralelizable efectiva $1-f=0.023415$. El límite
+asintótico correspondiente es $1/f=1.023976\times$. Esta $f$ incluye arranque,
+JDBC, E/S, escritura y sobrecarga de ejecución; no debe interpretarse como
+el porcentaje de código inherentemente secuencial.
 
 Formalmente, Gustafson define el \emph{speedup escalado} $S_g(N)$ asumiendo
 que el tiempo secuencial se mantiene fijo mientras el tamaño del problema
@@ -1179,7 +1166,10 @@ ventana con \texttt{groupby(...).transform('sum')} y la discretización con
 \texttt{pandas.cut} usando los mismos límites de intervalo que el
 \texttt{Bucketizer} de Spark, de modo que ambos tratamientos son
 funcionalmente equivalentes y comparables bajo el mismo conjunto de datos.
-Ambos scripts exportan su resultado en formato Parquet. El
+La línea base pandas exporta un archivo Parquet sin índice; el pipeline Spark
+materializa un directorio Parquet mediante una acción terminal explícita.
+La corrección \#17 incorpora esta escritura y el protocolo reproducible;
+la evidencia experimental sigue pendiente de ejecución real. El
 Listado~\ref{lst:baseline} muestra la función equivalente de agregación por
 ventana en la línea base, que ilustra la correspondencia deliberada entre
 ambas implementaciones.
@@ -1204,23 +1194,16 @@ def agregar_participantes_por_periodo(
 
 \subsection{Configuración de lectura distribuida}
 
-La lectura JDBC del pipeline Spark se parametriza para leer en paralelo por
-particiones de la columna \texttt{id}, evitando que la extracción completa
-del clúster se sirva desde un único nodo lector. La configuración por
-defecto establece 16 particiones de lectura sobre el rango de
-identificadores del conjunto de datos, y la sesión de Spark se construye
-con \texttt{spark.sql.shuffle.partitions} ajustado explícitamente en lugar
-de usar el valor por defecto de 200 particiones, que resultaría
-sobredimensionado para un volumen de $10^5$ filas y produciría una sobrecarga
-de coordinación desproporcionada frente al trabajo útil por partición. La
-cadena de conexión y las credenciales se externalizan mediante las
-variables de entorno \texttt{RESERVAS\_JDBC\_URL},
-\texttt{RESERVAS\_DB\_USERNAME} y \texttt{RESERVAS\_DB\_PASSWORD}, con
-valores por defecto que apuntan a los tres puertos SQL locales del clúster
-E3 (\texttt{26261}, \texttt{26262}, \texttt{26263}), de modo que el
-controlador JDBC de PostgreSQL pueda alternar entre nodos si alguno no
-responde.
-
+La lectura JDBC actual no configura particiones de extracción. El protocolo
+local de la corrección \#17 varía \texttt{local[N]} y las particiones de
+\emph{shuffle} con cinco grados (1, 2, 4, 6 y 8), desactivando AQE.
+Las credenciales y conexiones se exigen mediante variables de entorno;
+no hay valores predeterminados. El procedimiento reproducible está en
+\texttt{spark/README.md}. Se calculan medias, desviaciones y aceleramiento
+contra pandas; Amdahl se estima sobre Spark(1)/Spark(N), separando el
+escalamiento del cambio de motor. La fracción serial es efectiva e incluye
+arranque, JDBC y escritura. En el lote definitivo, la fracción serial efectiva
+fue $f=0.976585$ y el RMSE normalizado del ajuste fue $0.021508$.
 \subsection{Detalle de la transformación de combinación}
 
 La segunda transformación del pipeline --la combinación entre solicitudes
@@ -1266,9 +1249,9 @@ la versión pandas de manera potencialmente inconsistente.
 
 A la fecha de este informe, tanto \texttt{pipeline.py} como
 \texttt{baseline.py} están completos y son ejecutables de forma
-independiente contra el clúster E3, pero \textbf{ninguno de los dos se ha
-ejecutado todavía de manera sistemática} sobre el dataset de referencia de
-100\,000 filas cargado en la Sección~\ref{sec:cluster}. El
+independiente contra el clúster E3. La ejecución definitiva de la corrección
+\#17 procesó 90\,000 filas por ejecución, tras verificar la equivalencia
+funcional sobre las 20 columnas del resultado. El
 Listado~\ref{lst:orquestador} resume el orquestador experimental
 (\texttt{experiments/run\_comparison.py}) construido para automatizar esa
 comparación cuando se ejecute: alterna el orden de los dos tratamientos,
@@ -1290,14 +1273,11 @@ conforme al esquema JSON \texttt{experiments/metrics/metric-schema.json}.
 }
 \end{lstlisting}
 
-El archivo de resultados agregados (\texttt{experiments/metrics/results/
-comparacion.csv}) existe en el repositorio como una plantilla vacía --con
-sus 26 columnas declaradas y ninguna fila de datos-- que el orquestador
-completará únicamente cuando se ejecuten repeticiones reales. No se
-presenta en este informe ninguna cifra de \emph{speedup}, uso de CPU o
-memoria para el par pandas/PySpark, precisamente porque esa medición no
-existe todavía; sí se documenta el protocolo con el que se generará
-(Sección~\ref{sec:protocolo}).
+El lote definitivo versionado conserva 6 registros pandas totales (1 warmup y
+5 medidos) y 30 registros Spark totales (5 warmups y 25 medidos); todos los
+registros terminaron con estado \texttt{completed}. Los resultados de
+rendimiento se presentan en la Tabla~\ref{tab:resultados-spark} y en la
+evidencia de la corrección \#17.
 
 \section{Protocolo experimental y resultados}
 \label{sec:protocolo}
@@ -1307,11 +1287,11 @@ existe todavía; sí se documenta el protocolo con el que se generará
 El protocolo experimental (\texttt{experiments/protocolo-experimental.md})
 sigue las recomendaciones de Jain~\cite{baltes2022sampling} y de
 Wohlin~\emph{et al.}~\cite{verdecchia2023} para la comparación de sistemas de
-cómputo, y define, sin ejecutarlos todavía, los siguientes elementos:
+cómputo y se ejecutó para la corrección \#17 con los siguientes elementos:
 
-\textbf{Hipótesis.} $H_1$: el pipeline paralelo con $N$ núcleos presenta un
-tiempo medio de ejecución menor que la línea base secuencial para
-$|D| \geq 5\times10^5$ registros; $H_0$: no hay diferencia significativa.
+\textbf{Pregunta experimental.} Se comparó el tiempo medio de la línea base
+pandas con Spark en $N=1,2,4,6,8$ sobre 90\,000 filas. No se realizó una
+prueba inferencial de significancia estadística.
 
 \textbf{Variable independiente.} Motor de procesamiento
 (\texttt{pandas-baseline} o \texttt{pyspark-pipeline}).
@@ -1326,19 +1306,16 @@ versiones de Python, pandas, Java y Spark, configuración de Spark, número
 de repeticiones y calentamientos, y procesos externos activos durante la
 medición.
 
-\textbf{Diseño.} Preparación de una instantánea identificable del conjunto
-de datos; registro del entorno y las versiones; iteraciones de calentamiento
-excluidas de los resultados; alternancia del orden de los tratamientos para
-reducir el sesgo de caché y de orden de ejecución; $r=10$ repeticiones
-medidas por tratamiento (según el Anexo A de la guía de la entrega), de las
-cuales se descartan la primera y la última como calentamiento y
-enfriamiento; registro de una observación por ejecución conforme al esquema
-JSON, incluidas las ejecuciones fallidas.
+\textbf{Diseño.} Preparación de una instantánea identificable y verificación
+previa de equivalencia; registro del entorno y las versiones; un warmup por
+tratamiento/grado excluido de los resultados; alternancia del orden de los
+tratamientos; y cinco repeticiones medidas por tratamiento/grado. Se
+conservaron las observaciones conforme al esquema JSON.
 
-\textbf{Análisis planificado.} Media $\bar t$, desviación típica $s$ e
-intervalo de confianza al 95\,\% mediante
-$\bar t \pm 1.96 \cdot s/\sqrt{r}$; contraste con prueba $t$ pareada si se
-cumple el supuesto de normalidad, o prueba de Wilcoxon en caso contrario.
+\textbf{Análisis realizado.} Media $\bar t$, desviación típica muestral,
+speedup contra pandas y contra Spark(1), eficiencia respecto de Spark(1) y
+ajuste OLS restringido de Amdahl. No se calcularon intervalos de confianza ni
+se ejecutó una prueba $t$ o de Wilcoxon.
 
 \subsection{Esquema de registro de observaciones}
 
@@ -1374,16 +1351,36 @@ respaldo empírico directo.
 
 \subsection{Resultados disponibles}
 
-De los dos frentes experimentales de esta entrega, únicamente la
-verificación de tolerancia a fallos del clúster (Tabla~\ref{tab:latencia},
-Sección~\ref{sec:tolerancia}) cuenta con evidencia medida, y se trata de
-una observación puntual por escenario, no de una serie con repeticiones. La
-comparación pandas/PySpark descrita en el protocolo anterior no tiene
-ejecuciones registradas: el archivo de resultados agregados está vacío y
-ningún valor de \emph{speedup}, $p$ estimado en la Ecuación~\eqref{eq:amdahl},
-ni intervalo de confianza puede reportarse honestamente en este informe.
-Esta limitación se retoma como principal amenaza a la validez de conclusión
-en la Sección~\ref{sec:discusion}.
+El lote definitivo de la corrección \#17 contiene 6 registros pandas totales
+(1 warmup y 5 medidos) y 30 registros Spark totales (5 warmups y 25 medidos),
+todos \texttt{completed}. Cada ejecución válida procesó 90\,000 filas. La
+equivalencia funcional previa se verificó sobre las 20 columnas del resultado.
+
+\begin{table}[t]
+\centering
+\caption{Resultados definitivos de rendimiento para 90\,000 filas.}
+\label{tab:resultados-spark}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Tratamiento/N} & \textbf{Media ms} & \textbf{Desv. ms} &
+\textbf{Speedup} & \textbf{Eficiencia} \\
+\midrule
+pandas & 17326.5594 & 1504.0669 & 1.0000 & -- \\
+Spark(1) & 40932.1306 & 5654.1916 & 0.4233 & 1.0000 \\
+Spark(2) & 39071.1490 & 1280.0474 & 0.4435 & 0.5238 \\
+Spark(4) & 40681.5648 & 5748.0534 & 0.4259 & 0.2515 \\
+Spark(6) & 39392.2152 & 2369.4410 & 0.4398 & 0.1732 \\
+Spark(8) & 41187.6932 & 1088.0059 & 0.4207 & 0.1242 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El speedup de Spark es frente a pandas; la eficiencia es
+$\mathrm{Spark(1)/Spark}(N)/N$. Frente a Spark(1), el mejor speedup fue
+Spark(2), $1.0476\times$, mientras Spark(8) obtuvo $0.9938\times$. No se
+observó una mejora relevante en los tiempos medios al aumentar $N$ y no se
+afirma significancia estadística.
 
 \subsection{Estado de cumplimiento por módulo}
 
@@ -1408,10 +1405,10 @@ B. Esquema distribuido & ADR-003 aprobado; DDL de partición pendiente. \\
 C. Clúster Docker & Completo y verificado (Sección~\ref{sec:cluster}). \\
 D. Tolerancia a fallos & Completo, con evidencia y bitácora; latencia
 puntual, no repetida. \\
-E. Pipeline Spark & Código completo (5 transformaciones); sin ejecución
-sobre el dataset de referencia. \\
-F. Protocolo experimental & Diseñado con detalle; sin repeticiones
-ejecutadas. \\
+E. Pipeline Spark & Código completo (5 transformaciones); ejecutado y
+equivalente sobre 90\,000 filas. \\
+F. Protocolo experimental & Ejecutado con cinco repeticiones medidas y un
+warmup por tratamiento/grado. \\
 G. Métricas Prometheus & No iniciado en este ciclo. \\
 \bottomrule
 \end{tabular}
@@ -1467,21 +1464,20 @@ Gustafson discutida en la Sección~\ref{sec:teoria}, el dominio de SCLI
 favorece conceptualmente la lectura de Gustafson: el volumen de reservas
 que el sistema procesará en producción crecerá con el número de periodos
 académicos acumulados y con la adopción del sistema por más laboratorios,
-en lugar de permanecer fijo en las $10^5$ filas usadas como conjunto de
-referencia en esta entrega. Sin mediciones de $t(N)$ para al menos dos
-valores de $N$, sin embargo, ninguna de las dos leyes puede aplicarse más
-allá de esta discusión cualitativa; ajustar $p$ o $\alpha$ empíricamente
-es, junto con la ejecución del protocolo comparativo, el primer paso
-pendiente hacia la E4.
+en lugar de permanecer fijo en las 90\,000 filas usadas como conjunto de
+referencia en esta entrega. El ajuste realizado para la carga fija produjo
+$f=0.976585$, fracción serial efectiva cuyo límite $1/f$ es aproximadamente
+$1.023976\times$. Por tanto, esta carga concreta no obtuvo un beneficio
+importante al aumentar $N$ en el entorno medido; el ajuste no debe extrapolarse
+como porcentaje de código serial ni como predicción para cargas escaladas.
 
 \subsection{Amenazas a la validez}
 
 \textbf{Internas.} (i) Ausencia de repeticiones en la medición de latencia
 de tolerancia a fallos: una sola observación por escenario no permite
-distinguir variación real de ruido del sistema anfitrión. (ii) Calentamiento
-de JVM no aislado: como el pipeline PySpark aún no se ejecutó, no hay
-evidencia propia sobre cuánto afecta el arranque de la máquina virtual de
-Java al tiempo total reportado por el orquestador cuando se use. (iii)
+distinguir variación real de ruido del sistema anfitrión. (ii) El tiempo de
+cada observación incluye el arranque de JVM, JDBC, E/S, escritura y ejecución;
+no se aisló cada componente del tiempo total. (iii)
 Estado compartido del equipo de desarrollo: las capturas se tomaron en
 máquinas de desarrollo individuales de los integrantes, no en un entorno de
 medición dedicado y aislado de otros procesos.
@@ -1520,11 +1516,11 @@ no está en \texttt{db/schema.sql}; en consecuencia, ninguna de las
 afirmaciones de la Sección~\ref{sec:esquema} sobre poda de particiones se
 verificó todavía con \texttt{EXPLAIN} sobre el esquema real.
 
-\textbf{Comparación de rendimiento no ejecutada.} La comparación
-pandas/PySpark no tiene ejecuciones registradas y, en consecuencia, no hay
-verificación empírica de la Ley de Amdahl ni de la reevaluación de
-Gustafson sobre datos propios del proyecto; toda cifra de \emph{speedup}
-que se mencionara sin esta ejecución sería una invención, no un resultado.
+\textbf{Comparación de rendimiento acotada.} La comparación pandas/PySpark
+se ejecutó sobre 90\,000 filas en un entorno local. Spark tardó aproximadamente
+39--41 s frente a 17.33 s de pandas; el mejor speedup frente a Spark(1) fue
+1.0476\times con $N=2$. No se realizó prueba inferencial de significancia y
+la fracción serial ajustada es efectiva, no una medida de código.
 
 \textbf{Observabilidad incompleta.} Las métricas Prometheus incrementales
 exigidas por el Módulo G de la guía de la entrega
@@ -1558,14 +1554,13 @@ predice la teoría de consenso Raft, y la estrategia de fragmentación y
 replicación quedó documentada mediante dos ADR que fundamentan las
 decisiones de diseño en el patrón de acceso real del dominio. El pipeline
 analítico paralelo y su línea base secuencial están implementados y son
-funcionalmente equivalentes, aunque su comparación empírica de rendimiento
-queda pendiente. En conjunto, estos avances responden a los objetivos
+funcionalmente equivalentes y fueron comparados empíricamente en la
+corrección \#17. En conjunto, estos avances responden a los objetivos
 específicos 1 a 3 de la Sección~\ref{sec:intro} (diseño del esquema,
 despliegue del clúster y verificación de tolerancia a fallos) de manera
 completa, y a los objetivos 4 a 6 (protocolo comparativo, pipeline PySpark
 y verificación de las leyes de escalamiento) de manera parcial: el código
-y el protocolo existen, pero la ejecución y el análisis estadístico
-todavía no.
+y el protocolo existen; el análisis presentado es descriptivo y no inferencial.
 
 Respondiendo directamente a la pregunta de integración del Anexo B de la
 guía de la entrega --qué artefactos de esta entrega serán consumidos, sin
@@ -1575,10 +1570,9 @@ y su esquema de base de datos;
 los ADR-003 y ADR-004 como fundamento de cualquier decisión de observabilidad
 o escalamiento posterior; el pipeline \texttt{spark/pipeline.py} y su línea
 base \texttt{spark/baseline.py}; y el orquestador experimental
-\texttt{experiments/run\_comparison.py}, listo para producir las mediciones
-que este informe no pudo reportar todavía. El trabajo inmediato hacia la
-E4 consiste en materializar el DDL de fragmentación, ejecutar el protocolo
-comparativo con las diez repeticiones especificadas, y extender el
+\texttt{experiments/run\_comparison.py}, junto con la evidencia definitiva
+de la comparación. El trabajo inmediato hacia la E4 consiste en materializar
+el DDL de fragmentación y extender el
 \texttt{endpoint} de métricas con los tres instrumentos Prometheus
 definidos en el Módulo G, sobre los cuales se construirá el panel de
 observabilidad consolidado de la siguiente entrega.
@@ -1590,13 +1584,11 @@ para el inicio del próximo ciclo, cada paso condicionado a la finalización
 del anterior: (i)~escribir y versionar el \texttt{DDL} de
 \texttt{PARTITION BY RANGE} con los límites trimestrales y las particiones
 de cobertura del ADR-003, y verificar con \texttt{EXPLAIN} que las
-consultas de disponibilidad usan poda de particiones; (ii)~ejecutar
-\texttt{experiments/run\_comparison.py} con $r=10$ repeticiones por
-tratamiento sobre el dataset de 100\,000 filas ya cargado, alternando el
-orden de \texttt{pandas-baseline} y \texttt{pyspark-pipeline} conforme al
-protocolo de la Sección~\ref{sec:protocolo}; (iii)~calcular la media, la
-desviación típica y el intervalo de confianza al 95\,\% de las mediciones
-resultantes, y ajustar empíricamente $p$ en la Ecuación~\eqref{eq:amdahl};
+consultas de disponibilidad usan poda de particiones; (ii)~ampliar, si
+procede, la evidencia de \texttt{experiments/run\_comparison.py} con
+escenarios y tamaños adicionales, manteniendo la equivalencia y el protocolo
+de la Sección~\ref{sec:protocolo}; (iii)~realizar análisis inferencial solo si
+se define y ejecuta una prueba estadística apropiada;
 (iv)~repetir la verificación de tolerancia a fallos de la
 Sección~\ref{sec:tolerancia} con $r=10$ repeticiones por escenario, en
 lugar de la observación puntual reportada en este informe; y

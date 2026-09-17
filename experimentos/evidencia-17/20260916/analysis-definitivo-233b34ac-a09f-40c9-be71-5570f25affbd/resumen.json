@@ -1,0 +1,87 @@
+{
+  "source": "experimentos\\evidencia-17\\20260916\\benchmark-definitivo-9d94efe6-7bb7-4227-b78e-c70092e9bcfb\\comparacion.json",
+  "sha256": "1761eec8a90e49cf232ab44ac146346e17ab06744140cb57522b57b73094aacf",
+  "config_sha256": "f21a2157def850f8870f7f5a25307956f03d6e0578db28f475ada57b5493a9d8",
+  "amdahl": {
+    "serial_fraction": 0.9765853070901807,
+    "unconstrained_serial_fraction": 0.9765853070901807,
+    "boundary_fit": false,
+    "rmse_normalized_time": 0.021507899337621234,
+    "method": "OLS T(N)/T(1), f constrained to [0,1]; Spark(1) reference",
+    "limitation": "Effective serial fraction includes startup, JDBC, I/O and overhead; not code fraction"
+  },
+  "summary": [
+    {
+      "treatment": "pandas-baseline",
+      "parallelism": 1,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 17326.5594,
+      "stddev_ms": 1504.066891305802,
+      "speedup_vs_pandas": 1.0,
+      "speedup_vs_spark1": null,
+      "efficiency_vs_spark1": null,
+      "amdahl_speedup": null
+    },
+    {
+      "treatment": "pyspark-pipeline",
+      "parallelism": 1,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 40932.1306,
+      "stddev_ms": 5654.191636543352,
+      "speedup_vs_pandas": 0.42329971946292966,
+      "speedup_vs_spark1": 1.0,
+      "efficiency_vs_spark1": 1.0,
+      "amdahl_speedup": 1.0
+    },
+    {
+      "treatment": "pyspark-pipeline",
+      "parallelism": 2,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 39071.149,
+      "stddev_ms": 1280.0473631844645,
+      "speedup_vs_pandas": 0.4434617318267246,
+      "speedup_vs_spark1": 1.0476305828630736,
+      "efficiency_vs_spark1": 0.5238152914315368,
+      "amdahl_speedup": 1.0118460320563087
+    },
+    {
+      "treatment": "pyspark-pipeline",
+      "parallelism": 4,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 40681.5648,
+      "stddev_ms": 5748.0534183045565,
+      "speedup_vs_pandas": 0.4259069061178295,
+      "speedup_vs_spark1": 1.006159197691432,
+      "efficiency_vs_spark1": 0.251539799422858,
+      "amdahl_speedup": 1.0178749215311946
+    },
+    {
+      "treatment": "pyspark-pipeline",
+      "parallelism": 6,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 39392.2152,
+      "stddev_ms": 2369.440957629079,
+      "speedup_vs_pandas": 0.4398472975442112,
+      "speedup_vs_spark1": 1.0390918711268615,
+      "efficiency_vs_spark1": 0.1731819785211436,
+      "amdahl_speedup": 1.019900548450436
+    },
+    {
+      "treatment": "pyspark-pipeline",
+      "parallelism": 8,
+      "repetitions": 5,
+      "rows_processed": 90000,
+      "mean_ms": 41187.6932,
+      "stddev_ms": 1088.0059124939096,
+      "speedup_vs_pandas": 0.4206732170181358,
+      "speedup_vs_spark1": 0.993795170835156,
+      "efficiency_vs_spark1": 0.1242243963543945,
+      "amdahl_speedup": 1.0209163882528496
+    }
+  ]
+}

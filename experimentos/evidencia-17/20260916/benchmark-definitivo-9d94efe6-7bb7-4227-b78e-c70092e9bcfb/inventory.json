@@ -1,0 +1,107 @@
+{
+  "identity": {
+    "host": "localhost",
+    "port": 26261,
+    "database": "reservas_db",
+    "schema": "public"
+  },
+  "tables": {
+    "solicitudes_reserva": {
+      "rows": 100000,
+      "columns": [
+        "id",
+        "solicitante_id",
+        "docente_id",
+        "laboratorio_id",
+        "materia_id",
+        "periodo_lectivo_id",
+        "fecha_reserva",
+        "hora_inicio",
+        "hora_fin",
+        "numero_participantes",
+        "motivo",
+        "observacion",
+        "estado",
+        "clave_idempotencia",
+        "creada_en",
+        "actualizada_en",
+        "version",
+        "piso_id",
+        "propuesta_fecha",
+        "propuesta_hora_inicio",
+        "propuesta_hora_fin",
+        "propuesta_laboratorio_id",
+        "propuesta_observacion"
+      ],
+      "content_sha256": "a55e28d187bda95457b204a04849cdb052b2df9b17d32aea792f651cb5d2d047"
+    },
+    "reservas": {
+      "rows": 100000,
+      "columns": [
+        "id",
+        "solicitud_id",
+        "laboratorio_id",
+        "responsable_id",
+        "fecha_reserva",
+        "hora_inicio",
+        "hora_fin",
+        "estado",
+        "codigo_reserva",
+        "creada_en",
+        "actualizada_en",
+        "version",
+        "piso_id"
+      ],
+      "content_sha256": "d4ce229e84396df3559e09b15c94c79c6df4c8035a31c7d92ee7b0ea0536e471"
+    },
+    "historial_solicitudes": {
+      "rows": 200000,
+      "columns": [
+        "id",
+        "solicitud_id",
+        "estado_anterior",
+        "estado_nuevo",
+        "usuario_accion_id",
+        "comentario",
+        "fecha_hora"
+      ],
+      "content_sha256": "df21b8d5cafdba61ad8414c12f96df44f8ba7ddc0ea13a773e1e54506cf7f193"
+    },
+    "bloqueos_agenda": {
+      "rows": 10000,
+      "columns": [
+        "id",
+        "laboratorio_id",
+        "fecha",
+        "hora_inicio",
+        "hora_fin",
+        "motivo",
+        "creado_por",
+        "activo",
+        "creado_en",
+        "version"
+      ],
+      "content_sha256": "b94b34d977dcae0dc7ad57dee8b09b62cbf17ec39c1a82a21d2e5df124c13650"
+    },
+    "configuraciones_reserva": {
+      "rows": 1,
+      "columns": [
+        "id",
+        "anticipacion_minima_horas",
+        "anticipacion_maxima_dias",
+        "duracion_minima_minutos",
+        "duracion_maxima_minutos",
+        "permite_fines_semana",
+        "activo",
+        "creada_en",
+        "actualizada_en",
+        "version"
+      ],
+      "content_sha256": "12a786daa043883bb93df65af9f85628468b5c4f85851346459c960eeaf65eb7"
+    }
+  },
+  "total_rows": 410001,
+  "seeds_sha256": "15e3a6b682976bf2d82d36f73a2f78473a2e9b713985e94f85b476ace2bc4241",
+  "snapshot_id": "sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98",
+  "read_timestamp": "1789601689608167648.0000000000"
+}

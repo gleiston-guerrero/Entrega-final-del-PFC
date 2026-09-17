@@ -1,0 +1,52 @@
+{
+  "command": [
+    "C:\\Users\\TUF-GAMING\\Videos\\ORA_entrega_F_ISAIAS\\.venv-spark\\Scripts\\python.exe",
+    "experimentos\\run_comparison.py",
+    "--config",
+    "experimentos\\experiment-config.local.json",
+    "--output",
+    "experimentos\\evidencia-17\\20260916\\benchmark-definitivo-9d94efe6-7bb7-4227-b78e-c70092e9bcfb",
+    "--equivalence",
+    "experimentos\\evidencia-17\\20260916\\equivalence-final-a2b60a0e-d2b5-4d69-95c5-904353062c9a\\equivalence.json"
+  ],
+  "timestamp": "2026-09-17T00:21:20.125063Z",
+  "environment": {
+    "jdbc_version": "42.7.11",
+    "packages": {
+      "pandas": "2.3.3",
+      "pyspark": "4.0.4",
+      "pyarrow": "19.0.1",
+      "sqlalchemy": "2.0.54",
+      "sqlalchemy-cockroachdb": "2.0.4",
+      "psycopg": "3.3.5",
+      "psutil": "7.2.2",
+      "matplotlib": "3.11.2"
+    },
+    "jdbc_sha256": "1981b31d3993c58702783c1cddf10a34e48c1f413d70ff1cb6def0a143484647",
+    "host": "DESKTOP-IN1DOMI",
+    "operating_system": "Windows-11-10.0.26200-SP0",
+    "cpu_model": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+    "logical_cpu_count": 8,
+    "memory_mib": 14272.898,
+    "python_version": "3.13.14",
+    "pandas_version": "2.3.3",
+    "spark_version": "4.0.4",
+    "java_version": "Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false\nopenjdk version \"21.0.8\" 2025-07-15 LTS\nOpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)"
+  },
+  "git_head": "21d2d3e19c68546638e2760074cd35ccd6c05402",
+  "source_sha256": {
+    "experimentos\\run_comparison.py": "4207ea92711e60b4fec107135e08a6fddce469108723ceffbf9c5eb9e6d7c87a",
+    "spark\\pipeline.py": "93d11b9fe28f5b29c9f1eb3ee8823bce3238662111991fbc046b614af3c1bef8",
+    "spark\\baseline.py": "c88780f20b23b24421eab99613fe3abd497d13af69f1c1870bdc5ea974400705",
+    "experimentos\\analyze_speedup.py": "e0333c6bf681d19b214e7ad691d0bef56a196d4f19a6582e6d29db38579a1f35"
+  },
+  "packages": {
+    "pandas": "2.3.3",
+    "pyspark": "4.0.4",
+    "pyarrow": "19.0.1",
+    "sqlalchemy": "2.0.54",
+    "sqlalchemy-cockroachdb": "2.0.4",
+    "psycopg": "3.3.5",
+    "psutil": "7.2.2"
+  }
+}
