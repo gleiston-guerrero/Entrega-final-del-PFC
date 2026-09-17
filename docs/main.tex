@@ -256,17 +256,17 @@ reproduce, a pequeña escala y sobre datos propios, el comportamiento que
 estos trabajos predicen teóricamente.
 
 En la capa de procesamiento paralelo, el modelo de \emph{Resilient
-Distributed Datasets} (RDD) de Zaharia~\emph{et al.}~\cite{wang2022spark}
+Distributed Datasets} (RDD) de Zaharia~\emph{et al.}~\cite{zaharia2012rdd}
 fundamenta el diseño del pipeline PySpark implementado en este proyecto, y
-la guía de Chambers y Zaharia~\cite{wang2022spark} orienta las decisiones
+la guía de Chambers y Zaharia~\cite{chambers2018spark} orienta las decisiones
 prácticas de la API de DataFrames utilizada. La revisión de Salloum
-\emph{et al.}~\cite{wang2022spark} sobre analítica de macrodatos con Apache
+\emph{et al.}~\cite{salloum2016spark} sobre analítica de macrodatos con Apache
 Spark documenta patrones de uso comparables a los aplicados aquí (filtrado,
 combinación de conjuntos, ventanas de agregación y transformaciones de
 aprendizaje automático ligero). El marco metodológico para reportar la
 comparación de rendimiento se apoya en las guías de experimentación en
-ingeniería de software de Wohlin~\emph{et al.}~\cite{verdecchia2023} y en las
-recomendaciones de Jain~\cite{baltes2022sampling} para el diseño experimental de
+ingeniería de software de Wohlin~\emph{et al.}~\cite{wohlin2012experimentation} y en las
+recomendaciones de Jain~\cite{jain1991performance} para el diseño experimental de
 sistemas de cómputo, si bien --como se explica en la
 Sección~\ref{sec:protocolo}-- la ejecución completa de ese protocolo queda
 pendiente para un ciclo posterior.
