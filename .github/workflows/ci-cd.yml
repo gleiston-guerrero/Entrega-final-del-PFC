@@ -435,7 +435,7 @@ jobs:
   build-mobile-release-signed:
     name: Build - Android release signed
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/feature/entrega-4' }}
+    if: ${{ github.event_name == 'push' }}
 
     steps:
       - name: Check signing configuration
