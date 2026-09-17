@@ -47,7 +47,10 @@ scrape_configs:
           - otel-collector:8889
 
   - job_name: crdb-e3-cluster
+    scheme: https
     metrics_path: /_status/vars
+    tls_config:
+      ca_file: /cockroach/cockroach-certs/ca.crt
     static_configs:
       - targets:
           - crdb-e3-1:8080
