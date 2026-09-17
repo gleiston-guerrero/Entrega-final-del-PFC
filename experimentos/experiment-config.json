@@ -13,7 +13,8 @@
   "dataset": {
     "id": "reservas_db",
     "source": "cockroachdb-e3",
-    "snapshot_id": null
+    "snapshot_id": null,
+    "expected_total_rows": 410001
   },
   "execution": {
     "warmup_iterations": 1,

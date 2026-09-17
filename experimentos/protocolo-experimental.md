@@ -6,8 +6,9 @@ Comparar la línea base implementada con pandas y el
 pipeline distribuido implementado con PySpark. La comparación deberá utilizar
 los mismos datos de entrada, transformaciones y resultado lógico.
 
-Este documento define el protocolo y la estructura de registro. No contiene
-resultados. **Evidencia experimental pendiente de ejecución real (#17, IVÁN).**
+Este documento define el protocolo y la estructura de registro. El protocolo
+1.1 fue ejecutado para la corrección #17; sus resultados están versionados en
+`experimentos/evidencia-17/20260916/`.
 Los comandos del protocolo 1.1 están en [spark/README.md](../spark/README.md).
 Se reutiliza `run_comparison.py`: cinco grados Spark (1,2,4,6,8), cinco
 repeticiones medidas y un warmup por tratamiento/grado. Ambos motores escriben
@@ -63,7 +64,7 @@ Motor de procesamiento y grado de paralelismo local de PySpark.
 `analyze_speedup.py` valida el lote y produce resumen y figura desde registros
 reales. Calcula media, desviación muestral, speedup contra pandas y contra
 Spark(1), eficiencia respecto de Spark(1) y ajuste restringido de Amdahl sobre
-tiempos normalizados Spark. No se generan resultados hasta ejecutar el lote real.
+tiempos normalizados Spark.
 
 ## Condiciones de validez
 
@@ -87,3 +88,15 @@ Prometheus y Grafana no se incorporan en este subpaso porque no se identificó
 una exigencia explícita en la rúbrica disponible. La estructura JSON permite
 integrar posteriormente un recolector externo sin acoplar el protocolo a una
 plataforma de observabilidad.
+
+## Ejecución de referencia 2026-09-16
+
+La ejecución definitiva procesó 90 000 filas con pandas y Spark `local[N]`,
+para `N=1,2,4,6,8`, usando un warmup y cinco repeticiones medidas por
+tratamiento/grado. La equivalencia previa se verificó antes de medir. El lote
+es `experimentos/evidencia-17/20260916/benchmark-definitivo-9d94efe6-7bb7-4227-b78e-c70092e9bcfb`;
+la equivalencia es
+`equivalence-final-a2b60a0e-d2b5-4d69-95c5-904353062c9a` y el análisis es
+`analysis-definitivo-233b34ac-a09f-40c9-be71-5570f25affbd`. Los detalles y
+resultados agregados se consultan en `resumen.json` y `resumen.csv` del
+análisis, sin convertir este protocolo en un informe estadístico.

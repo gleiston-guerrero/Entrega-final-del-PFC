@@ -95,8 +95,21 @@ def summarize(payload: dict, config: dict) -> tuple[list[dict], dict]:
 
 def analyze(source: Path, output: Path) -> None:
     config_path = source.with_name("config.json")
-    summary, fit = summarize(json.loads(source.read_text(encoding="utf-8")),
-                             json.loads(config_path.read_text(encoding="utf-8")))
+    from verify_equivalence import require_report
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    report = json.loads(source.with_name("equivalence.json").read_text(encoding="utf-8"))
+    require_report(report, config, config["environment"], check_sources=False)
+    if report["source_sha256"] != config["equivalence_source_sha256"]:
+        raise ValueError("Equivalencia y codigo del lote no coinciden")
+    execution = config["execution"]
+    if (execution["parallelism_levels"] != [1, 2, 4, 6, 8] or
+            execution["measured_iterations"] != 5 or execution["warmup_iterations"] != 1):
+        raise ValueError("El lote no cumple el protocolo requerido")
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    if any(r["rows_processed"] != report["rows"] or r["environment"] != report["environment"]
+           for r in payload["results"]):
+        raise ValueError("Las observaciones no corresponden a la equivalencia")
+    summary, fit = summarize(payload, config)
     # Load plotting dependency before creating any output.
     import matplotlib
     matplotlib.use("Agg")

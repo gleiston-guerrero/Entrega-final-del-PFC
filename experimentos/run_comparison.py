@@ -16,6 +16,8 @@ import importlib.metadata
 import json
 import os
 import platform
+import shutil
+import re
 import socket
 import statistics
 import subprocess
@@ -23,6 +25,7 @@ import sys
 import tempfile
 import time
 import uuid
+import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -87,7 +90,26 @@ def installed_version(distribution: str) -> str | None:
 def environment_metadata() -> dict[str, Any]:
     """Captura información estable del entorno para cada observación."""
 
+    from prepare_local import LocalValidationError
+    java_home = os.getenv("JAVA_HOME")
+    java = str(Path(java_home) / "bin" / ("java.exe" if os.name == "nt" else "java")) if java_home else shutil.which("java")
+    if not java:
+        raise LocalValidationError("Java no disponible")
+    java_version = subprocess.run([java, "-version"], capture_output=True, text=True, check=True).stderr.strip()
+    major = re.search(r'version "(\d+)', java_version)
+    if not major or int(major.group(1)) not in (17, 21):
+        raise LocalValidationError("Spark 4.0 requiere Java 17 o 21; compruebe JAVA_HOME")
+    packages = {name: installed_version(name) for name in
+                ("pandas", "pyspark", "pyarrow", "sqlalchemy", "sqlalchemy-cockroachdb", "psycopg", "psutil", "matplotlib")}
+    if any(value is None for value in packages.values()) or not packages["pyspark"].startswith("4.0."):
+        raise LocalValidationError("Instale spark/requirements.txt en el interprete activo")
+    with zipfile.ZipFile(os.environ["POSTGRES_JDBC_JAR"]) as jar:
+        manifest = jar.read("META-INF/MANIFEST.MF").decode("utf-8")
+    jdbc_version = re.search(r"^Implementation-Version: (.+)$", manifest, re.MULTILINE)
     return {
+        "jdbc_version": jdbc_version.group(1).strip() if jdbc_version else "unknown (see SHA-256)",
+        "packages": packages,
+        "jdbc_sha256": hashlib.sha256(Path(os.environ["POSTGRES_JDBC_JAR"]).read_bytes()).hexdigest(),
         "host": socket.gethostname(),
         "operating_system": platform.platform(),
         "cpu_model": platform.processor() or "unknown",
@@ -96,16 +118,14 @@ def environment_metadata() -> dict[str, Any]:
         "python_version": platform.python_version(),
         "pandas_version": installed_version("pandas"),
         "spark_version": installed_version("pyspark"),
-        "java_version": subprocess.run(
-            ["java", "-version"], capture_output=True, text=True, check=True
-        ).stderr.strip(),
+        "java_version": java_version,
     }
 
 
 def load_config(path: Path) -> dict[str, Any]:
     """Lee y valida los campos mínimos de la configuración experimental."""
 
-    with path.open(encoding="utf-8") as config_file:
+    with path.open(encoding="utf-8-sig") as config_file:
         config = json.load(config_file)
 
     treatment_ids = {item["id"] for item in config["treatments"]}
@@ -184,7 +204,7 @@ def worker(treatment: str, result_path: Path, parallelism: int) -> int:
         payload = {
             "status": "failed",
             "rows_processed": 0,
-            "error": f"{type(error).__name__}: {error}",
+            "error": f"{type(error).__name__}: fallo del worker (detalle omitido por privacidad)",
         }
         exit_code = 1
 
@@ -257,11 +277,13 @@ def execute_treatment(
     timeout = float(config["execution"]["timeout_seconds"])
     cpu_samples: list[float] = []
     memory_samples: list[float] = []
+    runtime_logs_dir = PROJECT_ROOT / "experimentos" / "local-evidence" / "runtime-logs"
+    runtime_logs_dir.mkdir(parents=True, exist_ok=True)
+    worker_log = runtime_logs_dir / f"worker-{run_id}.log"
 
     with tempfile.TemporaryDirectory(prefix="scli-experiment-") as temp_dir:
         temp_path = Path(temp_dir)
         worker_result = temp_path / "worker-result.json"
-        worker_log = temp_path / "worker.log"
 
         command = [
             sys.executable,
@@ -274,7 +296,7 @@ def execute_treatment(
             str(parallelism),
         ]
 
-        with worker_log.open("w+", encoding="utf-8") as log_file:
+        with worker_log.open("w", encoding="utf-8", errors="replace") as log_file:
             process = subprocess.Popen(
                 command,
                 cwd=PROJECT_ROOT,
@@ -288,18 +310,24 @@ def execute_treatment(
             known_processes: dict[int, psutil.Process] = {}
             timed_out = False
 
-            while process.poll() is None:
-                cpu, memory = sample_resources(root_process, known_processes)
-                cpu_samples.append(cpu)
-                memory_samples.append(memory)
-                if time.perf_counter() - start >= timeout:
-                    timed_out = True
+            try:
+                while process.poll() is None:
+                    cpu, memory = sample_resources(root_process, known_processes)
+                    cpu_samples.append(cpu)
+                    memory_samples.append(memory)
+                    if time.perf_counter() - start >= timeout:
+                        timed_out = True
+                        terminate_process_tree(process)
+                        break
+                    time.sleep(SAMPLE_INTERVAL_SECONDS)
+            except BaseException:
+                if process.poll() is None:
                     terminate_process_tree(process)
-                    break
-                time.sleep(SAMPLE_INTERVAL_SECONDS)
-
-            log_file.seek(0)
-            captured_log = log_file.read().strip()
+                else:
+                    process.wait()
+                raise
+            else:
+                process.wait()
 
         if timed_out:
             worker_payload = {
@@ -313,8 +341,34 @@ def execute_treatment(
             worker_payload = {
                 "status": "failed",
                 "rows_processed": 0,
-                "error": captured_log or f"Proceso finalizado con código {process.returncode}",
+                "error": f"Proceso finalizado con codigo {process.returncode}; detalle omitido por privacidad",
             }
+
+        if worker_payload["status"] == "completed":
+            for attempt in range(5):
+                try:
+                    worker_log.unlink()
+                    break
+                except FileNotFoundError:
+                    break
+                except OSError:
+                    if attempt < 4:
+                        time.sleep(0.2)
+        elif worker_log.is_file():
+            diagnostic = worker_log.read_text(encoding="utf-8", errors="replace")
+            for variable in (
+                "RESERVAS_DB_PASSWORD",
+                "RESERVAS_PANDAS_URL",
+                "RESERVAS_JDBC_URL",
+            ):
+                value = os.getenv(variable)
+                if value:
+                    diagnostic = diagnostic.replace(value, "[REDACTED]")
+            diagnostic_directory = PROJECT_ROOT / "experimentos" / "local-evidence" / "worker-failures"
+            diagnostic_directory.mkdir(parents=True, exist_ok=True)
+            diagnostic_path = diagnostic_directory / f"worker-{run_id}.log"
+            diagnostic_path.write_text(diagnostic, encoding="utf-8")
+            print(f"Worker fallo; diagnostico local: {diagnostic_path}", file=sys.stderr)
 
     duration_ms = (time.perf_counter() - start) * 1000
     rows_processed = int(worker_payload["rows_processed"])
@@ -426,40 +480,42 @@ def ordered_treatments(config: dict[str, Any], iteration: int) -> list[str]:
     return treatments
 
 
-def run_comparison(config_path: Path) -> None:
+def run_comparison(config_path: Path, output: Path, equivalence: Path) -> None:
     """Ejecuta calentamientos y repeticiones medidas de ambos tratamientos."""
 
     config = load_config(config_path)
-    for name in ("RESERVAS_JDBC_URL", "RESERVAS_DB_USERNAME", "RESERVAS_DB_PASSWORD",
-                 "RESERVAS_PANDAS_URL", "POSTGRES_JDBC_JAR"):
-        if not os.getenv(name):
-            raise ValueError(f"Falta variable de entorno: {name}")
-    if not Path(os.environ["POSTGRES_JDBC_JAR"]).is_file():
-        raise ValueError("POSTGRES_JDBC_JAR debe ser un archivo local existente")
-    for name in ("pandas", "pyspark", "pyarrow", "sqlalchemy", "psycopg"):
-        if installed_version(name) is None:
-            raise ValueError(f"Falta dependencia: {name}")
-    config["environment"] = environment_metadata()
+    from prepare_local import validate
+    from verify_equivalence import require_report
+    output_directory = output.resolve()
+    config["environment"] = validate(config, output_directory)
+    report = json.loads(equivalence.read_text(encoding="utf-8-sig"))
+    require_report(report, config, config["environment"])
+    config["equivalence_source_sha256"] = report["source_sha256"]
     warmups = int(config["execution"]["warmup_iterations"])
     repetitions = int(config["execution"]["measured_iterations"])
     config["batch_id"] = str(uuid.uuid4())
-    output_directory = PROJECT_ROOT / config["output"]["directory"] / config["batch_id"]
+    config["output"]["directory"] = str(output_directory)
     environment = config["environment"]
     if max(config["execution"]["parallelism_levels"]) > environment["logical_cpu_count"]:
         raise ValueError("No hay suficientes CPU lógicas para los grados solicitados")
     output_directory.mkdir(parents=True, exist_ok=False)
+    (output_directory / "equivalence.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (output_directory / "inventory.json").write_text(json.dumps(config["dataset"]["inventory"], indent=2), encoding="utf-8")
+    (output_directory / "packages.txt").write_text("\n".join(sorted(
+        f"{dist.metadata['Name']}=={dist.version}" for dist in importlib.metadata.distributions()
+        if dist.metadata.get("Name"))) + "\n", encoding="utf-8")
     (output_directory / "config.json").write_text(
         json.dumps(config, indent=2), encoding="utf-8")
     (output_directory / "provenance.json").write_text(json.dumps({
         "command": [sys.executable, *sys.argv], "timestamp": utc_now(),
         "environment": environment,
         "git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-        "git_diff": subprocess.check_output(["git", "diff"], text=True),
+        # Do not archive arbitrary git diffs: unrelated edits can contain secrets.
         "source_sha256": {str(path.relative_to(PROJECT_ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [Path(__file__).resolve(), SPARK_DIR / "pipeline.py",
                                        SPARK_DIR / "baseline.py", Path(__file__).with_name("analyze_speedup.py")]},
         "packages": {name: installed_version(name) for name in
-                     ("pandas", "pyspark", "pyarrow", "sqlalchemy", "psycopg", "psutil")},
+                     ("pandas", "pyspark", "pyarrow", "sqlalchemy", "sqlalchemy-cockroachdb", "psycopg", "psutil")},
     }, indent=2), encoding="utf-8")
     measured_records: list[dict[str, Any]] = []
 
@@ -483,6 +539,8 @@ def run_comparison(config_path: Path) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--equivalence", type=Path)
     parser.add_argument("--worker", choices=["pandas-baseline", "pyspark-pipeline"])
     parser.add_argument("--worker-result", type=Path)
     parser.add_argument("--parallelism", type=int, default=1)
@@ -496,9 +554,15 @@ def main() -> int:
             raise ValueError("--worker-result es obligatorio en modo worker")
         return worker(args.worker, args.worker_result, args.parallelism)
 
-    run_comparison(args.config)
+    if args.output is None or args.equivalence is None:
+        raise ValueError("Se requieren --output nuevo y --equivalence")
+    run_comparison(args.config, args.output, args.equivalence)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except Exception as error:
+        print(f"Benchmark fallo ({type(error).__name__}); revise prevalidacion/equivalencia.", file=sys.stderr)
+        raise SystemExit(1)

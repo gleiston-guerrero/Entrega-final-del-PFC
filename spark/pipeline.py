@@ -1,7 +1,7 @@
-"""Pipeline Spark para preparar el análisis del dominio de reservas.
+"""Pipeline Spark para preparar el anÃ¡lisis del dominio de reservas.
 
-El módulo obtiene las fuentes desde CockroachDB por JDBC y construye las
-transformaciones del Paso 4. La ejecución escribe todas las columnas en Parquet.
+El mÃ³dulo obtiene las fuentes desde CockroachDB por JDBC y construye las
+transformaciones del Paso 4. La ejecuciÃ³n escribe todas las columnas en Parquet.
 """
 
 from __future__ import annotations
@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import os
 from dataclasses import dataclass
+from pathlib import Path
+from snapshot import source_sql
 
 from pyspark.ml.feature import Bucketizer
 from pyspark.sql import DataFrame, SparkSession
@@ -27,7 +29,7 @@ TABLAS_RESERVAS = (
 
 @dataclass(frozen=True)
 class JdbcConfig:
-    """Parámetros de conexión al esquema de reservas en CockroachDB E3."""
+    """ParÃ¡metros de conexiÃ³n al esquema de reservas en CockroachDB E3."""
 
     url: str
     usuario: str
@@ -47,11 +49,12 @@ class JdbcConfig:
             "user": self.usuario,
             "password": self.password,
             "driver": self.driver,
+            "options": "-c timezone=UTC",
         }
 
 
 def crear_sesion(paralelismo: int | None = None) -> SparkSession:
-    """Crea la sesión sin ejecutar lecturas ni transformaciones."""
+    """Crea la sesiÃ³n sin ejecutar lecturas ni transformaciones."""
 
     builder = SparkSession.builder.appName("scli-reservas-pipeline")
     if paralelismo is not None:
@@ -61,10 +64,16 @@ def crear_sesion(paralelismo: int | None = None) -> SparkSession:
                    .config("spark.default.parallelism", paralelismo)
                    .config("spark.sql.shuffle.partitions", paralelismo)
                    .config("spark.sql.adaptive.enabled", "false"))
-    builder = builder.config("spark.sql.session.timeZone", "UTC")
+    builder = (builder.config("spark.sql.session.timeZone", "UTC")
+               .config("spark.driver.extraJavaOptions", "-Duser.timezone=UTC"))
     jdbc_jar = os.getenv("POSTGRES_JDBC_JAR")
     if jdbc_jar:
-        builder = builder.config("spark.jars", jdbc_jar)
+        jdbc_path = str(Path(jdbc_jar).resolve())
+        builder = (
+            builder
+            .config("spark.driver.extraClassPath", jdbc_path)
+            .config("spark.executor.extraClassPath", jdbc_path)
+        )
     return builder.getOrCreate()
 
 
@@ -77,7 +86,7 @@ def cargar_fuentes(
     return {
         tabla: spark.read.jdbc(
             url=jdbc.url,
-            table=f"public.{tabla}",
+            table=source_sql(tabla).removeprefix("SELECT * FROM "),
             properties=jdbc.propiedades(),
         )
         for tabla in TABLAS_RESERVAS
@@ -85,7 +94,7 @@ def cargar_fuentes(
 
 
 def filtrar_reservas_activas(reservas: DataFrame) -> DataFrame:
-    """Conserva reservas que aún participan en la operación del laboratorio."""
+    """Conserva reservas que aÃºn participan en la operaciÃ³n del laboratorio."""
 
     return reservas.filter(F.col("estado").isin("PROGRAMADA", "EN_CURSO"))
 
@@ -123,7 +132,7 @@ def unir_solicitudes_con_reservas(
 
 
 def agregar_dimensiones_temporales(datos: DataFrame) -> DataFrame:
-    """Normaliza la fecha y deriva dimensiones de calendario para el análisis."""
+    """Normaliza la fecha y deriva dimensiones de calendario para el anÃ¡lisis."""
 
     fecha = F.to_date(F.col("fecha_reserva"))
     return (
@@ -135,7 +144,7 @@ def agregar_dimensiones_temporales(datos: DataFrame) -> DataFrame:
 
 
 def agregar_participantes_por_periodo(datos: DataFrame) -> DataFrame:
-    """Suma participantes por laboratorio, año y trimestre usando Window."""
+    """Suma participantes por laboratorio, aÃ±o y trimestre usando Window."""
 
     periodo = Window.partitionBy(
         "laboratorio_id",
@@ -149,7 +158,7 @@ def agregar_participantes_por_periodo(datos: DataFrame) -> DataFrame:
 
 
 def categorizar_numero_participantes(datos: DataFrame) -> DataFrame:
-    """Agrupa el tamaño de la reserva en intervalos numéricos con Spark ML."""
+    """Agrupa el tamaÃ±o de la reserva en intervalos numÃ©ricos con Spark ML."""
 
     bucketizer = Bucketizer(
         splits=[float("-inf"), 10.0, 20.0, 30.0, float("inf")],
@@ -161,7 +170,7 @@ def categorizar_numero_participantes(datos: DataFrame) -> DataFrame:
 
 
 def construir_pipeline(fuentes: dict[str, DataFrame]) -> DataFrame:
-    """Compone las transformaciones sin provocar evaluación ni escritura."""
+    """Compone las transformaciones sin provocar evaluaciÃ³n ni escritura."""
 
     reservas_activas = filtrar_reservas_activas(fuentes["reservas"])
     datos = unir_solicitudes_con_reservas(
@@ -174,7 +183,7 @@ def construir_pipeline(fuentes: dict[str, DataFrame]) -> DataFrame:
 
 
 def exportar_parquet(datos: DataFrame, destino: str, overwrite: bool = False) -> None:
-    """Acción terminal: evalúa todas las transformaciones y escribe Parquet."""
+    """AcciÃ³n terminal: evalÃºa todas las transformaciones y escribe Parquet."""
 
     datos.write.mode("overwrite" if overwrite else "errorifexists").parquet(destino)
 

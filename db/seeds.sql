@@ -102,7 +102,7 @@ SELECT
     END AS usuario_accion_id,
     CASE WHEN i <= 100000 THEN 'Solicitud creada por semilla reproducible' ELSE 'Solicitud aprobada por semilla reproducible' END AS comentario,
     TIMESTAMPTZ '2026-01-01 00:00:00+00'
-        + CASE WHEN i <= 100000 THEN 0 ELSE INTERVAL '5 minutes' END
+        + CASE WHEN i <= 100000 THEN INTERVAL '0 seconds' ELSE INTERVAL '5 minutes' END
         + (((i - 1) % 100000) % 259200) * INTERVAL '1 second' AS fecha_hora
 FROM generate_series(1, 200000) AS serie(i);
 

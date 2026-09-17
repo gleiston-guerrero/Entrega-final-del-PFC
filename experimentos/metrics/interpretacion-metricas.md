@@ -71,5 +71,18 @@ deberse a la plataforma y no al motor de procesamiento.
 ## Uso posterior
 
 Los gráficos, estadísticos agregados y conclusiones finales deben construirse
-solo después de ejecutar el protocolo completo. Las plantillas vacías no
-representan resultados ni deben interpretarse como mediciones.
+solo después de ejecutar el protocolo completo. Las plantillas históricas no
+representan el lote definitivo ni deben interpretarse como mediciones.
+
+## Interpretación del lote de referencia #17
+
+En el lote definitivo, pandas tuvo una media de 17.3266 s sobre 90 000 filas.
+Spark tardó aproximadamente 39--41 s. El speedup `Spark(1)/Spark(N)` fue
+1.0000, 1.0476, 1.0062, 1.0391 y 0.9938 para `N=1,2,4,6,8`, respectivamente;
+la eficiencia decreció de 1.0000 a 0.1242 al aumentar el grado. No se observó
+una mejora relevante en los tiempos medios al aumentar `N`.
+
+El ajuste de Amdahl produjo una fracción serial efectiva `f=0.976585` y un
+RMSE normalizado de `0.02151`; la fracción paralelizable efectiva es
+aproximadamente `0.023415`. Esta `f` incluye arranque, JDBC, E/S, escritura y
+sobrecarga de ejecución: no es el porcentaje de código inherentemente serial.

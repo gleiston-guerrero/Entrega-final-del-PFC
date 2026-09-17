@@ -1,13 +1,16 @@
-"""Línea base pandas funcionalmente equivalente al pipeline PySpark."""
+"""LÃƒÂ­nea base pandas funcionalmente equivalente al pipeline PySpark."""
 
 from __future__ import annotations
 
 import os
+from uuid import UUID
 from dataclasses import dataclass
 from pathlib import Path
 
 import pandas as pd
-from sqlalchemy import Engine, create_engine
+from sqlalchemy import Engine, create_engine, text
+from sqlalchemy.engine import make_url
+from snapshot import source_sql
 
 
 TABLAS_RESERVAS = (
@@ -23,7 +26,7 @@ SALIDA_PREDETERMINADA = Path(__file__).resolve().parent / "out" / "reservas_proc
 
 @dataclass(frozen=True)
 class PandasDbConfig:
-    """Configuración SQL para consultar el mismo clúster usado por Spark."""
+    """ConfiguraciÃƒÂ³n SQL para consultar el mismo clÃƒÂºster usado por Spark."""
 
     url: str
 
@@ -35,14 +38,24 @@ class PandasDbConfig:
 def crear_motor(config: PandasDbConfig) -> Engine:
     """Crea el motor de lectura sin abrir conexiones anticipadamente."""
 
-    return create_engine(config.url)
+    url = make_url(config.url).set(
+        drivername="cockroachdb+psycopg",
+        username=os.environ["RESERVAS_DB_USERNAME"],
+        password=os.environ["RESERVAS_DB_PASSWORD"],
+    )
+    return create_engine(
+        url,
+        isolation_level="AUTOCOMMIT",
+        connect_args={"options": "-c timezone=UTC"},
+    )
 
 
 def cargar_fuentes(motor: Engine) -> dict[str, pd.DataFrame]:
     """Lee las tablas declaradas en db/schema.sql desde CockroachDB."""
 
     return {
-        tabla: pd.read_sql_table(tabla, motor, schema="public")
+        tabla: pd.read_sql_query(text(source_sql(tabla)), motor).map(
+            lambda value: str(value) if isinstance(value, UUID) else value)
         for tabla in TABLAS_RESERVAS
     }
 
@@ -101,7 +114,7 @@ def unir_solicitudes_con_reservas(
 
 
 def agregar_dimensiones_temporales(datos: pd.DataFrame) -> pd.DataFrame:
-    """Normaliza la fecha y deriva año, trimestre y primer día del mes."""
+    """Normaliza la fecha y deriva aÃƒÂ±o, trimestre y primer dÃƒÂ­a del mes."""
 
     resultado = datos.copy()
     resultado["fecha_reserva"] = pd.to_datetime(resultado["fecha_reserva"])
@@ -126,7 +139,7 @@ def agregar_participantes_por_periodo(datos: pd.DataFrame) -> pd.DataFrame:
 
 
 def categorizar_numero_participantes(datos: pd.DataFrame) -> pd.DataFrame:
-    """Aplica los mismos intervalos numéricos definidos por Bucketizer."""
+    """Aplica los mismos intervalos numÃƒÂ©ricos definidos por Bucketizer."""
 
     resultado = datos.copy()
     resultado["segmento_participantes"] = pd.cut(
@@ -140,7 +153,7 @@ def categorizar_numero_participantes(datos: pd.DataFrame) -> pd.DataFrame:
 
 
 def construir_pipeline(fuentes: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    """Compone la línea base con el mismo orden que pipeline.py."""
+    """Compone la lÃƒÂ­nea base con el mismo orden que pipeline.py."""
 
     reservas_activas = filtrar_reservas_activas(fuentes["reservas"])
     datos = unir_solicitudes_con_reservas(
@@ -157,7 +170,7 @@ def exportar_parquet(
     destino: Path = SALIDA_PREDETERMINADA,
     overwrite: bool = False,
 ) -> Path:
-    """Escribe el resultado en spark/out sin incluir el índice de pandas."""
+    """Escribe el resultado en spark/out sin incluir el ÃƒÂ­ndice de pandas."""
 
     destino.parent.mkdir(parents=True, exist_ok=True)
     with destino.open("wb" if overwrite else "xb") as output:
@@ -166,7 +179,7 @@ def exportar_parquet(
 
 
 def ejecutar_baseline() -> Path:
-    """Lee, transforma y exporta el resultado de la línea base."""
+    """Lee, transforma y exporta el resultado de la lÃƒÂ­nea base."""
 
     motor = crear_motor(PandasDbConfig.desde_entorno())
     try:
