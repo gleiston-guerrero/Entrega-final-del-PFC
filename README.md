@@ -86,7 +86,7 @@ o reales y nunca debe versionarse:
 ```bash
 git clone https://github.com/gleiston-guerrero/Entrega-final-del-PFC.git
 cd Entrega-final-del-PFC
-git switch feature/entrega-4
+git switch main
 cp .env.example .env
 # Complete .env sin registrar secretos en Git.
 docker compose --env-file .env config --quiet
@@ -331,9 +331,10 @@ La única fuente oficial del informe final acumulativo es
 
 ### Compilación reproducible del informe oficial
 
-El informe utiliza `pdflatex` y BibTeX. Se requiere una distribución LaTeX que
-incluya ambos comandos y los paquetes declarados por `docs/main.tex`. Desde la
-raíz del repositorio:
+El informe utiliza `pdflatex` y BibTeX. En Ubuntu/CI se requieren explícitamente
+los paquetes `texlive-latex-base`, `texlive-latex-recommended`,
+`texlive-latex-extra`, `texlive-fonts-recommended`, `texlive-lang-spanish` y
+`texlive-bibtex-extra`. Desde la raíz del repositorio:
 
 ```bash
 cd docs
@@ -343,7 +344,7 @@ pdflatex -interaction=nonstopmode -halt-on-error main.tex
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-La primera pasada genera los auxiliares, BibTeX procesa `referencias.bib`, y
+La primera pasada genera los auxiliares, BibTeX procesa `Referencias.bib`, y
 las dos pasadas finales resuelven citas y referencias cruzadas. El resultado
 esperado es `docs/main.pdf`. El PDF no se versiona necesariamente: GitHub Actions
 ejecuta esta validación mediante [`docs.yml`](.github/workflows/docs.yml) y lo
