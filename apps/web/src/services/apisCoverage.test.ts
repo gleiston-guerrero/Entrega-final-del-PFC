@@ -15,28 +15,31 @@ type RequestExpectation = [path: string, method?: string, body?: string]
 
 function expectRequests(expected: RequestExpectation[]) {
   expect(mockRequest).toHaveBeenCalledTimes(expected.length)
-  for (const [path, method = 'GET', body] of expected) {
-    const call = mockRequest.mock.calls.find(([calledPath, init]) =>
-      calledPath === path && (init?.method ?? 'GET') === method && (body === undefined || init?.body === body),
-    )
-    expect(call, `missing request ${method} ${path}`).toBeDefined()
+  expected.forEach(([path, method = 'GET', body], index) => {
+    const call = mockRequest.mock.calls[index]
+    expect(call?.[0], `missing request ${method} ${path}`).toBe(path)
     expect(call?.[1]?.method ?? 'GET').toBe(method)
     if (body !== undefined) expect(call?.[1]?.body).toBe(body)
-  }
+  })
 }
 
 describe('cobertura exhaustiva de endpoints de servicios', () => {
+  // Los mocks usan valores distintos por clave para demostrar qué propiedad
+  // consume realmente cada adapter: academico/usuariosApi leen `content`
+  // (paginación estilo Spring), mientras que operationalApi lee `contenido`
+  // (paginación en español). Un cambio accidental de una por otra rompe las
+  // aserciones de retorno de abajo.
   beforeEach(() => {
     mockRequest.mockReset()
-    mockRequest.mockResolvedValue({ content: ['item'], contenido: ['item'] })
+    mockRequest.mockResolvedValue({ content: ['item-content'], contenido: ['item-contenido'] })
   })
 
   it('cubre funciones CRUD de academicoApi', async () => {
     await academico.obtenerDocentesPlanificacion()
-    expect(await academico.obtenerLaboratorios()).toEqual(['item'])
-    expect(await academico.obtenerDocentes()).toEqual(['item'])
-    expect(await academico.obtenerMaterias()).toEqual(['item'])
-    expect(await academico.obtenerPeriodos()).toEqual(['item'])
+    expect(await academico.obtenerLaboratorios()).toEqual(['item-content'])
+    expect(await academico.obtenerDocentes()).toEqual(['item-content'])
+    expect(await academico.obtenerMaterias()).toEqual(['item-content'])
+    expect(await academico.obtenerPeriodos()).toEqual(['item-content'])
     await academico.crearPeriodo({
       codigo: '2026-1',
       nombre: 'P1',
@@ -57,13 +60,13 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
       ppaNombre: 'PPA Uno',
       cicloAcademico: 1,
     })
-    expect(await academico.obtenerCarreras()).toEqual(['item'])
-    expect(await academico.obtenerPisos()).toEqual(['item'])
-    expect(await academico.obtenerCampus()).toEqual(['item'])
-    expect(await academico.obtenerEquipos()).toEqual(['item'])
-    expect(await academico.obtenerTiposEquipo()).toEqual(['item'])
-    expect(await academico.obtenerBloques()).toEqual(['item'])
-    expect(await academico.obtenerFacultades()).toEqual(['item'])
+    expect(await academico.obtenerCarreras()).toEqual(['item-content'])
+    expect(await academico.obtenerPisos()).toEqual(['item-content'])
+    expect(await academico.obtenerCampus()).toEqual(['item-content'])
+    expect(await academico.obtenerEquipos()).toEqual(['item-content'])
+    expect(await academico.obtenerTiposEquipo()).toEqual(['item-content'])
+    expect(await academico.obtenerBloques()).toEqual(['item-content'])
+    expect(await academico.obtenerFacultades()).toEqual(['item-content'])
     await academico.crearLaboratorio({ pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })
     await academico.actualizarLaboratorio('l-1', { pisoId: 'p1', codigo: 'L1', nombre: 'Lab 1', capacidad: 20, descripcion: 'Desc' })
     await academico.cambiarEstadoLaboratorio('l-1', 'DISPONIBLE')
@@ -163,7 +166,9 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await operational.aprobarSolicitudRetiro('plan-1', 'retiro-1')
     await operational.rechazarSolicitudRetiro('plan-1', 'retiro-1', 'No procede')
 
-    await operational.listarIncidentes()
+    // demuestra que listarIncidentes lee `contenido` (no `content`): si el
+    // adapter cambiara de propiedad, esta aserción rompería con el mock actual
+    expect(await operational.listarIncidentes()).toEqual(['item-contenido'])
     await operational.crearIncidente({ laboratorioEquipo: 'EQ1', descripcion: 'Fallo', prioridad: 'ALTA', fecha: '2026-01-01' })
     await operational.actualizarIncidente('inc-1', 'RESUELTO')
 
@@ -179,7 +184,14 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
   })
 
   it('cubre funciones de contexto y administradores en usuariosApi', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => {
+    // listarAdministradores es la única llamada paginada de este bloque: responde
+    // con `content` (no `contenido`) para demostrar qué propiedad lee realmente
+    // usuariosApi.listarAdministradores; el resto de endpoints no son paginados.
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+      const url = typeof input === 'string' ? input : input.toString()
+      if (url === '/api/v1/administradores?size=100') {
+        return new Response(JSON.stringify({ content: ['item-content'] }), { status: 200 })
+      }
       return new Response(JSON.stringify([{ id: 'ctx-1' }]), { status: 200 })
     })
 
@@ -205,7 +217,8 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     await usuarios.obtenerContextosAcademicos('perf-1')
     await usuarios.asignarContextoAcademico('perf-1', { carreraId: 'c1', periodoId: 'p1', nivel: 2 })
     await usuarios.obtenerDocenteResumen('doc-1')
-    await usuarios.listarAdministradores()
+    // demuestra que listarAdministradores lee `content` (no `contenido`)
+    expect(await usuarios.listarAdministradores()).toEqual(['item-content'])
     await usuarios.actualizarAdministrador({
       id: 'adm-1', perfilId: 'p-1', codigoAdministrador: 'ADM', cargo: 'Cargo', pisoId: 'piso-1', activo: true,
     }, 'piso-2')
@@ -216,11 +229,29 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
     const requests = fetchSpy.mock.calls.map(([url, init]) => ({ url, method: init?.method ?? 'GET', body: init?.body }))
     expect(requests).toEqual([
       { url: '/api/v1/perfiles/p-1', method: 'GET', body: undefined },
-      { url: '/api/v1/perfiles/p-1', method: 'PUT', body: expect.any(String) },
+      {
+        url: '/api/v1/perfiles/p-1',
+        method: 'PUT',
+        body: JSON.stringify({
+          identificacion: '123', nombres: 'A', apellidos: 'B', emailInstitucional: 'a@b.com',
+          emailPersonal: '', telefono: '', direccion: '', fechaNacimiento: '2000-01-01', fotoUrl: null,
+        }),
+      },
       { url: '/api/v1/perfiles/p-1/estado', method: 'PATCH', body: JSON.stringify({ activo: true }) },
       { url: '/api/v1/perfiles/me', method: 'GET', body: undefined },
       { url: '/api/v1/perfiles/me', method: 'PATCH', body: JSON.stringify({ emailPersonal: 'p@b.com', telefono: '0999', direccion: 'Dir', fotoUrl: null }) },
-      { url: '/api/v1/perfiles/administracion-usuarios/p-1', method: 'PUT', body: expect.any(String) },
+      {
+        url: '/api/v1/perfiles/administracion-usuarios/p-1',
+        method: 'PUT',
+        body: JSON.stringify({
+          authId: 'auth-1',
+          perfil: {
+            identificacion: '123', nombres: 'A', apellidos: 'B', emailInstitucional: 'a@b.com',
+            emailPersonal: '', telefono: '', direccion: '', fechaNacimiento: '2000-01-01', fotoUrl: null,
+          },
+          username: 'user1', email: 'u@b.com', rol: 'DOCENTE', activo: true, pisoId: null, carreraId: null,
+        }),
+      },
       { url: '/api/v1/estudiantes/mi-contexto', method: 'GET', body: undefined },
       { url: '/api/v1/estudiantes/mi-contexto', method: 'POST', body: JSON.stringify({ carreraId: 'c1', periodoId: 'p1', nivel: 2 }) },
       { url: '/api/v1/estudiantes/mis-contextos', method: 'GET', body: undefined },
@@ -228,7 +259,13 @@ describe('cobertura exhaustiva de endpoints de servicios', () => {
       { url: '/api/v1/estudiantes/perfil/perf-1/contextos', method: 'POST', body: JSON.stringify({ carreraId: 'c1', periodoId: 'p1', nivel: 2 }) },
       { url: '/api/v1/docentes/doc-1/resumen', method: 'GET', body: undefined },
       { url: '/api/v1/administradores?size=100', method: 'GET', body: undefined },
-      { url: '/api/v1/administradores/adm-1', method: 'PUT', body: expect.any(String) },
+      {
+        url: '/api/v1/administradores/adm-1',
+        method: 'PUT',
+        body: JSON.stringify({
+          perfilId: 'p-1', codigoAdministrador: 'ADM', cargo: 'Cargo', pisoId: 'piso-2', activo: true,
+        }),
+      },
       { url: '/api/v1/perfiles/perf-1/asociacion-rol', method: 'GET', body: undefined },
       { url: '/api/v1/perfiles/perf-1/asociacion-rol', method: 'PUT', body: JSON.stringify({ rol: 'ADMIN', pisoId: 'p1', carreraId: null }) },
     ])

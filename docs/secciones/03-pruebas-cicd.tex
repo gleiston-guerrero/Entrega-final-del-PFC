@@ -136,6 +136,20 @@ tanto, una promoción solo continúa si los umbrales configurados y el build se
 satisfacen. La configuración define el criterio de aceptación y el reporte de
 cada ejecución constituye la evidencia reproducible del resultado.
 
+La prueba \texttt{CoordinadorPlanificacion.test.tsx > guarda una nueva
+asignación como borrador} se identificó como potencialmente inestable bajo
+contención de la suite completa (43 archivos en paralelo): su tiempo pasó de
+$\sim$1s en aislamiento a $\sim$2,1s con la suite completa, por el re-render de
+la cuadrícula semanal en cada interacción. Se le fijó un timeout local mínimo
+de 10s (sin tocar el timeout global de Vitest) y se validó con 5/5 ejecuciones
+consecutivas en PASS. Adicionalmente, se fortalecieron las aserciones de
+\texttt{usuariosApi} en \texttt{apisCoverage.test.ts}, reemplazando
+\texttt{expect.any(String)} por cuerpos exactos y diferenciando explícitamente
+\texttt{content} de \texttt{contenido} según la propiedad que cada adaptador
+consume realmente. El gate de cobertura se verificó ejecutando la CLI con un
+umbral temporal de 101\% (\texttt{--coverage.thresholds.*=101}), que produjo
+código de salida distinto de cero sin modificar \texttt{vite.config.ts}.
+
 \subsubsection{Compatibilidad E2E con Playwright}
 
 Playwright mantiene escenarios funcionales de autenticación, rutas protegidas,

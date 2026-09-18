@@ -643,14 +643,44 @@ estadística entre líneas.
     Reservas & Líneas & 84,3586 & 80 & CUMPLE \\
     Reservas & Ramas & 56,7256 & 48 & CUMPLE \\
     Gateway & Líneas & 88,8889 & 70 & CUMPLE \\
-    Web & Líneas & 89,91 & 70 & CUMPLE \\
-    Web & Ramas & 73,69 & 70 & CUMPLE \\
-    Web & Funciones & 81,87 & 70 & CUMPLE \\
-    Web & Sentencias & 85,96 & 70 & CUMPLE \\
+    Web & Líneas (HISTÓRICA / E3) & 89,91 & 70 & CUMPLE \\
+    Web & Ramas (HISTÓRICA / E3) & 73,69 & 70 & CUMPLE \\
+    Web & Funciones (HISTÓRICA / E3) & 81,87 & 70 & CUMPLE \\
+    Web & Sentencias (HISTÓRICA / E3) & 85,96 & 70 & CUMPLE \\
     Android & Líneas & \textbf{38,3407} & 70 & \textbf{NO CUMPLE} \\
     \hline
   \end{tabular}
 \end{table*}
+
+Las cifras Web de la Tabla~\ref{tab:mantenibilidad-e3} corresponden a una
+medición E3 anterior que no incluía la totalidad de \texttt{src/} y quedan
+marcadas como \textbf{HISTÓRICA / E3}; no deben interpretarse como la cifra
+vigente. La medición vigente del alcance completo \texttt{apps/web/src/**/*.\{ts,tsx\}}
+se documenta en la Tabla~\ref{tab:mantenibilidad-web-vigente}.
+
+\begin{table*}[ht]
+  \centering
+  \small
+  \caption{\textbf{MEDICIÓN WEB VIGENTE} de cobertura, alcance completo de \texttt{apps/web/src/}.}
+  \label{tab:mantenibilidad-web-vigente}
+  \begin{tabular}{|l|r|r|l|}
+    \hline
+    \textbf{Métrica} & \textbf{Resultado (\%)} & \textbf{Umbral (\%)} & \textbf{Decisión} \\
+    \hline
+    Sentencias (statements) & 81,89 & 70 & CUMPLE \\
+    Ramas (branches) & 70,25 & 70 & CUMPLE \\
+    Funciones (functions) & 78,43 & 70 & CUMPLE \\
+    Líneas (lines) & 84,87 & 70 & CUMPLE \\
+    \hline
+  \end{tabular}
+\end{table*}
+
+Comando exacto: \texttt{npm run test:coverage} (equivalente a \texttt{vitest run --coverage}).
+Alcance: \texttt{apps/web/src/**/*.\{ts,tsx\}}. Umbral mínimo del gate: 70\%
+para statements, branches, functions y lines (sin reducir). Suite: 43 archivos,
+296 pruebas, 3/3 repeticiones consecutivas en PASS. Contexto de rama:
+\texttt{fix/eval2-7-web-ivan}, base en el commit \texttt{c10abc0} del repositorio
+oficial \texttt{gleiston-guerrero/Entrega-final-del-PFC}.
 
 La decisión global experimental de mantenibilidad es \textbf{NO CUMPLE
 únicamente por Android}, cuya cobertura de líneas fue

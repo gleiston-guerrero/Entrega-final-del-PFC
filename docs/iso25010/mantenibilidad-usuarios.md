@@ -55,11 +55,30 @@ SHA `fa7d75ec0f75573938bf46ed6a68f0aee99606ac`.
 | Reservas | Líneas | 84,35857805255023 % | 80 % | CUMPLE |
 | Reservas | Ramas | 56,72559569561876 % | 48 % | CUMPLE |
 | Gateway | Líneas | 88,88888888888889 % | 70 % | CUMPLE |
-| Web | Líneas | 89,91 % | 70 % | CUMPLE |
-| Web | Ramas | 73,69 % | 70 % | CUMPLE |
-| Web | Funciones | 81,87 % | 70 % | CUMPLE |
-| Web | Sentencias | 85,96 % | 70 % | CUMPLE |
+| Web | Líneas (HISTÓRICA / E3) | 89,91 % | 70 % | CUMPLE |
+| Web | Ramas (HISTÓRICA / E3) | 73,69 % | 70 % | CUMPLE |
+| Web | Funciones (HISTÓRICA / E3) | 81,87 % | 70 % | CUMPLE |
+| Web | Sentencias (HISTÓRICA / E3) | 85,96 % | 70 % | CUMPLE |
 | Android | Líneas | **38,34070796460177 %** | 70 % | **NO CUMPLE** |
+
+Las cifras Web de la tabla anterior pertenecen a una medición E3 previa que no
+incluía la totalidad de `src/` y quedan marcadas como **HISTÓRICA / E3**; no
+representan la cobertura vigente del cliente Web.
+
+## MEDICIÓN WEB VIGENTE
+
+| Métrica | Resultado | Umbral | Decisión |
+|---|---:|---:|---|
+| Sentencias (statements) | 81,89 % | 70 % | CUMPLE |
+| Ramas (branches) | 70,25 % | 70 % | CUMPLE |
+| Funciones (functions) | 78,43 % | 70 % | CUMPLE |
+| Líneas (lines) | 84,87 % | 70 % | CUMPLE |
+
+- **Comando exacto:** `npm run test:coverage` (equivalente a `vitest run --coverage`), ejecutado en `apps/web`.
+- **Alcance:** `apps/web/src/**/*.{ts,tsx}`.
+- **Threshold del gate:** 70 % mínimo en statements, branches, functions y lines (sin reducir).
+- **Suite:** 43 archivos, 296 pruebas; 3/3 repeticiones consecutivas en PASS.
+- **Contexto:** rama `fix/eval2-7-web-ivan`, base en el commit `c10abc0` del repositorio oficial `gleiston-guerrero/Entrega-final-del-PFC`.
 
 En las tres repeticiones cada métrica produjo el mismo valor: `sample_sd = 0`
 y el IC95 t degeneró en `[media; media]`. Ese resultado refleja el carácter
