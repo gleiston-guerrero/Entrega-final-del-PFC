@@ -2,6 +2,10 @@ name: CI
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "v*"
   pull_request:
 
 jobs:
@@ -51,11 +55,24 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install experimental Python dependencies
+        run: python -m pip install -r spark/requirements.txt
+
       - name: Compile experimental scripts
         run: python -m py_compile experimentos/*.py experimentos/tests/test_arbiter.py
 
       - name: Run experimental unit tests
         run: python -m unittest discover -s experimentos/tests -p "test_*.py" -v
+
+  verify-experimental-manifest:
+    name: Verify - experimental results manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify experimental results checksums
+        run: sha256sum --check experimentos/resultados/SHA256SUMS
 
   validate-openapi-contracts:
     name: Validate - OpenAPI contracts
@@ -317,6 +334,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
@@ -354,6 +373,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Enable KVM
         run: |
@@ -397,6 +418,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
@@ -416,7 +439,7 @@ jobs:
   build-mobile-release-signed:
     name: Build - Android release signed
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/feature/entrega-4' }}
+    if: ${{ github.event_name == 'push' }}
 
     steps:
       - name: Check signing configuration
@@ -453,6 +476,8 @@ jobs:
       - name: Set up Android SDK
         if: ${{ steps.signing.outputs.configured == 'true' }}
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK packages
         if: ${{ steps.signing.outputs.configured == 'true' }}
@@ -471,6 +496,11 @@ jobs:
           ANDROID_SIGNING_KEYSTORE_BASE64: ${{ secrets.ANDROID_SIGNING_KEYSTORE_BASE64 }}
         shell: bash
         run: |
+          version="0.1.0"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            version="$GITHUB_REF_NAME"
+          fi
+          echo "RELEASE_APK=scli-mobile-${version}-release.apk" >> "$GITHUB_ENV"
           mkdir -p apps/mobile/app/build/outputs/release
           printf '%s' "$ANDROID_SIGNING_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/scli-release.jks"
 
@@ -486,14 +516,14 @@ jobs:
           output_dir="apps/mobile/app/build/outputs/release"
           "$build_tools/zipalign" -p -f 4 \
             apps/mobile/app/build/outputs/apk/release/app-release-unsigned.apk \
-            "$output_dir/scli-mobile-0.1.0-release-aligned.apk"
+            "$output_dir/${RELEASE_APK%.apk}-aligned.apk"
           "$build_tools/apksigner" sign \
             --ks "$RUNNER_TEMP/scli-release.jks" \
             --ks-key-alias "$ANDROID_SIGNING_KEY_ALIAS" \
             --ks-pass env:ANDROID_SIGNING_STORE_PASSWORD \
             --key-pass env:ANDROID_SIGNING_KEY_PASSWORD \
-            --out "$output_dir/scli-mobile-0.1.0-release.apk" \
-            "$output_dir/scli-mobile-0.1.0-release-aligned.apk"
+            --out "$output_dir/$RELEASE_APK" \
+            "$output_dir/${RELEASE_APK%.apk}-aligned.apk"
 
       - name: Verify signature and checksum
         if: ${{ steps.signing.outputs.configured == 'true' }}
@@ -502,9 +532,9 @@ jobs:
           build_tools="$ANDROID_HOME/build-tools/34.0.0"
           output_dir="apps/mobile/app/build/outputs/release"
           "$build_tools/apksigner" verify --verbose --print-certs \
-            "$output_dir/scli-mobile-0.1.0-release.apk"
+            "$output_dir/$RELEASE_APK"
           cd "$output_dir"
-          sha256sum scli-mobile-0.1.0-release.apk > SHA256SUMS.txt
+          sha256sum "$RELEASE_APK" > SHA256SUMS.txt
           sha256sum --check SHA256SUMS.txt
 
       - name: Upload signed release APK
@@ -513,7 +543,7 @@ jobs:
         with:
           name: scli-mobile-release-${{ github.sha }}
           path: |
-            apps/mobile/app/build/outputs/release/scli-mobile-0.1.0-release.apk
+            apps/mobile/app/build/outputs/release/${{ env.RELEASE_APK }}
             apps/mobile/app/build/outputs/release/SHA256SUMS.txt
           if-no-files-found: error
 
@@ -521,6 +551,42 @@ jobs:
         if: ${{ always() && steps.signing.outputs.configured == 'true' }}
         shell: bash
         run: rm -f "$RUNNER_TEMP/scli-release.jks"
+
+  build-release-documentation:
+    name: Build - release manuscript
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-lang-spanish \
+            texlive-bibtex-extra
+
+      - name: Compile release manuscript
+        working-directory: docs
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          bibtex main
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          test -f main.pdf
+          cp main.pdf "SCLI-PFC-${GITHUB_REF_NAME}.pdf"
+
+      - name: Upload release manuscript
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-manuscript-${{ github.sha }}
+          path: docs/SCLI-PFC-${{ github.ref_name }}.pdf
+          if-no-files-found: error
 
   integration:
     name: Compose integration tests
@@ -725,6 +791,82 @@ jobs:
           context: ${{ matrix.context }}
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/scli-${{ matrix.name }}:${{ github.sha }}
+
+      - name: Publish and inspect version image alias
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          SERVICE: ${{ matrix.name }}
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER}/scli-${SERVICE}"
+          docker buildx imagetools create \
+            --tag "${image}:${GITHUB_REF_NAME}" \
+            "${image}:${GITHUB_SHA}"
+          docker buildx imagetools inspect "${image}:${GITHUB_REF_NAME}"
+
+  publish-release:
+    name: Publish versioned GitHub Release
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: [build-mobile-release-signed, build-release-documentation, build-images]
+    permissions:
+      contents: write
+    steps:
+      - name: Download signed APK and checksum
+        uses: actions/download-artifact@v4
+        with:
+          name: scli-mobile-release-${{ github.sha }}
+          path: release-assets/mobile
+
+      - name: Download manuscript PDF
+        uses: actions/download-artifact@v4
+        with:
+          name: release-manuscript-${{ github.sha }}
+          path: release-assets/docs
+
+      - name: Verify assets and publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          shopt -s nullglob
+          apks=(release-assets/mobile/*.apk)
+          pdfs=(release-assets/docs/*.pdf)
+          checksum="release-assets/mobile/SHA256SUMS.txt"
+          if [[ ${#apks[@]} -ne 1 || ${#pdfs[@]} -ne 1 || ! -f "$checksum" ]]; then
+            echo "::error::Expected exactly one signed APK, one PDF and SHA256SUMS.txt."
+            exit 1
+          fi
+          apk="release-assets/mobile/scli-mobile-${GITHUB_REF_NAME}-release.apk"
+          pdf="release-assets/docs/SCLI-PFC-${GITHUB_REF_NAME}.pdf"
+          if [[ "${apks[0]}" != "$apk" || "${pdfs[0]}" != "$pdf" ]]; then
+            echo "::error::Release asset names do not match the version tag."
+            exit 1
+          fi
+          (
+            cd release-assets/mobile
+            sha256sum --check SHA256SUMS.txt
+            sha256sum "${apk##*/}" | cmp - SHA256SUMS.txt
+          )
+          ls -lah "$pdf" "$apk" "$checksum"
+
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$pdf" "$apk" "$checksum" --clobber
+          else
+            prerelease=()
+            if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+              prerelease=(--prerelease)
+            fi
+            gh release create "$GITHUB_REF_NAME" \
+              "$pdf" "$apk" "$checksum" \
+              --verify-tag \
+              --title "SCLI $GITHUB_REF_NAME" \
+              --generate-notes \
+              "${prerelease[@]}"
+          fi
 
   call-deploy:
     name: Call production VM deployment

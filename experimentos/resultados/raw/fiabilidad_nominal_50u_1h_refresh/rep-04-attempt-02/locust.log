@@ -1,0 +1,1299 @@
+[2026-09-15 05:08:07,451] pfc-pruebas-e1/INFO/locust.main: Run time limit set to 3600 seconds
+[2026-09-15 05:08:07,451] pfc-pruebas-e1/INFO/locust.main: Starting Locust 2.31.6
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+[2026-09-15 05:08:07,452] pfc-pruebas-e1/INFO/locust.runners: Ramping to 50 users at a rate of 10.00 per second
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+[2026-09-15 05:08:11,456] pfc-pruebas-e1/INFO/locust.runners: All users spawned: {"ReservasUser": 50} (50 total users)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                         0     0(0.00%) |      0       0       0      0 |    0.00        0.00
+
+[2026-09-15 05:08:37,489] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,490] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,490] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,491] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,491] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,492] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,502] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,503] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,504] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:37,504] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,465] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,466] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,467] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,472] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:38,475] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,467] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           21  21(100.00%) |  30025   30009   30048  30009 |    0.00        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        21  21(100.00%) |  30025   30009   30048  30009 |    0.00        0.00
+
+[2026-09-15 05:08:39,482] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,483] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,484] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,484] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,486] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,486] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:39,487] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,467] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,468] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,470] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:40,475] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,468] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,469] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,470] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,471] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,472] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,473] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,474] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+[2026-09-15 05:08:41,475] pfc-pruebas-e1/ERROR/locust.user.users: 
+Traceback (most recent call last):
+  File "/home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust/user/users.py", line 148, in run
+    self.on_start()
+  File "/home/ubuntu/ORA_entrega_F/tests/load/locustfile.py", line 39, in on_start
+    raise StopUser()
+locust.exception.StopUser
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    2.00        2.00
+
+KeyboardInterrupt
+2026-09-15T05:13:02Z
+[2026-09-15 05:13:02,722] pfc-pruebas-e1/INFO/locust.main: writing html report to file: /home/ubuntu/ORA_entrega_F/experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-02/locust-report.html
+[2026-09-15 05:13:02,724] pfc-pruebas-e1/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     POST /api/v1/auth/login                                                           50  50(100.00%) |  30021   30009   30048  30009 |    1.47        1.47
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        50  50(100.00%) |  30021   30009   30048  30009 |    1.47        1.47
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+POST     POST /api/v1/auth/login                                                             30000  30000  30000  30000  30000  30000  30000  30000  30000  30000  30000     50
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                          30000  30000  30000  30000  30000  30000  30000  30000  30000  30000  30000     50
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+50                 POST POST /api/v1/auth/login: Login falló con HTTP 401                                              
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

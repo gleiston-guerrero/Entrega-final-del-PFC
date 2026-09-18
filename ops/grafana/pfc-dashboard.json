@@ -56,8 +56,8 @@
       "type": "timeseries",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "targets": [
-        {"refId": "A", "expr": "100 * sum by (name) (rate(container_cpu_usage_seconds_total{name=~\"scli-.*|api-gateway|reservas-service\"}[5m]))", "legendFormat": "CPU {{name}}"},
-        {"refId": "B", "expr": "sum by (name) (container_memory_working_set_bytes{name=~\"scli-.*|api-gateway|reservas-service\"})", "legendFormat": "RAM {{name}}"}
+        {"refId": "A", "expr": "100 * sum by (container) (label_replace(rate(container_cpu_usage_seconds_total{job=\"cadvisor\",id=~\"/system.slice/docker-.*[.]scope\",cpu=\"total\"}[5m]), \"container\", \"$1\", \"id\", \".*/docker-([0-9a-f]{12}).*\"))", "legendFormat": "CPU {{container}}"},
+        {"refId": "B", "expr": "sum by (container) (label_replace(container_memory_working_set_bytes{job=\"cadvisor\",id=~\"/system.slice/docker-.*[.]scope\"}, \"container\", \"$1\", \"id\", \".*/docker-([0-9a-f]{12}).*\"))", "legendFormat": "RAM {{container}}"}
       ],
       "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
       "fieldConfig": {"defaults": {}, "overrides": [
@@ -68,11 +68,11 @@
     },
     {
       "id": 6,
-      "title": "LATENCIA E2E MÓVIL (PROXY DE ENDPOINTS)",
-      "description": "Proxy operacional: latencia p95 en Gateway de rutas consumidas por Android. No distingue clientes cuando Web usa la misma ruta.",
+      "title": "LATENCIA P95 DEL API GATEWAY (PROXY OPERACIONAL)",
+      "description": "Proxy operacional de latencia p95 de solicitudes de aplicacion procesadas por el API Gateway. Spring Cloud Gateway MVC registra actualmente estas rutas como uri=UNKNOWN; la metrica no distingue cliente ni endpoint individual.",
       "type": "timeseries",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
-      "targets": [{"refId": "A", "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{job=\"api-gateway\",uri=~\".*(reservas|solicitudes|incidentes|qr).*\"}[5m])))", "legendFormat": "p95 rutas móviles"}],
+      "targets": [{"refId": "A", "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{job=\"api-gateway\",uri=\"UNKNOWN\"}[5m])))", "legendFormat": "p95 solicitudes Gateway"}],
       "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
       "fieldConfig": {"defaults": {"unit": "s"}, "overrides": []},
       "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}}

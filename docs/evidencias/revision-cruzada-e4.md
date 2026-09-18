@@ -2,9 +2,9 @@
 
 **Consulta actual:** 2026-09-13T22:49:30Z
 
-**Repositorio:** `ffarinangog2/Entrega-final-del-PFC`
+**Repositorio:** `gleiston-guerrero/Entrega-final-del-PFC`
 
-**PR:** [#1 Feature/entrega 4](https://github.com/ffarinangog2/Entrega-final-del-PFC/pull/1)
+**PR:** [#1 Feature/entrega 4](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/pull/1)
 
 ## Estado verificable
 

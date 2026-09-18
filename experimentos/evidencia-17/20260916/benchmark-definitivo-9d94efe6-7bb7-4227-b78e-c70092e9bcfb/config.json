@@ -1,0 +1,176 @@
+{
+  "protocol_version": "1.1",
+  "treatments": [
+    {
+      "id": "pandas-baseline",
+      "entrypoint": "spark/baseline.py"
+    },
+    {
+      "id": "pyspark-pipeline",
+      "entrypoint": "spark/pipeline.py"
+    }
+  ],
+  "dataset": {
+    "id": "reservas_db",
+    "source": "cockroachdb-e3",
+    "snapshot_id": "sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98",
+    "expected_total_rows": 410001,
+    "inventory": {
+      "identity": {
+        "host": "localhost",
+        "port": 26261,
+        "database": "reservas_db",
+        "schema": "public"
+      },
+      "tables": {
+        "solicitudes_reserva": {
+          "rows": 100000,
+          "columns": [
+            "id",
+            "solicitante_id",
+            "docente_id",
+            "laboratorio_id",
+            "materia_id",
+            "periodo_lectivo_id",
+            "fecha_reserva",
+            "hora_inicio",
+            "hora_fin",
+            "numero_participantes",
+            "motivo",
+            "observacion",
+            "estado",
+            "clave_idempotencia",
+            "creada_en",
+            "actualizada_en",
+            "version",
+            "piso_id",
+            "propuesta_fecha",
+            "propuesta_hora_inicio",
+            "propuesta_hora_fin",
+            "propuesta_laboratorio_id",
+            "propuesta_observacion"
+          ],
+          "content_sha256": "a55e28d187bda95457b204a04849cdb052b2df9b17d32aea792f651cb5d2d047"
+        },
+        "reservas": {
+          "rows": 100000,
+          "columns": [
+            "id",
+            "solicitud_id",
+            "laboratorio_id",
+            "responsable_id",
+            "fecha_reserva",
+            "hora_inicio",
+            "hora_fin",
+            "estado",
+            "codigo_reserva",
+            "creada_en",
+            "actualizada_en",
+            "version",
+            "piso_id"
+          ],
+          "content_sha256": "d4ce229e84396df3559e09b15c94c79c6df4c8035a31c7d92ee7b0ea0536e471"
+        },
+        "historial_solicitudes": {
+          "rows": 200000,
+          "columns": [
+            "id",
+            "solicitud_id",
+            "estado_anterior",
+            "estado_nuevo",
+            "usuario_accion_id",
+            "comentario",
+            "fecha_hora"
+          ],
+          "content_sha256": "df21b8d5cafdba61ad8414c12f96df44f8ba7ddc0ea13a773e1e54506cf7f193"
+        },
+        "bloqueos_agenda": {
+          "rows": 10000,
+          "columns": [
+            "id",
+            "laboratorio_id",
+            "fecha",
+            "hora_inicio",
+            "hora_fin",
+            "motivo",
+            "creado_por",
+            "activo",
+            "creado_en",
+            "version"
+          ],
+          "content_sha256": "b94b34d977dcae0dc7ad57dee8b09b62cbf17ec39c1a82a21d2e5df124c13650"
+        },
+        "configuraciones_reserva": {
+          "rows": 1,
+          "columns": [
+            "id",
+            "anticipacion_minima_horas",
+            "anticipacion_maxima_dias",
+            "duracion_minima_minutos",
+            "duracion_maxima_minutos",
+            "permite_fines_semana",
+            "activo",
+            "creada_en",
+            "actualizada_en",
+            "version"
+          ],
+          "content_sha256": "12a786daa043883bb93df65af9f85628468b5c4f85851346459c960eeaf65eb7"
+        }
+      },
+      "total_rows": 410001,
+      "seeds_sha256": "15e3a6b682976bf2d82d36f73a2f78473a2e9b713985e94f85b476ace2bc4241",
+      "snapshot_id": "sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98",
+      "read_timestamp": "1789601689608167648.0000000000"
+    }
+  },
+  "execution": {
+    "warmup_iterations": 1,
+    "parallelism_levels": [
+      1,
+      2,
+      4,
+      6,
+      8
+    ],
+    "measured_iterations": 5,
+    "alternate_treatment_order": true,
+    "timeout_seconds": 900
+  },
+  "output": {
+    "directory": "C:\\Users\\TUF-GAMING\\Videos\\ORA_entrega_F_ISAIAS\\experimentos\\evidencia-17\\20260916\\benchmark-definitivo-9d94efe6-7bb7-4227-b78e-c70092e9bcfb",
+    "record_format": "json"
+  },
+  "environment": {
+    "jdbc_version": "42.7.11",
+    "packages": {
+      "pandas": "2.3.3",
+      "pyspark": "4.0.4",
+      "pyarrow": "19.0.1",
+      "sqlalchemy": "2.0.54",
+      "sqlalchemy-cockroachdb": "2.0.4",
+      "psycopg": "3.3.5",
+      "psutil": "7.2.2",
+      "matplotlib": "3.11.2"
+    },
+    "jdbc_sha256": "1981b31d3993c58702783c1cddf10a34e48c1f413d70ff1cb6def0a143484647",
+    "host": "DESKTOP-IN1DOMI",
+    "operating_system": "Windows-11-10.0.26200-SP0",
+    "cpu_model": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+    "logical_cpu_count": 8,
+    "memory_mib": 14272.898,
+    "python_version": "3.13.14",
+    "pandas_version": "2.3.3",
+    "spark_version": "4.0.4",
+    "java_version": "Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false\nopenjdk version \"21.0.8\" 2025-07-15 LTS\nOpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)"
+  },
+  "equivalence_source_sha256": {
+    "spark/baseline.py": "c88780f20b23b24421eab99613fe3abd497d13af69f1c1870bdc5ea974400705",
+    "spark/pipeline.py": "93d11b9fe28f5b29c9f1eb3ee8823bce3238662111991fbc046b614af3c1bef8",
+    "spark/snapshot.py": "87004c32a8b2d099a0dfbb8188b3e7345e308d5fa8a80bc439724da31fb974a1",
+    "spark/requirements.txt": "b5c51c25f838b170cff67e62d1b009cf64759dabc0814a971618a2e16e50e237",
+    "experimentos/verify_equivalence.py": "b2fa6984bb8a1f01feccd2bd4f1134d5ccd65b03e0aabc5b852010bab8463ad3",
+    "experimentos/prepare_local.py": "3486a7b124316e6080c404bb5f44472276a9e57b39b4cf4dd1ae65bb3c96b236",
+    "experimentos/run_comparison.py": "4207ea92711e60b4fec107135e08a6fddce469108723ceffbf9c5eb9e6d7c87a"
+  },
+  "batch_id": "bc2e11b7-cf59-4611-95f9-0768629083c1"
+}

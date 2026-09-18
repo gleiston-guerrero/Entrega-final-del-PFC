@@ -1,0 +1,334 @@
+\section{Estrategia de pruebas y entrega continua}
+\label{sec:pruebas-cicd}
+
+La calidad de las aplicaciones descritas en la
+Sección~\ref{sec:aplicaciones} se evaluó mediante niveles complementarios. Las
+pruebas unitarias aíslan reglas y estados; las de integración ejercitan
+frameworks, persistencia y procesos; Pact comprueba contratos entre
+consumidores y proveedores; Playwright y las pruebas instrumentadas recorren
+interfaces completas; y Locust genera tráfico concurrente contra el sistema
+desplegado. Esta separación evita atribuir a una sola métrica riesgos que
+pertenecen a niveles distintos y sigue el principio de definir procesos de
+prueba adecuados al contexto del ciclo de vida \cite{iso29119_2_2021}.
+
+La cobertura se interpreta por componente. No se promedian porcentajes de Java,
+TypeScript y Kotlin, porque cada herramienta instrumenta un universo diferente
+y un promedio ocultaría, por ejemplo, una cobertura móvil insuficiente detrás de
+resultados altos del Gateway. La Tabla~\ref{tab:piramide-pruebas} resume la
+pirámide realmente implementada.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Niveles de prueba implementados en la Entrega 4.}
+  \label{tab:piramide-pruebas}
+  \begin{tabular}{|p{2.0cm}|p{2.8cm}|p{3.0cm}|p{4.8cm}|}
+    \hline
+    \textbf{Nivel} & \textbf{Tecnología} & \textbf{Componente} & \textbf{Propósito y evidencia} \\
+    \hline
+    Unitario & JUnit, Mockito; Vitest/RTL; JUnit, MockK y Robolectric & Backend, Web y Mobile & Reglas, servicios, ViewModels, repositorios simulados, sesión, rutas y estados de interfaz; reportes Surefire, Vitest y Gradle. \\
+    \hline
+    Integración & Spring Boot, Testcontainers, Flyway, Room & Backend y Mobile & Persistencia, migraciones, seguridad, cifrado, concurrencia y migración local sobre implementaciones reales. \\
+    \hline
+    Contrato & Pact JVM & Web, Mobile y servicios & Compatibilidad de solicitudes y respuestas HTTP; JSON Pact y verificación de proveedores. \\
+    \hline
+    E2E & Playwright; Compose/Espresso & Web y Mobile & Flujos visibles en Chromium, Firefox, WebKit y emulador Android API 29. \\
+    \hline
+    Carga & Locust & Gateway y Reservas & Autenticación real, consultas nominales y rampa; CSV y archivos crudos analizados en el capítulo ISO. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Backend: pruebas unitarias, integración y cobertura}
+\label{subsec:pruebas-backend}
+
+Los cinco módulos emplean Maven, JUnit 5 y JaCoCo; Mockito se usa donde es
+necesario aislar puertos o clientes. Las suites cubren controladores, servicios,
+repositorios, validaciones y seguridad. En Reservas también se prueban las
+estrategias de disponibilidad y las transiciones State; en Auth se ejercitan JWT,
+rotación de sesión, bloqueo de acceso, recuperación de contraseña y auditoría.
+La Tabla~\ref{tab:cobertura-backend} describe los controles verificables en el
+árbol actual. Los porcentajes y recuentos exactos pertenecen a cada ejecución y
+deben consultarse en sus reportes Surefire/JaCoCo de GitHub Actions; no se
+trasladan cifras de un SHA anterior como si describieran el HEAD actual.
+La ejecución de push del SHA funcional
+\texttt{e43967eda31410b7fef060cfc7903cea94efbe96} completó los cinco jobs
+Backend, incluido el control reforzado de Reservas, sin sustituir esos reportes
+por una cifra agregada entre servicios.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Controles de pruebas y cobertura Backend configurados.}
+  \label{tab:cobertura-backend}
+  \begin{tabular}{|p{4.2cm}|p{3.2cm}|p{3.0cm}|p{2.3cm}|}
+    \hline
+    \textbf{Servicio} & \textbf{Herramienta} & \textbf{Fuente de resultado} & \textbf{Criterio} \\
+    \hline
+    auth-service & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate $\geq 70\%$ \\
+    \hline
+    usuarios-service & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate $\geq 70\%$ \\
+    \hline
+    academico-laboratorios-service & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate $\geq 70\%$ \\
+    \hline
+    reservas-solicitudes-service & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate: líneas $\geq80\%$ y ramas $\geq48\%$ \\
+    \hline
+    api-gateway & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate $\geq 70\%$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Superar un umbral en una ejecución no significa que cada ruta esté probada ni
+que el sistema sea inmune a fallos. La cobertura de líneas no sustituye la
+verificación de condiciones,
+concurrencia o contratos. Por ello se conservan niveles de integración y E2E en
+el pipeline, coherentes con la necesidad de mantener pruebas a diferentes
+escalas \cite{winters2020softwareengineeringgoogle}.
+
+\subsubsection{Persistencia real con Testcontainers}
+
+Las pruebas de integración no se reducen a declarar la dependencia. En Auth,
+\texttt{UsuarioAuthRepositoryCockroachIntegrationTest} inicia un
+\texttt{CockroachContainer}, persiste y recupera usuarios y comprueba que las
+sesiones activas excluyan registros vencidos o revocados. En Usuarios,
+\texttt{CockroachFlywayIntegrationTest} verifica la aplicación de Flyway,
+tablas, restricciones, índices y lectura/escritura mediante el adaptador; por
+su parte, \texttt{CifradoDatosSensiblesIntegrationTest} comprueba que los datos
+queden cifrados en la base, sean descifrados por la aplicación y puedan buscarse
+por hash.
+
+\texttt{CockroachFlywayIntegrationTests}, en Reservas, levanta un contenedor
+efímero, valida las tablas migradas y ejecuta repositorios reales. Incluye
+serialización del mutex de agenda, aprobaciones concurrentes, atomicidad,
+versionado e idempotencia de creación y aprobación. Cada prueba obtiene una base
+aislada y las credenciales se generan para la ejecución. La limitación es
+concreta: \texttt{academico-laboratorios-service} carece de una prueba
+Testcontainers equivalente, aunque dispone de pruebas unitarias de adaptadores y
+de un contexto Spring de seguridad. El pipeline añade además un job separado que
+valida el clúster CockroachDB de tres nodos de la Entrega 3; esta evidencia se
+distingue de los contenedores efímeros por servicio.
+
+\subsection{Aplicación web}
+\label{subsec:pruebas-web}
+
+Vitest y React Testing Library validan el comportamiento observable de la SPA.
+La suite actual comprende 43 archivos de prueba y 296 casos, todos aprobados
+mediante la ejecución reproducible, desde la raíz del repositorio, de
+\texttt{cd apps/web \&\& npm ci \&\& npm run test:coverage}. Las pruebas cubren autenticación,
+rutas protegidas, cliente HTTP, renovación ante 401, APIs de dominio,
+formularios, reservas, administración y flujos por rol. Las pruebas de la capa
+de servicios verifican no solo que una función haya sido invocada, sino también
+la ruta HTTP, el método, el cuerpo enviado y la forma de la respuesta cuando
+corresponde.
+
+La configuración de Vitest/V8 en \texttt{vite.config.ts} instrumenta el conjunto
+de fuentes de la aplicación, incluyendo archivos no ejercitados por las pruebas;
+por ello el reporte conserva explícitamente archivos con cobertura cero en lugar
+de excluirlos del denominador. Sobre el árbol integrado evaluado, la ejecución
+reproducible de \texttt{npm run test:coverage} produjo 81.89\% de statements,
+70.25\% de branches, 78.43\% de functions y 84.87\% de lines. Estos valores
+superan el umbral configurado de 70\% en las cuatro métricas y corresponden al
+reporte generado sobre el estado actual del repositorio, no a una medición
+trasladada desde un SHA anterior.
+
+El pipeline ejecuta \texttt{npm run test:coverage} y \texttt{npm run build}; por
+tanto, una promoción solo continúa si los umbrales configurados y el build se
+satisfacen. La configuración define el criterio de aceptación y el reporte de
+cada ejecución constituye la evidencia reproducible del resultado.
+
+\subsubsection{Compatibilidad E2E con Playwright}
+
+Playwright mantiene escenarios funcionales de autenticación, rutas protegidas,
+reservas, revisión y preferencias de interfaz. Cada escenario se proyecta sobre
+Chromium, Firefox y WebKit con un
+solo worker y hasta dos reintentos en CI. Los tres motores aportan evidencia
+práctica frente a diferencias de Chrome, Firefox y Safari, pero no representan
+todos los navegadores, sistemas operativos ni dispositivos.
+
+La configuración y la ejecución deben distinguirse. La evidencia utilizada es
+el job \emph{Compose integration tests} del SHA funcional
+\texttt{e43967eda31410b7fef060cfc7903cea94efbe96}, que terminó correctamente,
+instala los tres motores, espera healthchecks, realiza login y una consulta
+protegida, y luego ejecuta \texttt{npm run test:e2e}. El reporter es de consola;
+las trazas se habilitan en el primer reintento, pero el workflow no publica
+actualmente un artefacto Playwright dedicado.
+
+\subsection{Aplicación móvil}
+\label{subsec:pruebas-mobile}
+
+La suite local combina JUnit 4, MockK, \texttt{coroutines-test}, MockWebServer,
+Robolectric y utilidades de Compose. Sus pruebas ejercitan
+ViewModels, sesión y refresh, almacenamiento cifrado, clasificación de errores,
+repositorios remotos y locales, caché, reservas, incidentes, disponibilidad y
+estados QR. La medición histórica del SHA
+\texttt{e43967eda31410b7fef060cfc7903cea94efbe96} registró 45,69\% de
+líneas y completó los jobs
+\emph{Test mobile} y \emph{Test mobile instrumented}, pero ese resultado verde
+no convierte la cifra histórica en una cobertura actual distinta ni permite
+afirmar 70\%. La medición experimental oficial posterior, ejecutada sobre
+\texttt{fa7d75ec0f75573938bf46ed6a68f0aee99606ac}, obtuvo 38,3407\%
+frente al umbral de 70\% y por ello \textbf{NO CUMPLE}. El detalle y sus
+limitaciones se presentan en la Sección~\ref{subsec:tabla-iso25010}.
+
+El resultado documentado es parcial: existe una base amplia de casos, pero la
+evidencia oficial vigente no alcanza 70\% de líneas. Compose, pantallas,
+navegación y wiring
+aportan una parte importante al denominador; aun así, esto no justifica ignorar
+el déficit. La configuración solo excluye artefactos Android generados habituales
+(por ejemplo, \texttt{R}, \texttt{BuildConfig} y manifest), no clases del
+negocio ni Composables para elevar artificialmente la cifra. Por ello la calidad
+móvil no se presenta como cumplimiento total.
+
+\subsubsection{Pruebas instrumentadas y APK}
+
+El directorio \texttt{androidTest} contiene cinco archivos de prueba; el número
+de casos ejecutados se obtiene del reporte instrumentado de cada SHA.
+Comprueba un flujo Compose de listado a detalle de reserva, DAO y actualización
+de caché, migración Room de versión 1 a 2, creación/listado de incidentes y tres
+estados del flujo QR. El job \emph{Test mobile instrumented} usa un emulador
+Pixel 2, Android API 29, imagen \texttt{google\_apis} x86\_64, desactiva
+animaciones y ejecuta \texttt{connectedDebugAndroidTest}. Sus resultados se
+publican incluso ante fallo.
+
+\textbf{Estado previo / antecedente.} En la medición anterior, este job dependía
+de las pruebas locales y actuaba como gate del APK. \emph{Build mobile APK}
+generaba \texttt{app-debug.apk} solo después de unitarias e instrumentadas. En
+ese estado previo, el proyecto no configuraba \texttt{signingConfig}, keystore
+ni \texttt{assembleRelease} en CI; por tanto, el artifact disponible era
+exclusivamente de depuración y no se presentaba como release firmado. Tampoco se
+había encontrado una rúbrica versionada que obligara a distribuirlo, por lo que
+en ese momento no se añadieron secretos ni complejidad de firma.
+
+\textbf{Estado actual E7.} El workflow incorpora el job \emph{Build - Android
+release signed}: ejecuta \texttt{assembleRelease}, alinea el binario mediante
+\texttt{zipalign}, lo firma con \texttt{apksigner}, valida la firma con
+\texttt{apksigner verify}, genera y comprueba \texttt{SHA256SUMS.txt}, y publica
+el APK release firmado como artifact de GitHub Actions. El binario está
+incorporado en \path{release/apk/scli-mobile-0.1.0-release.apk} y su checksum en
+\path{release/apk/SHA256SUMS.txt}; procede del run \texttt{34688947156}, para el
+SHA \texttt{0b755310a0acf34da2456290a4f978475a8e17f9}, generado y verificado por
+CI. GitHub Actions continúa siendo la fuente reproducible; las claves privadas
+y contraseñas de firma permanecen fuera de Git.
+No se ejecutó un emulador manualmente durante la redacción; se usa la ejecución
+automatizada de CI como evidencia.
+
+\subsection{Contratos HTTP con Pact}
+\label{subsec:pact}
+
+Pact expresa el flujo consumidor $\rightarrow$ contrato $\rightarrow$
+verificación del proveedor. El árbol contiene contratos consumidores para Web,
+Mobile, Auth, Usuarios, Académico y Reservas, además de verificadores de
+proveedor en Académico, Reservas y Usuarios. El número aprobado pertenece al
+reporte del job de cada SHA y no se fija aquí como una cifra inmutable. Los contratos de
+Reservas representan listar, consultar detalle, cancelar y proponer una
+alternativa; incluyen método, ruta, encabezado Bearer y forma del cuerpo. Los
+proveedores \texttt{reservas-solicitudes-service} y
+\texttt{usuarios-service} disponen de verificadores JUnit que preparan los
+estados requeridos y contrastan el JSON generado durante \texttt{mvn verify}.
+
+CI regenera los Pacts antes de probar esos proveedores y publica los archivos
+JSON asociados al SHA. No existe Pact Broker: no hay matriz central de versiones,
+historial ni verificación automática de \emph{can-i-deploy}. La compatibilidad se
+demuestra dentro de cada ejecución, pero su evolución entre despliegues exige
+consultar artefactos individuales.
+
+\subsection{Carga nominal y rampa}
+\label{subsec:carga-locust}
+
+\texttt{tests/load/locustfile.py} autentica un usuario real contra el Gateway,
+conserva el JWT y genera, con pesos distintos, listados y detalles de reservas.
+Valida códigos y estructura mínima para no contabilizar como éxito una respuesta
+semánticamente inválida. \texttt{ramp\_locustfile.py} incorpora un
+\texttt{LoadTestShape} que asciende linealmente de 0 a 200 usuarios durante diez
+minutos. CI solo ejecuta un smoke controlado de dos usuarios durante diez
+segundos; la prueba nominal y la rampa experimental cuentan con evidencia real
+separada. Sus estadísticos y limitaciones se analizan en el capítulo de
+observabilidad e ISO 25010; no se reinterpretan en este capítulo.
+
+\subsection{Integración y entrega continuas}
+\label{subsec:ci-cd}
+
+El workflow \texttt{ci-cd.yml} responde tanto a \texttt{pull\_request} como a
+\texttt{push}. Un PR ejecuta validaciones, pero \texttt{build-images} está
+condicionado a \texttt{push} y, por tanto, no publica ni despliega. Los gates
+incluyen Checkstyle/ESLint; cinco matrices Maven con JaCoCo y verificación Pact;
+Vitest, cobertura y build Web; pruebas Mobile, lint, cobertura, emulador y APK;
+Testcontainers y clúster CockroachDB; Compose, Playwright y smoke Locust.
+
+\texttt{build-images} depende explícitamente de \texttt{lint}, Backend, Web,
+Mobile local, Mobile instrumentado, APK, CockroachDB e Integración. Solo después
+construye las cinco imágenes de servicio y la Web. Esta estructura convierte las
+pruebas en barreras de promoción, una aplicación concreta del flujo automatizado
+DevSecOps descrito por NIST \cite{chandramouli2022nistdevsecops}.
+
+\subsubsection{Artefactos y trazabilidad por SHA}
+
+Las imágenes se publican en GHCR con el SHA Git completo, nunca con
+\texttt{latest}. \texttt{docker-compose.prod.yml} exige \texttt{IMAGE\_TAG} y lo
+aplica a las seis imágenes, estableciendo la cadena
+commit $\rightarrow$ ejecución CI $\rightarrow$ imagen $\rightarrow$ despliegue.
+Los demás artefactos publicados son los contratos Pact, \texttt{dist.tar.gz} de
+Web, el informe JaCoCo Mobile, los resultados instrumentados y el APK debug. No
+se publican actualmente los reportes JaCoCo Backend, la cobertura Web ni un
+reporte Playwright; permanecen en los logs o en el espacio temporal del runner.
+
+\subsubsection{Despliegue controlado}
+
+Tras publicar las imágenes, \texttt{call-deploy} invoca \texttt{cd.yml}. En un
+push a \texttt{feature/entrega-4} solo se activa cuando
+\texttt{CD\_FEATURE\_ENABLED=true}; en \texttt{main} requiere
+\texttt{CD\_ENABLED=true}. El job verifica la identidad SSH configurada sin
+exponer claves, valida el fingerprint del servidor y se conecta mediante una
+Action fijada a commit. En la VM obtiene exactamente el SHA aprobado, adopta un
+checkout separado, inicia sesión en GHCR y entrega el mismo \texttt{IMAGE\_TAG} a
+\texttt{deploy-vm.sh}.
+
+El script valida la sintaxis Compose, descarga imágenes, ejecuta
+\texttt{up -d --remove-orphans} y espera hasta cinco minutos a que el healthcheck
+del Gateway responda \texttt{UP}. Un estado no saludable hace fallar el job y
+muestra diagnóstico, pero no restaura automáticamente la versión anterior. Tampoco
+hay estrategia blue/green, canary o garantía de zero-downtime; la recuperación
+es manual. La automatización reduce variación operacional, pero conserva estos
+límites, coherentes con la necesidad de tratar el despliegue como un proceso
+repetible y verificable \cite{farley2021modernsoftwareengineering}.
+
+Como aprendizaje operativo, la autenticación SSH falló una vez porque el
+proveedor cloud regeneró \texttt{authorized\_keys} y retiró una entrada manual.
+La clave pública se registró mediante el mecanismo persistente de metadatos de la
+instancia. No fue un defecto del pipeline ni del código y no se reproducen IP,
+claves ni fingerprints en el informe.
+
+\subsection{Trazabilidad de requisitos de calidad}
+\label{subsec:trazabilidad-pruebas}
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Trazabilidad resumida de calidad, prueba y CI.}
+  \label{tab:trazabilidad-pruebas}
+  \begin{tabular}{|p{3.1cm}|p{3.1cm}|p{3.2cm}|p{4.0cm}|}
+    \hline
+    \textbf{Requisito} & \textbf{Prueba} & \textbf{Job CI} & \textbf{Resultado/evidencia} \\
+    \hline
+    Web $\geq 70\%$ & Vitest y V8 & Test web & Cuatro umbrales configurados en 70\%; resultado por SHA en CI. \\
+    \hline
+    Calidad Mobile & JUnit/Robolectric, JaCoCo y emulador & Test mobile; Test mobile instrumented & Antecedente \texttt{e43967e}: 45,69\%; E3 oficial \texttt{fa7d75ec}: 38,3407\% frente a 70\%, NO CUMPLE. \\
+    \hline
+    Contratos compatibles & Pact consumer/provider & Matrices Backend & Consumidores y verificadores versionados; resultado por SHA en CI; sin Broker. \\
+    \hline
+    Persistencia CockroachDB & Testcontainers/Flyway & Matrices Backend; CockroachDB E3 cluster tests & Auth, Usuarios y Reservas verificados; falta equivalente en Académico. \\
+    \hline
+    Compatibilidad Web & Playwright & Compose integration tests & Escenarios versionados en tres motores; ejecución por SHA en CI. \\
+    \hline
+    Promoción trazable & Gates, GHCR y healthcheck & Build and publish image; Call production VM deployment & Imágenes y despliegue ligados al SHA completo. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Finalmente, varias limitaciones de automatización permanecen abiertas. Algunas
+Actions oficiales usan tags mayores (por ejemplo, \texttt{@v4} o \texttt{@v6})
+en vez de commits inmutables; el lint Web usa Node 20 mientras pruebas e
+integración fijan Node 22.22.2; no hay rollback; y faltan artefactos persistentes
+para ciertas coberturas y Playwright. Estas restricciones no anulan los gates,
+pero delimitan la reproducibilidad y el endurecimiento de la cadena de
+suministro que todavía puede mejorarse.

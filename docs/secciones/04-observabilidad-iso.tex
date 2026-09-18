@@ -1,0 +1,923 @@
+\section{Observabilidad y evaluación ISO/IEC 25010}
+\label{sec:observabilidad-iso}
+
+La Entrega 4 incorpora observabilidad como una capacidad transversal del
+sistema distribuido y no como sustituto de las pruebas. Métricas, trazas y logs
+responden preguntas distintas: las métricas resumen comportamiento agregado,
+las trazas reconstruyen el recorrido de una solicitud y los logs conservan
+eventos discretos con contexto. Esta separación coincide con las señales
+definidas por OpenTelemetry \cite{opentelemetry2026signals}; combinarlas mejora
+el diagnóstico, pero la sola presencia de herramientas no certifica calidad ni
+garantiza correlación perfecta.
+
+\subsection{Arquitectura de observabilidad}
+\label{subsec:arquitectura-observabilidad}
+
+Los cinco servicios Spring exponen Actuator y Prometheus, y configuran
+instrumentación y exportación OTLP. El flujo implementado es el siguiente:
+
+\begin{center}
+\begin{verbatim}
+servicios -- metricas Prometheus ----------> Prometheus --\
+         \-- trazas OTLP --> Collector --> Tempo ----------> Grafana
+          \- logs OTLP ----> Collector --> Loki -----------/
+cAdvisor -- recursos de contenedores ------> Prometheus ---/
+\end{verbatim}
+\end{center}
+
+Prometheus consulta cada quince segundos los cinco endpoints
+\texttt{/actuator/prometheus}, cAdvisor, el Collector y los tres nodos
+CockroachDB. Grafana dispone de fuentes provisionadas para Prometheus, Tempo y
+Loki. Tempo conserva trazas localmente durante 24 horas; Loki almacena logs, y
+cAdvisor aporta CPU y memoria de contenedores. El Collector recibe OTLP por
+gRPC 4317 y HTTP 4318, aplica el procesador \texttt{batch} y separa tres
+pipelines: trazas hacia Tempo, métricas hacia un exporter Prometheus en 8889 y
+logs hacia Loki. OpenTelemetry funciona aquí como estándar, instrumentación y
+canal de transporte; los backends y Grafana proporcionan almacenamiento y
+consulta, pues OpenTelemetry no es por sí mismo un APM completo.
+
+\subsubsection{Métricas Prometheus}
+
+Micrometer produce la familia
+\texttt{http\_server\_requests\_seconds}: el contador permite calcular volumen y
+tasa por estado, y los buckets habilitan percentiles con
+\texttt{histogram\_quantile}. En Reservas una regla de grabación crea el alias
+\texttt{http\_request\_duration\_seconds} exigido por el protocolo a partir de
+la familia estándar. Usuarios y Académico agregan además
+\texttt{http\_requests\_total} con ruta, método y estado; Auth registra éxitos,
+fallos, refresh y logout; Reservas publica eventos de negocio de baja
+cardinalidad después del commit transaccional. Las series de CockroachDB y
+cAdvisor complementan la vista con estado de nodos, rangos no disponibles y
+consumo de recursos.
+
+La tasa se obtiene con \texttt{rate} sobre contadores y los 5xx mediante el
+filtro \texttt{status=\textasciitilde{}"5.."}. Para latencia, los buckets se
+agregan por \texttt{le} antes de calcular p50, p95 o p99. Un percentil de
+histograma es una estimación dependiente de los buckets y de la ventana elegida;
+no equivale necesariamente al percentil calculado por el cliente de carga.
+
+\subsubsection{Trazas y logs estructurados}
+
+La configuración de cada servicio asigna \texttt{OTEL\_SERVICE\_NAME}, exporta
+trazas y logs por OTLP y habilita muestreo de trazas. Los appenders Logback se
+instalan sobre el SDK autoconfigurado y el formato de consola es JSON tipo
+Logstash. La configuración añade el servicio y renombra el contexto activo como
+\texttt{trace\_id} y \texttt{span\_id}; el encoder incorpora también timestamp,
+nivel, logger y mensaje. Tempo puede enlazar una traza con Loki usando ambos
+identificadores, aunque un log emitido fuera de un span no necesariamente los
+contiene. Por esa razón se habla de correlación disponible, no universal.
+
+Los registros no deben transportar credenciales. En particular, el callback de
+FCM informa que recibió un token nuevo, pero no escribe su valor. Esta decisión
+preserva utilidad operativa sin convertir el sistema de logs en un canal de
+exposición. Los eventos estructurados y ricos en contexto facilitan consultas y
+diagnóstico de sistemas distribuidos \cite{majors2022observability}, pero su
+calidad depende de atributos consistentes y de la propagación efectiva.
+
+\subsection{Dashboard consolidado}
+\label{subsec:dashboard-grafana}
+
+\texttt{ops/grafana/pfc-dashboard.json} contiene exactamente seis paneles. Las
+consultas PromQL son sintácticamente coherentes con las familias configuradas;
+la Tabla~\ref{tab:paneles-grafana} distingue lo que mide cada una y evita
+atribuir al panel una semántica que no posee.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Paneles reales del dashboard consolidado.}
+  \label{tab:paneles-grafana}
+  \begin{tabular}{|p{3.0cm}|p{2.0cm}|p{3.6cm}|p{3.8cm}|}
+    \hline
+    \textbf{Panel} & \textbf{Fuente} & \textbf{Métrica/consulta} & \textbf{Propósito} \\
+    \hline
+    Request rate & Prometheus & \texttt{rate(http\_server\_requests\_seconds\_count)} & Comparar volumen por job en cinco minutos. \\
+    \hline
+    Latencia p50/p95/p99 & Prometheus & \texttt{histogram\_quantile} sobre buckets HTTP & Observar distribución y cola de latencia. \\
+    \hline
+    Errores HTTP 5xx & Prometheus & Tasa del contador HTTP con estado 5xx & Detectar fallos de servidor por job. \\
+    \hline
+    CockroachDB & Prometheus & \texttt{liveness\_livenodes}; \texttt{ranges\_unavailable} & Vigilar nodos vivos y rangos no disponibles. \\
+    \hline
+    Recursos de contenedores & Prometheus/cAdvisor & CPU y memoria por nombre de contenedor & Identificar presión de recursos. \\
+    \hline
+    Latencia E2E móvil (proxy) & Prometheus & p95 del Gateway para URI de reservas, solicitudes, incidentes o QR & Aproximar endpoints asociados a Mobile; no mide dispositivo, red completa ni renderizado. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+El sexto panel constituye la brecha principal: su nombre reconoce que es un
+proxy y su punto de medición sigue siendo el Gateway. Además, algunas URI del
+filtro no tienen backend remoto actual, como incidentes. Por tanto, el dashboard
+cubre seis finalidades solicitadas, pero la latencia Mobile no es E2E real y el
+criterio D6.2 permanece parcial.
+
+La Figura~\ref{fig:panel-monitoreo-carga-real} muestra el dashboard consolidado
+durante una prueba real de carga de 50 usuarios durante cinco minutos. La
+ejecución produjo 6782 solicitudes, 15 fallos (0,22\,\%) y una tasa media
+aproximada de 22,64 solicitudes por segundo. Las series visibles permiten
+relacionar la tasa de peticiones con la latencia y los errores HTTP 5xx. Estos
+fallos estuvieron asociados al límite de transacciones concurrentes de la
+instancia de CockroachDB sin licencia, según los registros conservados junto con
+la salida de Locust. Esta ejecución adicional no sustituye ni modifica las diez
+repeticiones nominales analizadas en la
+Sección~\ref{subsec:eficiencia-nominal}.
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{panel-monitoreo.png}
+  \caption{Dashboard de observabilidad de SCLI durante una prueba real de carga
+  de 50 usuarios durante cinco minutos.}
+  \label{fig:panel-monitoreo-carga-real}
+\end{figure*}
+
+\subsection{Marco y protocolo ISO/IEC 25010}
+\label{subsec:marco-iso25010}
+
+La evaluación usa el modelo de calidad de producto ISO/IEC 25010:2023
+\cite{iso25010_2023}, pero no pretende cubrir todas sus características. Se
+seleccionaron eficiencia de desempeño, fiabilidad, seguridad, mantenibilidad y
+compatibilidad. La disponibilidad se trata como parte de fiabilidad y exige
+observación temporal propia; no se infiere de una tasa puntual de errores.
+
+El protocolo nominal define diez repeticiones equivalentes con 50 usuarios. La
+eficiencia dura cinco minutos y exige p95 menor que 500 ms. La fiabilidad
+preveía una hora por repetición y menos de 1\% de HTTP 5xx. La regla se fijó
+antes de observar resultados: r1 y r10 se conservan, mientras r2--r9 forman las
+ocho muestras centrales. Esto trata de forma uniforme los bordes del lote y,
+sobre todo, impide elegir exclusiones después de conocer los valores; no se
+eliminaron ejecuciones desfavorables por conveniencia.
+
+Para cada métrica central se usa $n=8$, desviación estándar muestral con siete
+grados de libertad e intervalo bilateral
+$\bar{x}\pm t_{0,975;7}s/\sqrt{8}$, con $t=2,364624251$. La decisión principal
+es conservadora: el límite superior del IC95 debe ser menor que el umbral. Esta
+estructura y la conservación de resultados fallidos son coherentes con un
+proceso de prueba documentado y repetible \cite{iso29119_2_2021}.
+
+\subsection{Preguntas de investigación y respuestas}
+\label{subsec:preguntas-investigacion}
+
+Los criterios, umbrales y diseño experimental fueron declarados antes de la
+ejecución. Las preguntas PI1/PI2 se formalizaron posteriormente en el manuscrito
+utilizando esos criterios preexistentes. El historial de Git sitúa el protocolo
+inicial y los umbrales de p95 y HTTP 5xx en el commit
+\texttt{5b1c498} del 18 de agosto de 2026. El umbral secundario de p99 fue
+incorporado al analizador en \texttt{e1c82c7} el 24 de agosto, antes de que la
+campaña de eficiencia se ejecutara el 30 de agosto. En ambos casos la regla
+permite una respuesta negativa: se exige que el límite superior del IC95 sea
+estrictamente menor que el umbral.
+
+\textbf{PI1.} ¿Al fijar como variable manipulada una carga nominal de 50
+usuarios concurrentes durante cinco minutos sobre las consultas autenticadas
+de solo lectura de Reservas/Solicitudes, los límites superiores de los IC95 de
+la latencia p95 y p99 observada por Locust permanecen por debajo de los
+umbrales previamente declarados de 500 ms y 750 ms, respectivamente, en las
+ocho repeticiones centrales r2--r9 del despliegue SCLI evaluado?
+
+\textbf{Respuesta a PI1.} Sí. El análisis corregido delimita la población por
+identidad del request y utiliza las filas GET de Reservas/Solicitudes conservadas
+en los CSV raw. Para p95 obtiene media 45,500000 ms e IC95
+[27,304023; 63,695977] ms; para p99, media 371,250000 ms, desviación muestral
+364,032475 ms e IC95 [66,911235; 675,588765] ms. La dispersión del p99 es
+elevada y su límite superior queda 74,411235 ms por debajo del umbral de
+750 ms; por ello el resultado se interpreta como cumplimiento acotado al
+escenario observado, no como un margen holgado ni generalizable. Ambos límites
+superiores permanecen por debajo de 500 ms y 750 ms, respectivamente. La selección no filtra respuestas por código
+HTTP, latencia ni éxito/fallo. Excluye \texttt{POST /api/v1/auth/login}
+exclusivamente porque pertenece a Auth y no a las consultas de solo lectura de
+Reservas/Solicitudes. Los valores corregidos y la decisión están en
+\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md}; el diseño y la
+regla de ocho muestras están en
+\path{../../experimentos/protocolo-e4.md}; y las filas GET que sustentan cada
+percentil se conservan en
+\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m/rep-02/locust_stats.csv}
+hasta \path{../rep-09/locust_stats.csv}. No se repitió ni alteró la campaña.
+El análisis histórico sobre \texttt{Aggregated}, que mezclaba esos GET con
+login, permanece documentado y produjo p95 media 57,500000 ms e IC95
+[26,456064; 88,543936] ms, y p99 media 624,000000 ms e IC95
+[116,881810; 1131,118190] ms; bajo esa población incorrecta p99 no cumplía.
+
+\textbf{PI2.} ¿Al fijar como variable manipulada una carga nominal de 50
+usuarios concurrentes durante una hora sobre las consultas autenticadas de
+solo lectura de Reservas/Solicitudes, el límite superior del IC95 de la tasa
+observada de respuestas HTTP 5xx permanece por debajo del umbral previamente
+declarado de 1\,\% en las ocho repeticiones centrales r2--r9 del despliegue
+SCLI evaluado, y qué comportamiento operacional adicional registra Locust?
+
+\textbf{Respuesta a PI2.} Sí para el indicador formal acotado en la
+campaña correctiva. Las diez repeticiones válidas sumaron 896\,964 GET de
+negocio, con 0 respuestas HTTP 401 y 0 respuestas HTTP 5xx. Sobre r2--r9,
+la tasa 5xx tuvo media 0,000000\,\%, desviación muestral 0,000000\,\% e
+IC95 [0,000000; 0,000000]\,\%; por tanto, el límite superior permanece por
+debajo del 1\,\% prerregistrado.
+
+Como métricas descriptivas, p95 tuvo media 6,680642 ms e IC95
+[6,532522; 6,828763] ms, y p99 media 9,849009 ms e IC95
+[9,439893; 10,258124] ms. Estos percentiles no constituyen criterios nuevos
+de aceptación E2. La campaña histórica con 668\,367 HTTP 401 permanece
+publicada como antecedente del defecto de renovación que motivó la corrección.
+La tasa 5xx no se interpreta como disponibilidad temporal. El CSV
+\path{../../experimentos/resultados/iso25010-correctiva.csv} y
+\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md} contienen los
+conteos y estadísticos. El prerregistro correctivo está en
+\path{../../experimentos/protocolo-e2-fiabilidad-correctiva.md} y la evidencia
+raw oficial en
+\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/}.
+Cada repetición válida conserva \texttt{locust\_requests.csv},
+\texttt{locust-final-stats.json}, \texttt{metadata.json} y su manifiesto
+SHA-256.
+
+\subsubsection{Proveniencia e integridad}
+
+La evidencia se ejecutó en \texttt{servidor-proyectos}. La campaña de
+eficiencia corresponde al SHA
+\texttt{a47f0441f644bea5f52944b7a11216f37b2242de}, con Locust 2.31.6 y Python
+3.11.10; la campaña final de fiabilidad corresponde al SHA
+\texttt{061a1050a94e1bd30d81b30c47c7e818005a33bb}, con Locust 2.31.6 y Python
+3.12.3. El protocolo está en
+\path{../../experimentos/protocolo-e4.md};
+\path{../../experimentos/resultados/iso25010.csv} contiene resultados
+procesados y \path{../../experimentos/resultados/raw} conserva CSV canónicos,
+fallos, excepciones, logs, metadata,
+consultas y respuestas Prometheus, salud y estadísticas de contenedores. Los
+historiales completos y HTML voluminosos permanecen en la VM, circunstancia
+registrada en el resumen de evidencia.
+
+El manifiesto general actual
+\path{../../experimentos/resultados/SHA256SUMS} contiene 468 entradas para 468
+archivos. La verificación completa sobre los bytes canónicos versionados produjo
+468 hashes correctos, cero incorrectos y cero archivos ausentes. SHA-256 permite detectar alteraciones
+respecto del manifiesto, pero no constituye una firma ni prueba autenticidad por
+sí solo. La procedencia se apoya adicionalmente en metadata, timestamps, SHA
+probado y el documento
+\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md}.
+
+\subsection{Eficiencia nominal: 50 usuarios durante cinco minutos}
+\label{subsec:eficiencia-nominal}
+
+Las diez repeticiones terminaron con código cero y registraron 0 respuestas HTTP
+5xx. La Tabla~\ref{tab:repeticiones-eficiencia} transcribe el CSV verificado; r1
+y r10 se muestran porque forman parte de la evidencia, aunque no intervienen en
+el análisis central.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Diez repeticiones de eficiencia nominal medidas por Locust.}
+  \label{tab:repeticiones-eficiencia}
+  \begin{tabular}{|c|r|r|r|r|c|}
+    \hline
+    \textbf{Rep.} & \textbf{Requests} & \textbf{HTTP 5xx} & \textbf{p95 (ms)} & \textbf{p99 (ms)} & \textbf{Uso} \\
+    \hline
+    r1  & 6991 & 0 & 87 & 1000 & Conservada \\
+    r2  & 7180 & 0 & 24 & 40   & Central \\
+    r3  & 7101 & 0 & 80 & 1000 & Central \\
+    r4  & 7162 & 0 & 24 & 45   & Central \\
+    r5  & 7155 & 0 & 54 & 740  & Central \\
+    r6  & 7209 & 0 & 31 & 85   & Central \\
+    r7  & 7164 & 0 & 58 & 410  & Central \\
+    r8  & 7159 & 0 & 27 & 110  & Central \\
+    r9  & 7111 & 0 & 66 & 540  & Central \\
+    r10 & 7231 & 0 & 23 & 88   & Conservada \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Las ocho repeticiones centrales suman 57\,241 consultas GET de la población
+formal. Para p95, los valores 24, 80, 24, 54, 31, 58, 27 y 66 ms producen media
+45,500000 ms, desviación muestral 21,764978 ms e IC95
+[27,304023; 63,695977] ms. Como el límite superior 63,695977 ms es menor que
+500 ms, la eficiencia \textbf{cumple} para este
+escenario nominal. La conclusión no se extrapola a cargas, duraciones o entornos
+distintos.
+
+El p99 se analiza como indicador secundario. Los valores 40, 1000, 45, 740, 85,
+410, 110 y 540 ms producen media 371,250000 ms, desviación 364,032475 ms e IC95
+[66,911235; 675,588765] ms. El límite superior permanece bajo el umbral
+secundario de 750 ms, por lo que ese indicador también cumple. La corrección es
+exclusivamente de delimitación de población y no cambia campaña, raws ni umbral.
+
+Para trazabilidad, el análisis histórico de la fila \texttt{Aggregated} mezcló
+57\,241 GET con 400 login en r2--r9. Produjo p95 media 57,500000 ms e IC95
+[26,456064; 88,543936] ms, y p99 media 624,000000 ms e IC95
+[116,881810; 1131,118190] ms; p99 no cumplía bajo esa población incorrecta.
+
+Las ocho ventanas centrales contienen 0 HTTP 5xx de 57\,241 consultas GET, es
+decir, 0\%, frente al objetivo menor que 1\%. Esto demuestra ausencia de 5xx en
+el escenario observado; no demuestra disponibilidad anual, ausencia de otros
+errores ni fiabilidad absoluta.
+
+\subsubsection{Contraste con Prometheus}
+
+Las series Prometheus de r2--r9 contienen p95 de 10,004445; 30,067916;
+9,949600; 21,021640; 13,281961; 22,143963; 11,358052 y 28,439426 ms. Su media es
+18,283375 ms, la desviación 8,240924 ms y el IC95 [11,393791; 25,172960] ms;
+las diez ventanas registran cero 5xx. Locust mide extremo a extremo desde el
+generador, incluyendo red, Gateway y serialización. Prometheus mide el histograma
+interno de Reservas para su ventana. Son puntos de observación complementarios,
+no resultados intercambiables ni fuentes que deban forzarse a coincidir.
+
+\subsection{Rampa exploratoria de 0 a 200 usuarios}
+\label{subsec:rampa-exploratoria}
+
+La rampa de diez minutos produjo 29,217 solicitudes, una respuesta HTTP 500 en
+\texttt{GET /api/v1/reservas} y una tasa exacta de 0,00342266\%. Locust registró
+p95 de 180 ms, p99 de 1100 ms y máximo de 14024,163663 ms. El proceso terminó
+con estado fallido porque se configuró para devolver error ante cualquier fallo,
+no porque la mayoría de solicitudes hubiera fallado.
+
+La tasa 5xx permaneció por debajo de 1\% y el p95 fue moderado mientras la carga
+crecía, pero p99 y el máximo confirman una cola larga y picos aislados. Esta
+prueba complementa el estudio de capacidad progresiva; no pertenece al CSV
+central ni sustituye el escenario nominal ISO.
+
+\subsection{Fiabilidad nominal y alcance de la disponibilidad}
+\label{subsec:fiabilidad-disponibilidad}
+
+La campaña correctiva completó diez repeticiones válidas independientes de una
+hora con 50 usuarios y \texttt{spawn-rate} 10 usuarios/s sobre el SHA
+\texttt{b94b7af7ebab2510c16eae0c70593664763de1e7}. El análisis central utiliza
+r2--r9 conforme al prerregistro.
+
+Las diez repeticiones contienen 896\,964 GET de negocio, con 0 respuestas
+HTTP 401 y 0 respuestas HTTP 5xx. Los contadores finales de Locust, incluyendo
+login y refresh, suman 899\,464 requests con 0 fallos.
+
+Sobre r2--r9, la tasa HTTP 5xx tuvo media 0,000000\,\%, desviación muestral
+0,000000\,\% e IC95 [0,000000; 0,000000]\,\%. El límite superior del IC95 es
+menor que 1\,\%, por lo que \textbf{E2 cumple} el criterio acotado
+prerregistrado.
+
+Como métricas descriptivas, p95 presentó media 6,680642 ms, desviación
+muestral 0,177173 ms e IC95 [6,532522; 6,828763] ms. P99 presentó media
+9,849009 ms, desviación muestral 0,489360 ms e IC95
+[9,439893; 10,258124] ms. El prerregistro establece que estos percentiles son
+informativos y no constituyen criterios adicionales de aceptación E2.
+
+Los percentiles se reconstruyen directamente desde
+\texttt{locust\_requests.csv} sobre todos los GET de negocio, sin excluir
+observaciones por código HTTP, éxito, fallo o latencia. Login y refresh se
+contabilizan por separado y quedan fuera de la población de percentiles de
+negocio. Los intentos inválidos o abortados permanecen preservados y no se
+incorporan a r2--r9.
+
+La campaña histórica permanece publicada como antecedente metodológico. En ella
+la ausencia de renovación de sesión produjo 668\,367 respuestas HTTP 401 y
+debilitó la carga efectiva después del TTL. Ese resultado histórico no se
+elimina ni se reinterpreta como si hubiese utilizado refresh.
+
+La tasa HTTP 5xx y la disponibilidad temporal no son equivalentes. Para afirmar
+una disponibilidad de al menos 99,5\,\% sería necesario operacionalizar tiempo
+apto frente a tiempo total. En consecuencia, E2 sí es concluyente para su
+criterio acotado de errores, mientras la disponibilidad temporal permanece
+\textbf{no concluyente}.
+
+\subsection{Experimento de arbitraje concurrente S0--S4}
+\label{subsec:arbiter-resultados}
+
+El experimento ARBITER comparó cinco comportamientos seleccionables sin alterar
+el camino productivo predeterminado: S0, escritura sin arbitraje usada como
+control negativo; S1, control optimista; S2, control pesimista; S3, coordinador
+de aplicación elegido mediante el algoritmo Bully y orden lógico de Lamport; y
+S4, transacción \texttt{SERIALIZABLE} en CockroachDB respaldada por el consenso
+del clúster. S3 no utiliza Raft: su líder pertenece a la aplicación. En S4 no
+existe un coordinador Bully; la coordinación corresponde a la persistencia
+distribuida del clúster.
+
+La campaña del SHA
+\texttt{e43967eda31410b7fef060cfc7903cea94efbe96} planificó 130 corridas. Se
+completaron 123, siete fallaron y ninguna fue clasificada como inválida. La regla
+prerregistrada excluye las repeticiones 1 y 10 de cada configuración, lo que
+produce 104 posiciones analíticas teóricas. Cinco posiciones centrales de
+Esc-1 también fallaron; por ello el conjunto realmente analizable contiene 99
+corridas completadas. La Tabla~\ref{tab:arbiter-conteos} evita confundir esas
+cuatro cantidades.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Conteos auditados de la campaña ARBITER.}
+  \label{tab:arbiter-conteos}
+  \begin{tabular}{|l|r|r|r|r|}
+    \hline
+    \textbf{Escenario} & \textbf{Planificadas} & \textbf{Completadas} & \textbf{Fallidas} & \textbf{Analíticas válidas} \\
+    \hline
+    Esc-1, nominal & 10 & 3 & 7 & 3 \\
+    \hline
+    Esc-2, contención media & 50 & 50 & 0 & 40 \\
+    \hline
+    Esc-3, contención máxima & 50 & 50 & 0 & 40 \\
+    \hline
+    Esc-4, caída controlada & 20 & 20 & 0 & 16 \\
+    \hline
+    \textbf{Total} & \textbf{130} & \textbf{123} & \textbf{7} & \textbf{99} \\
+    \hline
+  \end{tabular}
+\end{table}
+
+S0 exhibió dobles adjudicaciones en todas las muestras analíticas de
+contención: 8/8 en Esc-2 y 8/8 en Esc-3. Para S1--S4 no se observaron dobles
+adjudicaciones en las corridas ejecutadas; este resultado acotado no constituye
+una garantía de aislamiento absoluto. La Tabla~\ref{tab:arbiter-estrategias}
+resume las 96 muestras analíticas de contención y caída, separadas de las tres
+muestras nominales válidas de Esc-1.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Resultado principal por estrategia en muestras analíticas.}
+  \label{tab:arbiter-estrategias}
+  \begin{tabular}{|c|r|l|l|}
+    \hline
+    \textbf{Estrategia} & \textbf{$n$} & \textbf{Dobles adjudicaciones} & \textbf{Interpretación} \\
+    \hline
+    S0 & 16 & Observadas en 16/16 & Control negativo efectivo \\
+    \hline
+    S1 & 16 & No observadas & Resultado limitado a las corridas \\
+    \hline
+    S2 & 16 & No observadas & Resultado limitado a las corridas \\
+    \hline
+    S3 & 24 & No observadas & Incluye 8 corridas de caída \\
+    \hline
+    S4 & 24 & No observadas & Incluye 8 corridas de caída \\
+    \hline
+  \end{tabular}
+\end{table}
+
+La Tabla~\ref{tab:arbiter-http} presenta el censo HTTP de la población central
+r2--r9. Se deriva de los registros \texttt{REQUEST} de los raw, no del resumen
+estadístico. Todos los fallos encontrados fueron HTTP 500 y no hubo respuestas
+4xx.
+
+\begin{table}[ht]
+  \centering
+  \scriptsize
+  \caption{Censo HTTP ARBITER en la población central r2--r9.}
+  \label{tab:arbiter-http}
+  \begin{tabular}{|c|c|r|r|r|r|r|}
+    \hline
+    \textbf{Esc.} & \textbf{Estrategia} & \textbf{Requests} & \textbf{2xx} & \textbf{4xx} & \textbf{5xx} & \textbf{Error} \\
+    \hline
+    2 & S0 & 400 & 400 & 0 & 0 & 0\% \\
+    2 & S1 & 400 & 400 & 0 & 0 & 0\% \\
+    2 & S2 & 400 & 348 & 0 & 52 & 13,0000\% \\
+    2 & S3 & 400 & 400 & 0 & 0 & 0\% \\
+    2 & S4 & 400 & 396 & 0 & 4 & 1,0000\% \\
+    \hline
+    3 & S0 & 1\,600 & 1\,586 & 0 & 14 & 0,8750\% \\
+    3 & S1 & 1\,600 & 1\,173 & 0 & 427 & 26,6875\% \\
+    3 & S2 & 1\,600 & 1\,381 & 0 & 219 & 13,6875\% \\
+    3 & S3 & 1\,600 & 1\,600 & 0 & 0 & 0\% \\
+    3 & S4 & 1\,600 & 1\,368 & 0 & 232 & 14,5000\% \\
+    \hline
+  \end{tabular}
+\end{table}
+
+S0 es el baseline formal y control negativo; S3 no lo es. La comparación
+descriptiva de 26,6875\% frente a 0\% corresponde a S1 frente a S3 en Esc-3.
+Respecto del baseline formal S0, la comparación correcta en ese escenario es
+26,6875\% frente a 0,8750\%. Esta asimetría impide atribuir superioridad
+operacional global a S1--S4.
+
+Cada \texttt{HTTP\_ERROR} conserva \texttt{sent\_ns}, \texttt{received\_ns} y
+\texttt{latency\_ms}. Los HTTP 500 fueron incluidos en los promedios por corrida:
+la latencia publicada representa todos los intentos bajo carga, incluidas las
+respuestas 500, y no solo adjudicaciones exitosas. No hubo exclusión selectiva
+de fallos de la población principal.
+
+En S3, los tiempos de recuperación de las ocho muestras analíticas fueron 0,
+0, 1, 0, 0, 0, 0 y 0 ms: media 0,125 ms, mediana 0 ms y rango 0--1 ms. En siete
+casos no se observó demora medible con la resolución milimétrica disponible;
+esto no equivale a recuperación instantánea. En S4, la recuperación observada
+por healthcheck presentó media 3252,11 ms, mediana 3171,85 ms, desviación
+estándar 2188,52 ms y rango 1116,75--5949,68 ms. Esta medición demuestra el
+retorno del servicio al estado saludable, no el tiempo interno de convergencia
+de Raft.
+
+El oráculo evaluó 96 muestras analíticas. I1 (ausencia de doble adjudicación)
+produjo 80 PASS y 16 FAIL, todos estos últimos en S0; I2 (exactamente un
+adjudicatario) produjo 96 PASS; e I3 (equipo fuera de mantenimiento), 96 PASS.
+I4 (liberación exactamente una vez tras cancelar) e I5 (acceso solo con reserva
+vigente) quedaron ambos en 96 \texttt{NOT\_OBSERVED}; no se interpretan como
+aprobados.
+
+Para la tasa de doble adjudicación, las comparaciones prerregistradas entre S0
+como grupo A y cada estrategia S1--S4 como grupo B, tanto en Esc-2 como en
+Esc-3, obtuvieron $U=64$, $p=0,0007775304469403844$ y $A_{12}=1,0$, con ocho muestras por
+grupo. $A_{12}$ expresa la probabilidad de que A produzca un valor mayor que B:
+en esta métrica, un valor mayor es desfavorable, de modo que 1,0 representa el
+peor comportamiento de S0 y no su superioridad. Las comparaciones de latencia
+mostraron diferencias entre S0 y S3 en Esc-2 ($U=4$, $p=0,00328$,
+$A_{12}=0,0625$) y entre S0 y S1--S3 en Esc-3 ($p\leq0,00114$ y
+$A_{12}\leq0,015625$); S0 frente a S4 no mostró diferencia estadística en
+Esc-2 ($p=0,7527$) ni Esc-3 ($p=0,5286$). Estos contrastes no compensan la
+inseguridad observada en S0.
+
+El índice de Jain fue 1,0000, pero no discrimina equidad en este diseño: cada
+corrida usa una única franja y un único equipo y, en S1--S4, normalmente existe
+un solo adjudicatario. Se trata de un resultado degenerado, no de evidencia de
+superioridad. Los rechazos innecesarios medidos fueron cero porque todas las
+solicitudes contenciosas clasificadas como \texttt{REJECTED} compartieron equipo
+y franja con una adjudicación confirmada. \texttt{HTTP\_ERROR} no se convierte
+en confirmación ni en rechazo: por ello, cero dobles adjudicaciones y cero
+rechazos innecesarios pueden coexistir con fallos HTTP y no significan que todas
+las solicitudes terminaran correctamente. Los valores $U=64$,
+$p=0,0007775304469403844$ y $A_{12}=1,0$ siguen siendo matemáticamente
+reproducibles y los 500 no invalidan su cálculo, pero tampoco prueban
+disponibilidad equivalente. La conclusión queda limitada a seguridad observada
+bajo la carga ofrecida, no a corrección o superioridad operacional absoluta.
+Además, siete corridas de Esc-1 fallaron ante respuestas HTTP 500 y este
+escenario aporta solo $n=3$ muestras válidas; I4 e I5 no
+fueron observados; S3 está limitado por la resolución temporal; y S4 mide
+healthcheck, no consenso directamente. La evidencia solo permite afirmar que no
+se observaron modificaciones en las tablas productivas que fueron verificadas,
+no impacto cero absoluto sobre toda la producción.
+
+La evidencia versionada de la campaña está disponible en
+\path{../../experimentos/resultados/arbiter/campaign/}. Corresponde al SHA
+experimental \texttt{e43967eda31410b7fef060cfc7903cea94efbe96} e incluye
+\path{manifest/checkpoint.json}, \path{summary/runs.json},
+\path{summary/runs.csv}, \path{analysis/comparisons.json},
+\path{analysis/oracle/}, \path{raw/} y \path{SHA256SUMS}. Este último contiene
+315 entradas verificadas.
+
+\subsection{Evaluación ISO/IEC 25010 seleccionada}
+\label{subsec:tabla-iso25010}
+
+Observabilidad apoya la eficiencia, la tasa de fallos y el diagnóstico, pero no
+certifica ISO 25010 por sí sola. La Tabla~\ref{tab:resultado-iso25010} integra
+solo características con evidencia disponible.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Resultado de las características ISO/IEC 25010 seleccionadas.}
+  \label{tab:resultado-iso25010}
+  \begin{tabular}{|p{2.3cm}|p{2.5cm}|p{2.2cm}|p{4.0cm}|p{1.8cm}|}
+    \hline
+    \textbf{Característica} & \textbf{Métrica} & \textbf{Objetivo} & \textbf{Evidencia/resultado} & \textbf{Estado} \\
+    \hline
+    Eficiencia & p95 nominal, 50 usuarios & IC95 superior $<500$ ms & Media 45,50 ms; IC95 [27,30; 63,70] ms & CUMPLE \\
+    \hline
+    Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Media 371,25 ms; SD 364,03 ms; IC95 [66,91; 675,59] ms & CUMPLE \\
+    \hline
+    Fiabilidad acotada & HTTP 5xx correctivo, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,000000\%; IC95 [0,000000; 0,000000]\% en r2--r9 & CUMPLE en escenario \\
+    \hline
+    Disponibilidad & Tiempo apto/tiempo total & $\geq99,5\%$ & Diez horas ejecutadas, sin indicador temporal operacionalizado & NO CONCLUYENTE \\
+    \hline
+    Seguridad & Decisiones dinámicas por Gateway & 100\%; cero falsos permitidos/rechazados y flaky & 21/21; IC95 Wilson [0,845361; 1]; todos los conteos adversos en cero & CUMPLE en matriz \\
+    \hline
+    Mantenibilidad & Cobertura por componente & Umbrales previos de líneas y puertas secundarias & Todos cumplen salvo Android: 38,3407\% de líneas frente a 70\% & NO CUMPLE \\
+    \hline
+    Compatibilidad & Suite Web en tres motores & 100\%; cero fallidos, omitidos y flaky & Chromium, Firefox y WebKit: 24/24 cada uno; IC95 Wilson [0,862024; 1] & CUMPLE en suite \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Seguridad, mantenibilidad y compatibilidad se midieron en E3 sobre el SHA
+experimental
+\texttt{fa7d75ec0f75573938bf46ed6a68f0aee99606ac}. Los commits posteriores
+incorporan análisis y documentación; no cambian retrospectivamente el software
+medido. El resultado consolidado se conserva en
+\path{../../experimentos/resultados/analisis-e3.json} y su relación con el
+protocolo, productores y raw se explicita en
+\path{../../experimentos/resultados/TRAZABILIDAD-E3-E4.md}.
+
+En seguridad se realizaron tres repeticiones de siete decisiones: 21/21 fueron
+correctas, con proporción observada 1, IC95 Wilson
+[0,845360981013798; 1], cero accesos incorrectamente permitidos, cero
+incorrectamente rechazados y cero casos flaky. La decisión es \textbf{CUMPLE}
+dentro de la matriz dinámica, fixtures, Gateway y entorno ensayados; no es una
+garantía universal. La auditoría estática anterior de 198 operaciones y sus
+limitaciones de ámbito se conserva como antecedente complementario.
+
+En compatibilidad, Chromium, Firefox y WebKit obtuvieron 24/24 casos aprobados
+por motor, sin fallidos, omitidos ni flaky. Cada proporción observada fue 1 y su
+IC95 Wilson [0,862023795269197; 1]. La decisión es \textbf{CUMPLE} para la
+suite, versiones de motor y entorno ensayados, sin extrapolarla a todos los
+navegadores o dispositivos.
+
+\subsection{Mantenibilidad: evidencia y alcance}
+\label{subsec:mantenibilidad}
+
+La \textbf{modularidad} se sustenta en cinco microservicios con propiedad de
+datos diferenciada y en clientes Web y Android separados. Dentro de los
+servicios, controladores, casos de uso, puertos y adaptadores reducen el impacto
+de sustituir persistencia o clientes HTTP. Esta separación no es absoluta: el
+dominio Académico todavía expone tipos de paginación de Spring, limitación
+descrita en la Sección~\ref{sec:capas-solid}.
+
+La \textbf{analizabilidad} se apoya en Checkstyle, ESLint, logs estructurados,
+métricas, trazas y reportes Surefire, JaCoCo y V8. La arquitectura registra
+decisiones mediante ADR y emplea Repository, Strategy, State, Observer, Facade,
+Factory y Singleton en puntos concretos; estos patrones aportan vocabulario y
+puntos de variación, pero su sola presencia no prueba bajo acoplamiento.
+
+La \textbf{modificabilidad} se evidencia mediante contratos Pact y gates por
+servicio: un cambio se valida antes de construir imágenes ligadas al SHA. La
+\textbf{testabilidad} cuenta con unitarias, integración Spring/Room,
+Testcontainers, pruebas de seguridad, Pact, Vitest, Playwright e instrumentadas
+Android. Los umbrales son verificables en configuración: 70\% de líneas para
+Auth, Usuarios, Académico y Gateway; 80\% de líneas y 48\% de ramas para
+Reservas; y 70\% para statements, ramas, funciones y líneas Web.
+
+La Tabla~\ref{tab:mantenibilidad-e3} presenta todas las puertas oficiales E3.
+Cada métrica produjo el mismo valor en las tres repeticiones, por lo que
+$s=0$ y el IC95 t es degenerado [media; media]. Esto refleja repetición idéntica
+del proceso de medición sobre el mismo SHA, no certeza universal ni independencia
+estadística entre líneas.
+
+\begin{table*}[ht]
+  \centering
+  \small
+  \caption{Resultados oficiales de mantenibilidad E3, tres repeticiones por métrica.}
+  \label{tab:mantenibilidad-e3}
+  \begin{tabular}{|l|l|r|r|l|}
+    \hline
+    \textbf{Componente} & \textbf{Métrica} & \textbf{Media/IC95 (\%)} & \textbf{Umbral (\%)} & \textbf{Decisión} \\
+    \hline
+    Auth & Líneas & 88,0422 & 70 & CUMPLE \\
+    Usuarios & Líneas & 84,0524 & 70 & CUMPLE \\
+    Académico & Líneas & 83,1609 & 70 & CUMPLE \\
+    Reservas & Líneas & 84,3586 & 80 & CUMPLE \\
+    Reservas & Ramas & 56,7256 & 48 & CUMPLE \\
+    Gateway & Líneas & 88,8889 & 70 & CUMPLE \\
+    Web & Líneas & 89,91 & 70 & CUMPLE \\
+    Web & Ramas & 73,69 & 70 & CUMPLE \\
+    Web & Funciones & 81,87 & 70 & CUMPLE \\
+    Web & Sentencias & 85,96 & 70 & CUMPLE \\
+    Android & Líneas & \textbf{38,3407} & 70 & \textbf{NO CUMPLE} \\
+    \hline
+  \end{tabular}
+\end{table*}
+
+La decisión global experimental de mantenibilidad es \textbf{NO CUMPLE
+únicamente por Android}, cuya cobertura de líneas fue
+38,34070796460177\%, inferior al umbral previo de 70\%. Las cifras del SHA
+\texttt{e43967eda31410b7fef060cfc7903cea94efbe96}, incluida la referencia
+Android de 45,69\%, permanecen como antecedentes históricos de CI y no se usan
+como resultado oficial E3.
+
+\subsection{Análisis crítico}
+\label{subsec:analisis-critico-final}
+
+Las fortalezas principales son una p95 nominal con amplio margen respecto de
+500 ms, cero 5xx en las muestras centrales, instrumentación de las tres señales,
+evidencia raw trazable, pruebas multicapa y gates CI/CD ligados al SHA. La
+arquitectura permite relacionar un cambio con pruebas, imagen y despliegue, y el
+manifiesto hace detectables alteraciones en el conjunto experimental.
+
+Las limitaciones impiden una conclusión total. El p99 de eficiencia presenta
+gran dispersión aunque cumple su umbral previo; la rampa contiene un máximo
+superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña histórica de
+fiabilidad registró decenas de miles de 401 por repetición; la campaña
+correctiva registró 0 HTTP 401 y 0 HTTP 5xx, aunque la disponibilidad temporal
+no fue operacionalizada. A ello se suman el panel Mobile proxy, falta de rollback automático,
+ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
+persistidos para todos los componentes. Estas restricciones se documentan como
+amenazas a la generalización, no se ocultan mediante promedios o extrapolaciones.
+
+\subsection{Reflexión ética}
+\label{subsec:reflexion-etica}
+
+SCLI trata perfiles de estudiantes y docentes, asignaciones institucionales,
+reservas, incidentes y registros de asistencia. Aunque el sistema no está
+integrado con la matrícula académica oficial ni con fuentes externas de la
+universidad, estos datos internos permiten inferir presencia, horarios y
+actividad. Por ello deben recopilarse únicamente los atributos necesarios para
+operar el laboratorio, limitarse su conservación al propósito declarado y
+evitar que observabilidad o logs repliquen credenciales, tokens o información
+personal innecesaria.
+
+La trazabilidad de aprobaciones y asistencia favorece la rendición de cuentas,
+pero también puede convertirse en vigilancia excesiva si se usa para finalidades
+distintas de las informadas. El control por roles reduce exposición, sin
+eliminar la obligación de revisar periódicamente permisos y accesos. Las
+métricas deben agregarse cuando sea posible y no utilizarse para elaborar
+perfiles personales de productividad. Estas decisiones siguen los principios
+de privacidad, prevención del daño, honestidad y responsabilidad profesional
+del Código de Ética de la ACM \cite{acm2018code}.
+
+Las decisiones académicas o disciplinarias no deben automatizarse a partir de
+una ausencia, alerta o métrica aislada. SCLI aporta evidencia operacional; una
+persona responsable debe verificar contexto, errores de identificación,
+indisponibilidad técnica y reglas institucionales antes de actuar. El equipo
+mantiene responsabilidad sobre diseño, validación y comunicación de
+limitaciones, incluida la ausencia de integración con registros académicos
+oficiales.
+
+La responsabilidad profesional también alcanza la seguridad del producto y la
+veracidad de su evaluación. Los permisos deben aplicarse en Backend y no solo
+ocultar controles en las interfaces; los incidentes y trazas deben conservarse
+sin exponer datos personales; y ninguna automatización debe desplazar el juicio
+humano en decisiones que afecten a estudiantes o docentes. En coherencia con el
+Código de Ética y Práctica Profesional de Ingeniería de Software, aprobado
+conjuntamente por ACM e IEEE Computer Society \cite{acmieee1999secode}, el equipo
+debe comunicar tanto los resultados favorables como los fallos y límites. Por
+ello se mantienen las siete corridas fallidas de ARBITER, los invariantes no
+observados, el análisis histórico p99 incorrectamente poblado y los 401 de la
+campaña de fiabilidad, en
+lugar de convertir evidencia desfavorable en cumplimiento.
+
+\subsection{Declaración de uso de inteligencia artificial generativa}
+\label{subsec:declaracion-ia}
+
+Durante el desarrollo y la redacción se empleó inteligencia artificial
+generativa como herramienta de apoyo. El código y el texto resultantes fueron
+revisados por integrantes del equipo y contrastados con el repositorio, las
+pruebas y la evidencia disponible. Una salida generada por IA no se considera
+por sí sola evidencia experimental: los resultados reportados proceden de los
+archivos de protocolo, datos crudos, resúmenes y verificaciones versionadas. La
+selección técnica, la interpretación de resultados y la responsabilidad final
+corresponden al equipo FUVV; no se atribuye a la herramienta autoría ni decisión
+autónoma.
+
+\subsection{Amenazas a la validez}
+\label{subsec:amenazas-validez}
+
+\subsubsection{Validez interna}
+
+\textbf{Amenaza:} calentamiento de JVM, cachés y recursos compartidos entre
+contenedores pueden alterar la latencia. \textbf{Efecto:} diferencias entre
+repeticiones que no provienen del cambio evaluado. \textbf{Mitigación aplicada:}
+protocolo previo, diez repeticiones nominales, conservación de r1 y r10 y uso
+uniforme de r2--r9 para el análisis central. \textbf{Riesgo residual:} no se
+aislaron por completo CPU, red, cachés ni pausas del runtime en el host.
+
+\textbf{Amenaza:} las preguntas PI1 y PI2 se formalizaron en el manuscrito
+después de ejecutadas las campañas, aunque el protocolo, la población y los
+umbrales de decisión ya estaban versionados previamente.
+\textbf{Efecto:} existe riesgo de sesgo retrospectivo al expresar preguntas de
+investigación con conocimiento de resultados ya observados.
+\textbf{Mitigación aplicada:} se conserva la cronología Git de los criterios
+previos, no se repitieron las campañas para favorecer las respuestas y las
+reglas permiten resultados negativos.
+\textbf{Riesgo residual:} las preguntas no fueron prerregistradas literalmente
+antes de la ejecución; por tanto, sus respuestas deben interpretarse como una
+formalización posterior aplicada a criterios experimentales preexistentes.
+
+\textbf{Amenaza:} la disponibilidad HTTP fue asimétrica entre estrategias
+ARBITER; Esc-3/S1 alcanzó 26,6875\% de respuestas 500, mientras Esc-3/S3 tuvo
+0\% y el baseline S0 0,8750\%. \textbf{Efecto:} una estrategia puede evitar
+dobles adjudicaciones porque controla la concurrencia, pero también porque parte
+de la carga falla antes de confirmar. \textbf{Mitigación aplicada:} se conservan
+y publican todos los intentos y códigos HTTP. \textbf{Riesgo residual:} la tasa
+de doble adjudicación no operacionaliza disponibilidad ni corrección total.
+
+\textbf{Amenaza:} la tasa 5xx no operacionaliza tiempo disponible.
+\textbf{Efecto:} el cumplimiento del umbral de errores podría interpretarse
+erróneamente como disponibilidad. \textbf{Mitigación aplicada:} la campaña
+correctiva completó diez ventanas válidas de una hora con 0 HTTP 401 y
+0 HTTP 5xx; la campaña histórica con 401 permanece publicada por separado y
+no se calcula disponibilidad a partir de ninguna de las dos.
+\textbf{Riesgo residual:} el tiempo apto frente al tiempo total sigue siendo
+desconocido.
+
+\subsubsection{Validez externa}
+
+\textbf{Amenaza:} la evidencia procede de una VM y un conjunto de datos y carga
+controlados, no de una instalación distribuida representativa de todas las
+condiciones institucionales. \textbf{Efecto:} p95, p99 y tasa de errores pueden
+cambiar con otra red, hardware, volumen o distribución de usuarios.
+\textbf{Mitigación aplicada:} se documentan versión, SHA, herramientas,
+parámetros y datos crudos para repetir el escenario. \textbf{Riesgo residual:}
+los resultados solo se generalizan al escenario medido.
+
+\textbf{Amenaza:} el número de escenarios de carga y compatibilidad es limitado.
+\textbf{Efecto:} pueden quedar combinaciones de navegador, dispositivo o
+contención sin observar. \textbf{Mitigación aplicada:} se usan tres motores Web,
+un emulador Android y una rampa exploratoria además del caso nominal.
+\textbf{Riesgo residual:} dispositivos reales y redes adversas permanecen sin
+cubrir; aunque ARBITER S0--S4 fue ejecutado, Esc-1 conservó solo tres muestras
+analíticas válidas y el dataset experimental no representa toda la demanda de
+un campus real.
+
+\subsubsection{Validez de constructo}
+
+\textbf{Amenaza:} Locust y Prometheus miden latencia en puntos diferentes, y el
+panel Mobile utiliza un proxy del Gateway. \textbf{Efecto:} tratar las métricas
+como equivalentes sobreestimaría la experiencia E2E o escondería latencia de
+red y renderizado. \textbf{Mitigación aplicada:} se reportan por separado y se
+explica el punto de medición. \textbf{Riesgo residual:} no existe medición E2E
+real desde el dispositivo.
+
+\textbf{Amenaza:} el estimando de latencia ARBITER mezcla respuestas válidas y
+HTTP 500, con tasas de fallo diferentes entre estrategias. \textbf{Efecto:} no
+puede interpretarse como latencia exclusiva de adjudicaciones exitosas ni como
+comparación de disponibilidad equivalente. \textbf{Mitigación aplicada:} la
+población principal conserva todos los intentos y se informa el censo HTTP por
+separado. \textbf{Riesgo residual:} restringir ahora el análisis principal a
+2xx sería una redefinición post hoc no prerregistrada. Un eventual análisis
+solo-2xx sería exclusivamente una sensibilidad secundaria y no sustituiría el
+resultado principal.
+
+\textbf{Amenaza:} cobertura, número de pruebas y configuración del pipeline no
+equivalen por sí solos a calidad completa. \textbf{Efecto:} declarar
+cumplimiento por conteo puede omitir seguridad, concurrencia o comportamiento
+semántico. \textbf{Mitigación aplicada:} se combinan pruebas unitarias,
+contratos, integración, E2E y evidencia experimental, y las cifras variables se
+remiten al reporte del SHA. \textbf{Riesgo residual:} Seguridad,
+Compatibilidad y Mantenibilidad permanecen parciales donde falta evidencia
+integral actual. Esas auditorías históricas parciales no sustituyen las
+decisiones experimentales E3 reportadas en la
+Sección~\ref{subsec:tabla-iso25010}. La trazabilidad contractual incorporada
+posteriormente se presenta en la Sección~\ref{sec:contratos-openapi}.
+
+\subsection{Trazabilidad final de la Entrega 4}
+\label{subsec:trazabilidad-final}
+
+\begin{table}[ht]
+  \centering
+  \scriptsize
+  \caption{Matriz final de trazabilidad respecto de la rúbrica.}
+  \label{tab:trazabilidad-final}
+  \begin{tabular}{|p{1.1cm}|p{3.0cm}|p{4.1cm}|p{2.2cm}|p{1.7cm}|}
+    \hline
+    \textbf{Req.} & \textbf{Implementación} & \textbf{Evidencia} & \textbf{Sección} & \textbf{Estado} \\
+    \hline
+    D1.1 & Capas y puertos & Servicios; dependencia Spring Page/Pageable en dominio Académico & Arquitectura/SOLID & PARCIAL \\
+    \hline
+    D1.2 & Siete patrones reales & ADR-005 y clases Repository, Factory, Strategy, State, Observer, Facade, Singleton & Patrones & CUMPLE \\
+    \hline
+    D2.1 & SPA Web funcional y logout remoto & React, rutas, reservas, JWT y revocación & Aplicación Web & CUMPLE \\
+    \hline
+    D2.2 & Calidad Web & Umbrales V8 al 70\%; Playwright en tres motores & Pruebas Web & Resultado por SHA en CI \\
+    \hline
+    D3.1 & Cliente Android & Compose/MVVM, Room, QR; incidentes locales y FCM no E2E & Aplicación Mobile & PARCIAL \\
+    \hline
+    D3.2 & Calidad Mobile & Antecedente del SHA \texttt{e43967e}: 45,69\%; E3 oficial: 38,3407\%, bajo 70\% & Pruebas Mobile & NO CUMPLE en E3 \\
+    \hline
+    D4.1 & Contratos Pact & Consumidores y verificadores versionados; resultado por SHA & Pact & EVIDENCIADO EN CI \\
+    \hline
+    D4.2 & Integración CockroachDB & Testcontainers, Flyway, cifrado e idempotencia & Testcontainers & CUMPLE \\
+    \hline
+    D5.1 & Pirámide de pruebas & Backend, Web, Mobile, integración y E2E verdes en \texttt{e43967e}; Mobile conserva medición documental bajo 70\% & Estrategia de pruebas & PARCIAL \\
+    \hline
+    D5.2 & CI/CD con gates y SHA & Workflows, GHCR, APK, deployment; sin rollback y Actions por tag & CI/CD & PARCIAL \\
+    \hline
+    D6.1 & Métricas, trazas y logs & Prometheus, OTel, Tempo, Loki, cAdvisor y Grafana & Observabilidad & CUMPLE \\
+    \hline
+    D6.2 & Dashboard de seis paneles & JSON canónico; latencia Mobile solo proxy de Gateway & Dashboard & PARCIAL \\
+    \hline
+    D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 CUMPLE $<1\%$; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
+    \hline
+    D7.2 & Experimento ARBITER & 130 planificadas; 123 completadas; 99 muestras analíticas válidas & ARBITER/oráculo & PARCIAL \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Conclusiones}
+\label{subsec:conclusiones-e4}
+
+La Entrega 4 consolidó un sistema distribuido con cinco aplicaciones Backend,
+clientes Web y Android, persistencia CockroachDB y controles de seguridad
+integrados. La arquitectura por capas, los patrones aplicados y los contratos
+HTTP permiten separar responsabilidades, aunque permanece deuda puntual en el
+dominio Académico y en capacidades Mobile sin backend remoto.
+
+La calidad cuenta con evidencia reproducible: pruebas unitarias, integración
+real con CockroachDB, Pact, Playwright, Android instrumentado, Locust y un
+pipeline que condiciona imágenes y despliegue. Backend y Web tienen gates de
+cobertura configurados; la evidencia Mobile del HEAD permanece bajo 70\%, por
+lo que no se afirma cumplimiento global ni se atribuyen al HEAD cifras de un
+reporte anterior.
+
+La eficiencia nominal cumple los criterios p95 y p99 y no registró HTTP 5xx en
+las muestras centrales; la rampa muestra picos de cola. La campaña correctiva
+de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
+0,000000\,\% e IC95 [0,000000; 0,000000]\,\%, con 0 HTTP 401 y 0 HTTP 5xx
+en las diez repeticiones válidas. Los 401 de la campaña histórica permanecen
+como antecedente del defecto corregido. Este resultado no demuestra
+disponibilidad de 99,5\,\%; la conclusión profesional sigue siendo parcial
+para la evaluación ISO completa.
+
+El experimento ARBITER confirmó la utilidad del control negativo: S0 presentó
+dobles adjudicaciones en las 16 muestras analíticas de contención. No se
+observaron dobles adjudicaciones con S1--S4 en las corridas ejecutadas, sin que
+esto constituya una garantía universal ni superioridad operacional: los fallos
+HTTP fueron asimétricos y alcanzaron 26,6875\% en Esc-3/S1. El resultado expresa
+seguridad observada bajo la carga ofrecida y no disponibilidad equivalente. De
+130 corridas planificadas se
+completaron 123 y quedaron 99 muestras analíticas válidas; I4 e I5 no fueron
+observados y las mediciones de recuperación conservan las limitaciones de
+resolución y healthcheck descritas en la Sección~\ref{subsec:arbiter-resultados}.
+
+La observabilidad mejora la capacidad de diagnóstico mediante Prometheus,
+OpenTelemetry, Tempo, Loki, cAdvisor y Grafana. Su dashboard satisface la
+estructura de seis paneles, pero debe sustituir el proxy Mobile por medición E2E
+real. En conjunto, la entrega está sustentada para informe y defensa siempre que
+las limitaciones experimentales y técnicas permanezcan explícitas.
+
+\subsection{Trabajo futuro}
+\label{subsec:trabajo-futuro}
+
+Las prioridades son elevar la cobertura Mobile con casos de ramas y UI de valor,
+diagnosticar mediante una campaña independiente el patrón de respuestas 401,
+operacionalizar y validar disponibilidad, investigar y reducir la variabilidad
+p99, y medir latencia E2E
+desde el dispositivo. También conviene automatizar rollback, incorporar Pact
+Broker con \emph{can-i-deploy}, extender Testcontainers a Académico, persistir
+reportes Backend/Web/Playwright y fijar versiones inmutables y uniformes de las
+herramientas CI. Estas acciones cierran brechas existentes sin introducir
+tecnología ajena a los riesgos observados.

@@ -1,0 +1,7 @@
+git_branch=fix/fiabilidad-e2
+git_sha=75128b235be35485ad6410c32f8146c9c18aa949
+host=http://localhost:8080
+prometheus_url=http://localhost:9090
+python=Python 3.12.3
+locust=locust 2.31.6 from /home/ubuntu/ORA_entrega_F/.venv-load/lib/python3.12/site-packages/locust (Python 3.12.3)
+os=Linux pfc-pruebas-e1 6.17.0-1020-oracle #20-Ubuntu SMP Sat Jul 25 00:58:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux

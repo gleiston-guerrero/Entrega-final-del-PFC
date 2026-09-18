@@ -4,6 +4,9 @@
   "title": "Registro de ejecución experimental SCLI",
   "type": "object",
   "additionalProperties": false,
+  "allOf": [{"if": {"properties": {"protocol_version": {"const": "1.1"}}},
+             "then": {"required": ["parallelism", "warmup", "batch_id", "iteration", "dataset_snapshot_id"],
+                      "properties": {"dataset_snapshot_id": {"type": "string", "minLength": 1}}}}],
   "required": [
     "run_id",
     "protocol_version",
@@ -22,6 +25,9 @@
     "environment"
   ],
   "properties": {
+    "parallelism": {"type": "integer", "minimum": 1},
+    "warmup": {"type": "boolean"},
+    "batch_id": {"type": "string", "format": "uuid"},
     "run_id": {
       "type": "string",
       "format": "uuid"

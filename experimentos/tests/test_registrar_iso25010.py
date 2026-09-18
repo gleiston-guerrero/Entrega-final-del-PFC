@@ -146,7 +146,14 @@ class RegistrarFiabilidadCorrectivaTest(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
-    def _write_stats(self, *, business_gets: int, login: int, refresh: int) -> None:
+    def _write_stats(
+        self,
+        *,
+        business_gets: int,
+        login: int,
+        refresh: int,
+        write_final: bool = True,
+    ) -> None:
         (self.evidence / "locust_stats.csv").write_text(
             "Type,Name,Request Count,Failure Count\n"
             f"GET,GET /api/v1/reservas,{business_gets},7\n"
@@ -154,6 +161,41 @@ class RegistrarFiabilidadCorrectivaTest(unittest.TestCase):
             f"POST,POST /api/v1/auth/refresh,{refresh},0\n"
             f",Aggregated,{business_gets + login + refresh},7\n",
             encoding="utf-8",
+        )
+        if write_final:
+            self._write_final_stats(
+                business_gets=business_gets,
+                login=login,
+                refresh=refresh,
+            )
+
+    def _write_final_stats(
+        self, *, business_gets: int, login: int, refresh: int
+    ) -> None:
+        payload = {
+            "entries": [
+                {
+                    "request_type": "GET",
+                    "name": "GET /api/v1/reservas",
+                    "request_count": business_gets,
+                    "failure_count": 7,
+                },
+                {
+                    "request_type": "POST",
+                    "name": "POST /api/v1/auth/login",
+                    "request_count": login,
+                    "failure_count": 0,
+                },
+                {
+                    "request_type": "POST",
+                    "name": "POST /api/v1/auth/refresh",
+                    "request_count": refresh,
+                    "failure_count": 0,
+                },
+            ]
+        }
+        (self.evidence / "locust-final-stats.json").write_text(
+            json.dumps(payload), encoding="utf-8"
         )
 
     def _write_request_events(self) -> None:
@@ -308,6 +350,24 @@ class RegistrarFiabilidadCorrectivaTest(unittest.TestCase):
         metadata = self.finalize()
         self.assertFalse(metadata["business_events_consistent"])
         self.assertFalse(metadata["execution_completed"])
+
+    def test_periodic_csv_may_lag_behind_exact_final_snapshot(self):
+        # locust_stats.csv puede quedar unos requests detrás al finalizar.
+        self._write_stats(
+            business_gets=89,
+            login=50,
+            refresh=49,
+            write_final=False,
+        )
+        self._write_final_stats(
+            business_gets=100,
+            login=50,
+            refresh=50,
+        )
+        metadata = self.finalize()
+        self.assertTrue(metadata["execution_completed"])
+        self.assertEqual(100, metadata["business_get_count"])
+        self.assertTrue(metadata["business_events_consistent"])
 
     def test_complete_hour_with_500_and_locust_exit_one_is_valid(self):
         metadata = self.finalize()

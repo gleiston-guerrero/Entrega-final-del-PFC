@@ -1,0 +1,145 @@
+run_id,protocol_version,treatment,dataset_id,dataset_snapshot_id,iteration,started_at,finished_at,duration_ms,cpu_percent_mean,cpu_percent_max,memory_mib_mean,memory_mib_max,rows_processed,throughput_rows_per_second,status,error,host,operating_system,cpu_model,logical_cpu_count,system_memory_mib,python_version,pandas_version,spark_version,java_version,parallelism,warmup,batch_id
+505141fe-1880-4a03-ae77-3037d9ec90c9,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:21:20.263055Z,2026-09-17T00:21:43.319951Z,23056.817,75.55,110.4,331.518,550.32,90000,3903.401,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+3f877a2f-51d0-4446-a2d7-e0faa79fe37c,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:21:43.323581Z,2026-09-17T00:22:33.109761Z,49786.135,166.598,391.2,418.701,740.516,90000,1807.732,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+d95b8092-8db3-4b5c-9b6b-2c546e7b9b7b,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:22:33.112816Z,2026-09-17T00:23:13.985431Z,40872.565,188.583,395.1,444.262,904.395,90000,2201.966,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+a5814e9b-8665-4b0e-b496-e5ffc246c354,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:23:13.988455Z,2026-09-17T00:23:55.530680Z,41542.176,203.514,555.4,422.5,823.328,90000,2166.473,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+44820120-9ac9-46b9-b135-0afa8055097f,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:23:55.534210Z,2026-09-17T00:24:34.235118Z,38700.847,205.082,521.5,453.082,975.078,90000,2325.53,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+235c5c8d-6c4a-4caa-9d1d-e938d07bef00,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:24:34.238889Z,2026-09-17T00:25:20.162842Z,45923.898,194.726,470.4,429.832,835.348,90000,1959.764,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,True,bc2e11b7-cf59-4611-95f9-0768629083c1
+24606bde-dbee-4048-af60-901a9446c32f,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:25:20.166225Z,2026-09-17T00:25:39.650320Z,19484.045,75.748,106.7,330.029,571.555,90000,4619.164,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+2f9835be-a0d3-4b72-ae76-714f80f15c0e,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:25:39.654434Z,2026-09-17T00:26:26.388193Z,46733.711,169.492,385.4,417.975,754.004,90000,1925.805,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+ae97e49d-0372-4daf-a626-aac07d253967,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:26:26.391562Z,2026-09-17T00:27:07.361823Z,40970.206,193.177,1030.9,463.369,833.523,90000,2196.718,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+3c8e60cf-f0b2-4eb5-86a0-7427f5afbe00,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:27:07.364890Z,2026-09-17T00:27:55.431611Z,48066.592,176.318,465.7,445.664,917.703,90000,1872.402,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+16a4f281-611e-4b0b-ab5d-3e5d1f9e0c44,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:27:55.436052Z,2026-09-17T00:28:37.380271Z,41944.167,193.895,620.7,420.322,867.211,90000,2145.71,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+ac720459-fb53-4504-ad72-1241fbc48b51,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,1,2026-09-17T00:28:37.383562Z,2026-09-17T00:29:17.827917Z,40444.304,204.205,625.3,415.942,850.516,90000,2225.282,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+7c2ab14a-a3c0-4b7d-a06b-91208efefe72,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:29:17.830887Z,2026-09-17T00:30:00.281456Z,42450.514,195.921,533.9,423.629,879.48,90000,2120.116,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+464a032f-d4af-4e89-b1a6-9c3798d4b7b1,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:30:00.284571Z,2026-09-17T00:30:40.892615Z,40607.991,205.754,500.6,445.032,872.387,90000,2216.313,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+b60e2072-f9b0-4d56-b347-4cd9f69ecdf0,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:30:40.896520Z,2026-09-17T00:31:25.972874Z,45076.307,189.348,503.2,427.357,991.652,90000,1996.614,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+6656665f-c50b-4ffd-bb52-12bf176c07c6,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:31:25.976337Z,2026-09-17T00:32:04.394729Z,38418.341,204.431,500.7,423.803,828.359,90000,2342.631,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+ea90afd5-6e84-4da5-85e6-c9d9e7f174b1,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:32:04.398894Z,2026-09-17T00:32:43.127695Z,38728.754,194.83,396.9,438.388,766.332,90000,2323.855,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+633d7631-1d34-4d6b-b992-d18585746504,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,2,2026-09-17T00:32:43.132352Z,2026-09-17T00:33:01.104862Z,17972.466,77.046,103.0,308.13,568.812,90000,5007.66,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+6fda1e8d-e7b7-470a-94c1-157650a3e99a,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:33:01.107840Z,2026-09-17T00:33:17.634403Z,16526.515,84.847,103.8,335.538,569.891,90000,5445.794,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+1fb702de-3498-4587-8498-f2313f451258,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:33:17.636926Z,2026-09-17T00:33:54.184295Z,36547.3,202.656,417.0,430.216,748.289,90000,2462.562,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+adc9628c-6919-4729-961d-7970148df197,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:33:54.187965Z,2026-09-17T00:34:33.064847Z,38876.827,197.834,464.3,448.207,879.805,90000,2315.004,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+d5cb1292-78ff-456e-a7ea-e6c606187ce0,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:34:33.068243Z,2026-09-17T00:35:10.428833Z,37360.543,225.051,2157.5,454.384,932.422,90000,2408.959,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+d31ab747-7137-47e6-a45d-0e078d737408,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:35:10.435346Z,2026-09-17T00:35:50.736295Z,40300.904,216.505,555.2,442.147,902.297,90000,2233.201,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+358a3e16-4a5e-48a1-9e32-17599d7c4a79,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,3,2026-09-17T00:35:50.739101Z,2026-09-17T00:36:31.269464Z,40530.316,211.533,527.3,454.853,846.621,90000,2220.56,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+439f0215-df9d-4297-a87b-bdb8cbee52d6,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:36:31.272351Z,2026-09-17T00:37:11.493203Z,40220.803,208.779,527.0,425.331,820.262,90000,2237.648,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+efe0520b-d127-4593-ae3a-2b2017f48e77,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:37:11.496282Z,2026-09-17T00:37:49.713999Z,38217.253,206.754,572.3,449.967,874.5,90000,2354.957,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+c83f7481-1987-4406-b63d-08a72c52812d,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:37:49.717021Z,2026-09-17T00:38:23.770960Z,34053.89,227.846,573.5,455.453,920.887,90000,2642.87,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+3e691da9-4b15-48cd-bdac-ea0566403f64,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:38:23.774157Z,2026-09-17T00:39:03.301861Z,39527.65,205.582,2058.1,448.584,808.109,90000,2276.887,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+4002b4a5-6ab1-43c2-b327-b002040659a5,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:39:03.307359Z,2026-09-17T00:39:50.541756Z,47234.344,166.725,409.1,395.468,739.848,90000,1905.393,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+4ab9e990-c9dc-4175-9111-82e4afdb2f65,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,4,2026-09-17T00:39:50.544261Z,2026-09-17T00:40:07.684707Z,17140.409,81.175,109.5,327.839,567.25,90000,5250.75,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+1e4eceaf-5891-495c-a524-8cb0b68591cd,1.1,pandas-baseline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:40:07.687575Z,2026-09-17T00:40:23.196980Z,15509.362,85.142,103.7,331.497,578.656,90000,5802.947,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+e87f5a30-5d8e-4e6e-af66-616c97bae9d1,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:40:23.199525Z,2026-09-17T00:40:58.616113Z,35416.544,212.202,1569.1,422.82,723.277,90000,2541.185,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",1,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+0b0fd047-6a0c-4501-bf5e-35c1daccc3b8,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:40:58.620324Z,2026-09-17T00:41:36.183083Z,37562.721,209.428,554.2,442.051,803.926,90000,2395.993,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",2,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+6444d1df-9532-4b65-bf91-c3cc7b10c4ab,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:41:36.185184Z,2026-09-17T00:42:15.036034Z,38850.492,213.168,552.8,424.663,825.965,90000,2316.573,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",4,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+abe6ba63-b36c-4afc-97b2-97222bdf27d7,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:42:15.039320Z,2026-09-17T00:42:50.930123Z,35890.761,237.153,2239.6,444.207,860.426,90000,2507.609,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",6,False,bc2e11b7-cf59-4611-95f9-0768629083c1
+18a6fecb-023a-481b-9c56-6e733ef29f9c,1.1,pyspark-pipeline,reservas_db,sha256:090a9639e48c35572f2dcbd4e3d93754153ae55c00fa60023afa5e395c0f8e98,5,2026-09-17T00:42:50.932935Z,2026-09-17T00:43:33.225515Z,42292.529,195.162,547.4,430.437,847.766,90000,2128.035,completed,,DESKTOP-IN1DOMI,Windows-11-10.0.26200-SP0,"AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",8,14272.898,3.13.14,2.3.3,4.0.4,"Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true -Djava.net.preferIPv4Stack=false
+openjdk version ""21.0.8"" 2025-07-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.8+9 (build 21.0.8+9-LTS, mixed mode, sharing)",8,False,bc2e11b7-cf59-4611-95f9-0768629083c1

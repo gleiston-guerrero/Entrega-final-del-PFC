@@ -2,7 +2,7 @@
 
 ## Fuente oficial
 
-La única fuente oficial y acumulativa del informe final es [`main.tex`](main.tex).
+La única fuente oficial y acumulativa del informe final es [`docs/main.tex`](main.tex).
 GitHub Actions la compila desde `docs/` y publica `main.pdf` como artifact
 `informe-final-scli`. El PDF oficial no se versiona necesariamente en Git.
 
@@ -17,7 +17,7 @@ pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
 Las fuentes modulares vigentes que consume el informe están en
-`entrega-4/secciones/`. Los ADR, diagramas, evidencias técnicas, contratos
+[`docs/secciones/`](secciones/). Los ADR, diagramas, evidencias técnicas, contratos
 OpenAPI e informes ISO son documentación complementaria trazable.
 
 ## Trabajo colaborativo
@@ -31,9 +31,12 @@ técnicos, pero no una reunión, su modalidad, hora o asistencia.
 
 ## Documentación histórica
 
-`entrega-3/` y `entrega-4/` conservan fuentes y PDFs de entregas anteriores. Son
-snapshots históricos y no reemplazan `docs/main.tex`. Sus inconsistencias
-editoriales se preservan cuando forman parte del material originalmente entregado.
+`docs/entrega-3/` y `docs/entrega-4/` son snapshots históricos de entregas
+anteriores. Su contenido no es fuente vigente ni reemplaza `docs/main.tex`.
+`docs/entrega-4/` conserva únicamente el PDF histórico y su README explicativo;
+las fuentes modulares vigentes están exclusivamente en `docs/secciones/`.
+Las inconsistencias editoriales del material histórico se preservan cuando
+forman parte del material originalmente entregado.
 
 Los PDFs históricos pueden no contener integraciones documentales posteriores.
 Para consultar el estado acumulativo se debe usar la fuente oficial o el artifact
@@ -41,6 +44,8 @@ producido por el workflow de documentación.
 
 ## Evidencias visuales pendientes
 
-No hay capturas versionadas del dashboard real de Grafana ni del flujo QR en un
-dispositivo. Si se incorporan después, deben proceder de un entorno real, omitir
-secretos y datos personales, e identificar SHA, fecha, zona horaria y entorno.
+Existe una captura versionada del dashboard real de Grafana en
+`release/screenshots/panel-monitoreo.png`. Aún no hay una captura versionada del
+flujo QR en un dispositivo. Las evidencias visuales incorporadas deben proceder
+de un entorno real, omitir secretos y datos personales, e identificar SHA,
+fecha, zona horaria y entorno.

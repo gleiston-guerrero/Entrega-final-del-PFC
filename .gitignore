@@ -23,6 +23,11 @@ __pycache__/
 *.log
 
 # Variables de entorno
+/env
+/experimentos/experiment-config.local.json
+/experimentos/local-evidence/
+/.venv-spark/
+/spark/out/
 **/.env
 **/.env.*
 !**/.env.example

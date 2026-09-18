@@ -1,0 +1,19 @@
+CONTAINER ID   NAME                                         CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+a47ff1602019   scli-prod-web-1                              0.00%     2.855MiB / 11.67GiB   0.02%     64.7kB / 126B     111kB / 2.34MB    5
+d0ce8b188d0d   scli-prod-api-gateway-1                      0.12%     264.2MiB / 11.67GiB   2.21%     1.04GB / 4.56GB   47.5MB / 89.3MB   51
+7c52c58584f3   scli-prod-reservas-solicitudes-service-1     0.07%     575.7MiB / 11.67GiB   4.82%     293MB / 930MB     42.5MB / 3.45MB   48
+8356cdedff8e   scli-prod-auth-service-1                     0.06%     486.7MiB / 11.67GiB   4.07%     8.04MB / 39.7MB   22.7MB / 3.6MB    54
+bf4788c7374d   scli-prod-academico-laboratorios-service-1   2.25%     378.5MiB / 11.67GiB   3.17%     2.31MB / 27.8MB   11MB / 3.41MB     51
+daea51298e91   scli-prod-usuarios-service-1                 0.07%     401.5MiB / 11.67GiB   3.36%     2.78MB / 31MB     13.4MB / 3.41MB   51
+152c3c3a1e7e   reservas-db-node-1                           3.76%     991.6MiB / 11.67GiB   8.30%     610MB / 796MB     127MB / 5.14GB    16
+60d7cfae18e6   scli-cockroach-academico                     3.83%     872.3MiB / 11.67GiB   7.30%     1.56MB / 1.39MB   56.8MB / 1.7GB    15
+9da6a7d4b3d7   reservas-db-node-2                           3.76%     780.6MiB / 11.67GiB   6.53%     597MB / 334MB     97.7MB / 5.21GB   16
+7ebf10bb0ec2   scli-cockroach-auth                          3.48%     719.9MiB / 11.67GiB   6.02%     3.42MB / 6.07MB   115MB / 1.8GB     15
+605b28004700   reservas-db-node-3                           3.74%     843MiB / 11.67GiB     7.05%     520MB / 557MB     89.2MB / 5.17GB   15
+06db11f304ae   scli-prod-grafana-1                          0.03%     59.96MiB / 11.67GiB   0.50%     1.19MB / 881kB    351MB / 43.8MB    17
+07e101b3ad5b   scli-cockroach-usuarios                      1.63%     528.4MiB / 11.67GiB   4.42%     1.71MB / 1.66MB   136MB / 1.49GB    11
+d9ddc9f050ca   scli-prod-otel-collector-1                   0.50%     66.06MiB / 11.67GiB   0.55%     5.52GB / 735MB    151MB / 1.17MB    11
+f44c2a248c2a   scli-prod-loki-1                             0.25%     110.5MiB / 11.67GiB   0.92%     80.3MB / 7.4MB    226MB / 492MB     11
+a64e76d45782   scli-prod-prometheus-1                       0.00%     65.16MiB / 11.67GiB   0.55%     886MB / 28MB      311MB / 188MB     10
+8ddd5dc0efe9   scli-prod-cadvisor-1                         0.69%     59.62MiB / 11.67GiB   0.50%     2.69MB / 82.4MB   74.1MB / 2.4MB    12
+95db8add72d7   scli-prod-tempo-1                            0.32%     299.1MiB / 11.67GiB   2.50%     582MB / 7.78MB    753MB / 3.47GB    11
