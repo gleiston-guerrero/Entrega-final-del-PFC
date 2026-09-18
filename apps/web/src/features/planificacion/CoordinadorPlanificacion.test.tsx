@@ -210,6 +210,10 @@ describe('CoordinadorPlanificacion', () => {
     expect(academico.obtenerPeriodos).not.toHaveBeenCalled()
   })
 
+  // Timeout local: la cuadrícula semanal completa re-renderiza en cada
+  // selectOptions y bajo contención de la suite completa (43 archivos en
+  // paralelo) se midieron ~2.1s vs ~1s en aislamiento; se deja margen para
+  // runners de CI más lentos sin tocar el timeout global de Vitest.
   it('guarda una nueva asignación como borrador', async () => {
     const user = userEvent.setup()
     renderPage()
@@ -230,7 +234,7 @@ describe('CoordinadorPlanificacion', () => {
       ),
     )
     expect(screen.getAllByText('Bases de Datos')).toHaveLength(2)
-  })
+  }, 10_000)
 
   it('filtra laboratorios por piso sin añadir el piso a la planificación', async () => {
     const user = userEvent.setup()
