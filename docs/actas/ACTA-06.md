@@ -21,7 +21,7 @@
 
 ## Objetivo
 
-Revisar el cierre del punto #7 de la guía del PFC, validar la revisión cruzada realizada en el PR #10 y organizar el tratamiento de los puntos pendientes.
+Revisar el cierre del punto #7 de la guía del PFC, validar la revisión cruzada realizada en el PR #10 del repositorio histórico y organizar el tratamiento de los puntos pendientes.
 
 ## Temas tratados
 
@@ -44,15 +44,26 @@ cd apps/web && npm ci && npm run test:coverage
 
 **Estado acordado:** punto #7 cerrado con base en la evidencia reproducible revisada y su integración mediante los PR correspondientes.
 
-### 2. Revisión cruzada del PR #10
+### 2. Revisión cruzada del PR #10 del repositorio histórico
 
+Durante la reunión se revisó el PR #10 del repositorio histórico
+`iavillamarin98-pred/ORA_entrega_F`, utilizado como evidencia verificable
+del proceso de revisión seguido por el equipo.
+
+- Repositorio: `iavillamarin98-pred/ORA_entrega_F`.
+- PR: #10 — `docs(web): precisar comando reproducible de cobertura`.
 - Autor: `IsaiasUrb`.
 - Reviewer: `iavillamarin98-pred`.
-- Review: aprobado.
-- CI: en verde.
-- Merge: integrado a `feature/entrega-4`.
+- Review: `APPROVED`.
+- Merge commit: `4ba4325`.
+- Rama destino: `feature/entrega-4`.
 
-La revisión fue realizada por Iván Villamarín, una persona distinta al autor del cambio, Isaías Urbina.
+La revisión fue realizada por Iván Villamarín, una persona distinta al autor
+del cambio, Isaías Urbina.
+
+> Nota de trazabilidad: este PR #10 pertenece al repositorio histórico
+> `iavillamarin98-pred/ORA_entrega_F` y no debe confundirse con el PR #10
+> posterior del repositorio oficial `gleiston-guerrero/Entrega-final-del-PFC`.
 
 Se acordó el siguiente flujo de trabajo:
 
@@ -107,15 +118,16 @@ Puntos pendientes:
 
 ## Evidencias
 
-Carpeta: [evidencias/acta-06/](evidencias/acta-06/).
+La captura `meet-revision-pr10.png` muestra la sesión activa de Google Meet
+durante la revisión técnica del PR #10 del repositorio histórico
+`iavillamarin98-pred/ORA_entrega_F`.
 
-La captura `meet-revision-pr10.png` muestra la sesión activa de Google Meet durante la revisión técnica del PR #10.
+![Sesión de Google Meet durante la revisión del PR #10 histórico](evidencias/acta-06/meet-revision-pr10.png)
 
-![Sesión de Google Meet durante la revisión del PR #10](evidencias/acta-06/meet-revision-pr10.png)
+La captura `pr10-aprobado-mergeado.png` documenta la aprobación de
+`iavillamarin98-pred` y la integración del PR #10 del repositorio histórico.
 
-La captura `pr10-aprobado-mergeado.png` documenta la aprobación de `iavillamarin98-pred`, la integración del PR #10 a `feature/entrega-4` y el cierre de la solicitud.
-
-![PR #10 aprobado e integrado a feature/entrega-4](evidencias/acta-06/pr10-aprobado-mergeado.png)
+![PR #10 histórico aprobado e integrado](evidencias/acta-06/pr10-aprobado-mergeado.png)
 
 ## Cierre
 
