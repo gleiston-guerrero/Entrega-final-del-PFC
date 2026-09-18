@@ -1,4 +1,4 @@
-\# Evidencia de renormalización — Corrección #20
+# Evidencia de renormalización — Corrección #20
 
 
 
@@ -10,7 +10,7 @@ HEAD base: 699c799
 
 
 
-\## Configuración
+## Configuración
 
 
 
@@ -18,7 +18,7 @@ La raíz del repositorio contiene:
 
 
 
-`\* text=auto eol=lf`
+`* text=auto eol=lf`
 
 
 
@@ -26,11 +26,11 @@ La evidencia experimental original se preserva mediante:
 
 
 
-`experimentos/resultados/raw/\*\* binary`
+`experimentos/resultados/raw/** binary`
 
 
 
-\## Ejecución
+## Ejecución
 
 
 
@@ -46,7 +46,7 @@ sobre el árbol versionado del HEAD indicado.
 
 
 
-\## Resultado
+## Resultado
 
 
 
@@ -54,13 +54,13 @@ La operación no produjo diferencias respecto del índice actual:
 
 
 
-\- 0 archivos modificados por la renormalización;
+- 0 archivos modificados por la renormalización;
 
-\- 0 archivos staged;
+- 0 archivos staged;
 
-\- 0 archivos bajo `experimentos/resultados/raw/\*\*` modificados;
+- 0 archivos bajo `experimentos/resultados/raw/**` modificados;
 
-\- no fue necesario regenerar manifiestos ni checksums.
+- no fue necesario regenerar manifiestos ni checksums.
 
 
 
@@ -78,7 +78,7 @@ Comprobaciones:
 
 
 
-\## Conclusión
+## Conclusión
 
 
 
