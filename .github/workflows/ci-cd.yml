@@ -483,12 +483,34 @@ jobs:
         if: ${{ steps.signing.outputs.configured == 'true' }}
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
+      - name: Create Firebase configuration for release APK
+        if: ${{ steps.signing.outputs.configured == 'true' }}
+        env:
+          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$GOOGLE_SERVICES_JSON_BASE64" ]; then
+            echo "::error::GOOGLE_SERVICES_JSON_BASE64 is required to build a release APK with FCM configuration."
+            exit 1
+          fi
+          printf '%s' "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > apps/mobile/app/google-services.json
+          if [ ! -s apps/mobile/app/google-services.json ]; then
+            echo "::error::apps/mobile/app/google-services.json was not created or is empty."
+            exit 1
+          fi
+
       - name: Build unsigned release APK
         if: ${{ steps.signing.outputs.configured == 'true' }}
         working-directory: apps/mobile
         run: |
           chmod +x gradlew
           ./gradlew clean testDebugUnitTest lint assembleRelease
+
+      - name: Remove temporary Firebase configuration
+        if: ${{ always() && steps.signing.outputs.configured == 'true' }}
+        shell: bash
+        run: rm -f apps/mobile/app/google-services.json
 
       - name: Prepare release output and keystore
         if: ${{ steps.signing.outputs.configured == 'true' }}
