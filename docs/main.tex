@@ -163,13 +163,13 @@ servicio de usuarios, un servicio académico-laboratorios y un servicio de
 reservas y solicitudes, cada uno propietario de su propia base de datos, un
 \texttt{api-gateway} que centraliza el enrutamiento hacia los cuatro
 servicios, y autenticación basada en JSON Web Tokens (JWT) según la
-especificación RFC 7519~\cite{venckauskas2023jwt}, validados por cada microservicio de
+especificación RFC 7519~\cite{jones2015jwt}, validados por cada microservicio de
 forma independiente sin necesidad de consultar al servicio de
 autenticación en cada petición. Esta arquitectura de microservicios sigue
 los principios de sistemas orientados a recursos discutidos por
-Fielding~\cite{li2021microservices} en su caracterización del estilo REST, y los
+Fielding~\cite{fielding2000rest} en su caracterización del estilo REST, y los
 límites de servicio se trazaron siguiendo las heurísticas de descomposición
-por dominio de Newman~\cite{li2021microservices}.
+por dominio de Newman~\cite{newman2015microservices}.
 
 \subsection{Organización y trazabilidad del trabajo colaborativo}
 
@@ -242,14 +242,14 @@ sistemas de datos modernos, discutiendo de forma extensa los compromisos
 entre consistencia, disponibilidad y particionamiento que enmarcan
 decisiones como las tomadas en este proyecto.
 
-El teorema CAP de Brewer~\cite{lee2023cap} y su reformulación posterior como
-PACELC por Abadi~\cite{lee2023cap} son el marco teórico bajo el cual se
+El teorema CAP de Brewer~\cite{brewer2012cap} y su extensión posterior como
+PACELC por Abadi~\cite{abadi2012pacelc} son el marco teórico bajo el cual se
 interpreta el comportamiento observado del clúster: CockroachDB se posiciona
 explícitamente como un sistema CP, y el trabajo de
 Taft~\emph{et al.}~\cite{taft2020} --el artículo de referencia de sus
 autores originales publicado en SIGMOD 2020-- describe en detalle cómo la
 base de datos logra consistencia serializable mediante el algoritmo de
-consenso Raft de Ongaro y Ousterhout~\cite{huang2020tidb}, sacrificando
+consenso Raft de Ongaro y Ousterhout~\cite{ongaro2014raft}, sacrificando
 disponibilidad ante particiones de red severas. La verificación de
 tolerancia a fallos realizada en este trabajo (Sección~\ref{sec:cluster})
 reproduce, a pequeña escala y sobre datos propios, el comportamiento que
@@ -271,7 +271,7 @@ sistemas de cómputo. Como se explica en la Sección~\ref{sec:protocolo}, el pro
 ejecutado en la corrección \#17 con Spark en $N=1,2,4,6,8$ y cinco
 repeticiones medidas por tratamiento y grado.
 
-Cooper~\emph{et al.}~\cite{taipalus2023dbms} introducen el benchmark YCSB
+Cooper~\emph{et al.}~\cite{cooper2010ycsb} introducen el benchmark YCSB
 (\emph{Yahoo! Cloud Serving Benchmark}), un marco de referencia ampliamente
 adoptado para comparar sistemas de almacenamiento distribuido bajo cargas
 mixtas de lectura y escritura; aunque este proyecto no ejecuta YCSB
@@ -284,7 +284,7 @@ registros ligeros (\emph{Architectural Decision Records}, ADR) --aplicada
 en los ADR-003 y ADR-004 de la Sección~\ref{sec:esquema}-- sigue la
 convención popularizada por Michael Nygard y adoptada de forma extendida en
 proyectos de arquitectura de microservicios como el descrito por
-Newman~\cite{li2021microservices}, cuya guía sobre sistemas de grano fino orientó
+Newman~\cite{newman2015microservices}, cuya guía sobre sistemas de grano fino orientó
 también las decisiones de límites de servicio tomadas en las entregas
 previas del PFC.
 
@@ -346,7 +346,7 @@ red~\cite{lee2023cap}. El modelo PACELC extiende esta discusión
 incorporando el compromiso entre latencia y consistencia incluso en
 ausencia de particiones: en presencia de una partición ($P$), el sistema
 elige entre disponibilidad ($A$) y consistencia ($C$); en su ausencia
-($E$), elige entre latencia ($L$) y consistencia ($C$)~\cite{lee2023cap}.
+($E$), elige entre latencia ($L$) y consistencia ($C$)~\cite{abadi2012pacelc}.
 CockroachDB se ubica como un sistema \mbox{PC/EC}: prioriza consistencia
 serializable tanto ante particiones como en operación normal, sacrificando
 disponibilidad de escritura cuando el clúster pierde el quórum
@@ -359,7 +359,7 @@ Sección~\ref{sec:tolerancia}.
 
 El algoritmo Raft descompone el problema del consenso distribuido en tres
 subproblemas independientes: elección de líder, replicación del registro de
-operaciones (\emph{log}) y seguridad~\cite{huang2020tidb}. En CockroachDB, cada
+operaciones (\emph{log}) y seguridad~\cite{ongaro2014raft}. En CockroachDB, cada
 rango de datos --la unidad atómica de fragmentación y replicación del
 motor-- constituye un grupo Raft independiente con su propio líder. Una
 escritura se considera comprometida (\emph{committed}) cuando el líder
@@ -368,7 +368,7 @@ garantizando durabilidad frente a la caída de una minoría de nodos. Cuando
 el líder deja de estar disponible y sobreviven réplicas suficientes para
 alcanzar mayoría, el grupo elige un nuevo líder y continúa operando; en caso
 contrario, el rango deja de aceptar escrituras hasta que se restablezca el
-quórum~\cite{huang2020tidb}.
+quórum~\cite{taft2020,ongaro2014raft}.
 
 \subsection{Modelo de programación paralela y leyes de escalamiento}
 
@@ -376,7 +376,7 @@ El modelo RDD (\emph{Resilient Distributed Dataset}) de Apache Spark
 abstrae una colección distribuida e inmutable de datos, con linaje de
 transformaciones, evaluación perezosa (\emph{lazy evaluation}) y tolerancia
 a fallos mediante recómputo del linaje en lugar de replicación
-física~\cite{wang2022spark}. Sobre este modelo se construye la API de
+física~\cite{zaharia2012rdd}. Sobre este modelo se construye la API de
 DataFrames utilizada en el pipeline de la Sección~\ref{sec:pipeline}.
 
 La Ley de Amdahl expresa el \emph{speedup} teórico máximo alcanzable al
@@ -1290,8 +1290,8 @@ evidencia de la corrección \#17.
 \subsection{Diseño del protocolo}
 
 El protocolo experimental (\texttt{experimentos/protocolo-experimental.md})
-sigue las recomendaciones de Jain~\cite{baltes2022sampling} y de
-Wohlin~\emph{et al.}~\cite{verdecchia2023} para la comparación de sistemas de
+sigue las recomendaciones de Jain~\cite{jain1991performance} y de
+Wohlin~\emph{et al.}~\cite{wohlin2012experimentation} para la comparación de sistemas de
 cómputo y se ejecutó para la corrección \#17 con los siguientes elementos:
 
 \textbf{Pregunta experimental.} Se comparó el tiempo medio de la línea base
