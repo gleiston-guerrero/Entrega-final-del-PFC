@@ -1,6 +1,6 @@
-# PFC acumulativo — Sistema de Control de Laboratorios e Infraestructura
+# PFC acumulativo — SCLI — Sistema de Control de Laboratorios Informáticos
 
-## Sistema de Control de Laboratorios e Infraestructura
+## SCLI — Sistema de Control de Laboratorios Informáticos
 
 SCLI gestiona autenticación, usuarios institucionales, laboratorios, solicitudes y
 reservas. El proyecto acumulativo integra cinco servicios backend, clientes web y Android,
