@@ -1198,6 +1198,10 @@ def agregar_participantes_por_periodo(
 La lectura JDBC actual no configura particiones de extracción. El protocolo
 local de la corrección \#17 varía \texttt{local[N]} y las particiones de
 \emph{shuffle} con cinco grados (1, 2, 4, 6 y 8), desactivando AQE.
+El escenario $N=8$ puede utilizar los ocho procesadores lógicos del mismo
+equipo que aloja el clúster CockroachDB. En consecuencia, los tiempos
+observados incorporan posible contención por CPU y no deben interpretarse como
+el rendimiento de un clúster Spark dedicado con recursos físicamente aislados.
 Las credenciales y conexiones se exigen mediante variables de entorno;
 no hay valores predeterminados. El procedimiento reproducible está en
 \texttt{spark/README.md}. Se calculan medias, desviaciones y aceleramiento
@@ -1254,11 +1258,11 @@ independiente contra el clúster E3. La ejecución definitiva de la corrección
 \#17 procesó 90\,000 filas por ejecución, tras verificar la equivalencia
 funcional sobre las 20 columnas del resultado. El
 Listado~\ref{lst:orquestador} resume el orquestador experimental
-(\texttt{experiments/run\_comparison.py}) utilizado para automatizar esa
+(\texttt{experimentos/run\_comparison.py}) utilizado para automatizar esa
 comparación: alterna el orden de los dos tratamientos,
 descarta una iteración de calentamiento, muestrea CPU y memoria del árbol
 de procesos con \texttt{psutil}, y registra una observación por repetición
-conforme al esquema JSON \texttt{experiments/metrics/metric-schema.json}.
+conforme al esquema JSON \texttt{experimentos/metrics/metric-schema.json}.
 
 \begin{lstlisting}[language=Python,caption={Firma de los tratamientos configurados en \texttt{experiment-config.json}.},label={lst:orquestador}]
 "treatments": [
@@ -1285,7 +1289,7 @@ evidencia de la corrección \#17.
 
 \subsection{Diseño del protocolo}
 
-El protocolo experimental (\texttt{experiments/protocolo-experimental.md})
+El protocolo experimental (\texttt{experimentos/protocolo-experimental.md})
 sigue las recomendaciones de Jain~\cite{baltes2022sampling} y de
 Wohlin~\emph{et al.}~\cite{verdecchia2023} para la comparación de sistemas de
 cómputo y se ejecutó para la corrección \#17 con los siguientes elementos:
@@ -1321,7 +1325,7 @@ se ejecutó una prueba $t$ o de Wilcoxon.
 \subsection{Esquema de registro de observaciones}
 
 Cada ejecución medida se registra conforme al esquema JSON
-\texttt{experiments/metrics/metric-schema.json}, que declara como campos
+\texttt{experimentos/metrics/metric-schema.json}, que declara como campos
 obligatorios un identificador único de ejecución (\texttt{run\_id}), la
 versión del protocolo, el tratamiento (\texttt{pandas-baseline} o
 \texttt{pyspark-pipeline}), el identificador y la instantánea del conjunto
@@ -1357,6 +1361,14 @@ El lote definitivo de la corrección \#17 contiene 6 registros pandas totales
 todos \texttt{completed}. Cada ejecución válida procesó 90\,000 filas. La
 equivalencia funcional previa se verificó sobre las 20 columnas del resultado.
 
+Como reconciliación de procedencia, \texttt{provenance.json} conserva el
+\texttt{git\_head} histórico \texttt{21d2d3e}, cuyo contenido no coincide
+exactamente con los hashes de las fuentes medidas. Estos hashes coinciden con
+las versiones posteriormente versionadas en \texttt{197ce33}, por lo que la
+ejecución se realizó sobre un árbol de trabajo no confirmado y no puede
+atribuirse a un commit exacto. La evidencia histórica no se reescribió; la
+discrepancia queda documentada en la nota de reconciliación del paquete.
+
 \begin{table}[t]
 \centering
 \caption{Resultados definitivos de rendimiento para 90\,000 filas.}
@@ -1382,6 +1394,25 @@ $\mathrm{Spark(1)/Spark}(N)/N$. Frente a Spark(1), el mejor speedup fue
 Spark(2), $1.0476\times$, mientras Spark(8) obtuvo $0.9938\times$. No se
 observó una mejora relevante en los tiempos medios al aumentar $N$ y no se
 afirma significancia estadística.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.85\linewidth]{../experimentos/evidencia-17/20260916/analysis-definitivo-233b34ac-a09f-40c9-be71-5570f25affbd/speedup.png}
+  \caption{Speedup observado de Spark frente a pandas y frente a Spark(1)
+  para $N=1,2,4,6,8$, junto con el speedup teórico del ajuste de Amdahl
+  sobre Spark(1)/Spark($N$).}
+  \label{fig:speedup-e17}
+\end{figure}
+
+La Figura~\ref{fig:speedup-e17} muestra que el speedup frente a Spark(1) se
+mantiene aproximadamente plano alrededor de $1.0\times$ en todo el rango de
+$N$ evaluado, sin una tendencia creciente clara al añadir paralelismo local.
+La curva de Amdahl ajustada reproduce ese comportamiento casi plano porque la
+fracción serial efectiva estimada es muy alta ($f=0.9766$), consistente con
+que el tiempo total está dominado por arranque, JDBC y E/S y no por el
+cómputo paralelizable. Estos datos no demuestran escalabilidad: para esta
+carga local de 90\,000 filas, aumentar $N$ no produjo una mejora sostenida de
+rendimiento.
 
 \subsection{Estado de cumplimiento por módulo}
 
@@ -1571,7 +1602,7 @@ y su esquema de base de datos;
 los ADR-003 y ADR-004 como fundamento de cualquier decisión de observabilidad
 o escalamiento posterior; el pipeline \texttt{spark/pipeline.py} y su línea
 base \texttt{spark/baseline.py}; y el orquestador experimental
-\texttt{experiments/run\_comparison.py}, junto con la evidencia definitiva
+\texttt{experimentos/run\_comparison.py}, junto con la evidencia definitiva
 de la comparación. El trabajo inmediato hacia la E4 consiste en materializar
 el DDL de fragmentación y extender el
 \texttt{endpoint} de métricas con los tres instrumentos Prometheus
@@ -1586,7 +1617,7 @@ del anterior: (i)~escribir y versionar el \texttt{DDL} de
 \texttt{PARTITION BY RANGE} con los límites trimestrales y las particiones
 de cobertura del ADR-003, y verificar con \texttt{EXPLAIN} que las
 consultas de disponibilidad usan poda de particiones; (ii)~ampliar, si
-procede, la evidencia de \texttt{experiments/run\_comparison.py} con
+procede, la evidencia de \texttt{experimentos/run\_comparison.py} con
 escenarios y tamaños adicionales, manteniendo la equivalencia y el protocolo
 de la Sección~\ref{sec:protocolo}; (iii)~realizar análisis inferencial solo si
 se define y ejecuta una prueba estadística apropiada;
