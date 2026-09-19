@@ -18,10 +18,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AgendaItemResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseAgendaItemResponse"
                 }
               }
             }
@@ -56,21 +53,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -157,10 +156,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AgendaItemResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseAgendaItemResponse"
                 }
               }
             }
@@ -195,21 +191,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -687,10 +685,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/IncidenteResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseIncidenteResponse"
                 }
               }
             }
@@ -698,21 +693,23 @@
         },
         "parameters": [
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2247,10 +2244,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseReservaResponse"
                 }
               }
             }
@@ -2302,21 +2296,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2339,10 +2335,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseReservaResponse"
                 }
               }
             }
@@ -2377,21 +2370,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2414,10 +2409,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseReservaResponse"
                 }
               }
             }
@@ -2434,21 +2426,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2471,10 +2465,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseReservaResponse"
                 }
               }
             }
@@ -2491,21 +2482,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2718,10 +2711,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SolicitudReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseSolicitudReservaResponse"
                 }
               }
             }
@@ -2764,21 +2754,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2834,10 +2826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SolicitudReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseSolicitudReservaResponse"
                 }
               }
             }
@@ -2853,21 +2842,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -2890,10 +2881,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SolicitudReservaResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseSolicitudReservaResponse"
                 }
               }
             }
@@ -2910,21 +2898,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -3119,10 +3109,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/HistorialSolicitudResponse"
-                  }
+                  "$ref": "#/components/schemas/PaginaResponseHistorialSolicitudResponse"
                 }
               }
             }
@@ -3139,21 +3126,23 @@
             }
           },
           {
-            "name": "0",
+            "name": "pagina",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 0
             }
           },
           {
-            "name": "20",
+            "name": "tamanio",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -3399,6 +3388,19 @@
       }
     },
     "schemas": {
+      "AbrirSesionAsistenciaRequest": {
+        "type": "object",
+        "properties": {
+          "reservaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bloqueId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
       "AccionReserva": {
         "type": "string",
         "enum": [
@@ -3420,120 +3422,6 @@
           "ACEPTAR_PROPUESTA",
           "RECHAZAR_PROPUESTA"
         ]
-      },
-      "EstadoIncidente": {
-        "type": "string",
-        "enum": [
-          "REPORTADO",
-          "EN_REVISION",
-          "RESUELTO"
-        ]
-      },
-      "EstadoPlanificacion": {
-        "type": "string",
-        "enum": [
-          "BORRADOR",
-          "ENVIADA",
-          "PROPUESTA_CAMBIO",
-          "CONFIRMADA",
-          "RECHAZADA",
-          "CANCELADA"
-        ]
-      },
-      "EstadoPlanificacionAgregada": {
-        "type": "string",
-        "enum": [
-          "BORRADOR",
-          "EN_REVISION",
-          "REQUIERE_CAMBIOS",
-          "APROBADA",
-          "FINALIZADA"
-        ]
-      },
-      "EstadoReserva": {
-        "type": "string",
-        "enum": [
-          "PROGRAMADA",
-          "EN_CURSO",
-          "FINALIZADA",
-          "CANCELADA",
-          "NO_ASISTIDA"
-        ]
-      },
-      "EstadoRevisionPlanificacion": {
-        "type": "string",
-        "enum": [
-          "PENDIENTE",
-          "APROBADA",
-          "RECHAZADA",
-          "PROPUESTA_CAMBIO"
-        ]
-      },
-      "EstadoSesionAsistencia": {
-        "type": "string",
-        "enum": [
-          "ABIERTA",
-          "CERRADA",
-          "VENCIDA"
-        ]
-      },
-      "EstadoSolicitud": {
-        "type": "string",
-        "enum": [
-          "PENDIENTE",
-          "EN_REVISION",
-          "PROPUESTA",
-          "APROBADA",
-          "RECHAZADA",
-          "CANCELADA",
-          "EXPIRADA"
-        ]
-      },
-      "EstadoSolicitudCambio": {
-        "type": "string",
-        "enum": [
-          "PENDIENTE",
-          "APROBADA",
-          "RECHAZADA"
-        ]
-      },
-      "EstadoSolicitudRetiro": {
-        "type": "string",
-        "enum": [
-          "PENDIENTE",
-          "APROBADA",
-          "RECHAZADA"
-        ]
-      },
-      "PrioridadIncidente": {
-        "type": "string",
-        "enum": [
-          "BAJA",
-          "MEDIA",
-          "ALTA"
-        ]
-      },
-      "TipoSolicitudCambio": {
-        "type": "string",
-        "enum": [
-          "LABORATORIO",
-          "HORARIO",
-          "DOCENTE",
-          "CANCELACION"
-        ]
-      },
-      "AbrirSesionAsistenciaRequest": {
-        "type": "object",
-        "properties": {
-          "reservaId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "bloqueId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
       },
       "ActorAutenticado": {
         "type": "object",
@@ -4187,6 +4075,14 @@
           }
         }
       },
+      "EstadoIncidente": {
+        "type": "string",
+        "enum": [
+          "REPORTADO",
+          "EN_REVISION",
+          "RESUELTO"
+        ]
+      },
       "EstadoLaboratorio": {
         "type": "object",
         "properties": {
@@ -4200,6 +4096,82 @@
             "type": "string"
           }
         }
+      },
+      "EstadoPlanificacion": {
+        "type": "string",
+        "enum": [
+          "BORRADOR",
+          "ENVIADA",
+          "PROPUESTA_CAMBIO",
+          "CONFIRMADA",
+          "RECHAZADA",
+          "CANCELADA"
+        ]
+      },
+      "EstadoPlanificacionAgregada": {
+        "type": "string",
+        "enum": [
+          "BORRADOR",
+          "EN_REVISION",
+          "REQUIERE_CAMBIOS",
+          "APROBADA",
+          "FINALIZADA"
+        ]
+      },
+      "EstadoReserva": {
+        "type": "string",
+        "enum": [
+          "PROGRAMADA",
+          "EN_CURSO",
+          "FINALIZADA",
+          "CANCELADA",
+          "NO_ASISTIDA"
+        ]
+      },
+      "EstadoRevisionPlanificacion": {
+        "type": "string",
+        "enum": [
+          "PENDIENTE",
+          "APROBADA",
+          "RECHAZADA",
+          "PROPUESTA_CAMBIO"
+        ]
+      },
+      "EstadoSesionAsistencia": {
+        "type": "string",
+        "enum": [
+          "ABIERTA",
+          "CERRADA",
+          "VENCIDA"
+        ]
+      },
+      "EstadoSolicitud": {
+        "type": "string",
+        "enum": [
+          "PENDIENTE",
+          "EN_REVISION",
+          "PROPUESTA",
+          "APROBADA",
+          "RECHAZADA",
+          "CANCELADA",
+          "EXPIRADA"
+        ]
+      },
+      "EstadoSolicitudCambio": {
+        "type": "string",
+        "enum": [
+          "PENDIENTE",
+          "APROBADA",
+          "RECHAZADA"
+        ]
+      },
+      "EstadoSolicitudRetiro": {
+        "type": "string",
+        "enum": [
+          "PENDIENTE",
+          "APROBADA",
+          "RECHAZADA"
+        ]
       },
       "EstudianteExternoResponse": {
         "type": "object",
@@ -4616,6 +4588,221 @@
           }
         }
       },
+      "PaginaResponseAgendaItemResponse": {
+        "type": "object",
+        "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+        "properties": {
+          "contenido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgendaItemResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primera": {
+            "type": "boolean"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contenido",
+          "pagina",
+          "tamanio",
+          "totalElementos",
+          "totalPaginas",
+          "primera",
+          "ultima"
+        ]
+      },
+      "PaginaResponseHistorialSolicitudResponse": {
+        "type": "object",
+        "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+        "properties": {
+          "contenido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HistorialSolicitudResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primera": {
+            "type": "boolean"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contenido",
+          "pagina",
+          "tamanio",
+          "totalElementos",
+          "totalPaginas",
+          "primera",
+          "ultima"
+        ]
+      },
+      "PaginaResponseIncidenteResponse": {
+        "type": "object",
+        "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+        "properties": {
+          "contenido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncidenteResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primera": {
+            "type": "boolean"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contenido",
+          "pagina",
+          "tamanio",
+          "totalElementos",
+          "totalPaginas",
+          "primera",
+          "ultima"
+        ]
+      },
+      "PaginaResponseReservaResponse": {
+        "type": "object",
+        "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+        "properties": {
+          "contenido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReservaResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primera": {
+            "type": "boolean"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contenido",
+          "pagina",
+          "tamanio",
+          "totalElementos",
+          "totalPaginas",
+          "primera",
+          "ultima"
+        ]
+      },
+      "PaginaResponseSolicitudReservaResponse": {
+        "type": "object",
+        "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+        "properties": {
+          "contenido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SolicitudReservaResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primera": {
+            "type": "boolean"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contenido",
+          "pagina",
+          "tamanio",
+          "totalElementos",
+          "totalPaginas",
+          "primera",
+          "ultima"
+        ]
+      },
       "PerfilExternoResponse": {
         "type": "object",
         "properties": {
@@ -4795,6 +4982,14 @@
             "format": "int64"
           }
         }
+      },
+      "PrioridadIncidente": {
+        "type": "string",
+        "enum": [
+          "BAJA",
+          "MEDIA",
+          "ALTA"
+        ]
       },
       "ProponerAlternativaRequest": {
         "type": "object",
@@ -5347,6 +5542,15 @@
             }
           }
         }
+      },
+      "TipoSolicitudCambio": {
+        "type": "string",
+        "enum": [
+          "LABORATORIO",
+          "HORARIO",
+          "DOCENTE",
+          "CANCELACION"
+        ]
       }
     }
   }

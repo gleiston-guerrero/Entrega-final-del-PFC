@@ -26,11 +26,25 @@ hay 77 operaciones y no existen los dos mappings experimentales. El contrato de
 activo por defecto.
 
 La fachada del Gateway contiene 159 rutas y 224/224 operaciones: 182 canónicas,
-8 alias de Auth y 34 alias de Usuarios. Como el Gateway usa
-\texttt{RouterFunction}, la prueba envía cada operación a los routers reales y
-comprueba el backend elegido y la reescritura de los alias. La completitud de la
-fachada se define como todas las operaciones de backend públicas, previamente
-validadas contra Spring runtime, más los alias explícitos realmente enrutados.
+8 alias de Auth y 34 alias de Usuarios. El Gateway solo acepta una petición si
+\texttt{GatewayRouteCatalog.accepts(método, ruta)} la reconoce en la lista
+blanca método+ruta cargada desde \texttt{gateway-route-catalog.json}; los seis
+\texttt{RouterFunction} de \texttt{GatewayRoutes} consultan esa política antes
+de enrutar. La prueba de completitud envía cada operación esperada a los
+routers reales y comprueba el backend elegido y la reescritura de los alias.
+Además, \texttt{RouterFunctionCatalogGuardTest} inspecciona con ASM todas las
+clases compiladas de producción, sin enumerar clases de configuración ni URLs.
+Exige que cada método \texttt{@Bean} con retorno \texttt{RouterFunction}
+alcance una llamada a \texttt{GatewayRouteCatalog.accepts}, incluyendo lambdas
+y llamadas entre clases. Detecta nuevos beans que omitan por completo el
+catálogo, independientemente de su ruta. Esta garantía arquitectónica de
+alcanzabilidad no demuestra por sí sola que el resultado controle todas las
+ramas; la revisión de los seis routers actuales confirma que condiciona su
+enrutamiento. La completitud de la fachada se define, por
+tanto, como todas las operaciones de backend públicas, previamente validadas
+contra Spring runtime y contra la lista blanca del catálogo, más los alias
+explícitos realmente enrutados y la ausencia demostrada de rutas aceptadas
+fuera de esa lista.
 
 \subsection{Seguridad contractual}
 
@@ -67,8 +81,74 @@ semánticos. Pruebas negativas cubren además prefijos de clase,
 El job matricial existente ejecuta \texttt{mvn verify} para los cinco módulos en
 cada push y pull request; no existe un flag opcional que omita estas pruebas.
 
-OpenAPI y Pact son complementarios. OpenAPI describe la superficie de la API,
-sus parámetros y schemas; Pact verifica interacciones consumidor--proveedor
-seleccionadas. Ninguno sustituye al otro. La validación runtime acredita la
-completitud estructural método+ruta, pero no demuestra por sí sola todos los
-comportamientos dinámicos ni las reglas de negocio durante ejecución.
+OpenAPI y Pact son complementarios. Pact verifica interacciones
+consumidor--proveedor seleccionadas y no sustituye a OpenAPI. La validación
+runtime acredita la completitud estructural método+ruta, pero no demuestra por
+sí sola todos los comportamientos dinámicos ni las reglas de negocio durante
+ejecución.
+
+\subsection{Paginación, parámetros de consulta y validación independiente de schemas}
+
+En los servicios, 25 operaciones GET devuelven resultados paginados: 14 usan
+\texttt{Page<T>} de Spring Data (Académico y Usuarios) y 11 usan el DTO propio
+\texttt{PaginaResponse<T>} (Reservas/Solicitudes/Agenda/Incidentes). El
+extractor ya no describe estas respuestas como \texttt{type: array}; genera un
+schema de objeto reutilizable por tipo (\texttt{Page\{Tipo\}} con
+\texttt{content} y los metadatos que Spring serializa por defecto --
+\texttt{totalElements}, \texttt{totalPages}, \texttt{number}, \texttt{size},
+\texttt{numberOfElements}, \texttt{first}, \texttt{last}, \texttt{empty} --, o
+\texttt{PaginaResponse\{Tipo\}} con los siete campos reales del \textit{record}
+\texttt{PaginaResponse}: \texttt{contenido}, \texttt{pagina}, \texttt{tamanio},
+\texttt{totalElementos}, \texttt{totalPaginas}, \texttt{primera} y
+\texttt{ultima}).
+
+El extractor tenía además un defecto que interpretaba el atributo
+\texttt{defaultValue} de \texttt{@RequestParam} como si fuera el nombre del
+parámetro, publicando parámetros de consulta llamados literalmente
+\texttt{"0"}, \texttt{"20"} o \texttt{"60"} y marcados como obligatorios. Tras
+corregir el parseo de atributos de anotación, los 23 parámetros afectados se
+publican con su nombre real (\texttt{pagina}, \texttt{tamanio},
+\texttt{rangoMinutos}), \texttt{required: false} y su \texttt{default} real. Los
+endpoints que reciben \texttt{Pageable} documentan ahora \texttt{page},
+\texttt{size} y \texttt{sort} como parámetros de consulta opcionales, acordes
+con el comportamiento real de Spring Data Web: \texttt{page} y \texttt{size}
+son enteros con defaults 0 y 20; \texttt{sort} es un array de strings sin
+default. No hay overrides en las anotaciones ni en la configuración actual.
+
+Esta corrección no puede acreditarse comparando el contrato contra sí mismo:
+el extractor regex y el validador estructural comparten la misma
+interpretación del código fuente, por lo que un contrato correcto podría ser
+rechazado por un snapshot incorrecto generado por el mismo mecanismo, o un
+defecto real podría pasar inadvertido si ambos lados heredan el mismo error.
+Por eso la corrección de schemas y parámetros se acredita con
+\texttt{SchemaContractVerifier}, una clase Java independiente que usa
+reflexión sobre los \texttt{HandlerMethod} que Spring ya resolvió: obtiene el
+tipo de retorno real (\texttt{ResolvableType} sobre el método compilado) para
+decidir si una operación es paginada, y la anotación real
+\texttt{@RequestParam} (o el tipo \texttt{Pageable}) de cada parámetro para
+obtener su nombre, \texttt{required} efectivo (falso si existe
+\texttt{defaultValue}) y valor por defecto. Esa firma se contrasta contra el
+JSON publicado sin leer ni reutilizar el extractor Python. Las pruebas
+\texttt{OpenApiSchemaContractTest} de Académico, Usuarios y Reservas ejecutan
+esta comprobación en cada \texttt{mvn verify}.
+
+El verificador exige un objeto con las nueve propiedades de \texttt{Page} o
+todos los componentes del record \texttt{PaginaResponse}, derivados por
+reflexión; comprueba además que el contenido sea un array con referencia al
+tipo de elemento \texttt{T} obtenido mediante \texttt{ResolvableType}.
+Con \texttt{MethodParameter} verifica nombres, obligatoriedad, tipos simples
+y defaults derivables. Las cuatro copias de \texttt{SchemaContractVerifier}
+(canónica y tres servicios) se mantienen idénticas.
+
+La validación previa acreditó cuatro mutaciones negativas, todas revertidas:
+(1) un objeto paginado con propiedades falsas; (2) eliminar
+\texttt{totalPaginas} de \texttt{PaginaResponse}; (3) cambiar el default de
+\texttt{pagina} por un valor incorrecto; y (4) añadir un
+\texttt{RouterFunction} con una ruta arbitraria que omitía el catálogo.
+Las tres primeras hicieron fallar el verificador semántico; la cuarta hizo
+fallar la garantía arquitectónica del Gateway.
+
+OpenAPI describe correctamente la superficie, los parámetros de consulta
+relevantes y los schemas de respuesta paginada solo a partir de esta
+corrección, y esa afirmación se sostiene en la validación independiente
+anterior, no en la comparación del extractor contra sí mismo.

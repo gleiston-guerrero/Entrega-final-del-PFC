@@ -42,7 +42,43 @@ El resultado independiente es Auth 12/12, Usuarios 44/44, Académico 71/71 y Res
 
 El Gateway usa `RouterFunction`, no controladores MVC. Su prueba forma la población desde los contratos de backend previamente contrastados con Spring runtime y envía cada operación mediante `MockMvc` a los routers reales. `ProxyExchangeHandlerFunction` está sustituido por un doble Mockito que devuelve 204 y registra el backend y la ruta transformada; no se levantan servicios locales ni se realiza una llamada de red. La definición formal de completitud es bidireccional: todas las operaciones runtime aceptadas por el `RouterFunction` deben aparecer en OpenAPI y todas las operaciones documentadas deben ser aceptadas, incluyendo los alias explícitos realmente enrutados. El Gateway aplica además una allowlist método+ruta cargada desde el artefacto generado `services/api-gateway/src/main/resources/gateway-route-catalog.json`; el catálogo se deriva de este snapshot y su hash y cantidad se verifican en la prueba. El resultado es 182 operaciones canónicas, 8 alias Auth y 34 alias Usuarios: 224/224.
 
+Además, `RouterFunctionCatalogGuardTest` inspecciona mediante ASM todas las clases compiladas de producción del Gateway, sin enumerar clases de configuración ni URLs. Construye el grafo de llamadas, incluyendo lambdas y llamadas entre clases, y exige que cada método `@Bean` con retorno `RouterFunction` alcance `GatewayRouteCatalog.accepts(...)`. Detecta así nuevos beans que omitan por completo el catálogo, cualquiera que sea su ruta. Es una garantía arquitectónica de consulta al catálogo: la alcanzabilidad de una llamada no prueba por sí sola que su resultado controle todas las ramas. En los seis routers actuales, la revisión del código confirma que la aceptación del catálogo condiciona el enrutamiento; la prueba runtime comprueba las 224 operaciones y sus destinos.
+
 No es necesario modificar el workflow: el job matricial existente ejecuta `mvn verify` sin flags opcionales para los cinco módulos en cada `push` y `pull_request`; una discrepancia hace fallar el pipeline.
+
+## Validación independiente de schemas y parámetros
+
+La completitud método+ruta no implica que los *schemas* de respuesta ni los
+parámetros de consulta sean correctos: ambos se derivan del mismo extractor
+regex que genera el snapshot, por lo que compararlo contra sí mismo no prueba
+nada sobre su exactitud semántica. Para eso existe `SchemaContractVerifier`
+(`tests/openapi-runtime`, con copias idénticas en Académico, Usuarios y Reservas, igual que
+`RuntimeContractVerifier`): usa reflexión sobre los `HandlerMethod` que Spring
+ya resolvió para obtener, del código compilado y no de texto Java, (a) si el
+tipo de retorno real es `Page<T>` o `PaginaResponse<T>` y (b) el nombre real,
+`required` efectivo y `defaultValue` de cada `@RequestParam`, así como los
+parámetros `page`/`size`/`sort` cuando el controlador recibe `Pageable`. Esa
+firma se contrasta contra el JSON publicado. Las pruebas
+`OpenApiSchemaContractTest` de Académico, Usuarios y Reservas ejecutan esta
+comprobación en cada `mvn verify`. El verificador exige un objeto con las nueve
+propiedades de `Page` o todos los componentes reales del record
+`PaginaResponse`, un contenido de tipo array y la referencia al elemento `T`
+derivado mediante `ResolvableType`. No basta con sustituir el array por
+cualquier objeto. Con `MethodParameter` contrasta nombres, obligatoriedad,
+tipos simples y defaults derivables de los parámetros compilados.
+
+Se corrigieron 25 GET paginados de backend: 14 `Page<T>` y 11
+`PaginaResponse<T>`, además de 23 parámetros mal nombrados. `pagina`,
+`tamanio` y `rangoMinutos` son enteros opcionales con defaults 0, 20 y 60.
+Para `Pageable`, `page` y `size` son enteros opcionales con defaults 0 y 20;
+`sort` es un array opcional de strings sin default. No existen overrides de
+estos defaults en las anotaciones ni en la configuración actual del proyecto.
+
+La validación previa acreditó cuatro mutaciones negativas, todas revertidas:
+un objeto paginado con propiedades falsas, la ausencia de `totalPaginas` en
+`PaginaResponse`, un default incorrecto de `pagina` y un `RouterFunction`
+con una ruta arbitraria que omitía el catálogo. Cada una hizo fallar su prueba
+independiente. Estas evidencias no dependen de regenerar el snapshot.
 
 ## Seguridad representada
 
@@ -52,7 +88,7 @@ Los alias `/auth-service/**` y `/usuarios-service/**` continúan en `GatewayRout
 
 ## OpenAPI, Pact y alcance
 
-OpenAPI describe la superficie HTTP, sus parámetros, cuerpos, respuestas y mecanismos de autenticación. Los tests Pact del repositorio verifican interacciones concretas entre consumidores y proveedores. Un contrato no sustituye al otro: OpenAPI ofrece el inventario de interfaz y Pact comprueba escenarios de integración seleccionados.
+OpenAPI describe la superficie HTTP; sus parámetros de consulta relevantes (incluidos `pagina`/`tamanio`/`rangoMinutos` y `page`/`size`/`sort` para `Pageable`) y los schemas de respuesta paginada se describen correctamente solo a partir de la corrección de este punto, y esa afirmación se sostiene en `SchemaContractVerifier`, no en la comparación del extractor Python contra sí mismo. Los tests Pact del repositorio verifican interacciones concretas entre consumidores y proveedores. Un contrato no sustituye al otro: OpenAPI ofrece el inventario de interfaz y Pact comprueba escenarios de integración seleccionados.
 
 Los cuatro contratos de servicio incluyen sus APIs externas e internas. El contrato del Gateway representa únicamente rutas que el código de routing expone y reutiliza los schemas de los servicios; no atribuye controladores propios al Gateway.
 
