@@ -4,9 +4,25 @@
 No requiere paquetes externos. Use --generate para actualizar docs/openapi/*.json;
 sin argumentos, el programa solo valida y nunca modifica archivos.
 
-La completitud metodo+ruta no se acredita con este extractor regex: la fuente
-autoritativa son las pruebas Java sobre RequestMappingHandlerMapping y los
-RouterFunction reales, ejecutadas por ``mvn verify`` en cada modulo.
+Responsabilidad de este script (y limites explicitos):
+
+- Genera los snapshots deterministas a partir de controladores y DTO.
+- Valida invariantes estructurales no circulares: JSON valido, campos basicos,
+  operationId sin duplicados, referencias $ref resolubles, esquemas de
+  seguridad declarados y consistencia catalogo-gateway.
+- La completitud metodo+ruta NO se acredita con este extractor regex: la
+  fuente autoritativa son las pruebas Java sobre RequestMappingHandlerMapping
+  y los RouterFunction reales (RuntimeContractVerifier), ejecutadas por
+  ``mvn verify`` en cada modulo.
+- La correccion SEMANTICA de schemas de respuesta (p. ej. que un endpoint
+  paginado no se describa como array plano) y de parametros de consulta
+  (nombre real, required, defaultValue, Pageable) tampoco se acredita aqui:
+  ese extractor y este validador comparten la misma interpretacion regex, por
+  lo que no pueden servir de evidencia independiente el uno del otro. Esa
+  evidencia la produce SchemaContractVerifier (reflexion sobre HandlerMethod
+  compilados), tambien ejecutado por ``mvn verify``. Este script solo puede
+  detectar que el snapshot publicado diverge de lo que el extractor generaria
+  hoy; no puede demostrar que el extractor mismo sea correcto.
 """
 from __future__ import annotations
 
@@ -64,17 +80,101 @@ def split_top(value: str) -> list[str]:
     tail = value[start:].strip()
     return out + ([tail] if tail else [])
 
-def unwrap_type(value: str) -> tuple[str, bool]:
+def strip_wrappers(value: str) -> str:
     value = re.sub(r"@[A-Za-z0-9_.]+(?:\([^)]*\))?\s*", "", value).strip()
     value = value.replace("? extends ", "")
     for wrapper in ("ResponseEntity", "Optional"):
         if value.startswith(wrapper + "<"):
-            return unwrap_type(value[len(wrapper)+1:-1])
-    for wrapper in ("List", "Set", "Collection", "Page", "PaginaResponse"):
+            return strip_wrappers(value[len(wrapper)+1:-1])
+    return value
+
+def unwrap_type(value: str) -> tuple[str, bool]:
+    value = strip_wrappers(value)
+    for wrapper in ("List", "Set", "Collection"):
         if value.startswith(wrapper + "<"):
             inner, _ = unwrap_type(value[len(wrapper)+1:-1])
             return inner, True
     return value.split(".")[-1], False
+
+def parse_annotation_args(args: str | None) -> dict[str, str]:
+    """Interpreta los atributos de una anotacion Java (name/value/required/defaultValue).
+
+    Un literal simple entre comillas sin clave se interpreta como el atributo
+    ``value`` (equivalente a ``name`` en @RequestParam/@PathVariable).
+    """
+    if not args:
+        return {}
+    bare = re.match(r'^\s*"([^"]*)"\s*$', args)
+    if bare:
+        return {"value": bare.group(1)}
+    result: dict[str, str] = {}
+    for match in re.finditer(r'(\w+)\s*=\s*("([^"]*)"|[\w.]+)', args):
+        result[match.group(1)] = match.group(3) if match.group(3) is not None else match.group(2)
+    return result
+
+def convert_default(raw_value: str, schema: dict) -> object:
+    kind = schema.get("type")
+    if kind == "integer":
+        try: return int(raw_value)
+        except ValueError: return raw_value
+    if kind == "number":
+        try: return float(raw_value)
+        except ValueError: return raw_value
+    if kind == "boolean":
+        return raw_value.lower() == "true"
+    return raw_value
+
+def pageable_parameters() -> list[dict]:
+    return [
+        {"name": "page", "in": "query", "required": False,
+         "description": "Numero de pagina solicitado (0-index).",
+         "schema": {"type": "integer", "format": "int32", "default": 0}},
+        {"name": "size", "in": "query", "required": False,
+         "description": "Cantidad de elementos por pagina.",
+         "schema": {"type": "integer", "format": "int32", "default": 20}},
+        {"name": "sort", "in": "query", "required": False,
+         "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+         "schema": {"type": "array", "items": {"type": "string"}}},
+    ]
+
+def paginated_schema(inner_expr: str, kind: str, known: set[str], extra_schemas: dict[str, dict]) -> dict:
+    item_schema = schema_for_type(inner_expr.strip(), known)
+    item_name = item_schema.get("$ref", "").rsplit("/", 1)[-1]
+    schema_name = f"{kind}{item_name}" if item_name else kind
+    if schema_name not in extra_schemas:
+        if kind == "PaginaResponse":
+            extra_schemas[schema_name] = {
+                "type": "object",
+                "description": "Pagina generica devuelta por PaginaResponse<T> del codigo fuente.",
+                "properties": {
+                    "contenido": {"type": "array", "items": item_schema},
+                    "pagina": {"type": "integer", "format": "int32"},
+                    "tamanio": {"type": "integer", "format": "int32"},
+                    "totalElementos": {"type": "integer", "format": "int64"},
+                    "totalPaginas": {"type": "integer", "format": "int32"},
+                    "primera": {"type": "boolean"},
+                    "ultima": {"type": "boolean"},
+                },
+                "required": ["contenido", "pagina", "tamanio", "totalElementos", "totalPaginas", "primera", "ultima"],
+            }
+        else:
+            extra_schemas[schema_name] = {
+                "type": "object",
+                "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+                "properties": {
+                    "content": {"type": "array", "items": item_schema},
+                    "totalElements": {"type": "integer", "format": "int64"},
+                    "totalPages": {"type": "integer", "format": "int32"},
+                    "number": {"type": "integer", "format": "int32"},
+                    "size": {"type": "integer", "format": "int32"},
+                    "numberOfElements": {"type": "integer", "format": "int32"},
+                    "first": {"type": "boolean"},
+                    "last": {"type": "boolean"},
+                    "empty": {"type": "boolean"},
+                },
+                "required": ["content", "totalElements", "totalPages", "number", "size", "numberOfElements", "first", "last", "empty"],
+            }
+    return {"$ref": f"#/components/schemas/{schema_name}"}
 
 def schema_for_type(value: str, known: set[str]) -> dict:
     name, array = unwrap_type(value)
@@ -126,7 +226,9 @@ def discover_types(root: Path) -> dict[str, dict]:
 def controllers(root: Path) -> list[Path]:
     return sorted(root.glob("src/main/java/**/*Controller.java"))
 
-def discover_operations(root: Path) -> dict[tuple[str, str], dict]:
+def discover_operations(root: Path, extra_schemas: dict[str, dict] | None = None) -> dict[tuple[str, str], dict]:
+    if extra_schemas is None:
+        extra_schemas = {}
     schemas = discover_types(root)
     known = set(schemas)
     operations = {}
@@ -151,14 +253,33 @@ def discover_operations(root: Path) -> dict[tuple[str, str], dict]:
                 ptype, pname = pm.group(1).strip(), pm.group(2)
                 if "@RequestBody" in raw:
                     body_type = ptype
+                elif ptype.split(".")[-1] == "Pageable":
+                    op_params.extend(pageable_parameters())
                 elif "@PathVariable" in raw or "@RequestParam" in raw:
                     ann = "PathVariable" if "@PathVariable" in raw else "RequestParam"
                     am = re.search(rf"@{ann}(?:\(([^)]*)\))?", raw)
-                    explicit = annotation_path(am.group(1)) if am else ""
-                    required = ann == "PathVariable" or not (am and "required" in (am.group(1) or "") and "false" in (am.group(1) or ""))
-                    op_params.append({"name": explicit or pname, "in": "path" if ann == "PathVariable" else "query", "required": required, "schema": schema_for_type(ptype, known)})
+                    attrs = parse_annotation_args(am.group(1) if am else None)
+                    explicit = attrs.get("name") or attrs.get("value") or ""
+                    param_schema = schema_for_type(ptype, known)
+                    if ann == "PathVariable":
+                        required = True
+                    elif "defaultValue" in attrs:
+                        required = False
+                    elif "required" in attrs:
+                        required = attrs["required"] != "false"
+                    else:
+                        required = True
+                    if "defaultValue" in attrs:
+                        param_schema = dict(param_schema)
+                        param_schema["default"] = convert_default(attrs["defaultValue"], param_schema)
+                    op_params.append({"name": explicit or pname, "in": "path" if ann == "PathVariable" else "query", "required": required, "schema": param_schema})
             success = "204" if return_type in ("Void", "void") else ("201" if method == "post" and "ResponseEntity.created" in text[match.end():match.end()+700] else "200")
-            response_schema = schema_for_type(match.group(4).strip(), known)
+            peeled_return = strip_wrappers(match.group(4).strip())
+            page_match = re.match(r"^(Page|PaginaResponse)<(.*)>$", peeled_return, re.S)
+            if page_match:
+                response_schema = paginated_schema(page_match.group(2), page_match.group(1), known, extra_schemas)
+            else:
+                response_schema = schema_for_type(match.group(4).strip(), known)
             operation = {"operationId": f"{controller}_{match.group(5)}", "tags": [controller], "responses": {success: {"description": "Respuesta satisfactoria"}}}
             if response_schema and success != "204": operation["responses"][success]["content"] = {"application/json": {"schema": response_schema}}
             if op_params: operation["parameters"] = op_params
@@ -172,16 +293,19 @@ def discover_operations(root: Path) -> dict[tuple[str, str], dict]:
     return operations
 
 def make_contract(label: str, root: Path, title: str, version: str) -> dict:
-    ops = discover_operations(root)
+    extra_schemas: dict[str, dict] = {}
+    ops = discover_operations(root, extra_schemas)
     paths = {}
     for (method, route), operation in sorted(ops.items(), key=lambda x: (x[0][1], x[0][0])):
         paths.setdefault(route, {})[method] = operation
+    all_schemas = dict(discover_types(root))
+    all_schemas.update(extra_schemas)
     return {"openapi": "3.1.0", "info": {"title": title, "version": version,
             "description": "Snapshot determinista derivado de controladores y DTO del código fuente vigente."},
             "paths": paths, "components": {"securitySchemes": {
                 "bearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"},
                 "internalApiKey": {"type": "apiKey", "in": "header", "name": "X-Internal-Api-Key"}},
-                "schemas": discover_types(root)}}
+                "schemas": dict(sorted(all_schemas.items()))}}
 
 def gateway_contract(contracts: dict[str, dict]) -> dict:
     public_prefixes = ("/api/v1/auth", "/api/v1/perfiles", "/api/v1/docentes", "/api/v1/estudiantes", "/api/v1/administradores",
