@@ -277,6 +277,12 @@ como **CUMPLE** dentro de los escenarios ensayados, y mantenibilidad como
 La [matriz de trazabilidad](experimentos/resultados/TRAZABILIDAD-E3-E4.md)
 relaciona requisitos, protocolos, productores, raw, análisis y documentos.
 
+La [verificación global de integridad](docs/evidencias/issue-19-integridad.md)
+se ejecuta con `python scripts/verificar-manifiestos.py` (Python 3.11 o superior).
+Comprueba todos los manifiestos rastreados, incluidos evidencia-17 y smoke-refresh;
+el job `verify-experimental-manifest` condiciona `publish-release`. Para revisar
+manifiestos nuevos antes de incorporarlos a Git, usar `--include-untracked`.
+
 ## Estado final ARBITER
 
 La campaña ARBITER del SHA experimental
