@@ -253,6 +253,21 @@ sí solo. La procedencia se apoya adicionalmente en metadata, timestamps, SHA
 probado y el documento
 \path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md}.
 
+La verificación global se ejecuta con
+\texttt{python scripts/verificar-manifiestos.py} desde la raíz del repositorio.
+Descubre los manifiestos rastreados por Git y comprueba cada uno desde su base
+correspondiente. La ampliación de integridad comprende 25 manifiestos y 1459
+entradas verificadas, incluidos evidencia-17 (50/50) y smoke-refresh (7/7).
+Los cuatro manifiestos nuevos fijan los 35 archivos preservados del intento
+\texttt{rep-04}, cuatro derivados y ocho capturas antes sin cobertura. El intento
+abortado por disco lleno conserva su metadata truncada y no pasa a ser una
+repetición válida. El job \texttt{verify-experimental-manifest} rechaza archivos
+ausentes, cambios de hash o manifiestos inválidos; \texttt{publish-release}
+depende de este control. Antes de incorporar archivos nuevos a Git, la opción
+\texttt{--include-untracked} permite verificarlos localmente. Este mecanismo
+comprueba integridad respecto del estado fijado, sin demostrar por sí solo que
+un dato y su hash nunca se hayan sustituido simultáneamente.
+
 \subsection{Eficiencia nominal: 50 usuarios durante cinco minutos}
 \label{subsec:eficiencia-nominal}
 

@@ -65,14 +65,22 @@ jobs:
         run: python -m unittest discover -s experimentos/tests -p "test_*.py" -v
 
   verify-experimental-manifest:
-    name: Verify - experimental results manifest
+    name: Verify - all tracked evidence manifests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify experimental results checksums
-        run: sha256sum --check experimentos/resultados/SHA256SUMS
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test manifest verifier
+        run: python -m unittest discover -s scripts/tests -p "test_verificar_manifiestos.py" -v
+
+      - name: Verify all tracked checksums
+        run: python scripts/verificar-manifiestos.py
 
   validate-openapi-contracts:
     name: Validate - OpenAPI contracts
@@ -809,7 +817,7 @@ jobs:
     name: Publish versioned GitHub Release
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    needs: [build-mobile-release-signed, build-release-documentation, build-images]
+    needs: [build-mobile-release-signed, build-release-documentation, build-images, verify-experimental-manifest]
     permissions:
       contents: write
     steps:
