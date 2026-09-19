@@ -104,7 +104,7 @@ Ruta prevista:
 
 `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada_smoke/`
 
-Duración prevista: 1500 s.
+Duración prevista: 930 s. Esta duración supera el TTL de 900 s y permite verificar actividad de negocio posterior a la expiración nominal.
 
 Carga:
 
