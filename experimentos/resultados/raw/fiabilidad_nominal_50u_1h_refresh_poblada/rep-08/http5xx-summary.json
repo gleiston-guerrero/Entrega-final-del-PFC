@@ -1,0 +1,34 @@
+{
+  "total": 21,
+  "business_get_count": 89485,
+  "rate_percent": 0.023467620271553892,
+  "by_endpoint_status": [
+    {
+      "name": "GET /api/v1/reservas",
+      "status_code": 500,
+      "count": 15
+    },
+    {
+      "name": "GET /api/v1/reservas/{id}",
+      "status_code": 500,
+      "count": 6
+    }
+  ],
+  "clusters_by_epoch_second": [
+    {
+      "epoch_second": 1789891804,
+      "utc": "2026-09-20T08:10:04+00:00",
+      "count": 12
+    },
+    {
+      "epoch_second": 1789893564,
+      "utc": "2026-09-20T08:39:24+00:00",
+      "count": 6
+    },
+    {
+      "epoch_second": 1789893592,
+      "utc": "2026-09-20T08:39:52+00:00",
+      "count": 3
+    }
+  ]
+}
