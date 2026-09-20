@@ -1,0 +1,10 @@
+Durante rep-01 se realizó únicamente diagnóstico de lectura sobre el uso de disco.
+Contenedor identificado: scli-prod-otel-collector-1
+Log Docker: /var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+Medición observada durante rep-01: 40.99 MiB en 30 s.
+Proyección observada: aproximadamente 4.80 GiB/h.
+Tamaño del log al cierre de rep-01: 10697326824 bytes.
+No se truncaron logs, no se reiniciaron contenedores y no se ejecutó limpieza
+de Docker durante rep-01.
+Cualquier acción de liberación de espacio queda fuera de la ventana de rep-01
+y se realizará antes de rep-02.
