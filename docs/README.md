@@ -42,10 +42,12 @@ Los PDFs históricos pueden no contener integraciones documentales posteriores.
 Para consultar el estado acumulativo se debe usar la fuente oficial o el artifact
 producido por el workflow de documentación.
 
-## Evidencias visuales pendientes
+## Evidencias visuales
 
 Existe una captura versionada del dashboard real de Grafana en
-`release/screenshots/panel-monitoreo.png`. Aún no hay una captura versionada del
-flujo QR en un dispositivo. Las evidencias visuales incorporadas deben proceder
-de un entorno real, omitir secretos y datos personales, e identificar SHA,
-fecha, zona horaria y entorno.
+`release/screenshots/panel-monitoreo.png`. El flujo QR real en dispositivo se
+encuentra documentado en `docs/evidencias/qr-e2e-2026-09-20.md`, con las capturas
+`docs/evidencias/qr-escaneo-real-2026-09-20.png` y
+`docs/evidencias/qr-resultado-laboratorio-2026-09-20.png`. Las evidencias
+visuales incorporadas deben proceder de un entorno real, omitir secretos y datos
+personales, e identificar SHA, fecha, zona horaria y entorno.

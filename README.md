@@ -175,7 +175,11 @@ en [`apps/mobile/README.md`](apps/mobile/README.md). La version Android actual e
 validado extremo a extremo con un dispositivo Android físico. El cliente obtiene
 y registra el token FCM, el backend persiste el dispositivo y envía
 notificaciones mediante Firebase Admin SDK. La evidencia de recepción real se
-conserva en [`docs/evidencias/fcm-e2e.md`](docs/evidencias/fcm-e2e.md).
+conserva en
+[`docs/evidencias/fcm-e2e-2026-09-20.md`](docs/evidencias/fcm-e2e-2026-09-20.md).
+El flujo QR con CameraX/ML Kit también cuenta con evidencia E2E real contra el
+laboratorio `DEMO-LAB-A` en
+[`docs/evidencias/qr-e2e-2026-09-20.md`](docs/evidencias/qr-e2e-2026-09-20.md).
 
 La release oficial verificada correspondiente al punto #35 es `v1.0.1`,
 generada por GitHub Actions y asociada al commit etiquetado
