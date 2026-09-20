@@ -1,0 +1,13 @@
+[2026-09-20T01:19:18.309459165Z] INTERVENCION ENTRE rep-01 Y rep-02
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=10700637817
+motivo=log Docker del OTel Collector crecia aproximadamente 4.80 GiB/h
+objetivo=prevenir disco lleno antes de rep-02
+rep-01_commit=d49b337
+rep-01_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T01:19:18.498217685Z
+bytes_after=0
+resultado=completed
+
