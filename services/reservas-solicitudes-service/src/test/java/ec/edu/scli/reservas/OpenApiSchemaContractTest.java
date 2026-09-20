@@ -56,6 +56,12 @@ class OpenApiSchemaContractTest {
 
         assertThat(runtime).anyMatch(signature ->
                 signature.paginacion().tipo() != SchemaContractVerifier.TipoPaginacion.NINGUNA);
+        assertThat(runtime).anyMatch(signature ->
+                "IncidenteResponse".equals(signature.paginacion().nombreClaseElemento()));
+        assertThat(runtime).anyMatch(signature -> signature.requestBodies().stream()
+                .anyMatch(body -> body.type().resolve().getSimpleName().equals("CrearIncidenteRequest")));
+        assertThat(runtime).anyMatch(signature -> signature.responseBodies().stream()
+                .anyMatch(body -> body.type().resolve().getSimpleName().equals("IncidenteResponse")));
         SchemaContractVerifier.assertMatches(runtime, document);
     }
 }

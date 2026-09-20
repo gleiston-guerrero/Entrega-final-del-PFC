@@ -1,14 +1,20 @@
 package ec.edu.scli.contracts;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.MissingNode;
 import ec.edu.scli.contracts.RuntimeContractVerifier.Operation;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,42 +23,42 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.math.BigDecimal;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.lang.reflect.RecordComponent;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * Deriva la firma real de parametros y de estructura de respuesta paginada
- * desde los HandlerMethod compilados (reflexion sobre clases Java reales) y
- * la contrasta contra el contrato OpenAPI. No comparte logica ni datos con el
- * extractor regex de scripts/validar-contratos-openapi.py: por eso puede
- * detectar un contrato correcto segun el codigo que el extractor regex
- * hubiera rechazado (o un contrato incorrecto que el extractor no detecta).
- *
- * El tipo de elemento T de Page&lt;T&gt;/PaginaResponse&lt;T&gt; se deriva en
- * tiempo de ejecucion con {@link ResolvableType} sobre el metodo compilado;
- * nunca se hardcodea el nombre de un DTO concreto. Las propiedades esperadas
- * de PaginaResponse se derivan por reflexion de sus {@code RecordComponent}
- * reales, no de una lista literal en este verificador.
+ * Verifica schemas OpenAPI contra HandlerMethod compilados. La validacion deriva
+ * requests, responses, propiedades y tipos desde clases Java reales; no reutiliza
+ * la logica del extractor Python que genera snapshots.
  */
 public final class SchemaContractVerifier {
 
     private SchemaContractVerifier() {
     }
 
-    /** Los 9 campos que Spring Data serializa por defecto para {@link Page}: son parte fija de esa API, no un DTO del proyecto. */
     private static final List<String> PROPIEDADES_PAGE = List.of(
             "content", "totalElements", "totalPages", "number", "size", "numberOfElements", "first", "last", "empty");
 
     public enum TipoPaginacion { NINGUNA, PAGE, PAGINA_RESPONSE }
+
+    public enum BodyKind { REQUEST, RESPONSE, SCHEMA }
 
     public record ParameterSignature(String name, boolean required, String type, Object defaultValue) {
     }
@@ -64,7 +70,17 @@ public final class SchemaContractVerifier {
         }
     }
 
-    public record OperationSignature(Operation operation, FirmaPaginacion paginacion, List<ParameterSignature> queryParams) {
+    public record BodySignature(String location, ResolvableType type, BodyKind kind) {
+    }
+
+    private static final JacksonBehavior JACKSON_BEHAVIOR = JacksonBehavior.detect();
+
+    public record OperationSignature(
+            Operation operation,
+            FirmaPaginacion paginacion,
+            List<ParameterSignature> queryParams,
+            List<BodySignature> requestBodies,
+            List<BodySignature> responseBodies) {
     }
 
     public static List<OperationSignature> runtimeSignatures(
@@ -82,10 +98,12 @@ public final class SchemaContractVerifier {
             Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
             FirmaPaginacion paginacion = firmaPaginacion(handlerMethod);
             List<ParameterSignature> queryParams = parametrosQuery(handlerMethod);
+            List<BodySignature> requests = requestBodies(handlerMethod);
+            List<BodySignature> responses = responseBodies(handlerMethod);
             for (String path : paths) {
                 for (RequestMethod method : methods) {
                     signatures.add(new OperationSignature(
-                            new Operation(method.name(), path), paginacion, queryParams));
+                            new Operation(method.name(), path), paginacion, queryParams, requests, responses));
                 }
             }
         }
@@ -93,11 +111,60 @@ public final class SchemaContractVerifier {
     }
 
     private static ResolvableType tipoRetornoResuelto(HandlerMethod handlerMethod) {
-        ResolvableType tipo = ResolvableType.forMethodReturnType(handlerMethod.getMethod());
-        if (ResponseEntity.class.isAssignableFrom(tipo.toClass())) {
-            tipo = tipo.getGeneric(0);
+        return unwrapResponseEntity(ResolvableType.forMethodReturnType(handlerMethod.getMethod()));
+    }
+
+    private static ResolvableType unwrapResponseEntity(ResolvableType type) {
+        Class<?> raw = type.resolve();
+        if (raw != null && ResponseEntity.class.isAssignableFrom(raw)) {
+            return type.getGeneric(0);
         }
-        return tipo;
+        return type;
+    }
+
+    private static List<BodySignature> responseBodies(HandlerMethod handlerMethod) {
+        ResolvableType type = tipoRetornoResuelto(handlerMethod);
+        if (!debeValidar(type)) {
+            return List.of();
+        }
+        return List.of(new BodySignature("response", type, BodyKind.RESPONSE));
+    }
+
+    private static List<BodySignature> requestBodies(HandlerMethod handlerMethod) {
+        List<BodySignature> bodies = new ArrayList<>();
+        for (MethodParameter parameter : handlerMethod.getMethodParameters()) {
+            if (parameter.hasParameterAnnotation(RequestBody.class)) {
+                ResolvableType type = ResolvableType.forMethodParameter(parameter);
+                if (!debeValidar(type)) {
+                    continue;
+                }
+                bodies.add(new BodySignature("requestBody", type, BodyKind.REQUEST));
+            }
+        }
+        return bodies;
+    }
+
+    private static boolean debeValidar(ResolvableType type) {
+        Class<?> raw = type.resolve();
+        if (raw == null || raw == Void.TYPE || raw == Void.class) {
+            return false;
+        }
+        if (HttpEntity.class.isAssignableFrom(raw)) {
+            return debeValidar(type.getGeneric(0));
+        }
+        if (raw.isArray()) {
+            return debeValidar(ResolvableType.forClass(raw.getComponentType()));
+        }
+        if (Collection.class.isAssignableFrom(raw) || Page.class.isAssignableFrom(raw)) {
+            return debeValidar(type.getGeneric(0));
+        }
+        if (raw.isEnum()) {
+            return true;
+        }
+        String packageName = raw.getPackageName();
+        return !packageName.startsWith("java.")
+                && !packageName.startsWith("jakarta.")
+                && !packageName.startsWith("org.springframework.");
     }
 
     private static FirmaPaginacion firmaPaginacion(HandlerMethod handlerMethod) {
@@ -125,7 +192,6 @@ public final class SchemaContractVerifier {
         return elemento == null ? null : elemento.getSimpleName();
     }
 
-    /** Propiedades reales del record, derivadas por reflexion (no hardcodeadas). */
     private static List<String> propiedadesDeRecord(Class<?> tipoRecord) {
         List<String> nombres = new ArrayList<>();
         for (RecordComponent componente : tipoRecord.getRecordComponents()) {
@@ -134,7 +200,6 @@ public final class SchemaContractVerifier {
         return nombres;
     }
 
-    /** El componente de tipo coleccion del record es el campo de contenido paginado, derivado por reflexion. */
     private static String campoContenido(Class<?> tipoRecord) {
         for (RecordComponent componente : tipoRecord.getRecordComponents()) {
             if (Collection.class.isAssignableFrom(componente.getType())) {
@@ -171,7 +236,6 @@ public final class SchemaContractVerifier {
         return params;
     }
 
-    /** {@code null} cuando el tipo Java no tiene una correspondencia simple derivable (p. ej. enums propios). */
     private static String tipoOpenApi(Class<?> tipoJava) {
         if (tipoJava == int.class || tipoJava == Integer.class || tipoJava == long.class || tipoJava == Long.class) {
             return "integer";
@@ -184,7 +248,8 @@ public final class SchemaContractVerifier {
             return "boolean";
         }
         if (tipoJava == String.class || UUID.class.isAssignableFrom(tipoJava)
-                || LocalDate.class.isAssignableFrom(tipoJava) || LocalDateTime.class.isAssignableFrom(tipoJava)) {
+                || LocalDate.class.isAssignableFrom(tipoJava) || LocalDateTime.class.isAssignableFrom(tipoJava)
+                || OffsetDateTime.class.isAssignableFrom(tipoJava) || Instant.class.isAssignableFrom(tipoJava)) {
             return "string";
         }
         return null;
@@ -230,7 +295,7 @@ public final class SchemaContractVerifier {
     private static JsonNode resolverSchema(JsonNode schema, JsonNode document) {
         JsonNode actual = schema;
         int saltos = 0;
-        while (actual.has("$ref") && saltos < 5) {
+        while (actual.has("$ref") && saltos < 8) {
             String ref = actual.path("$ref").asText();
             actual = document.at(ref.startsWith("#") ? ref.substring(1) : ref);
             saltos++;
@@ -244,22 +309,373 @@ public final class SchemaContractVerifier {
         for (OperationSignature signature : runtimeSignatures) {
             JsonNode operationNode = operationsIndex.get(signature.operation());
             if (operationNode == null) {
-                // la completitud metodo+ruta la acredita RuntimeContractVerifier por separado
                 continue;
             }
             if (signature.paginacion().tipo() != TipoPaginacion.NINGUNA) {
                 problems.addAll(compararPaginacion(signature, operationNode, openApiDocument));
             }
             problems.addAll(compararQueryParams(signature, operationNode));
+            problems.addAll(compararRequestBodies(signature, operationNode, openApiDocument));
+            problems.addAll(compararResponseBodies(signature, operationNode, openApiDocument));
         }
         return problems;
+    }
+
+    private static List<String> compararRequestBodies(
+            OperationSignature signature, JsonNode operationNode, JsonNode document) {
+        List<String> problems = new ArrayList<>();
+        for (BodySignature request : signature.requestBodies()) {
+            JsonNode schema = operationNode.path("requestBody").path("content").path("application/json").path("schema");
+            if (schema.isMissingNode()) {
+                problems.add("REQUEST_BODY_SCHEMA_FALTANTE " + signature.operation());
+                continue;
+            }
+            compareType(signature.operation().toString(), request.location(), request.type(), request.kind(), schema, document, problems);
+        }
+        return problems;
+    }
+
+    private static List<String> compararResponseBodies(
+            OperationSignature signature, JsonNode operationNode, JsonNode document) {
+        List<String> problems = new ArrayList<>();
+        for (BodySignature response : signature.responseBodies()) {
+            JsonNode schema = responseSchema(operationNode);
+            if (schema.isMissingNode()) {
+                problems.add("RESPONSE_SCHEMA_FALTANTE " + signature.operation());
+                continue;
+            }
+            compareType(signature.operation().toString(), response.location(), response.type(), response.kind(), schema, document, problems);
+        }
+        return problems;
+    }
+
+    private static JsonNode responseSchema(JsonNode operationNode) {
+        for (String status : List.of("200", "201", "202")) {
+            JsonNode schema = operationNode.path("responses").path(status)
+                    .path("content").path("application/json").path("schema");
+            if (!schema.isMissingNode()) {
+                return schema;
+            }
+        }
+        return MissingNode.getInstance();
+    }
+
+    public static List<String> compareTypeAgainstSchema(String context, ResolvableType type, JsonNode schema, JsonNode document) {
+        List<String> problems = new ArrayList<>();
+        compareType(context, "schema", type, BodyKind.SCHEMA, schema, document, problems);
+        return problems;
+    }
+
+    public static List<String> compareTypeAgainstSchema(
+            String context, ResolvableType type, BodyKind kind, JsonNode schema, JsonNode document) {
+        List<String> problems = new ArrayList<>();
+        compareType(context, kind.name().toLowerCase(), type, kind, schema, document, problems);
+        return problems;
+    }
+
+    private static void compareType(
+            String operation, String location, ResolvableType type, BodyKind kind,
+            JsonNode schema, JsonNode document, List<String> problems) {
+        type = unwrapResponseEntity(type);
+        Class<?> raw = type.resolve();
+        if (raw == null || raw == Void.class || raw == Void.TYPE || !debeValidar(type)) {
+            return;
+        }
+        if (raw.isArray()) {
+            compareArray(operation, location, ResolvableType.forClass(raw.getComponentType()), kind, schema, document, problems);
+            return;
+        }
+        if (Collection.class.isAssignableFrom(raw)) {
+            compareArray(operation, location, type.getGeneric(0), kind, schema, document, problems);
+            return;
+        }
+        if (Page.class.isAssignableFrom(raw) || (raw.isRecord() && "PaginaResponse".equals(raw.getSimpleName()))) {
+            compareContainerObject(operation, location, type, kind, schema, document, problems);
+            return;
+        }
+        if (raw.isEnum()) {
+            compareEnum(operation, location, raw, schema, document, problems);
+            return;
+        }
+        compareObjectDto(operation, location, raw, kind, schema, document, problems);
+    }
+
+    private static void compareArray(
+            String operation, String location, ResolvableType elementType, BodyKind kind,
+            JsonNode schema, JsonNode document, List<String> problems) {
+        JsonNode resolved = resolverSchema(schema, document);
+        if (!"array".equals(resolved.path("type").asText(null))) {
+            problems.add("DTO_TIPO_INCORRECTO " + operation + " " + location + " esperado=array declarado="
+                    + resolved.path("type").asText(null));
+            return;
+        }
+        compareType(operation, location + "[]", elementType, kind, resolved.path("items"), document, problems);
+    }
+
+    private static void compareContainerObject(
+            String operation, String location, ResolvableType type, BodyKind kind,
+            JsonNode schema, JsonNode document, List<String> problems) {
+        JsonNode resolved = resolverSchema(schema, document);
+        if (!"object".equals(resolved.path("type").asText(null))) {
+            problems.add("DTO_TIPO_INCORRECTO " + operation + " " + location + " esperado=object declarado="
+                    + resolved.path("type").asText(null));
+            return;
+        }
+        ResolvableType elementType = type.getGeneric(0);
+        Class<?> raw = type.resolve();
+        String contentName = Page.class.isAssignableFrom(raw) ? "content" : "contenido";
+        JsonNode content = resolved.path("properties").path(contentName);
+        if (!content.isMissingNode()) {
+            compareArray(operation, location + "." + contentName, elementType, kind, content, document, problems);
+        }
+    }
+
+    private static void compareObjectDto(
+            String operation, String location, Class<?> raw, BodyKind kind,
+            JsonNode schema, JsonNode document, List<String> problems) {
+        if (!schema.has("$ref")) {
+            JsonNode resolved = resolverSchema(schema, document);
+            if (!"object".equals(resolved.path("type").asText(null))) {
+                problems.add("DTO_TIPO_INCORRECTO " + operation + " " + location + " esperado=object declarado="
+                        + resolved.path("type").asText(null));
+                return;
+            }
+        } else if (!schema.path("$ref").asText().endsWith("/" + raw.getSimpleName())) {
+            problems.add("DTO_REF_INCORRECTO " + operation + " " + location + " esperado=" + raw.getSimpleName()
+                    + " declarado=" + schema.path("$ref").asText());
+        }
+
+        JsonNode resolved = resolverSchema(schema, document);
+        JsonNode propertiesNode = resolved.path("properties");
+        Map<String, DtoProperty> expected = propiedadesDto(raw);
+        Set<String> declaredNames = new LinkedHashSet<>();
+        propertiesNode.fieldNames().forEachRemaining(declaredNames::add);
+
+        for (DtoProperty property : expected.values()) {
+            JsonNode declared = propertiesNode.path(property.name());
+            if (declared.isMissingNode()) {
+                problems.add("DTO_PROPIEDAD_FALTANTE " + operation + " " + raw.getSimpleName() + "." + property.name()
+                        + " java=" + javaDescription(property.type()) + " openapi=<faltante>");
+                continue;
+            }
+            compareProperty(operation, raw.getSimpleName(), property, declared, document, problems);
+        }
+        for (String declared : declaredNames) {
+            if (!expected.containsKey(declared)) {
+                problems.add("DTO_PROPIEDAD_EXTRA " + operation + " " + raw.getSimpleName() + "." + declared
+                        + " java=<faltante> openapi=" + resumenSchema(propertiesNode.path(declared)));
+            }
+        }
+
+        Set<String> required = requiredNames(resolved);
+        for (DtoProperty property : expected.values()) {
+            if (isRequired(property, raw, kind) && !required.contains(property.name())) {
+                problems.add("DTO_REQUIRED_FALTANTE " + operation + " " + raw.getSimpleName() + "." + property.name());
+            }
+        }
+    }
+
+    private static void compareProperty(
+            String operation, String owner, DtoProperty property, JsonNode schema, JsonNode document, List<String> problems) {
+        ResolvableType type = property.type();
+        Class<?> raw = type.resolve();
+        if (raw == null) {
+            return;
+        }
+        if (raw.isArray()) {
+            compareArray(operation, owner + "." + property.name(), ResolvableType.forClass(raw.getComponentType()), BodyKind.SCHEMA, schema, document, problems);
+            return;
+        }
+        if (Collection.class.isAssignableFrom(raw)) {
+            compareArray(operation, owner + "." + property.name(), type.getGeneric(0), BodyKind.SCHEMA, schema, document, problems);
+            return;
+        }
+        if (raw.isEnum()) {
+            compareEnum(operation, owner + "." + property.name(), raw, schema, document, problems);
+            return;
+        }
+        if (debeValidar(type)) {
+            if (!schema.has("$ref") || !schema.path("$ref").asText().endsWith("/" + raw.getSimpleName())) {
+                problems.add("DTO_REF_INCORRECTO " + operation + " " + owner + "." + property.name()
+                        + " esperado=" + raw.getSimpleName() + " declarado=" + resumenSchema(schema));
+            }
+            return;
+        }
+        ExpectedScalar expected = scalar(raw);
+        if (expected == null) {
+            return;
+        }
+        String declaredType = schema.path("type").asText(null);
+        String declaredFormat = schema.path("format").asText(null);
+        if (!expected.type().equals(declaredType) || (expected.format() != null && !expected.format().equals(declaredFormat))) {
+            problems.add("DTO_TIPO_INCORRECTO " + operation + " " + owner + "." + property.name()
+                    + " java=" + expected + " openapi=" + resumenSchema(schema));
+        }
+    }
+
+    private static void compareEnum(
+            String operation, String location, Class<?> enumType, JsonNode schema, JsonNode document, List<String> problems) {
+        JsonNode enumSchema = schema.has("$ref") ? resolverSchema(schema, document) : schema;
+        if (!schema.has("$ref") && !"string".equals(enumSchema.path("type").asText(null))) {
+            problems.add("DTO_TIPO_INCORRECTO " + operation + " " + location + " java=enum openapi=" + resumenSchema(schema));
+            return;
+        }
+        if (schema.has("$ref") && !schema.path("$ref").asText().endsWith("/" + enumType.getSimpleName())) {
+            problems.add("DTO_REF_INCORRECTO " + operation + " " + location + " esperado=" + enumType.getSimpleName()
+                    + " declarado=" + schema.path("$ref").asText());
+        }
+        Set<String> expectedValues = new LinkedHashSet<>();
+        for (Object constant : enumType.getEnumConstants()) {
+            expectedValues.add(((Enum<?>) constant).name());
+        }
+        Set<String> declaredValues = new LinkedHashSet<>();
+        enumSchema.path("enum").forEach(value -> declaredValues.add(value.asText()));
+        if (!expectedValues.equals(declaredValues)) {
+            problems.add("DTO_ENUM_INCORRECTO " + operation + " " + location
+                    + " java=" + expectedValues + " openapi=" + declaredValues);
+        }
+    }
+
+    private static ExpectedScalar scalar(Class<?> raw) {
+        if (raw == String.class) {
+            return new ExpectedScalar("string", null);
+        }
+        if (raw == UUID.class) {
+            return new ExpectedScalar("string", "uuid");
+        }
+        if (raw == int.class || raw == Integer.class) {
+            return new ExpectedScalar("integer", "int32");
+        }
+        if (raw == long.class || raw == Long.class) {
+            return new ExpectedScalar("integer", "int64");
+        }
+        if (raw == float.class || raw == Float.class || raw == double.class || raw == Double.class
+                || raw == BigDecimal.class) {
+            return new ExpectedScalar("number", null);
+        }
+        if (raw == boolean.class || raw == Boolean.class) {
+            return new ExpectedScalar("boolean", null);
+        }
+        if (raw == LocalDate.class) {
+            return new ExpectedScalar("string", "date");
+        }
+        if (raw == Instant.class || raw == OffsetDateTime.class || raw == LocalDateTime.class) {
+            return new ExpectedScalar("string", "date-time");
+        }
+        return null;
+    }
+
+    private static Map<String, DtoProperty> propiedadesDto(Class<?> raw) {
+        Map<String, DtoProperty> properties = new LinkedHashMap<>();
+        if (raw.isRecord()) {
+            for (RecordComponent component : raw.getRecordComponents()) {
+                properties.put(component.getName(), new DtoProperty(
+                        component.getName(),
+                        ResolvableType.forType(component.getGenericType()),
+                        component.getType(),
+                        recordComponentAnnotations(raw, component)));
+            }
+            return properties;
+        }
+        Arrays.stream(raw.getDeclaredFields())
+                .filter(field -> !java.lang.reflect.Modifier.isStatic(field.getModifiers()))
+                .forEach(field -> properties.put(field.getName(), new DtoProperty(
+                        field.getName(),
+                        ResolvableType.forField(field),
+                        field.getType(),
+                        field.getAnnotations())));
+        return properties;
+    }
+
+    private static boolean isRequired(DtoProperty property, Class<?> owner, BodyKind kind) {
+        if (hasExplicitRequiredEvidence(property.annotations())) {
+            return true;
+        }
+        if (!property.rawType().isPrimitive()) {
+            return false;
+        }
+        if (kind == BodyKind.RESPONSE) {
+            return JACKSON_BEHAVIOR.serializesPrimitiveValues()
+                    && !hasOmittingJacksonAnnotation(owner.getAnnotations())
+                    && !hasOmittingJacksonAnnotation(property.annotations());
+        }
+        if (kind == BodyKind.REQUEST) {
+            return owner.isRecord()
+                    && JACKSON_BEHAVIOR.failsOnMissingPrimitiveCreatorProperty()
+                    && !hasOmittingJacksonAnnotation(property.annotations());
+        }
+        return false;
+    }
+
+    private static boolean hasExplicitRequiredEvidence(Annotation[] annotations) {
+        for (Annotation annotation : annotations) {
+            Class<? extends Annotation> type = annotation.annotationType();
+            if (type == NotNull.class || type == NotBlank.class || type == NotEmpty.class) {
+                return true;
+            }
+            if (annotationBooleanValue(annotation, "required")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasOmittingJacksonAnnotation(Annotation[] annotations) {
+        for (Annotation annotation : annotations) {
+            String name = annotation.annotationType().getName();
+            if (name.endsWith(".JsonInclude") || name.endsWith(".JsonFilter") || name.endsWith(".JsonSerialize")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean annotationBooleanValue(Annotation annotation, String methodName) {
+        try {
+            Method method = annotation.annotationType().getMethod(methodName);
+            Object value = method.invoke(annotation);
+            return Boolean.TRUE.equals(value);
+        } catch (ReflectiveOperationException ignored) {
+            return false;
+        }
+    }
+
+    private static Annotation[] recordComponentAnnotations(Class<?> owner, RecordComponent component) {
+        List<Annotation> annotations = new ArrayList<>();
+        annotations.addAll(Arrays.asList(component.getAnnotations()));
+        annotations.addAll(Arrays.asList(component.getAccessor().getAnnotations()));
+        try {
+            annotations.addAll(Arrays.asList(owner.getDeclaredField(component.getName()).getAnnotations()));
+        } catch (NoSuchFieldException ignored) {
+            // Los records normales exponen campo privado final; si no existe, las otras fuentes bastan.
+        }
+        return annotations.toArray(Annotation[]::new);
+    }
+
+    private static Set<String> requiredNames(JsonNode schema) {
+        Set<String> names = new HashSet<>();
+        schema.path("required").forEach(node -> names.add(node.asText()));
+        return names;
+    }
+
+    private static String javaDescription(ResolvableType type) {
+        Class<?> raw = type.resolve();
+        return raw == null ? type.toString() : raw.getSimpleName();
+    }
+
+    private static String resumenSchema(JsonNode schema) {
+        if (schema.has("$ref")) {
+            return schema.path("$ref").asText();
+        }
+        String type = schema.path("type").asText(null);
+        String format = schema.path("format").asText(null);
+        return format == null ? String.valueOf(type) : type + "(" + format + ")";
     }
 
     private static List<String> compararPaginacion(
             OperationSignature signature, JsonNode operationNode, JsonNode document) {
         List<String> problems = new ArrayList<>();
-        JsonNode schemaDeclarado = operationNode.path("responses").path("200")
-                .path("content").path("application/json").path("schema");
+        JsonNode schemaDeclarado = responseSchema(operationNode);
         if ("array".equals(schemaDeclarado.path("type").asText(null))) {
             problems.add("SCHEMA_PAGINADO_COMO_ARRAY " + signature.operation());
             return problems;
@@ -339,6 +755,52 @@ public final class SchemaContractVerifier {
         List<String> problems = compareSchemas(runtimeSignatures, openApiDocument);
         if (!problems.isEmpty()) {
             throw new AssertionError(String.join(System.lineSeparator(), problems));
+        }
+    }
+
+    private record DtoProperty(String name, ResolvableType type, Class<?> rawType, Annotation[] annotations) {
+    }
+
+    private record ExpectedScalar(String type, String format) {
+        @Override
+        public String toString() {
+            return format == null ? type : type + "(" + format + ")";
+        }
+    }
+
+    private record JacksonBehavior(boolean serializesPrimitiveValues, boolean failsOnMissingPrimitiveCreatorProperty) {
+        static JacksonBehavior detect() {
+            boolean failOnMissing = isDeserializationFeatureEnabled("FAIL_ON_MISSING_CREATOR_PROPERTIES");
+            boolean failOnNullPrimitives = isDeserializationFeatureEnabled("FAIL_ON_NULL_FOR_PRIMITIVES");
+            return new JacksonBehavior(true, failOnMissing || failOnNullPrimitives);
+        }
+
+        private static boolean isDeserializationFeatureEnabled(String featureName) {
+            Boolean toolsValue = featureEnabled(
+                    "tools.jackson.databind.ObjectMapper",
+                    "tools.jackson.databind.DeserializationFeature",
+                    featureName);
+            if (toolsValue != null) {
+                return toolsValue;
+            }
+            Boolean fasterXmlValue = featureEnabled(
+                    "com.fasterxml.jackson.databind.ObjectMapper",
+                    "com.fasterxml.jackson.databind.DeserializationFeature",
+                    featureName);
+            return fasterXmlValue != null && fasterXmlValue;
+        }
+
+        private static Boolean featureEnabled(String mapperClassName, String featureClassName, String featureName) {
+            try {
+                Class<?> mapperClass = Class.forName(mapperClassName);
+                Class<?> featureClass = Class.forName(featureClassName);
+                Object mapper = mapperClass.getConstructor().newInstance();
+                Object feature = Enum.valueOf(featureClass.asSubclass(Enum.class), featureName);
+                Method isEnabled = mapperClass.getMethod("isEnabled", featureClass);
+                return (Boolean) isEnabled.invoke(mapper, feature);
+            } catch (ReflectiveOperationException | LinkageError ignored) {
+                return null;
+            }
         }
     }
 }

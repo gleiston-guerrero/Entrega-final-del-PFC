@@ -1,4 +1,4 @@
-package ec.edu.scli.usuarios;
+package ec.edu.uteq.scli.auth_service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,14 +15,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Validacion de schemas/parametros independiente del extractor regex Python:
- * usa reflexion sobre los HandlerMethod que Spring ya resolvio (tipos de
- * retorno Page reales, anotaciones @RequestParam/Pageable reales) y la
- * contrasta contra el contrato OpenAPI publicado.
- */
 @SpringBootTest(properties = {
-        "spring.datasource.url=jdbc:h2:mem:usuarios_schema_contract;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
+        "spring.datasource.url=jdbc:h2:mem:auth_schema_contract;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.driver-class-name=org.h2.Driver",
         "spring.datasource.username=sa",
         "spring.datasource.password=",
@@ -39,19 +33,15 @@ class OpenApiSchemaContractTest {
     @Test
     void schemasYParametrosCoincidenConHandlerMethodsReales() throws Exception {
         List<OperationSignature> runtime = SchemaContractVerifier.runtimeSignatures(
-                mappings, "ec.edu.scli.usuarios");
+                mappings, "ec.edu.uteq.scli.auth_service");
         JsonNode document = new ObjectMapper().readTree(
-                RuntimeContractVerifier.repositoryFile(
-                        "docs/openapi/usuarios-service-openapi.json").toFile());
+                RuntimeContractVerifier.repositoryFile("docs/openapi/auth-service-openapi.json").toFile());
 
-        assertThat(runtime).anyMatch(signature ->
-                signature.paginacion().tipo() != SchemaContractVerifier.TipoPaginacion.NINGUNA);
-        assertThat(runtime).anyMatch(signature ->
-                "PerfilResponse".equals(signature.paginacion().nombreClaseElemento()));
-        assertThat(runtime).anyMatch(signature -> signature.requestBodies().stream()
-                .anyMatch(body -> body.type().resolve().getSimpleName().equals("UsuarioInstitucionalCreateRequest")));
-        assertThat(runtime).anyMatch(signature -> signature.responseBodies().stream()
-                .anyMatch(body -> body.type().resolve().getSimpleName().equals("PerfilResponse")));
+        assertThat(runtime)
+                .anyMatch(signature -> signature.requestBodies().stream()
+                        .anyMatch(body -> body.type().resolve().getSimpleName().equals("LoginRequest")))
+                .anyMatch(signature -> signature.responseBodies().stream()
+                        .anyMatch(body -> body.type().resolve().getSimpleName().equals("LoginResponse")));
         SchemaContractVerifier.assertMatches(runtime, document);
     }
 }
