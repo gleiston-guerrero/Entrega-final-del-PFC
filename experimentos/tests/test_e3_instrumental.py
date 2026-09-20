@@ -141,7 +141,7 @@ class AnalyzerTest(unittest.TestCase):
             ]
             maintenance = [(name, "lines", 80.0, 70.0) for name in
                            ("auth", "usuarios", "academico", "gateway", "web", "android")]
-            maintenance.append(("reservas", "lines", 85.0, 80.0))
+            maintenance.append(("reservas", "lines", 80.0, 80.0))
             maintenance.extend((("reservas", "branch", 60.0, 48.0),
                                 ("web", "branches", 80.0, 70.0),
                                 ("web", "functions", 80.0, 70.0),
@@ -161,6 +161,14 @@ class AnalyzerTest(unittest.TestCase):
                     for component, metric, percentage, threshold in maintenance:
                         writer.writerow({"component": component, "metric": metric,
                                          "percentage": percentage, "threshold": threshold, "exit_code": 0})
+                for component in ("auth", "usuarios", "academico", "reservas", "gateway"):
+                    report = maint / component / "report"
+                    report.mkdir(parents=True)
+                    (report / "jacoco.csv").write_text(
+                        "GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED\n"
+                        f"{component},example,Example,0,0,0,0,20,80,2,8,0,0\n",
+                        encoding="utf-8",
+                    )
                 comp = raw / "e3_compatibilidad" / f"rep-{number:02d}"
                 self.manifest(comp, "compatibilidad_web")
                 for motor in ("chromium", "firefox", "webkit"):
@@ -173,6 +181,10 @@ class AnalyzerTest(unittest.TestCase):
             self.assertEqual(result["security"]["decision"], "CUMPLE")
             self.assertEqual(result["maintenance"]["decision"], "CUMPLE")
             self.assertEqual(result["compatibility"]["decision"], "CUMPLE")
+            self.assertEqual(result["security"]["total"], 7)
+            self.assertEqual(result["compatibility"]["motors"]["chromium"]["total"], 5)
+            self.assertEqual(result["maintenance"]["metrics"][2]["values"], [80.0, 80.0, 80.0])
+            self.assertEqual(result["maintenance"]["complexity"]["usuarios"]["complexity_total"], 10)
             self.assertTrue(math.isclose(result["security"]["wilson95"][1], 1.0))
             decisions = raw / "e3_seguridad" / "rep-03" / "decisiones.csv"
             with decisions.open(encoding="utf-8") as handle:
@@ -182,10 +194,8 @@ class AnalyzerTest(unittest.TestCase):
             with decisions.open("w", newline="", encoding="utf-8") as handle:
                 writer = csv.DictWriter(handle, fieldnames=security_fields)
                 writer.writeheader(); writer.writerows(changed)
-            unfavorable = analyze_all(raw)["security"]
-            self.assertEqual(unfavorable["decision"], "NO CUMPLE")
-            self.assertEqual(unfavorable["false_rejected"], 1)
-            self.assertEqual(len(unfavorable["unfavorable"]), 1)
+            with self.assertRaisesRegex(ValueError, "diverge"):
+                analyze_all(raw)
 
 
 if __name__ == "__main__":

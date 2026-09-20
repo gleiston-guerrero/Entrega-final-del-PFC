@@ -44,8 +44,8 @@ de solo lectura de Reservas/Solicitudes:
 | Métrica | n | Media | s muestral | IC95 | Decisión |
 | --- | ---: | ---: | ---: | --- | --- |
 | HTTP 5xx | 8 | 0 % | 0 % | [0; 0] % | CUMPLE `<1 %` |
-| p95 Locust | 8 | 45,500000 ms | 21,764978 ms | [27,304023; 63,695977] ms | CUMPLE `<500 ms` |
-| p99 Locust | 8 | 371,250000 ms | 364,032475 ms | [66,911235; 675,588765] ms | CUMPLE `<750 ms` |
+| p95 Locust | 8 | 45,500000 ms | 21,764978 ms | [27,304023; 63,695977] ms | Descriptivo; NO CONCLUYENTE para el escenario prerregistrado |
+| p99 Locust | 8 | 371,250000 ms | 364,032475 ms | [66,911235; 675,588765] ms | Descriptivo; NO CONCLUYENTE para el escenario prerregistrado |
 
 El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. Las ocho repeticiones
 centrales contienen 57.241 observaciones de la población formal.
@@ -146,16 +146,33 @@ mayor o igual que 99,5 %**.
 
 ## Consolidación oficial E3: seguridad, mantenibilidad y compatibilidad
 
+> Corrección #32. Seguridad: las tres repeticiones verifican los mismos siete
+> casos y resultados; el intervalo Wilson usa 7/7, mientras 3/3 se informa como
+> repetibilidad. Compatibilidad: cada motor tiene 8/8 observaciones distintas y
+> 3/3 resúmenes exitosos e idénticos; el paquete compacto no permite verificar
+> retrospectivamente los identificadores individuales de esos ocho casos. La
+> evidencia se limita a comportamiento cross-browser de la suite Web ensayada,
+> no a coexistencia/interoperabilidad ISO completa ni Android. La matriz estática
+> de 198 operaciones de seguridad es antecedente de superficie, no prueba dinámica.
+
 Las tres campañas se ejecutaron sobre el software del SHA
 `fa7d75ec0f75573938bf46ed6a68f0aee99606ac`. El HEAD documental posterior
 incorpora análisis y documentación y no se presenta como el software medido.
 La fuente consolidada inalterada es [`analisis-e3.json`](analisis-e3.json).
+Las líneas backend se recalculan desde los `jacoco.csv` canónicos:
+Usuarios 329 missed/1735 covered = 84,06007751937985 % y Reservas 506/2730 =
+84,36341161928307 %. La complejidad JaCoCo es descriptiva, no una puntuación de
+calidad: Auth 133+219=352 (56 clases, media 6,285714, máximo 34);
+Usuarios 239+619=858 (107, 8,018692, máximo 68); Académico 260+944=1204
+(141, 8,539007, máximo 57); Reservas 711+1318=2029 (203, 9,995074, máximo
+178); Gateway 17+44=61 (9, 6,777778, máximo 28). El paquete canónico no
+conserva salida cuantitativa y exit code de Checkstyle para reconstruir E3.
 
 ### Seguridad
 
 | Repeticiones | Correctas | Proporción | IC95 Wilson | Falsos permitidos | Falsos rechazados | Flaky | Decisión |
 |---:|---:|---:|---|---:|---:|---:|---|
-| 3 | 21/21 | 1,0 | [0,845360981013798; 1,0] | 0 | 0 | 0 | **CUMPLE** |
+| 3 (repetibilidad 3/3) | 7/7 casos distintos | 1,0 | [0,6456695648259365; 1,0] | 0 | 0 | 0 | **CUMPLE en alcance dinámico reducido** |
 
 La decisión se limita a las siete decisiones dinámicas por repetición, fixtures,
 Gateway y entorno ensayados. No constituye una garantía universal de seguridad.
@@ -165,9 +182,9 @@ Gateway y entorno ensayados. No constituye una garantía universal de seguridad.
 | Componente | Métrica | Media/IC95 | Umbral | Decisión |
 |---|---|---:|---:|---|
 | Auth | Líneas | 88,042203985932 % | 70 % | CUMPLE |
-| Usuarios | Líneas | 84,0523509452254 % | 70 % | CUMPLE |
+| Usuarios | Líneas | 84,06007751937985 % | 70 % | CUMPLE |
 | Académico | Líneas | 83,16089903674634 % | 70 % | CUMPLE |
-| Reservas | Líneas | 84,35857805255023 % | 80 % | CUMPLE |
+| Reservas | Líneas | 84,36341161928307 % | 80 % | CUMPLE |
 | Reservas | Ramas | 56,72559569561876 % | 48 % | CUMPLE |
 | Gateway | Líneas | 88,88888888888889 % | 70 % | CUMPLE |
 | Web | Líneas | 89,91 % | 70 % | CUMPLE |
@@ -185,9 +202,9 @@ por Android**.
 
 | Motor | Aprobados | Fallidos | Omitidos | Flaky | IC95 Wilson | Decisión |
 |---|---:|---:|---:|---:|---|---|
-| Chromium | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| Firefox | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| WebKit | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
+| Chromium | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| Firefox | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| WebKit | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
 
 La decisión global es **CUMPLE** para la suite, motores y entorno ensayados; no
 se extrapola a todos los navegadores, versiones o dispositivos.
