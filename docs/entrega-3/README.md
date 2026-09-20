@@ -27,9 +27,10 @@ herramientas y paquetes estándar de LaTeX declarados en `main.tex`.
 
 - Commit histórico de origen: `859bc582f9473b68cde1531f1bd4d6f0f5b34500`.
 - HEAD sobre el que se preparó esta congelación: `6507bb4f7fc41e0c02b1ada2e411d4f5656f8559`.
-- Commit que congela la snapshot: **pendiente**. Este valor solo existirá
-  después del commit solicitado por el responsable del repositorio; no se
-  retrofecha ni se inventa un SHA.
+- Commit que congela la snapshot:
+  `ed6b48b7b9c4372c1c3432e57f731196e0f2a3ac`
+  (`docs(e6): congelar snapshot reproducible de entrega 3`,
+  2026-09-13T17:27:07-05:00).
 - Fecha real de reconstrucción: `2026-09-13`.
 - El PDF entregado históricamente se preserva sin cambios como
   `Informe_E3_SCLI_LATEX.pdf`.
@@ -81,5 +82,17 @@ origen, y ejecuta pdfLaTeX, BibTeX y dos pasadas finales de pdfLaTeX. Dos
 compilaciones limpias con esa imagen deben producir el mismo SHA-256. El log
 final debe carecer de referencias/citas indefinidas y de figuras ausentes.
 
-Los hashes exactos quedan registrados en `SHA256SUMS.txt`; deben verificarse
-desde esta carpeta con `sha256sum -c SHA256SUMS.txt`.
+El script genera exclusivamente `build/main.pdf`; no sobrescribe
+`Informe_E3_SCLI_LATEX.pdf` ni `Informe_E3_SCLI_RECONSTRUIDO.pdf`, porque ambos
+son artefactos congelados cubiertos por `SHA256SUMS.txt`. Para evitar depender
+del separador de rutas de `BIBINPUTS`, la bibliografia se copia al directorio
+temporal `build/` y BibTeX se ejecuta alli.
+
+Las referencias textuales `experiments/...` que permanecen dentro de
+`main.tex` forman parte del contenido historico congelado de E3 y no representan
+rutas vigentes del documento acumulativo actual.
+
+Los hashes de la snapshot quedan registrados en `SHA256SUMS.txt`; deben
+verificarse desde esta carpeta con `sha256sum -c SHA256SUMS.txt`. Ejecutar
+`compilar.sh` no debe modificar ningun archivo versionado ni invalidar ese
+manifiesto.
