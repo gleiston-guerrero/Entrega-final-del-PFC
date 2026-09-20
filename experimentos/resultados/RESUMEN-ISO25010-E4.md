@@ -132,8 +132,10 @@ r7, r8 y r9 conservan exit code 1 porque registraron fallos HTTP observados.
 Excluirlas habría eliminado resultados desfavorables.
 
 Cada repetición poblada tiene `SHA256SUMS`. El manifiesto global
-`resultados/SHA256SUMS` contiene 788 entradas, incluidas las 319 evidencias de
-la campaña poblada y `iso25010-correctiva-poblada.csv`.
+`resultados/SHA256SUMS` contiene 1.339 entradas. Incluye los 550 archivos
+actualmente versionados de la campaña correctiva anterior, su
+`iso25010-correctiva.csv`, las 319 evidencias de la campaña poblada y
+`iso25010-correctiva-poblada.csv`.
 
 Los intentos históricos descartados permanecen preservados y documentados en
 `../cierre-e2-fiabilidad.md`; no se corrigen ni se eliminan sus bytes.

@@ -237,13 +237,18 @@ El manifiesto global:
 
 `resultados/SHA256SUMS`
 
-contiene 788 entradas verificables, incluidas:
+contiene 1.339 entradas verificables. Entre ellas se encuentran:
 
+- los 550 archivos actualmente versionados de
+  `raw/fiabilidad_nominal_50u_1h_refresh/`;
+- `iso25010-correctiva.csv`;
 - las 319 evidencias de
   `raw/fiabilidad_nominal_50u_1h_refresh_poblada/`;
 - `iso25010-correctiva-poblada.csv`.
 
-La campaña anterior y sus raws históricos permanecen preservados.
+La campaña correctiva anterior permanece preservada como antecedente y sus
+bytes están cubiertos por el manifiesto global, aunque no se utiliza como
+evidencia definitiva de cierre debido al dataset vacío.
 
 ## Intentos no seleccionados de la campaña correctiva anterior
 
