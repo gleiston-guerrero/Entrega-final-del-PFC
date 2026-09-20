@@ -82,6 +82,28 @@ jobs:
       - name: Verify all tracked checksums
         run: python scripts/verificar-manifiestos.py
 
+      - name: Audit real ARBITER HTTP census, latencies and manuscript
+        run: >-
+          python experimentos/auditar_http_arbiter.py
+          experimentos/resultados/arbiter/campaign/raw --all-scenarios
+          --check-summary experimentos/resultados/arbiter/campaign/summary/runs.json
+          --check-manuscript docs/secciones/04-observabilidad-iso.tex
+
+      - name: Reconcile real ISO evidence and test negative ARBITER audit
+        run: >-
+          python -m unittest experimentos.tests.test_evidencia_real
+          experimentos.tests.test_auditar_http_arbiter -v
+
+      - name: Analyze versioned ISO campaigns offline
+        run: |
+          python experimentos/analizar_iso25010.py experimentos/resultados/iso25010.csv
+          python experimentos/analizar_iso25010.py experimentos/resultados/iso25010-correctiva.csv
+          python experimentos/analizar_iso25010.py experimentos/resultados/iso25010-correctiva-poblada.csv
+          python experimentos/analizar_iso25010.py experimentos/resultados/iso25010-eficiencia-poblada.csv
+
+      - name: Ensure offline analysis leaves tracked evidence unchanged
+        run: git diff --exit-code
+
   validate-openapi-contracts:
     name: Validate - OpenAPI contracts
     runs-on: ubuntu-latest
