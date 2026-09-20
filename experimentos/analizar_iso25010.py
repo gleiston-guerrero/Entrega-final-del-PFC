@@ -28,6 +28,14 @@ T_CRITICAL_95_DF7 = 2.364624251
 EXPECTED_REPETITIONS = set(range(1, 11))
 ANALYZED_REPETITIONS = set(range(2, 10))
 EFFICIENCY_SCENARIO = "eficiencia_nominal_50u_5m"
+
+LEGACY_RELIABILITY_SCENARIO = "fiabilidad_nominal_50u_1h_refresh"
+POPULATED_RELIABILITY_SCENARIO = "fiabilidad_nominal_50u_1h_refresh_poblada"
+
+RELIABILITY_RAW_DIRS = {
+    LEGACY_RELIABILITY_SCENARIO: "fiabilidad_nominal_50u_1h_refresh",
+    POPULATED_RELIABILITY_SCENARIO: "fiabilidad_nominal_50u_1h_refresh_poblada",
+}
 EFFICIENCY_REQUESTS = {
     ("GET", "GET /api/v1/reservas"),
     ("GET", "GET /api/v1/reservas/{id}"),
@@ -216,9 +224,18 @@ def read_efficiency_population(
 
 
 def read_corrective_reliability_population(
-    raw_root: Path, rows: list[dict[str, str]]
+    raw_root: Path,
+    rows: list[dict[str, str]],
+    scenario: str = LEGACY_RELIABILITY_SCENARIO,
 ) -> dict[int, dict[str, float | int | str]]:
     """Reconstruye la población correctiva directamente desde locust_requests.csv."""
+
+    try:
+        raw_directory = RELIABILITY_RAW_DIRS[scenario]
+    except KeyError as error:
+        raise ValueError(
+            f"{scenario}: escenario de fiabilidad correctiva no soportado"
+        ) from error
 
     business_names = {
         "GET /api/v1/reservas",
@@ -247,7 +264,7 @@ def read_corrective_reliability_population(
 
         events_path = (
             raw_root
-            / "fiabilidad_nominal_50u_1h_refresh"
+            / raw_directory
             / dirname
             / "locust_requests.csv"
         )
@@ -321,11 +338,15 @@ def format_integer_es(value: int) -> str:
 
 
 def build_corrective_document_blocks(
-    raw_root: Path, rows: list[dict[str, str]]
+    raw_root: Path,
+    rows: list[dict[str, str]],
+    scenario: str = LEGACY_RELIABILITY_SCENARIO,
 ) -> dict[str, str]:
     """Genera bloques documentales directamente desde los eventos raw E2."""
 
-    population = read_corrective_reliability_population(raw_root, rows)
+    population = read_corrective_reliability_population(
+        raw_root, rows, scenario
+    )
 
     if set(population) != EXPECTED_REPETITIONS:
         raise ValueError(
@@ -401,9 +422,9 @@ def analyze_scenario(
             )
 
     print(f"{scenario}: 8 muestras válidas (repeticiones 2..9)")
-    if scenario == "fiabilidad_nominal_50u_1h_refresh":
+    if scenario in RELIABILITY_RAW_DIRS:
         corrective_population = read_corrective_reliability_population(
-            raw_root, selected
+            raw_root, selected, scenario
         )
 
         repetitions = [int(row["_repetition"]) for row in selected]
@@ -496,7 +517,7 @@ def analyze_scenario(
         print_summary("historical_aggregated_p99_ms", historical_p99_values, 750.0, "ms")
 
     print_summary("failure_rate_percent", failure_rates, 1.0, "%")
-    if scenario == "fiabilidad_nominal_50u_1h_refresh":
+    if scenario in RELIABILITY_RAW_DIRS:
         print_descriptive_summary("p95_ms", p95_values, "ms")
         print_descriptive_summary("p99_ms", p99_values, "ms")
     else:
@@ -531,15 +552,27 @@ def main() -> int:
         raw_root = args.raw_root or args.csv_path.parent / "raw"
 
         if args.emit_markdown or args.emit_latex:
-            scenario = "fiabilidad_nominal_50u_1h_refresh"
-            rows = scenarios.get(scenario)
-            if rows is None:
+            scenario = next(
+                (
+                    candidate
+                    for candidate in (
+                        POPULATED_RELIABILITY_SCENARIO,
+                        LEGACY_RELIABILITY_SCENARIO,
+                    )
+                    if candidate in scenarios
+                ),
+                None,
+            )
+            if scenario is None:
                 raise ValueError(
-                    "La emisión documental requiere el escenario "
-                    "fiabilidad_nominal_50u_1h_refresh"
+                    "La emisión documental requiere un escenario "
+                    "de fiabilidad correctiva soportado"
                 )
 
-            blocks = build_corrective_document_blocks(raw_root, rows)
+            rows = scenarios[scenario]
+            blocks = build_corrective_document_blocks(
+                raw_root, rows, scenario
+            )
 
             if args.emit_markdown:
                 print(blocks["markdown"])
