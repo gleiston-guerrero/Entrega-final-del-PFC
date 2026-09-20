@@ -65,6 +65,48 @@ class RealEvidenceTest(unittest.TestCase):
                 for field in ("p95_ms", "p99_ms"):
                     self.assertAlmostEqual(float(row[field]), observed[field], delta=1e-6)
 
+    def test_pi1_manuscript_matches_populated_raw_evidence(self):
+        population = read_populated_efficiency_population(RAW, sorted(EXPECTED_REPETITIONS))
+        selected = [population[r] for r in sorted(ANALYZED_REPETITIONS)]
+        manuscript = MANUSCRIPT.read_text(encoding="utf-8")
+        start = manuscript.index(r"\textbf{Respuesta a PI1.}")
+        end = manuscript.index(r"\textbf{PI2.}", start)
+        answer = " ".join(manuscript[start:end].split())
+
+        self.assertIn("cierre oficial de PI1", answer)
+        self.assertIn("dataset controlado de 20 reservas", answer)
+        for source in (
+            "iso25010-eficiencia-poblada.csv",
+            f"raw/{POPULATED_EFFICIENCY_SCENARIO}/",
+        ):
+            self.assertIn(source, answer)
+        self.assertNotIn("raw/eficiencia_nominal_50u_5m/", answer)
+        for route in (r"\texttt{GET /api/v1/reservas}",
+                      r"\texttt{GET /api/v1/reservas/\{id\}}"):
+            self.assertIn(route, answer)
+
+        for field, label in (("total_get", "GET"), ("listado", "listados"),
+                             ("by_id", "consultas por id"),
+                             ("http_401", "respuestas HTTP 401"),
+                             ("http_5xx", "respuestas HTTP 5xx")):
+            with self.subTest(field=field):
+                total = sum(row[field] for row in selected)
+                formatted = f"{total:,}".replace(",", r"\,")
+                self.assertIn(f"{formatted} {label}", answer)
+
+        for field, label, threshold in (("p95_ms", "p95", 500), ("p99_ms", "p99", 750)):
+            with self.subTest(field=field):
+                mean, std, low, high = (
+                    f"{value:.6f}".replace(".", ",")
+                    for value in summarize([row[field] for row in selected])
+                )
+                self.assertRegex(
+                    answer,
+                    rf"{label}(?: se obtiene|,) media {mean} ms, desviación "
+                    rf"muestral {std} ms e IC95 \[{low}; {high}\] ms",
+                )
+                self.assertIn(f"${high} < {threshold}$ ms", answer)
+
     def test_canonical_backend_coverage_matches_manuscript(self):
         manuscript = MANUSCRIPT.read_text(encoding="utf-8")
         for service, label, covered, missed, threshold in (

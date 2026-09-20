@@ -156,7 +156,13 @@ El manifest global
 `iso25010-eficiencia-poblada.sha256` contiene 328 entradas y verifica
 328/328 sin fallos. Su SHA-256 es:
 
-`3b6a953108f0077cce6ed4aa0047e699fe283fefe21df58976ff62bfc76d61da`
+`c521a40e2ee141b3545b4b35aa1f3c711175792df7e469352c72bccd75fe4d42`
+
+La entrada del CSV usa el SHA-256 de sus bytes LF versionados en Git:
+`7ea4f35b4b0fccf4c24422d5def174131af2cd25e51621a73f0fb174cdce44a7`.
+El hash anterior `c3a3041fe0f8c51c2da82b0c1fc3772bd075b8d7d6dab4e3443816ce8e063313`
+correspondía al mismo contenido con CRLF. La corrección #34 ajusta esa entrada
+al blob canónico sin modificar el CSV ni la evidencia RAW.
 
 Después de r3 y antes de r4 se detectó crecimiento del log `json-file` del
 OTel Collector hasta aproximadamente 7,2 GB. Se preservó una muestra y se
