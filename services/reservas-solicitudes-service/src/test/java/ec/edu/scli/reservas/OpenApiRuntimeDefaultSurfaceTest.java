@@ -35,7 +35,7 @@ class OpenApiRuntimeDefaultSurfaceTest {
         List<Operation> runtime = RuntimeContractVerifier.runtimeOperations(
                 mappings, "ec.edu.scli.reservas");
 
-        assertThat(runtime).hasSize(77);
+        assertThat(runtime).hasSize(78);
         assertThat(runtime).noneMatch(operation ->
                 operation.path().startsWith("/api/v1/internal/experimentos/arbiter"));
     }

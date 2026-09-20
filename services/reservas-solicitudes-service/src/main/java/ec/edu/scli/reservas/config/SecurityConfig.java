@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health", "/actuator/info", "/actuator/prometheus").permitAll()
                         .requestMatchers("/api/v1/internal/experimentos/arbiter/**")
                         .hasAuthority(ExperimentalInternalApiKeyFilter.AUTHORITY)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/observabilidad/mobile/http-latency").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/incidentes").hasAuthority("INCIDENTE_CREAR")
                         .requestMatchers(HttpMethod.GET, "/api/v1/incidentes/**").hasAnyAuthority("INCIDENTE_LEER", "INCIDENTE_GESTIONAR")
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/incidentes/*/estado").hasAuthority("INCIDENTE_GESTIONAR")

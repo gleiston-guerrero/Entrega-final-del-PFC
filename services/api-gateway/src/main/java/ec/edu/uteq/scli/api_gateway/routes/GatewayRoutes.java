@@ -108,7 +108,8 @@ public class GatewayRoutes {
         return coincideAlguna(path, "/api/v1/reservas", "/api/v1/solicitudes",
                 "/api/v1/agenda", "/api/v1/disponibilidad", "/api/v1/incidentes",
                 "/api/v1/notificaciones", "/api/v1/planificaciones",
-                "/api/v1/planificaciones-agregadas", "/api/v1/asistencias");
+                "/api/v1/planificaciones-agregadas", "/api/v1/asistencias",
+                "/api/v1/observabilidad");
     }
 
     private static boolean coincideAlguna(String path, String... bases) {

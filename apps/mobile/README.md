@@ -93,8 +93,8 @@ El resultado sin firma queda en:
 app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-La firma de publicación se realiza en GitHub Actions únicamente para pushes a
-`feature/entrega-4` y cuando estén configurados estos secrets del repositorio:
+La firma de publicacion se realiza en GitHub Actions para pushes, segun el
+workflow vigente, cuando esten configurados estos secrets del repositorio:
 
 - `ANDROID_SIGNING_KEYSTORE_BASE64`
 - `ANDROID_SIGNING_STORE_PASSWORD`
@@ -103,28 +103,42 @@ La firma de publicación se realiza en GitHub Actions únicamente para pushes a
 
 CI reconstruye temporalmente el keystore dentro de `$RUNNER_TEMP`, alinea el APK
 con `zipalign`, firma con `apksigner` y verifica la firma y el certificado con
-`apksigner verify --verbose --print-certs`. Después genera y comprueba
-`SHA256SUMS.txt` y publica ambos archivos en el artifact
-`scli-mobile-release-<SHA>`:
+`apksigner verify --verbose --print-certs`. Despues genera y comprueba
+`SHA256SUMS.txt`. La version Android actual es `versionName` 1.0.1 y
+`versionCode` 2. La release oficial verificada correspondiente al punto #35 fue
+publicada por GitHub Actions como `v1.0.1`, asociada al commit etiquetado
+`166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8`, y contiene:
 
 ```text
-scli-mobile-1.0.1-release.apk
+scli-mobile-v1.0.1-release.apk
 SHA256SUMS.txt
+SCLI-PFC-v1.0.1.pdf
+Source code (zip)
+Source code (tar.gz)
 ```
 
-Para el SHA fuente `0b755310a0acf34da2456290a4f978475a8e17f9`, el job
-`Build - Android release signed` terminó con estado `completed/success`. El
+El SHA-256 verificado de `scli-mobile-v1.0.1-release.apk` es
+`a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8` y coincide
+con `SHA256SUMS.txt`. `apksigner` valido APK Signature Scheme v2 y v3, con un
+firmante RSA de 2048 bits y certificado `CN=scli, OU=uteq, O=uteq, L=Quevedo,
+ST=Los Rios, C=EC`. La evidencia se resume en
+`release/apk/VERIFICACION-v1.0.1.md`.
+
+Como evidencia historica, para el SHA fuente
+`0b755310a0acf34da2456290a4f978475a8e17f9`, el job
+`Build - Android release signed` termino con estado `completed/success`. El
 artifact `scli-mobile-release-0b755310a0acf34da2456290a4f978475a8e17f9` fue
 generado, firmado y verificado correctamente en GitHub Actions, dentro del run
-de CI `34688947156`. Se preserva una copia verificada en
+de CI `34688947156`. Esa evidencia corresponde al APK historico
 `release/apk/scli-mobile-0.1.0-release.apk`, con su checksum en
-`release/apk/SHA256SUMS.txt`; Actions continúa siendo la fuente reproducible del
-proceso. El identificador del paquete es `ec.edu.uteq.scli.mobile`.
+`release/apk/SHA256SUMS.txt`; no representa la release vigente `v1.0.1`. Actions
+continua siendo la fuente reproducible del proceso. El identificador del paquete
+es `ec.edu.uteq.scli.mobile`.
 
-Para instalar el APK descargado y comprobar su `applicationId`:
+Para instalar el APK oficial publicado y comprobar su `applicationId`:
 
 ```bash
-adb install -r scli-mobile-1.0.1-release.apk
+adb install -r scli-mobile-v1.0.1-release.apk
 adb shell pm list packages ec.edu.uteq.scli.mobile
 ```
 

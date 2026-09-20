@@ -168,21 +168,34 @@ cd apps/mobile
 En Windows use `gradlew.bat`. CI ejecuta unitarias, lint y las pruebas
 `src/androidTest` en un emulador API 29; estas pruebas instrumentadas forman parte
 del gate previo al APK. El APK debug se publica como artifact por SHA. El
-workflow también prepara un APK release firmado como artifact cuando los cuatro
-secrets de firma están configurados en un push autorizado; el procedimiento se
-documenta en [`apps/mobile/README.md`](apps/mobile/README.md). Firebase/FCM fue
+workflow vigente tambien prepara un APK release firmado como artifact en pushes
+cuando los secrets requeridos estan configurados; el procedimiento se documenta
+en [`apps/mobile/README.md`](apps/mobile/README.md). La version Android actual es
+`versionName` 1.0.1 y `versionCode` 2. Firebase/FCM fue
 validado extremo a extremo con un dispositivo Android físico. El cliente obtiene
 y registra el token FCM, el backend persiste el dispositivo y envía
 notificaciones mediante Firebase Admin SDK. La evidencia de recepción real se
 conserva en [`docs/evidencias/fcm-e2e.md`](docs/evidencias/fcm-e2e.md).
 
-El APK release firmado procedente del run `34688947156`, correspondiente al SHA
-`0b755310a0acf34da2456290a4f978475a8e17f9`, está incorporado en
+La release oficial verificada correspondiente al punto #35 es `v1.0.1`,
+generada por GitHub Actions y asociada al commit etiquetado
+`166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8`. Publica el APK
+`scli-mobile-v1.0.1-release.apk`, `SHA256SUMS.txt`, `SCLI-PFC-v1.0.1.pdf` y los
+assets de codigo fuente. El SHA-256 verificado del APK es
+`a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8`, coincidente
+con `SHA256SUMS.txt`. La firma APK valida los esquemas v2 y v3, con un firmante
+RSA de 2048 bits y certificado `CN=scli, OU=uteq, O=uteq, L=Quevedo, ST=Los Rios,
+C=EC`. La evidencia textual se conserva en
+[`release/apk/VERIFICACION-v1.0.1.md`](release/apk/VERIFICACION-v1.0.1.md).
+
+Como evidencia historica, el APK release firmado procedente del run
+`34688947156`, correspondiente al SHA
+`0b755310a0acf34da2456290a4f978475a8e17f9`, permanece incorporado en
 [`release/apk/scli-mobile-0.1.0-release.apk`](release/apk/scli-mobile-0.1.0-release.apk),
-junto con [`release/apk/SHA256SUMS.txt`](release/apk/SHA256SUMS.txt). CI lo firmó
-y verificó; Git no contiene las claves privadas ni las contraseñas de firma.
-GitHub Actions continúa siendo la fuente reproducible de generación y
-verificación.
+junto con [`release/apk/SHA256SUMS.txt`](release/apk/SHA256SUMS.txt). Ese binario
+se documenta solo como artefacto historico y no como release vigente. Git no
+contiene las claves privadas ni las contrasenas de firma. GitHub Actions
+continua siendo la fuente reproducible de generacion y verificacion.
 
 ## Pruebas
 

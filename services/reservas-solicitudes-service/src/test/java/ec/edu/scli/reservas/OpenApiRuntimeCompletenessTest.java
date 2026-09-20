@@ -44,8 +44,8 @@ class OpenApiRuntimeCompletenessTest {
                 RuntimeContractVerifier.repositoryFile(
                         "docs/openapi/reservas-solicitudes-service-openapi.json"));
 
-        assertThat(runtime).hasSize(79);
-        assertThat(contract).hasSize(79);
+        assertThat(runtime).hasSize(80);
+        assertThat(contract).hasSize(80);
         RuntimeContractVerifier.assertMatches(runtime, contract);
     }
 }

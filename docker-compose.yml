@@ -710,6 +710,7 @@ services:
 
     volumes:
       - ./ops/prometheus:/etc/prometheus:ro
+      - cockroach-certs:/cockroach/cockroach-certs:ro
 
     restart: unless-stopped
 

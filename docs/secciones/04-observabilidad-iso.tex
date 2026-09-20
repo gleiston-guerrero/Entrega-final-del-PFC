@@ -99,35 +99,38 @@ atribuir al panel una semántica que no posee.
     \hline
     CockroachDB & Prometheus & \texttt{liveness\_livenodes}; \texttt{ranges\_unavailable} & Vigilar nodos vivos y rangos no disponibles. \\
     \hline
-    Recursos de contenedores & Prometheus/cAdvisor & CPU y memoria por nombre de contenedor & Identificar presión de recursos. \\
+    Recursos de contenedores & Prometheus/cAdvisor & CPU y memoria por identificador de contenedor & Identificar presión de recursos. \\
     \hline
-    Latencia E2E móvil (proxy) & Prometheus & p95 del Gateway para URI de reservas, solicitudes, incidentes o QR & Aproximar endpoints asociados a Mobile; no mide dispositivo, red completa ni renderizado. \\
+    Latencia E2E móvil & Prometheus & \texttt{histogram\_quantile} p95 sobre \texttt{app\_mobile\_http\_latency\_seconds\_bucket} & Medir latencia HTTP observada desde Android, reportada a Reservas y expuesta por Prometheus. \\
     \hline
   \end{tabular}
 \end{table}
 
-El sexto panel constituye la brecha principal: su nombre reconoce que es un
-proxy y su punto de medición sigue siendo el Gateway. Además, algunas URI del
-filtro no tienen backend remoto actual, como incidentes. Por tanto, el dashboard
-cubre seis finalidades solicitadas, pero la latencia Mobile no es E2E real y el
-criterio D6.2 permanece parcial.
+El sexto panel ya no usa el Gateway como proxy. La aplicación Android mide el
+tiempo HTTP observado por OkHttp, lo reporta a
+\texttt{POST /api/v1/observabilidad/mobile/http-latency} y
+Reservas expone las familias \texttt{app.mobile.http.latency} y
+\texttt{app.mobile.http.requests} para Prometheus. El panel calcula p95 con
+\texttt{app\_mobile\_http\_latency\_seconds\_bucket} y el job
+\texttt{reservas-solicitudes-service}. La evidencia runtime final sigue
+pendiente: aún debe capturarse el dashboard en la VM con esta serie poblada bajo
+carga.
 
 La Figura~\ref{fig:panel-monitoreo-carga-real} muestra el dashboard consolidado
-durante una prueba real de carga de 50 usuarios durante cinco minutos. La
-ejecución produjo 6782 solicitudes, 15 fallos (0,22\,\%) y una tasa media
-aproximada de 22,64 solicitudes por segundo. Las series visibles permiten
-relacionar la tasa de peticiones con la latencia y los errores HTTP 5xx. Estos
-fallos estuvieron asociados al límite de transacciones concurrentes de la
-instancia de CockroachDB sin licencia, según los registros conservados junto con
-la salida de Locust. Esta ejecución adicional no sustituye ni modifica las diez
-repeticiones nominales analizadas en la
+versionado como evidencia visual de su estructura y provisionamiento. La imagen
+actual no se atribuye a una nueva validación de 50 usuarios, cinco minutos ni
+22,64 solicitudes por segundo, porque esa relación debe provenir de la evidencia
+runtime correspondiente. Cuando se ejecute la validación final en la VM será
+necesaria una nueva captura bajo carga que muestre la serie
+\texttt{app\_mobile\_http\_latency\_seconds\_bucket} poblada. Esta captura no
+sustituye ni modifica las diez repeticiones nominales analizadas en la
 Sección~\ref{subsec:eficiencia-nominal}.
 
 \begin{figure*}[htbp]
   \centering
   \includegraphics[width=\textwidth]{panel-monitoreo.png}
-  \caption{Dashboard de observabilidad de SCLI durante una prueba real de carga
-  de 50 usuarios durante cinco minutos.}
+  \caption{Dashboard de observabilidad de SCLI versionado como evidencia visual
+  de estructura y provisionamiento.}
   \label{fig:panel-monitoreo-carga-real}
 \end{figure*}
 
@@ -734,7 +737,8 @@ superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña his
 fiabilidad registró decenas de miles de 401 por repetición; la primera campaña
 con refresh quedó limitada por un dataset vacío, mientras la campaña poblada
 registró 0 HTTP 401 y 42 HTTP 5xx preservados. La disponibilidad temporal no
-fue operacionalizada. A ello se suman el panel Mobile proxy, falta de rollback automático,
+fue operacionalizada. A ello se suman la falta de una captura runtime final
+del panel Mobile E2E poblado bajo carga, falta de rollback automático,
 ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
 persistidos para todos los componentes. Estas restricciones se documentan como
 amenazas a la generalización, no se ocultan mediante promedios o extrapolaciones.
@@ -856,12 +860,13 @@ un campus real.
 
 \subsubsection{Validez de constructo}
 
-\textbf{Amenaza:} Locust y Prometheus miden latencia en puntos diferentes, y el
-panel Mobile utiliza un proxy del Gateway. \textbf{Efecto:} tratar las métricas
-como equivalentes sobreestimaría la experiencia E2E o escondería latencia de
-red y renderizado. \textbf{Mitigación aplicada:} se reportan por separado y se
-explica el punto de medición. \textbf{Riesgo residual:} no existe medición E2E
-real desde el dispositivo.
+\textbf{Amenaza:} Locust, Prometheus interno y la métrica móvil miden latencia
+en puntos diferentes. \textbf{Efecto:} tratarlas como equivalentes mezclaría
+latencia desde generador, latencia interna del backend y tiempo HTTP observado
+desde Android; además, ninguna de ellas mide renderizado de UI.
+\textbf{Mitigación aplicada:} se reportan por separado y se explica el punto de
+medición de cada una. \textbf{Riesgo residual:} falta una captura runtime final
+del dashboard con la métrica móvil poblada bajo carga en la VM.
 
 \textbf{Amenaza:} el estimando de latencia ARBITER mezcla respuestas válidas y
 HTTP 500, con tasas de fallo diferentes entre estrategias. \textbf{Efecto:} no
@@ -919,7 +924,7 @@ posteriormente se presenta en la Sección~\ref{sec:contratos-openapi}.
     \hline
     D6.1 & Métricas, trazas y logs & Prometheus, OTel, Tempo, Loki, cAdvisor y Grafana & Observabilidad & CUMPLE \\
     \hline
-    D6.2 & Dashboard de seis paneles & JSON canónico; latencia Mobile solo proxy de Gateway & Dashboard & PARCIAL \\
+    D6.2 & Dashboard de seis paneles & JSON canónico; panel 6 con latencia HTTP E2E móvil reportada desde Android; falta captura runtime poblada bajo carga & Dashboard & PARCIAL \\
     \hline
     D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 CUMPLE $<1\%$; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
     \hline
@@ -966,9 +971,11 @@ resolución y healthcheck descritas en la Sección~\ref{subsec:arbiter-resultado
 
 La observabilidad mejora la capacidad de diagnóstico mediante Prometheus,
 OpenTelemetry, Tempo, Loki, cAdvisor y Grafana. Su dashboard satisface la
-estructura de seis paneles, pero debe sustituir el proxy Mobile por medición E2E
-real. En conjunto, la entrega está sustentada para informe y defensa siempre que
-las limitaciones experimentales y técnicas permanezcan explícitas.
+estructura de seis paneles y el panel Mobile ya usa una métrica E2E medida desde
+Android y expuesta por Reservas a Prometheus. La evidencia visual final de esa
+serie poblada bajo carga en la VM sigue pendiente. En conjunto, la entrega está
+sustentada para informe y defensa siempre que las limitaciones experimentales y
+técnicas permanezcan explícitas.
 
 \subsection{Trabajo futuro}
 \label{subsec:trabajo-futuro}
@@ -976,8 +983,8 @@ las limitaciones experimentales y técnicas permanezcan explícitas.
 Las prioridades son elevar la cobertura Mobile con casos de ramas y UI de valor,
 diagnosticar mediante una campaña independiente el patrón de respuestas 401,
 operacionalizar y validar disponibilidad, investigar y reducir la variabilidad
-p99, y medir latencia E2E
-desde el dispositivo. También conviene automatizar rollback, incorporar Pact
+p99, y capturar bajo carga la latencia E2E móvil ya medida desde Android.
+También conviene automatizar rollback, incorporar Pact
 Broker con \emph{can-i-deploy}, extender Testcontainers a Académico, persistir
 reportes Backend/Web/Playwright y fijar versiones inmutables y uniformes de las
 herramientas CI. Estas acciones cierran brechas existentes sin introducir
