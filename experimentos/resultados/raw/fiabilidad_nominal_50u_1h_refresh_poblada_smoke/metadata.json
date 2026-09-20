@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "official": false,
+  "purpose": "pre-campaign populated-dataset smoke",
+  "scenario": "fiabilidad_nominal_50u_1h_refresh_poblada_smoke",
+  "users": 50,
+  "spawn_rate": 10,
+  "planned_duration_seconds": 930,
+  "started_at_utc": "2026-09-19T23:51:48.037204272Z",
+  "finished_at_utc": "2026-09-20T00:07:18.314110370Z",
+  "elapsed_seconds": 930.2769060134888,
+  "locust_exit_code": 0,
+  "evidence_git_sha": "cad3f4f6fd9da3a9acc44eee3e14573c21d9aa46",
+  "deployed_software_sha": "dd2e1923d7635857f4020c7ef5c8b6efee363d7a",
+  "dataset_sha256": "f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78",
+  "business_get_total": 23076,
+  "refresh_total": 50,
+  "business_after_900": 752,
+  "list_after_900": 532,
+  "by_id_after_900": 220,
+  "business_http_401": 0,
+  "business_http_5xx": 0,
+  "gates_passed": {
+    "duration_ge_925": true,
+    "locust_exit_zero": true,
+    "refresh_present": true,
+    "business_after_900_present": true,
+    "list_after_900_present": true,
+    "by_id_after_900_present": true
+  }
+}
