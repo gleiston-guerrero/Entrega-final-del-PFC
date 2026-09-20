@@ -3,15 +3,22 @@
 set -euo pipefail
 
 scenario="eficiencia_nominal_50u_5m_poblada"
-mode="official"; repetition=""; host=""; evidence_root=""; duration="5m"; planned_duration_seconds=300
+mode="official"; repetition=""; smoke_run=""; host=""; evidence_root=""; duration="5m"; planned_duration_seconds=300
 # Tolerancia explícita para el cierre normal de Locust y la toma de timestamps.
 duration_tolerance_seconds=5
 while (($#)); do case "$1" in
-  --smoke) mode="smoke"; shift;; --repetition) repetition="$2"; shift 2;;
+  --smoke) mode="smoke"; shift;; --smoke-run) smoke_run="$2"; shift 2;; --repetition) repetition="$2"; shift 2;;
   --host) host="$2"; shift 2;; --evidence-root) evidence_root="$2"; shift 2;;
   *) echo "Argumento desconocido: $1" >&2; exit 2;; esac; done
 [[ "$host" =~ ^https?:// ]] || { echo '--host es obligatorio' >&2; exit 2; }
 if [[ "$mode" == official ]]; then [[ "$repetition" =~ ^([1-9]|10)$ ]] || { echo '--repetition 1..10 es obligatorio' >&2; exit 2; }; fi
+if [[ -n "$smoke_run" && "$mode" != smoke ]]; then
+  echo '--smoke-run sólo es válido junto con --smoke' >&2; exit 2
+fi
+if [[ "$mode" == smoke ]]; then
+  smoke_run="${smoke_run:-1}"
+  [[ "$smoke_run" =~ ^([1-9]|[1-9][0-9])$ ]] || { echo '--smoke-run debe estar entre 1 y 99' >&2; exit 2; }
+fi
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 evidence_root="${evidence_root:-$root/experimentos/resultados/raw}"
 runtime_containers=(
@@ -56,7 +63,7 @@ capture_runtime_deployment() {
 }
 preflight="$evidence_root/$scenario/preflight"
 destination="$evidence_root/$scenario/rep-$(printf '%02d' "${repetition:-1}")"
-[[ "$mode" == smoke ]] && destination="$evidence_root/${scenario}_smoke/run-01"
+[[ "$mode" == smoke ]] && destination="$evidence_root/${scenario}_smoke/run-$(printf '%02d' "$smoke_run")"
 if [[ "$mode" == smoke ]]; then duration="1m"; planned_duration_seconds=60; fi
 [[ ! -e "$destination" ]] || { echo "La evidencia destino ya existe: $destination" >&2; exit 2; }
 
@@ -70,7 +77,7 @@ cp "$source_preflight/dataset-metadata.json" "$preflight/dataset-metadata.json"
 expected="$(awk '$2=="dataset.csv" {print $1}' "$source_preflight/SHA256SUMS")"
 actual="$(awk '$2=="dataset.csv" {print $1}' "$preflight/SHA256SUMS")"
 [[ -n "$expected" && "$expected" == "$actual" ]] || { echo 'Hash del dataset no coincide' >&2; exit 2; }
-dataset_verified=true
+dataset_verified=false
 curl --fail --silent --show-error "$host/actuator/health" > "$preflight/gateway-health.json"
 login="$(curl --fail --silent --show-error -H 'Content-Type: application/json' -d "{\"username\":\"${LOCUST_USERNAME:?}\",\"password\":\"${LOCUST_PASSWORD:?}\"}" "$host/api/v1/auth/login")"
 token="$(python3 -c 'import json,sys; x=json.load(sys.stdin); assert isinstance(x.get("accessToken"),str) and x["accessToken"]; print(x["accessToken"])' <<< "$login")"
@@ -87,8 +94,8 @@ sha256sum "$root/tests/load/locustfile.py" "$root/tests/load/locustfile_e2_corre
 mkdir -p "$destination"
 cp "$preflight/dataset.csv" "$preflight/dataset-metadata.json" "$destination/"
 sha256sum "$destination/dataset.csv" "$destination/dataset-metadata.json" > "$destination/dataset-sha256.txt"
-destination_dataset_sha="$(awk '$2=="dataset.csv" {print $1}' "$destination/dataset-sha256.txt")"
-[[ "$destination_dataset_sha" == "$expected" ]] || dataset_verified=false
+destination_dataset_sha="$(sha256sum "$destination/dataset.csv" | awk '{print $1}')"
+[[ -n "$expected" && "$destination_dataset_sha" == "$expected" ]] && dataset_verified=true
 cp "$preflight/evidence-git-sha.txt" "$preflight/deployed-software-sha.txt" "$preflight/harness-sha256.txt" "$destination/"
 sha256sum "$root/tests/load/locustfile.py" "$root/tests/load/locustfile_e2_correctiva.py" > "$destination/harness-before-sha256.txt"
 cmp -s "$destination/harness-sha256.txt" "$destination/harness-before-sha256.txt" || { echo 'Harness cambió antes de iniciar Locust' >&2; exit 2; }
