@@ -95,3 +95,15 @@ finished_at_utc=2026-09-20T08:44:50.382212671Z
 bytes_after=24549
 resultado=completed
 
+[2026-09-20T09:49:23.588741398Z] INTERVENCION ENTRE rep-09 Y rep-10
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5358823747
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-09_commit=bfc339e
+rep-09_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T09:49:23.667972085Z
+bytes_after=0
+resultado=completed
+
