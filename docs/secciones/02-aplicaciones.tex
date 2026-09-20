@@ -217,6 +217,14 @@ interfaz diferencia QR inválido, fallo de red y error del servicio. Por tanto,
 la lectura de cámara y la consulta posterior están conectadas, aunque dependen de
 que el laboratorio exista y el backend esté accesible.
 
+La validación E2E del 20/09/2026 ejecutó el flujo con cámara física, CameraX y
+ML Kit sobre un QR que contenía el UUID
+\texttt{10000000-0000-0000-0000-000000000008}. Tras el escaneo, la aplicación
+consultó el backend y mostró el detalle real del laboratorio
+\texttt{DEMO-LAB-A} (\emph{Laboratorio A DEMO}), con capacidad, código y estado
+\texttt{DISPONIBLE}. La evidencia se conserva en
+\texttt{docs/evidencias/qr-e2e-2026-09-20.md} y sus capturas asociadas.
+
 \subsubsection{Incidentes y notificaciones}
 
 La aplicación crea y lista incidentes locales y puede producir una notificación
@@ -234,14 +242,29 @@ perfil, dispone de un adaptador Firebase condicionado por
 planificación. El token no se escribe en logs y los fallos de entrega no revierten
 la operación de negocio.
 
-No obstante, \texttt{google-services.json} no está versionado y el despliegue no
-aporta en el repositorio credenciales Firebase reales, como corresponde a
-secretos. Tampoco existe evidencia conservada de la cadena completa evento
-backend $\rightarrow$ Firebase $\rightarrow$ dispositivo con Play Services
-$\rightarrow$ notificación recibida. Por ello FCM está
-\textbf{implementado parcialmente y pendiente de validación E2E}; no se declara
-operativo extremo a extremo. Además, los disparadores encontrados no incluyen
-todos los eventos posibles del dominio, por ejemplo la apertura de asistencia.
+La validación E2E del 20/09/2026 se ejecutó con el APK oficial release
+\texttt{scli-mobile-v1.0.1-release.apk} (\texttt{versionName}~1.0.1,
+\texttt{versionCode}~2), cuyo SHA-256 verificado es
+\texttt{a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8}.
+El artefacto contiene recursos Firebase
+\texttt{google\_app\_id}, \texttt{gcm\_defaultSenderId},
+\texttt{google\_api\_key} y \texttt{project\_id}; el archivo
+\texttt{google-services.json} no se versiona, sino que CI lo inyecta de forma
+segura desde \texttt{GOOGLE\_SERVICES\_JSON\_BASE64}. En esa prueba se registró
+un dispositivo Android físico, se ejecutó la transición real
+\texttt{REPORTADO -> EN\_REVISION} y el backend envió una notificación
+\texttt{INCIDENTE\_ACTUALIZADO} mediante Firebase, con \texttt{messageId} y
+\texttt{trace\_id} conservados. El teléfono recibió "Incidente actualizado" y
+"El incidente ahora está EN\_REVISION" a las 16:51 hora local, coherente con el
+timestamp de servidor 21:51 UTC. La evidencia está en
+\texttt{docs/evidencias/fcm-e2e-2026-09-20.md} y sus capturas asociadas.
+
+La validación no implica que todos los tokens históricos fueran válidos: además
+del envío exitoso al dispositivo actual, Firebase devolvió \texttt{UNREGISTERED}
+para un token antiguo. Ese fallo se conserva como riesgo operativo de higiene de
+tokens y no revierte la operación de negocio ni invalida la recepción comprobada.
+Además, los disparadores encontrados no incluyen todos los eventos posibles del
+dominio, por ejemplo la apertura de asistencia.
 
 \subsection{Integración de clientes y servicios}
 \label{subsec:integracion-clientes}
@@ -284,15 +307,15 @@ seguridad de microservicios como un problema transversal de identidad,
 infraestructura, comunicación y ciclo de desarrollo
 \cite{berardi2022microservicesecurity}.
 
-Permanecen cuatro limitaciones funcionales. Primero, incidentes es un módulo
-local sin API ni sincronización remota. Segundo, FCM carece de configuración
-Firebase verificable, registro de dispositivo y emisor backend. Tercero, salvo
-la lectura de reservas almacenadas y las operaciones locales de incidentes, las
-funciones remotas dependen de conectividad y disponibilidad del Gateway. Cuarto,
-el logout móvil no revoca todavía la sesión de renovación en el backend. La
-calidad y cobertura de estas funciones se evalúan en el capítulo de pruebas; no
-se infiere su suficiencia a partir de la mera existencia de pantallas o clases.
+Permanecen tres limitaciones funcionales. Primero, incidentes es un módulo local
+sin API ni sincronización remota. Segundo, salvo la lectura de reservas
+almacenadas y las operaciones locales de incidentes, las funciones remotas
+dependen de conectividad y disponibilidad del Gateway. Tercero, el logout móvil
+no revoca todavía la sesión de renovación en el backend. La calidad y cobertura
+de estas funciones se evalúan en el capítulo de pruebas; no se infiere su
+suficiencia a partir de la mera existencia de pantallas o clases.
 
-No se incorporaron capturas: el repositorio no contiene imágenes actuales y
-claramente atribuibles a las interfaces E4. Esta omisión evita reutilizar como
-evidencia visual las capturas históricas de infraestructura.
+Se incorporaron evidencias visuales actuales de FCM y QR del 20/09/2026 en
+\texttt{docs/evidencias/}. Estas capturas documentan recepción FCM en dispositivo
+físico y escaneo QR con resultado de laboratorio real, sin publicar secretos ni
+tokens.

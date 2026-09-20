@@ -55,9 +55,11 @@ El flujo validado fue:
 
 `evento backend -> NotificacionService -> Firebase Admin SDK -> FCM -> dispositivo Android`
 
-La evidencia está versionada en `docs/evidencias/fcm-e2e.md` e incluye las
-capturas de permiso de notificaciones y recepción real de la notificación FCM en
-el dispositivo.
+La evidencia está versionada en
+`docs/evidencias/fcm-e2e-2026-09-20.md` e incluye las capturas de recepción real
+de la notificación FCM en el dispositivo y en la pantalla interna de SCLI. En la
+misma validación se documentó que un token antiguo devolvió `UNREGISTERED`, sin
+invalidar el envío exitoso al dispositivo actual.
 
 `google-services.json`, las credenciales de Firebase Admin SDK y los tokens FCM
 permanecen fuera del repositorio. Las variables sensibles siguen
