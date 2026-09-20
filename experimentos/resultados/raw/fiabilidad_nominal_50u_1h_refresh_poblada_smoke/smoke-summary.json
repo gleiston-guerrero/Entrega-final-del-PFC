@@ -1,0 +1,13 @@
+{
+  "start_utc": "2026-09-19T23:51:48.037204272Z",
+  "end_utc": "2026-09-20T00:07:18.314110370Z",
+  "elapsed_seconds": 930.2769060134888,
+  "locust_exit_code": 0,
+  "business_get_total": 23076,
+  "refresh_total": 50,
+  "business_after_900": 752,
+  "list_after_900": 532,
+  "by_id_after_900": 220,
+  "business_http_401": 0,
+  "business_http_5xx": 0
+}

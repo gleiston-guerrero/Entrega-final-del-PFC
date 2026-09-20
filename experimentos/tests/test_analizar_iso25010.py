@@ -134,6 +134,7 @@ class CorrectiveReliabilityPopulationTest(unittest.TestCase):
         repetition: int,
         events: list[dict[str, str]],
         attempt: int = 1,
+        scenario: str = "fiabilidad_nominal_50u_1h_refresh",
     ) -> None:
         dirname = (
             f"rep-{repetition:02d}"
@@ -142,7 +143,7 @@ class CorrectiveReliabilityPopulationTest(unittest.TestCase):
         )
         target = (
             root
-            / "fiabilidad_nominal_50u_1h_refresh"
+            / scenario
             / dirname
         )
         target.mkdir(parents=True)
@@ -203,6 +204,51 @@ class CorrectiveReliabilityPopulationTest(unittest.TestCase):
             )
             self.assertEqual(result["p95_ms"], 30.0)
             self.assertEqual(result["p99_ms"], 30.0)
+
+
+    def test_reconstructs_populated_scenario_from_its_own_raw_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            self.write_events(
+                root,
+                2,
+                [
+                    {
+                        "request_type": "GET",
+                        "name": "GET /api/v1/reservas",
+                        "response_time_ms": "12",
+                        "status_code": "200",
+                    },
+                    {
+                        "request_type": "GET",
+                        "name": "GET /api/v1/reservas/{id}",
+                        "response_time_ms": "25",
+                        "status_code": "500",
+                    },
+                ],
+                scenario="fiabilidad_nominal_50u_1h_refresh_poblada",
+            )
+
+            result = read_corrective_reliability_population(
+                root,
+                [{"_repetition": "2", "intento": "1"}],
+                "fiabilidad_nominal_50u_1h_refresh_poblada",
+            )[2]
+
+            self.assertEqual(result["total_requests"], 2)
+            self.assertEqual(result["http_401"], 0)
+            self.assertEqual(result["http_5xx"], 1)
+            self.assertAlmostEqual(
+                result["failure_rate_percent"],
+                50.0,
+            )
+            self.assertEqual(result["p95_ms"], 25.0)
+            self.assertEqual(result["p99_ms"], 25.0)
+            self.assertIn(
+                "fiabilidad_nominal_50u_1h_refresh_poblada",
+                result["source"],
+            )
 
     def test_document_blocks_are_generated_from_ten_raw_repetitions(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

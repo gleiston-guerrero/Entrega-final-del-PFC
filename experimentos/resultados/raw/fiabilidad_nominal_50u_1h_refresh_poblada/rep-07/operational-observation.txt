@@ -1,0 +1,16 @@
+Antes de rep-07 se realizó una limpieza controlada del log Docker del
+OTel Collector, fuera de toda ventana de medición y documentada en Git.
+
+Durante rep-07 no se truncaron logs, no se reiniciaron contenedores,
+no se limpiaron volúmenes y no se modificó el dataset.
+
+Durante la medición se observó al menos un HTTP 5xx. La observación se
+preservó íntegramente en locust_requests.csv y se derivó además en
+http5xx-events.json. La repetición no fue reiniciada ni descartada.
+
+Contenedor observado: scli-prod-otel-collector-1
+Log Docker: /var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+Tamaño del log al cierre de rep-07: 5364912868 bytes.
+
+Cualquier nueva liberación de espacio se realizará únicamente después
+de sellar y versionar rep-07 y antes de iniciar rep-08.

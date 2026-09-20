@@ -1,0 +1,212 @@
+[
+  {
+    "timestamp_epoch": 1789891804.374783,
+    "timestamp_utc": "2026-09-20T08:10:04.374783+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1472.039118,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.379842,
+    "timestamp_utc": "2026-09-20T08:10:04.379842+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1079.43977,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.380332,
+    "timestamp_utc": "2026-09-20T08:10:04.380332+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 875.059818,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.380755,
+    "timestamp_utc": "2026-09-20T08:10:04.380755+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1449.319273,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.405629,
+    "timestamp_utc": "2026-09-20T08:10:04.405629+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 1387.451922,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.406129,
+    "timestamp_utc": "2026-09-20T08:10:04.406129+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 1383.290196,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.406561,
+    "timestamp_utc": "2026-09-20T08:10:04.406561+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1499.000513,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.406702,
+    "timestamp_utc": "2026-09-20T08:10:04.406702+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1150.811736,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.40709,
+    "timestamp_utc": "2026-09-20T08:10:04.407090+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 634.990083,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.407487,
+    "timestamp_utc": "2026-09-20T08:10:04.407487+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 1607.480953,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.407864,
+    "timestamp_utc": "2026-09-20T08:10:04.407864+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 89.385148,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789891804.443942,
+    "timestamp_utc": "2026-09-20T08:10:04.443942+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 1130.555224,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.738921,
+    "timestamp_utc": "2026-09-20T08:39:24.738921+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 118.65795,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.739527,
+    "timestamp_utc": "2026-09-20T08:39:24.739527+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 278.963412,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.741763,
+    "timestamp_utc": "2026-09-20T08:39:24.741763+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 247.279639,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.771075,
+    "timestamp_utc": "2026-09-20T08:39:24.771075+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 196.081489,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.779534,
+    "timestamp_utc": "2026-09-20T08:39:24.779534+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 287.787126,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893564.867024,
+    "timestamp_utc": "2026-09-20T08:39:24.867024+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 307.237828,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893592.541657,
+    "timestamp_utc": "2026-09-20T08:39:52.541657+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 84.858549,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893592.554266,
+    "timestamp_utc": "2026-09-20T08:39:52.554266+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 95.809668,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  },
+  {
+    "timestamp_epoch": 1789893592.619341,
+    "timestamp_utc": "2026-09-20T08:39:52.619341+00:00",
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas/{id}",
+    "status_code": 500,
+    "response_time_ms": 165.650385,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  }
+]

@@ -1,0 +1,109 @@
+[2026-09-20T01:19:18.309459165Z] INTERVENCION ENTRE rep-01 Y rep-02
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=10700637817
+motivo=log Docker del OTel Collector crecia aproximadamente 4.80 GiB/h
+objetivo=prevenir disco lleno antes de rep-02
+rep-01_commit=d49b337
+rep-01_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T01:19:18.498217685Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T02:24:28.009263820Z] INTERVENCION ENTRE rep-02 Y rep-03
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5365710724
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-02_commit=97607c9
+rep-02_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T02:24:28.268362076Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T03:27:27.976641787Z] INTERVENCION ENTRE rep-03 Y rep-04
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5370105583
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-03_commit=bb0c92f
+rep-03_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T03:27:28.231207621Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T04:30:33.042626624Z] INTERVENCION ENTRE rep-04 Y rep-05
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5367111904
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-04_commit=c12dd2a
+rep-04_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T04:30:33.257438020Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T05:33:07.918923948Z] INTERVENCION ENTRE rep-05 Y rep-06
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5363069617
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-05_commit=906dff2
+rep-05_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T05:33:08.012534261Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T06:36:06.191546051Z] INTERVENCION ENTRE rep-06 Y rep-07
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5363276132
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-06_commit=e37d335
+rep-06_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T06:36:06.310050063Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T07:40:41.969831978Z] INTERVENCION ENTRE rep-07 Y rep-08
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5369715086
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-07_commit=5fa1bba
+rep-07_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T07:40:42.025015366Z
+bytes_after=0
+resultado=completed
+
+[2026-09-20T08:44:50.273845839Z] INTERVENCION ENTRE rep-08 Y rep-09
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5366090615
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-08_commit=034b1d4
+rep-08_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T08:44:50.382212671Z
+bytes_after=24549
+resultado=completed
+
+[2026-09-20T09:49:23.588741398Z] INTERVENCION ENTRE rep-09 Y rep-10
+accion=truncate_log_otel_collector
+container=scli-prod-otel-collector-1
+log_path=/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+bytes_before=5358823747
+motivo=prevencion de disco lleno por crecimiento sostenido del log del OTel Collector
+rep-09_commit=bfc339e
+rep-09_finalizada_y_versionada_antes_de_intervencion=true
+finished_at_utc=2026-09-20T09:49:23.667972085Z
+bytes_after=0
+resultado=completed
+

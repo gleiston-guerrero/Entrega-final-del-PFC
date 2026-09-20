@@ -1,0 +1,9 @@
+{
+  "started_at_utc": "2026-09-19T23:51:48.037204272Z",
+  "split_at_seconds": 900,
+  "split_at_epoch": 1789862808.037204,
+  "finished_at_utc": "2026-09-20T00:07:18.314110370Z",
+  "start_epoch": 1789861908.037204,
+  "finish_epoch": 1789862838.31411,
+  "elapsed_seconds": 930.2769060134888
+}
