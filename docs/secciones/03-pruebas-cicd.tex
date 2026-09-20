@@ -216,17 +216,22 @@ en ese momento no se añadieron secretos ni complejidad de firma.
 \textbf{Estado actual E7.} El workflow incorpora el job \emph{Build - Android
 release signed}: ejecuta \texttt{assembleRelease}, alinea el binario mediante
 \texttt{zipalign}, lo firma con \texttt{apksigner}, valida la firma con
-\texttt{apksigner verify}, genera y comprueba \texttt{SHA256SUMS.txt}, y publica
-el APK release firmado como artifact de GitHub Actions en pushes segun el
-workflow vigente. La version Android actual es \texttt{versionName 1.0.1} y
-\texttt{versionCode 2}. El binario preservado en
-\path{release/apk/scli-mobile-0.1.0-release.apk} y su checksum en
-\path{release/apk/SHA256SUMS.txt} se mantienen solo como evidencia historica de
-una ejecucion anterior; no constituyen la evidencia definitiva del APK final
-1.0.1+. Esa evidencia definitiva queda pendiente hasta que CI genere, firme,
-verifique y publique oficialmente el APK 1.0.1+ con su checksum. GitHub Actions
-continua siendo la fuente reproducible; las claves privadas y contrasenas de
-firma permanecen fuera de Git.
+\texttt{apksigner verify}, genera y comprueba \texttt{SHA256SUMS.txt}. La
+release oficial verificada correspondiente al punto 35 es \texttt{v1.0.1},
+publicada por GitHub Actions sobre el commit etiquetado
+\texttt{166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8}. Sus assets incluyen
+\texttt{scli-mobile-v1.0.1-release.apk}, \texttt{SHA256SUMS.txt},
+\texttt{SCLI-PFC-v1.0.1.pdf}, \texttt{Source code (zip)} y
+\texttt{Source code (tar.gz)}. El SHA-256 verificado del APK es
+\texttt{a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8} y
+coincide con \texttt{SHA256SUMS.txt}. La validacion con \texttt{apksigner}
+confirmo APK Signature Scheme v2 y v3, un firmante RSA de 2048 bits y el
+certificado \texttt{CN=scli, OU=uteq, O=uteq, L=Quevedo, ST=Los Rios, C=EC}.
+El binario preservado en \path{release/apk/scli-mobile-0.1.0-release.apk} y su
+checksum en \path{release/apk/SHA256SUMS.txt} se mantienen solo como evidencia
+historica de una ejecucion anterior; no constituyen la release vigente
+\texttt{v1.0.1}. GitHub Actions continua siendo la fuente reproducible; las
+claves privadas y contrasenas de firma permanecen fuera de Git.
 No se ejecutó un emulador manualmente durante la redacción; se usa la ejecución
 automatizada de CI como evidencia.
 
