@@ -6,6 +6,7 @@ import ec.edu.uteq.scli.mobile.data.local.AppDatabase
 import ec.edu.uteq.scli.mobile.BuildConfig
 import ec.edu.uteq.scli.mobile.common.network.BearerAuthInterceptor
 import ec.edu.uteq.scli.mobile.common.network.GatewayClientFactory
+import ec.edu.uteq.scli.mobile.common.network.MobileHttpLatencyInterceptor
 import ec.edu.uteq.scli.mobile.common.network.RefreshAuthenticator
 import ec.edu.uteq.scli.mobile.features.auth.data.AuthApi
 import ec.edu.uteq.scli.mobile.features.auth.data.AuthRepository
@@ -23,6 +24,8 @@ import ec.edu.uteq.scli.mobile.features.notifications.DeviceTokenRegistrar
 import ec.edu.uteq.scli.mobile.features.notifications.PushNavigationManager
 import ec.edu.uteq.scli.mobile.features.notifications.data.NotificationsApi
 import ec.edu.uteq.scli.mobile.features.notifications.data.NotificationsRepository
+import ec.edu.uteq.scli.mobile.features.observability.data.DefaultMobileMetricsReporter
+import ec.edu.uteq.scli.mobile.features.observability.data.MobileMetricsApi
 import ec.edu.uteq.scli.mobile.features.profile.data.SettingsRepository
 import ec.edu.uteq.scli.mobile.features.profile.data.ProfileApi
 import ec.edu.uteq.scli.mobile.features.profile.data.ProfileRepository
@@ -62,9 +65,22 @@ class AppContainer(context: Context) {
         gatewayRetrofit.create(AuthApi::class.java),
         authStorage,
     )
+    private val mobileMetricsRetrofit = GatewayClientFactory.createRetrofit(
+        BuildConfig.API_BASE_URL,
+        OkHttpClient.Builder()
+            .addInterceptor(BearerAuthInterceptor {
+                authRepository.restoreSession()?.accessToken
+            })
+            .authenticator(RefreshAuthenticator(authRepository))
+            .build(),
+    )
+    private val mobileMetricsReporter = DefaultMobileMetricsReporter(
+        mobileMetricsRetrofit.create(MobileMetricsApi::class.java),
+    )
     private val authenticatedGatewayRetrofit = GatewayClientFactory.createRetrofit(
         BuildConfig.API_BASE_URL,
         OkHttpClient.Builder()
+            .addInterceptor(MobileHttpLatencyInterceptor(mobileMetricsReporter))
             .addInterceptor(BearerAuthInterceptor {
                 authRepository.restoreSession()?.accessToken
             })

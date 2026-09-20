@@ -103,13 +103,13 @@ class GatewayOpenApiRuntimeCompletenessTest {
         List<Operation> gateway = RuntimeContractVerifier.openApiOperations(
                 RuntimeContractVerifier.repositoryFile("docs/openapi/api-gateway-openapi.json"));
 
-        assertThat(canonical).hasSize(182);
+        assertThat(canonical).hasSize(183);
         assertThat(expected.keySet().stream()
                 .filter(operation -> operation.path().startsWith("/auth-service/"))).hasSize(8);
         assertThat(expected.keySet().stream()
                 .filter(operation -> operation.path().startsWith("/usuarios-service/"))).hasSize(34);
-        assertThat(expected).hasSize(224);
-        assertThat(gateway).hasSize(224);
+        assertThat(expected).hasSize(225);
+        assertThat(gateway).hasSize(225);
         assertThat(GatewayRouteCatalog.operationKeys())
             .containsExactlyInAnyOrderElementsOf(gateway.stream()
                 .map(operation -> operation.method() + " " + operation.path())

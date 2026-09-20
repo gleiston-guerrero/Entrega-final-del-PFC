@@ -311,6 +311,7 @@ def gateway_contract(contracts: dict[str, dict]) -> dict:
     public_prefixes = ("/api/v1/auth", "/api/v1/perfiles", "/api/v1/docentes", "/api/v1/estudiantes", "/api/v1/administradores",
         "/api/v1/reservas", "/api/v1/solicitudes", "/api/v1/agenda", "/api/v1/disponibilidad", "/api/v1/incidentes",
         "/api/v1/notificaciones", "/api/v1/planificaciones", "/api/v1/planificaciones-agregadas", "/api/v1/asistencias",
+        "/api/v1/observabilidad",
         "/api/v1/campus", "/api/v1/bloques", "/api/v1/pisos", "/api/v1/laboratorios", "/api/v1/equipos",
         "/api/v1/tipos-equipo", "/api/v1/facultades", "/api/v1/carreras", "/api/v1/materias", "/api/v1/periodos-lectivos", "/api/v1/horarios")
     paths, schemas = {}, {}
