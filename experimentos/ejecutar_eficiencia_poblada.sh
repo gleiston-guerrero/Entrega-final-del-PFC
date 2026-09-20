@@ -165,4 +165,10 @@ metadata = {"scenario": os.environ["SCLI_SCENARIO"], "repetition": int(os.enviro
  "locust_exit_code": int(os.environ["SCLI_CODE"])}
 open(p + "/metadata.json", "w", encoding="utf-8").write(json.dumps(metadata, indent=2) + "\n")
 PY
-sha256sum "$destination"/* > "$destination/SHA256SUMS"
+(
+  cd "$destination"
+  for file in *; do
+    [ "$file" = "SHA256SUMS" ] && continue
+    sha256sum "$file"
+  done
+) > "$destination/SHA256SUMS"

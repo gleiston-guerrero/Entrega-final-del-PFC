@@ -156,7 +156,7 @@ El manifest global
 `iso25010-eficiencia-poblada.sha256` contiene 328 entradas y verifica
 328/328 sin fallos. Su SHA-256 es:
 
-`3981d70a2e6b597e5a10d03258f366ea187afb694c7541d37d162cb9bca7879f`
+`3b6a953108f0077cce6ed4aa0047e699fe283fefe21df58976ff62bfc76d61da`
 
 Después de r3 y antes de r4 se detectó crecimiento del log `json-file` del
 OTel Collector hasta aproximadamente 7,2 GB. Se preservó una muestra y se
