@@ -3568,8 +3568,45 @@
           "inicio",
           "fin",
           "equipmentStatus",
+          "equipmentActive",
           "equipmentSource"
         ]
+      },
+      "Administrador": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Adscripcion": {
+        "type": "object",
+        "properties": {
+          "tipoAmbito": {
+            "type": "string"
+          },
+          "ambitoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activo": {
+            "type": "boolean"
+          }
+        }
       },
       "AgendaItemResponse": {
         "type": "object",
@@ -3718,20 +3755,6 @@
           "comentario"
         ]
       },
-      "ConnectionInvocationHandler": {
-        "type": "object",
-        "properties": {
-          "delegate": {
-            "type": "string",
-            "description": "Valor Java Connection"
-          },
-          "proxy": {},
-          "method": {
-            "type": "string",
-            "description": "Valor Java Method"
-          }
-        }
-      },
       "ConsultaDisponibilidad": {
         "type": "object",
         "properties": {
@@ -3829,14 +3852,12 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java Administrador"
+            "$ref": "#/components/schemas/Administrador"
           },
           "adscripciones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Adscripcion"
+              "$ref": "#/components/schemas/Adscripcion"
             }
           }
         }
@@ -4005,6 +4026,33 @@
           "motivo"
         ]
       },
+      "Decision": {
+        "type": "object",
+        "properties": {
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "revisadaPorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "creadaEn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resueltaEn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "DesregistrarDispositivoRequest": {
         "type": "object",
         "properties": {
@@ -4060,7 +4108,10 @@
           "motivo": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "disponible"
+        ]
       },
       "DispositivoNotificacionResponse": {
         "type": "object",
@@ -4083,7 +4134,10 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "DocenteExternoResponse": {
         "type": "object",
@@ -4520,7 +4574,8 @@
         "type": "object",
         "properties": {
           "principal": {
-            "$ref": "#/components/schemas/JwtPrincipal"
+            "type": "string",
+            "description": "Valor Java JwtPrincipal"
           },
           "authorities": {
             "type": "array",
@@ -4528,19 +4583,6 @@
               "type": "string",
               "description": "Valor Java GrantedAuthority"
             }
-          }
-        }
-      },
-      "JwtPrincipal": {
-        "type": "object",
-        "properties": {
-          "usuarioAuthId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "perfilId": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       },
@@ -4648,11 +4690,30 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "leida"
+        ]
       },
       "ObservacionPlanificacionRequest": {
         "type": "object",
         "properties": {
+          "observacion": {
+            "type": "string"
+          }
+        }
+      },
+      "ObservacionResponse": {
+        "type": "object",
+        "properties": {
+          "bloqueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "laboratorioPropuestoId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "observacion": {
             "type": "string"
           }
@@ -4973,8 +5034,7 @@
           "revisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java RevisionResponse"
+              "$ref": "#/components/schemas/RevisionResponse"
             }
           },
           "pisoGestionadoId": {
@@ -5309,7 +5369,10 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "version"
+        ]
       },
       "ResultadoDisponibilidad": {
         "type": "object",
@@ -5319,6 +5382,69 @@
           },
           "motivo": {
             "type": "string"
+          }
+        }
+      },
+      "Revision": {
+        "type": "object",
+        "properties": {
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "revisorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "resueltaEn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RevisionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "ronda": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vigente": {
+            "type": "boolean"
+          },
+          "revisadaPorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actualizadaEn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observaciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObservacionResponse"
+            }
           }
         }
       },
@@ -5468,8 +5594,7 @@
           "revisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Revision"
+              "$ref": "#/components/schemas/Revision"
             }
           },
           "materiaId": {
@@ -5607,11 +5732,14 @@
           "decisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Decision"
+              "$ref": "#/components/schemas/Decision"
             }
           }
-        }
+        },
+        "required": [
+          "pisosAprobados",
+          "totalPisos"
+        ]
       },
       "TipoSolicitudCambio": {
         "type": "string",

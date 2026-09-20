@@ -1800,6 +1800,27 @@
       }
     },
     "schemas": {
+      "AdministradorInstitucionalResponse": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
+          }
+        }
+      },
       "AdministradorRequest": {
         "type": "object",
         "properties": {
@@ -1852,11 +1873,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -1883,11 +1904,26 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
+          }
+        }
+      },
+      "AdscripcionResponse": {
+        "type": "object",
+        "properties": {
+          "tipoAmbito": {
+            "$ref": "#/components/schemas/TipoAmbitoInstitucional"
+          },
+          "ambitoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activo": {
+            "type": "boolean"
           }
         }
       },
@@ -1896,7 +1932,7 @@
         "properties": {
           "timestamp": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "status": {
             "type": "integer",
@@ -2012,6 +2048,21 @@
           }
         }
       },
+      "CarreraEstadoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "existe": {
+            "type": "boolean"
+          },
+          "activa": {
+            "type": "boolean"
+          }
+        }
+      },
       "ContextoAcademicoEstudianteRequest": {
         "type": "object",
         "properties": {
@@ -2062,7 +2113,31 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "activo"
+        ]
+      },
+      "ContextoAdministrador": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
           }
         }
       },
@@ -2092,7 +2167,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "ContextoInstitucional": {
         "type": "object",
@@ -2114,8 +2192,7 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java ContextoAdministrador"
+            "$ref": "#/components/schemas/ContextoAdministrador"
           },
           "adscripciones": {
             "type": "array",
@@ -2145,17 +2222,19 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java AdministradorInstitucionalResponse"
+            "$ref": "#/components/schemas/AdministradorInstitucionalResponse"
           },
           "adscripciones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java AdscripcionResponse"
+              "$ref": "#/components/schemas/AdscripcionResponse"
             }
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "Direction": {
         "type": "string",
@@ -2178,7 +2257,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "DocenteRequest": {
         "type": "object",
@@ -2241,11 +2323,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "nombres": {
             "type": "string"
@@ -2299,7 +2381,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "EstudianteRequest": {
         "type": "object",
@@ -2355,11 +2440,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -2367,7 +2452,8 @@
         "type": "object",
         "properties": {
           "principal": {
-            "$ref": "#/components/schemas/JwtPrincipal"
+            "type": "string",
+            "description": "Valor Java JwtPrincipal"
           },
           "authorities": {
             "type": "array",
@@ -2375,19 +2461,6 @@
               "type": "string",
               "description": "Valor Java GrantedAuthority"
             }
-          }
-        }
-      },
-      "JwtPrincipal": {
-        "type": "object",
-        "properties": {
-          "usuarioAuthId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "perfilId": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       },
@@ -2709,7 +2782,7 @@
           },
           "ocurridoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -2732,7 +2805,11 @@
               "type": "string"
             }
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "PerfilMeUpdateRequest": {
         "type": "object",
@@ -2791,11 +2868,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -2981,7 +3058,8 @@
           "perfil",
           "username",
           "email",
-          "rol"
+          "rol",
+          "activo"
         ]
       }
     }

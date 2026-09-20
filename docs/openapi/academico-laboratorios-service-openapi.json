@@ -3074,12 +3074,48 @@
       }
     },
     "schemas": {
+      "Administrador": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Adscripcion": {
+        "type": "object",
+        "properties": {
+          "tipoAmbito": {
+            "type": "string"
+          },
+          "ambitoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activo": {
+            "type": "boolean"
+          }
+        }
+      },
       "ApiError": {
         "type": "object",
         "properties": {
           "timestamp": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "status": {
             "type": "integer",
@@ -3142,11 +3178,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3189,11 +3225,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3210,7 +3246,11 @@
           "activa": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activa"
+        ]
       },
       "CarreraRequest": {
         "type": "object",
@@ -3260,11 +3300,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3288,14 +3328,12 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java Administrador"
+            "$ref": "#/components/schemas/Administrador"
           },
           "adscripciones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Adscripcion"
+              "$ref": "#/components/schemas/Adscripcion"
             }
           }
         }
@@ -3353,6 +3391,15 @@
             "type": "string"
           },
           "almacenamiento": {
+            "type": "string"
+          },
+          "direccionIp": {
+            "type": "string"
+          },
+          "direccionMac": {
+            "type": "string"
+          },
+          "observacion": {
             "type": "string"
           }
         },
@@ -3415,11 +3462,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3459,7 +3506,10 @@
           "existe": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe"
+        ]
       },
       "FacultadEstadoRequest": {
         "type": "object",
@@ -3511,11 +3561,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3605,11 +3655,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3691,7 +3741,11 @@
             "type": "integer",
             "format": "int32"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "LaboratorioEstadoRequest": {
         "type": "object",
@@ -3764,11 +3818,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -3793,7 +3847,11 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "MateriaRequest": {
         "type": "object",
@@ -3854,11 +3912,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -4456,11 +4514,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -4507,11 +4565,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -4558,11 +4616,11 @@
         "properties": {
           "instante": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "valor": {
-            "type": "string",
-            "description": "Valor Java double"
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -4619,11 +4677,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       }
