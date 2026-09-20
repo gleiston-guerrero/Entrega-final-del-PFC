@@ -1,0 +1,12 @@
+Antes de rep-03 se realizó una limpieza controlada del log Docker del
+OTel Collector, fuera de toda ventana de medición y documentada en Git.
+
+Durante rep-03 no se truncaron logs, no se reiniciaron contenedores,
+no se limpiaron volúmenes y no se modificó el dataset.
+
+Contenedor observado: scli-prod-otel-collector-1
+Log Docker: /var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+Tamaño del log al cierre de rep-03: 5367840187 bytes.
+
+Cualquier nueva liberación de espacio se realizará únicamente después
+de sellar y versionar rep-03 y antes de iniciar rep-04.
