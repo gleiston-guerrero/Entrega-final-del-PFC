@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp_epoch": 1789887398.479303,
+    "request_type": "GET",
+    "name": "GET /api/v1/reservas",
+    "status_code": 500,
+    "response_time_ms": 5992.82703,
+    "outcome": "failure",
+    "error": "HTTP esperado 200, recibido 500"
+  }
+]

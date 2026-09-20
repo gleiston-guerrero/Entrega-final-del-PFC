@@ -7,9 +7,10 @@ plugins {
     jacoco
 }
 
-val apiBaseUrl = providers.gradleProperty("SCLI_API_BASE_URL")
+val configuredApiBaseUrl = providers.gradleProperty("SCLI_API_BASE_URL")
     .orElse(providers.environmentVariable("SCLI_API_BASE_URL"))
-    .orElse("http://10.0.2.2:8080/")
+val debugApiBaseUrl = configuredApiBaseUrl.orElse("http://10.0.2.2:8080/")
+val releaseApiBaseUrl = configuredApiBaseUrl.orElse("http://157.137.221.157:8080/")
 
 // El plugin de Firebase necesita google-services.json, que todavía no existe
 // en este repo (ver apps/mobile/README.md). Se aplica solo si el archivo está
@@ -26,15 +27,19 @@ android {
         applicationId = "ec.edu.uteq.scli.mobile"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"${debugApiBaseUrl.get()}\"")
+        }
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "API_BASE_URL", "\"${releaseApiBaseUrl.get()}\"")
         }
     }
 
@@ -50,10 +55,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-
-    defaultConfig {
-        buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl.get()}\"")
     }
 
     composeOptions {

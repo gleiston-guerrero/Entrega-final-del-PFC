@@ -65,14 +65,22 @@ jobs:
         run: python -m unittest discover -s experimentos/tests -p "test_*.py" -v
 
   verify-experimental-manifest:
-    name: Verify - experimental results manifest
+    name: Verify - all tracked evidence manifests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify experimental results checksums
-        run: sha256sum --check experimentos/resultados/SHA256SUMS
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test manifest verifier
+        run: python -m unittest discover -s scripts/tests -p "test_verificar_manifiestos.py" -v
+
+      - name: Verify all tracked checksums
+        run: python scripts/verificar-manifiestos.py
 
   validate-openapi-contracts:
     name: Validate - OpenAPI contracts
@@ -483,6 +491,23 @@ jobs:
         if: ${{ steps.signing.outputs.configured == 'true' }}
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
+      - name: Create Firebase configuration for release APK
+        if: ${{ steps.signing.outputs.configured == 'true' }}
+        env:
+          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$GOOGLE_SERVICES_JSON_BASE64" ]; then
+            echo "::error::GOOGLE_SERVICES_JSON_BASE64 is required to build a release APK with FCM configuration."
+            exit 1
+          fi
+          printf '%s' "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > apps/mobile/app/google-services.json
+          if [ ! -s apps/mobile/app/google-services.json ]; then
+            echo "::error::apps/mobile/app/google-services.json was not created or is empty."
+            exit 1
+          fi
+
       - name: Build unsigned release APK
         if: ${{ steps.signing.outputs.configured == 'true' }}
         working-directory: apps/mobile
@@ -490,13 +515,18 @@ jobs:
           chmod +x gradlew
           ./gradlew clean testDebugUnitTest lint assembleRelease
 
+      - name: Remove temporary Firebase configuration
+        if: ${{ always() && steps.signing.outputs.configured == 'true' }}
+        shell: bash
+        run: rm -f apps/mobile/app/google-services.json
+
       - name: Prepare release output and keystore
         if: ${{ steps.signing.outputs.configured == 'true' }}
         env:
           ANDROID_SIGNING_KEYSTORE_BASE64: ${{ secrets.ANDROID_SIGNING_KEYSTORE_BASE64 }}
         shell: bash
         run: |
-          version="0.1.0"
+          version="1.0.1"
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
             version="$GITHUB_REF_NAME"
           fi
@@ -809,7 +839,7 @@ jobs:
     name: Publish versioned GitHub Release
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    needs: [build-mobile-release-signed, build-release-documentation, build-images]
+    needs: [build-mobile-release-signed, build-release-documentation, build-images, verify-experimental-manifest]
     permissions:
       contents: write
     steps:

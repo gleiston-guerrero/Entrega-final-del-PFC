@@ -4,8 +4,10 @@ App Android (Kotlin + Jetpack Compose), arquitectura MVVM + repositorio por feat
 
 - `minSdk`: 26
 - `targetSdk` / `compileSdk`: 34
-- El Gateway se configura con `SCLI_API_BASE_URL`. Para el emulador Android,
-  usar `http://10.0.2.2:8080/` (la barra final es obligatoria).
+- El Gateway puede sobrescribirse con `SCLI_API_BASE_URL` como propiedad Gradle
+  o variable de entorno. Por defecto, debug usa `http://10.0.2.2:8080/` para el
+  emulador Android y release usa `http://157.137.221.157:8080/` para el API
+  Gateway publico (la barra final es obligatoria).
 
 ## Wrapper de Gradle
 
@@ -106,7 +108,7 @@ con `zipalign`, firma con `apksigner` y verifica la firma y el certificado con
 `scli-mobile-release-<SHA>`:
 
 ```text
-scli-mobile-0.1.0-release.apk
+scli-mobile-1.0.1-release.apk
 SHA256SUMS.txt
 ```
 
@@ -122,7 +124,7 @@ proceso. El identificador del paquete es `ec.edu.uteq.scli.mobile`.
 Para instalar el APK descargado y comprobar su `applicationId`:
 
 ```bash
-adb install -r scli-mobile-0.1.0-release.apk
+adb install -r scli-mobile-1.0.1-release.apk
 adb shell pm list packages ec.edu.uteq.scli.mobile
 ```
 

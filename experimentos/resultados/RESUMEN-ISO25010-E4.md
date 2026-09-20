@@ -79,44 +79,70 @@ como métricas intercambiables.
 
 La campaña histórica se conserva como antecedente metodológico. Fue ejecutada
 sobre el SHA `061a1050a94e1bd30d81b30c47c7e818005a33bb` y produjo
-668.367 respuestas HTTP 401 debido a la ausencia de renovación del JWT.
-Sus raws no se eliminan ni se reinterpretan como campaña correctiva.
+668.367 respuestas HTTP 401 por ausencia de renovación del JWT. Sus raws no se
+eliminan ni se reinterpretan.
 
-La campaña correctiva oficial se ejecutó sobre el SHA
-`b94b7af7ebab2510c16eae0c70593664763de1e7`. Completó diez repeticiones
-válidas de una hora con 50 usuarios y `spawn-rate` 10 usuarios/s.
+La primera campaña con refresh,
+`raw/fiabilidad_nominal_50u_1h_refresh/`, fue ejecutada sobre
+`b94b7af7ebab2510c16eae0c70593664763de1e7` y completó diez repeticiones
+seleccionadas. Sin embargo, el listado permaneció vacío y no se ejecutó
+`GET /api/v1/reservas/{id}`. Por ello, sus 896.964 GET y 0 HTTP 5xx se
+conservan como antecedente, pero **no constituyen el cierre definitivo de E2**.
 
-Las diez repeticiones correctivas suman 896.964 GET de negocio, con
-0 HTTP 401 y 0 HTTP 5xx. El análisis estadístico principal utiliza r2–r9;
-r1 y r10 se conservan, pero se excluyen de medias e IC95 según el
-prerregistro.
+La corrección post-evaluación se ejecutó en
+`raw/fiabilidad_nominal_50u_1h_refresh_poblada/` sobre el software desplegado
+`dd2e1923d7635857f4020c7ef5c8b6efee363d7a`.
 
-Los resultados son reproducibles mediante
-`python3 experimentos/analizar_iso25010.py experimentos/resultados/iso25010-correctiva.csv`.
-El analizador reconstruye las métricas directamente desde los
-`locust_requests.csv` raw y verifica su coincidencia con el CSV consolidado.
+Se fijó una nueva población controlada de 20 reservas. Su `dataset.csv` tiene
+SHA-256
+`f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78`.
+No se afirma que sea una reconstrucción exacta del dataset histórico; la
+limitación de comparabilidad estricta queda declarada.
+
+Las diez repeticiones pobladas contienen 895.136 GET de negocio: 670.972 de
+listado y 224.164 por id, con 0 HTTP 401 y 42 HTTP 5xx. Los 5xx se preservan:
+r7=1, r8=21 y r9=20.
+
+El análisis estadístico principal utiliza r2--r9 según el diseño establecido.
+Estas ocho repeticiones contienen 716.099 GET de negocio, incluidos 179.322
+GET por id.
+
+Los resultados son reproducibles mediante:
+
+`python3 experimentos/analizar_iso25010.py experimentos/resultados/iso25010-correctiva-poblada.csv`
+
+El analizador reconstruye las métricas desde `locust_requests.csv` y exige su
+coincidencia con el consolidado.
 
 | Métrica | n | Media | s muestral | IC95 | Interpretación |
 | --- | ---: | ---: | ---: | --- | --- |
-| Tasa HTTP 5xx | 8 | 0,000000 % | 0,000000 % | [0,000000; 0,000000] % | **CUMPLE** `<1 %` |
-| p95 GET negocio | 8 | 6,680642 ms | 0,177173 ms | [6,532522; 6,828763] ms | INFORMATIVO |
-| p99 GET negocio | 8 | 9,849009 ms | 0,489360 ms | [9,439893; 10,258124] ms | INFORMATIVO |
+| Tasa HTTP 5xx | 8 | 0,005870 % | 0,010535 % | [-0,002938; 0,014677] % | **CUMPLE** `<1 %` |
+| p95 GET negocio | 8 | 11,256521 ms | 0,223526 ms | [11,069649; 11,443394] ms | INFORMATIVO |
+| p99 GET negocio | 8 | 23,945109 ms | 1,602666 ms | [22,605247; 25,284971] ms | INFORMATIVO |
 
-El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. La métrica primaria es
-`100 × HTTP 5xx / GET de negocio`. p95 y p99 se calculan sobre la distribución
-raw completa de GET de negocio, sin excluir observaciones por código HTTP,
-éxito, fallo o latencia. Login y refresh se contabilizan por separado.
+El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. El límite inferior negativo
+de la tasa procede del intervalo t no acotado y se conserva sin truncarlo. La
+regla de decisión utiliza el límite superior.
 
-Los contadores finales exactos de Locust registran 899.464 requests al incluir
-tráfico de sesión y 0 fallos. Para E2, el denominador oficial permanece en los
-896.964 GET de negocio.
+Como `0,014677 % < 1 %`, **E2 CUMPLE el criterio acotado de HTTP 5xx en la
+campaña poblada medida**. p95 y p99 son únicamente descriptivos.
 
-Los intentos inválidos o abortados permanecen preservados en sus directorios
-originales y no se reutilizan como observaciones oficiales.
+El código de salida de Locust no se usa como criterio automático de exclusión:
+r7, r8 y r9 conservan exit code 1 porque registraron fallos HTTP observados.
+Excluirlas habría eliminado resultados desfavorables.
 
-El resultado permite decidir el criterio acotado de HTTP 5xx y **E2 CUMPLE**
-en el escenario correctivo medido. No demuestra por sí solo una disponibilidad
-temporal mayor o igual que 99,5 %.
+Cada repetición poblada tiene `SHA256SUMS`. El manifiesto global
+`resultados/SHA256SUMS` contiene 1.339 entradas. Incluye los 550 archivos
+actualmente versionados de la campaña correctiva anterior, su
+`iso25010-correctiva.csv`, las 319 evidencias de la campaña poblada y
+`iso25010-correctiva-poblada.csv`.
+
+Los intentos históricos descartados permanecen preservados y documentados en
+`../cierre-e2-fiabilidad.md`; no se corrigen ni se eliminan sus bytes.
+
+La tasa HTTP 5xx no equivale a disponibilidad temporal. El resultado decide el
+criterio acotado de errores, pero **no demuestra por sí solo disponibilidad
+mayor o igual que 99,5 %**.
 
 ## Consolidación oficial E3: seguridad, mantenibilidad y compatibilidad
 

@@ -7,3 +7,6 @@ experimentos/resultados/arbiter/campaign/** binary
 
 # Evidencia experimental: preservar bytes originales y checksums
 experimentos/resultados/raw/** binary
+experimentos/evidencia-e2/smoke-refresh-25m/** binary
+experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt text eol=lf
+experimentos/evidencia-17/** binary

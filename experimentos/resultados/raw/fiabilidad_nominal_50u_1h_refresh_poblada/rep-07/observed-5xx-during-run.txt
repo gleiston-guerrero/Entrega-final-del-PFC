@@ -1,0 +1,13 @@
+Incidente observado durante rep-07.
+
+timestamp_epoch=1789887398.479303
+timestamp_utc=2026-09-20T06:56:38.479303Z
+request_type=GET
+name=GET /api/v1/reservas
+status_code=500
+response_time_ms=5992.827030
+outcome=failure
+error=HTTP esperado 200, recibido 500
+
+La repetición no fue interrumpida ni reiniciada.
+La observación se preserva para el cálculo final de la tasa HTTP 5xx.

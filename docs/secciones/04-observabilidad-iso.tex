@@ -206,52 +206,67 @@ declarado de 1\,\% en las ocho repeticiones centrales r2--r9 del despliegue
 SCLI evaluado, y qué comportamiento operacional adicional registra Locust?
 
 \textbf{Respuesta a PI2.} Sí para el indicador formal acotado en la
-campaña correctiva. Las diez repeticiones válidas sumaron 896\,964 GET de
-negocio, con 0 respuestas HTTP 401 y 0 respuestas HTTP 5xx. Sobre r2--r9,
-la tasa 5xx tuvo media 0,000000\,\%, desviación muestral 0,000000\,\% e
-IC95 [0,000000; 0,000000]\,\%; por tanto, el límite superior permanece por
-debajo del 1\,\% prerregistrado.
+campaña correctiva poblada post-evaluación. Las diez repeticiones sumaron
+895\,136 GET de negocio, de los cuales 224\,164 fueron consultas por id, con
+0 respuestas HTTP 401 y 42 respuestas HTTP 5xx. Los 5xx observados se
+preservaron: r7 registró 1, r8 registró 21 y r9 registró 20.
 
-Como métricas descriptivas, p95 tuvo media 6,680642 ms e IC95
-[6,532522; 6,828763] ms, y p99 media 9,849009 ms e IC95
-[9,439893; 10,258124] ms. Estos percentiles no constituyen criterios nuevos
-de aceptación E2. La campaña histórica con 668\,367 HTTP 401 permanece
-publicada como antecedente del defecto de renovación que motivó la corrección.
-La tasa 5xx no se interpreta como disponibilidad temporal. El CSV
-\path{../../experimentos/resultados/iso25010-correctiva.csv} y
-\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md} contienen los
-conteos y estadísticos. El prerregistro correctivo está en
-\path{../../experimentos/protocolo-e2-fiabilidad-correctiva.md} y la evidencia
-raw oficial en
-\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/}.
-Cada repetición válida conserva \texttt{locust\_requests.csv},
-\texttt{locust-final-stats.json}, \texttt{metadata.json} y su manifiesto
-SHA-256.
+Sobre r2--r9 se analizaron 716\,099 GET de negocio. La tasa 5xx tuvo media
+0,005870\,\%, desviación muestral 0,010535\,\% e IC95
+[-0,002938; 0,014677]\,\%. El intervalo t se reporta sin truncamiento;
+su límite superior, 0,014677\,\%, permanece por debajo del 1\,\%
+prerregistrado.
+
+Como métricas descriptivas, p95 tuvo media 11,256521 ms e IC95
+[11,069649; 11,443394] ms, y p99 media 23,945109 ms e IC95
+[22,605247; 25,284971] ms. Estos percentiles no constituyen criterios
+adicionales de aceptación E2.
+
+La campaña histórica con 668\,367 HTTP 401 permanece publicada como
+antecedente del defecto de renovación. Una primera campaña correctiva con
+refresh, ejecutada sobre \texttt{b94b7af7ebab2510c16eae0c70593664763de1e7},
+también permanece preservada, pero no se utiliza como cierre de PI2 porque su
+dataset de reservas estaba vacío y no ejercitó
+\texttt{GET /api/v1/reservas/\{id\}}.
+
+La campaña nueva usa una población controlada de 20 reservas. No se afirma que
+sea una reconstrucción exacta del dataset histórico, por lo que la
+comparabilidad estricta entre datasets queda limitada y declarada.
+
+La tasa 5xx no se interpreta como disponibilidad temporal. El consolidado
+oficial es
+\path{../../experimentos/resultados/iso25010-correctiva-poblada.csv};
+la evidencia raw está en
+\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}.
+El analizador reconstruye las métricas directamente desde
+\texttt{locust\_requests.csv}.
 
 \subsubsection{Proveniencia e integridad}
 
-La evidencia se ejecutó en \texttt{servidor-proyectos}. La campaña de
-eficiencia corresponde al SHA
-\texttt{a47f0441f644bea5f52944b7a11216f37b2242de}, con Locust 2.31.6 y Python
-3.11.10; la campaña final de fiabilidad corresponde al SHA
-\texttt{061a1050a94e1bd30d81b30c47c7e818005a33bb}, con Locust 2.31.6 y Python
-3.12.3. El protocolo está en
-\path{../../experimentos/protocolo-e4.md};
-\path{../../experimentos/resultados/iso25010.csv} contiene resultados
-procesados y \path{../../experimentos/resultados/raw} conserva CSV canónicos,
-fallos, excepciones, logs, metadata,
-consultas y respuestas Prometheus, salud y estadísticas de contenedores. Los
-historiales completos y HTML voluminosos permanecen en la VM, circunstancia
-registrada en el resumen de evidencia.
+Las campañas deben distinguirse por su procedencia. La campaña histórica de
+fiabilidad fue ejecutada sobre
+\texttt{061a1050a94e1bd30d81b30c47c7e818005a33bb}; la primera campaña con
+refresh y dataset vacío se ejecutó sobre
+\texttt{b94b7af7ebab2510c16eae0c70593664763de1e7}. Ambas se conservan como
+antecedentes.
 
-El manifiesto general actual
-\path{../../experimentos/resultados/SHA256SUMS} contiene 468 entradas para 468
-archivos. La verificación completa sobre los bytes canónicos versionados produjo
-468 hashes correctos, cero incorrectos y cero archivos ausentes. SHA-256 permite detectar alteraciones
-respecto del manifiesto, pero no constituye una firma ni prueba autenticidad por
-sí solo. La procedencia se apoya adicionalmente en metadata, timestamps, SHA
-probado y el documento
-\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md}.
+La campaña que cierra la corrección de fiabilidad es
+\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}
+y midió el software desplegado
+\texttt{dd2e1923d7635857f4020c7ef5c8b6efee363d7a}. Se ejecutó con Locust
+2.31.6 y Python 3.12.3 en la VM \texttt{pfc-pruebas-e1}.
+
+Cada repetición poblada conserva un manifiesto SHA-256. El manifiesto global
+\path{../../experimentos/resultados/SHA256SUMS} contiene 1.339 entradas.
+Incluye los 550 archivos actualmente versionados de la campaña correctiva
+anterior, su consolidado
+\path{../../experimentos/resultados/iso25010-correctiva.csv}, las 319
+evidencias de la campaña poblada y el consolidado
+\path{../../experimentos/resultados/iso25010-correctiva-poblada.csv}.
+
+La población de 20 reservas y su hash están fijados en la evidencia de
+preflight. No se atribuye a esa población identidad con el dataset histórico;
+la desviación se declara como amenaza a la comparabilidad.
 
 \subsection{Eficiencia nominal: 50 usuarios durante cinco minutos}
 \label{subsec:eficiencia-nominal}
@@ -335,42 +350,56 @@ central ni sustituye el escenario nominal ISO.
 \subsection{Fiabilidad nominal y alcance de la disponibilidad}
 \label{subsec:fiabilidad-disponibilidad}
 
-La campaña correctiva completó diez repeticiones válidas independientes de una
-hora con 50 usuarios y \texttt{spawn-rate} 10 usuarios/s sobre el SHA
-\texttt{b94b7af7ebab2510c16eae0c70593664763de1e7}. El análisis central utiliza
-r2--r9 conforme al prerregistro.
+La evolución experimental comprende tres campañas. La campaña histórica
+\texttt{061a1050...} conserva 668\,367 HTTP 401 causados por expiración de
+sesión. La primera campaña con refresh, \texttt{b94b7af...}, eliminó ese
+defecto de sesión pero se ejecutó con una tabla de reservas vacía, de modo que
+no ejercitó la consulta por id y se conserva únicamente como antecedente.
 
-Las diez repeticiones contienen 896\,964 GET de negocio, con 0 respuestas
-HTTP 401 y 0 respuestas HTTP 5xx. Los contadores finales de Locust, incluyendo
-login y refresh, suman 899\,464 requests con 0 fallos.
+La campaña correctiva poblada completó diez repeticiones de aproximadamente una
+hora con 50 usuarios y \texttt{spawn-rate} 10 usuarios/s sobre el software
+desplegado
+\texttt{dd2e1923d7635857f4020c7ef5c8b6efee363d7a}. El análisis central
+utiliza r2--r9.
 
-Sobre r2--r9, la tasa HTTP 5xx tuvo media 0,000000\,\%, desviación muestral
-0,000000\,\% e IC95 [0,000000; 0,000000]\,\%. El límite superior del IC95 es
-menor que 1\,\%, por lo que \textbf{E2 cumple} el criterio acotado
-prerregistrado.
+Se fijó una población controlada de 20 reservas. Esta población corrige la
+degeneración vacía, pero no se declara como reconstrucción exacta del dataset
+histórico.
 
-Como métricas descriptivas, p95 presentó media 6,680642 ms, desviación
-muestral 0,177173 ms e IC95 [6,532522; 6,828763] ms. P99 presentó media
-9,849009 ms, desviación muestral 0,489360 ms e IC95
-[9,439893; 10,258124] ms. El prerregistro establece que estos percentiles son
-informativos y no constituyen criterios adicionales de aceptación E2.
+Las diez repeticiones contienen 895\,136 GET de negocio: 670\,972 de listado
+y 224\,164 por id. Registraron 0 HTTP 401 y 42 HTTP 5xx. Los errores 5xx no
+se descartaron: r7 conservó 1, r8 conservó 21 y r9 conservó 20.
 
-Los percentiles se reconstruyen directamente desde
-\texttt{locust\_requests.csv} sobre todos los GET de negocio, sin excluir
-observaciones por código HTTP, éxito, fallo o latencia. Login y refresh se
-contabilizan por separado y quedan fuera de la población de percentiles de
-negocio. Los intentos inválidos o abortados permanecen preservados y no se
-incorporan a r2--r9.
+Además, todas las repeticiones mantuvieron consultas por id después de 900 s,
+lo que aporta evidencia de carga autenticada sostenida más allá del TTL que
+había degradado la campaña histórica.
 
-La campaña histórica permanece publicada como antecedente metodológico. En ella
-la ausencia de renovación de sesión produjo 668\,367 respuestas HTTP 401 y
-debilitó la carga efectiva después del TTL. Ese resultado histórico no se
-elimina ni se reinterpreta como si hubiese utilizado refresh.
+Sobre r2--r9 se analizaron 716\,099 GET de negocio. La tasa HTTP 5xx tuvo media
+0,005870\,\%, desviación muestral 0,010535\,\% e IC95
+[-0,002938; 0,014677]\,\%. El intervalo Student t no está acotado a valores
+físicamente posibles, por lo que el límite inferior negativo se reporta sin
+truncarlo. El límite superior 0,014677\,\% es menor que 1\,\%; por tanto,
+\textbf{E2 cumple} el criterio acotado prerregistrado en la campaña poblada.
+
+Como métricas descriptivas, p95 presentó media 11,256521 ms, desviación
+muestral 0,223526 ms e IC95 [11,069649; 11,443394] ms. P99 presentó media
+23,945109 ms, desviación muestral 1,602666 ms e IC95
+[22,605247; 25,284971] ms. Estos percentiles no constituyen criterios
+adicionales de aceptación E2.
+
+Las métricas se reconstruyen desde \texttt{locust\_requests.csv} sobre todos
+los GET de negocio, sin excluir observaciones por código HTTP, éxito, fallo o
+latencia. Login y refresh se contabilizan por separado.
+
+El código de salida de Locust se conserva como evidencia operacional, pero no
+es por sí solo criterio de exclusión cuando refleja fallos HTTP observados.
+Así, r7--r9 permanecen en la población aun cuando finalizaron con exit code 1;
+excluirlas habría eliminado observaciones desfavorables.
 
 La tasa HTTP 5xx y la disponibilidad temporal no son equivalentes. Para afirmar
 una disponibilidad de al menos 99,5\,\% sería necesario operacionalizar tiempo
-apto frente a tiempo total. En consecuencia, E2 sí es concluyente para su
-criterio acotado de errores, mientras la disponibilidad temporal permanece
+apto frente a tiempo total. En consecuencia, E2 es concluyente para su criterio
+acotado de errores, mientras la disponibilidad temporal permanece
 \textbf{no concluyente}.
 
 \subsection{Experimento de arbitraje concurrente S0--S4}
@@ -562,7 +591,7 @@ solo características con evidencia disponible.
     \hline
     Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Media 371,25 ms; SD 364,03 ms; IC95 [66,91; 675,59] ms & CUMPLE \\
     \hline
-    Fiabilidad acotada & HTTP 5xx correctivo, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,000000\%; IC95 [0,000000; 0,000000]\% en r2--r9 & CUMPLE en escenario \\
+    Fiabilidad acotada & HTTP 5xx correctivo poblado, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,005870\%; IC95 [-0,002938; 0,014677]\% en r2--r9 & CUMPLE en escenario \\
     \hline
     Disponibilidad & Tiempo apto/tiempo total & $\geq99,5\%$ & Diez horas ejecutadas, sin indicador temporal operacionalizado & NO CONCLUYENTE \\
     \hline
@@ -643,14 +672,44 @@ estadística entre líneas.
     Reservas & Líneas & 84,3586 & 80 & CUMPLE \\
     Reservas & Ramas & 56,7256 & 48 & CUMPLE \\
     Gateway & Líneas & 88,8889 & 70 & CUMPLE \\
-    Web & Líneas & 89,91 & 70 & CUMPLE \\
-    Web & Ramas & 73,69 & 70 & CUMPLE \\
-    Web & Funciones & 81,87 & 70 & CUMPLE \\
-    Web & Sentencias & 85,96 & 70 & CUMPLE \\
+    Web & Líneas (HISTÓRICA / E3) & 89,91 & 70 & CUMPLE \\
+    Web & Ramas (HISTÓRICA / E3) & 73,69 & 70 & CUMPLE \\
+    Web & Funciones (HISTÓRICA / E3) & 81,87 & 70 & CUMPLE \\
+    Web & Sentencias (HISTÓRICA / E3) & 85,96 & 70 & CUMPLE \\
     Android & Líneas & \textbf{38,3407} & 70 & \textbf{NO CUMPLE} \\
     \hline
   \end{tabular}
 \end{table*}
+
+Las cifras Web de la Tabla~\ref{tab:mantenibilidad-e3} corresponden a una
+medición E3 anterior que no incluía la totalidad de \texttt{src/} y quedan
+marcadas como \textbf{HISTÓRICA / E3}; no deben interpretarse como la cifra
+vigente. La medición vigente del alcance completo \texttt{apps/web/src/**/*.\{ts,tsx\}}
+se documenta en la Tabla~\ref{tab:mantenibilidad-web-vigente}.
+
+\begin{table*}[ht]
+  \centering
+  \small
+  \caption{\textbf{MEDICIÓN WEB VIGENTE} de cobertura, alcance completo de \texttt{apps/web/src/}.}
+  \label{tab:mantenibilidad-web-vigente}
+  \begin{tabular}{|l|r|r|l|}
+    \hline
+    \textbf{Métrica} & \textbf{Resultado (\%)} & \textbf{Umbral (\%)} & \textbf{Decisión} \\
+    \hline
+    Sentencias (statements) & 81,89 & 70 & CUMPLE \\
+    Ramas (branches) & 70,25 & 70 & CUMPLE \\
+    Funciones (functions) & 78,43 & 70 & CUMPLE \\
+    Líneas (lines) & 84,87 & 70 & CUMPLE \\
+    \hline
+  \end{tabular}
+\end{table*}
+
+Comando exacto: \texttt{npm run test:coverage} (equivalente a \texttt{vitest run --coverage}).
+Alcance: \texttt{apps/web/src/**/*.\{ts,tsx\}}. Umbral mínimo del gate: 70\%
+para statements, branches, functions y lines (sin reducir). Suite: 43 archivos,
+296 pruebas, 3/3 repeticiones consecutivas en PASS. Contexto de rama:
+\texttt{fix/eval2-7-web-ivan}, base en el commit \texttt{c10abc0} del repositorio
+oficial \texttt{gleiston-guerrero/Entrega-final-del-PFC}.
 
 La decisión global experimental de mantenibilidad es \textbf{NO CUMPLE
 únicamente por Android}, cuya cobertura de líneas fue
@@ -662,18 +721,20 @@ como resultado oficial E3.
 \subsection{Análisis crítico}
 \label{subsec:analisis-critico-final}
 
-Las fortalezas principales son una p95 nominal con amplio margen respecto de
-500 ms, cero 5xx en las muestras centrales, instrumentación de las tres señales,
-evidencia raw trazable, pruebas multicapa y gates CI/CD ligados al SHA. La
+Las fortalezas principales son una p95 nominal con margen respecto de
+500 ms, una tasa 5xx correctiva poblada cuyo IC95 superior permanece por debajo
+de 1\%, instrumentación de las tres señales, evidencia raw trazable, pruebas
+multicapa y gates CI/CD ligados al SHA. La
 arquitectura permite relacionar un cambio con pruebas, imagen y despliegue, y el
 manifiesto hace detectables alteraciones en el conjunto experimental.
 
 Las limitaciones impiden una conclusión total. El p99 de eficiencia presenta
 gran dispersión aunque cumple su umbral previo; la rampa contiene un máximo
 superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña histórica de
-fiabilidad registró decenas de miles de 401 por repetición; la campaña
-correctiva registró 0 HTTP 401 y 0 HTTP 5xx, aunque la disponibilidad temporal
-no fue operacionalizada. A ello se suman el panel Mobile proxy, falta de rollback automático,
+fiabilidad registró decenas de miles de 401 por repetición; la primera campaña
+con refresh quedó limitada por un dataset vacío, mientras la campaña poblada
+registró 0 HTTP 401 y 42 HTTP 5xx preservados. La disponibilidad temporal no
+fue operacionalizada. A ello se suman el panel Mobile proxy, falta de rollback automático,
 ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
 persistidos para todos los componentes. Estas restricciones se documentan como
 amenazas a la generalización, no se ocultan mediante promedios o extrapolaciones.
@@ -885,10 +946,10 @@ reporte anterior.
 
 La eficiencia nominal cumple los criterios p95 y p99 y no registró HTTP 5xx en
 las muestras centrales; la rampa muestra picos de cola. La campaña correctiva
-de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
-0,000000\,\% e IC95 [0,000000; 0,000000]\,\%, con 0 HTTP 401 y 0 HTTP 5xx
-en las diez repeticiones válidas. Los 401 de la campaña histórica permanecen
-como antecedente del defecto corregido. Este resultado no demuestra
+poblada de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
+0,005870\,\% e IC95 [-0,002938; 0,014677]\,\%. Las diez repeticiones
+pobladas preservan 0 HTTP 401 y 42 HTTP 5xx; los 401 de la campaña histórica y
+la campaña intermedia con dataset vacío permanecen como antecedentes. Este resultado no demuestra
 disponibilidad de 99,5\,\%; la conclusión profesional sigue siendo parcial
 para la evaluación ISO completa.
 

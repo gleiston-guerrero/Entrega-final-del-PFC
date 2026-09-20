@@ -18,15 +18,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AdministradorResponse"
-                  }
+                  "$ref": "#/components/schemas/PageAdministradorResponse"
                 }
               }
             }
           }
         },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -159,15 +192,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DocenteResponse"
-                  }
+                  "$ref": "#/components/schemas/PageDocenteResponse"
                 }
               }
             }
           }
         },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -400,15 +466,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EstudianteResponse"
-                  }
+                  "$ref": "#/components/schemas/PageEstudianteResponse"
                 }
               }
             }
           }
         },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -1199,10 +1298,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PerfilResponse"
-                  }
+                  "$ref": "#/components/schemas/PagePerfilResponse"
                 }
               }
             }
@@ -1247,6 +1343,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -1670,28 +1800,6 @@
       }
     },
     "schemas": {
-      "Direction": {
-        "type": "string",
-        "enum": [
-          "ASC",
-          "DESC"
-        ]
-      },
-      "TipoAmbitoInstitucional": {
-        "type": "string",
-        "enum": [
-          "CARRERA",
-          "FACULTAD"
-        ]
-      },
-      "TipoPerfil": {
-        "type": "string",
-        "enum": [
-          "DOCENTE",
-          "ESTUDIANTE",
-          "ADMINISTRADOR"
-        ]
-      },
       "AdministradorRequest": {
         "type": "object",
         "properties": {
@@ -2049,6 +2157,13 @@
           }
         }
       },
+      "Direction": {
+        "type": "string",
+        "enum": [
+          "ASC",
+          "DESC"
+        ]
+      },
       "DocenteInternoResponse": {
         "type": "object",
         "properties": {
@@ -2276,6 +2391,58 @@
           }
         }
       },
+      "PageAdministradorResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdministradorResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
       "PageCriteria": {
         "type": "object",
         "properties": {
@@ -2294,6 +2461,162 @@
             }
           }
         }
+      },
+      "PageDocenteResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocenteResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageEstudianteResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EstudianteResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PagePerfilResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PerfilResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
       },
       "PerfilAuthResponse": {
         "type": "object",
@@ -2533,6 +2856,21 @@
             "$ref": "#/components/schemas/Direction"
           }
         }
+      },
+      "TipoAmbitoInstitucional": {
+        "type": "string",
+        "enum": [
+          "CARRERA",
+          "FACULTAD"
+        ]
+      },
+      "TipoPerfil": {
+        "type": "string",
+        "enum": [
+          "DOCENTE",
+          "ESTUDIANTE",
+          "ADMINISTRADOR"
+        ]
       },
       "UsuarioAuthResponse": {
         "type": "object",

@@ -1,0 +1,31 @@
+{
+  "repetition": 3,
+  "status": "completed",
+  "elapsed_seconds": 3600.5177903175354,
+  "locust_exit_code": 0,
+  "events_total": 89832,
+  "login_count": 50,
+  "refresh_count": 200,
+  "list_count": 67042,
+  "by_id_count": 22540,
+  "business_get_count": 89582,
+  "business_after_900_count": 67184,
+  "by_id_after_900_count": 16942,
+  "business_http_401": 0,
+  "business_http_5xx": 0,
+  "events_outside_window": 0,
+  "p95_business_ms_nearest_rank": 11.479889,
+  "p99_business_ms_nearest_rank": 22.765938,
+  "gates": {
+    "duration_ge_3595": true,
+    "duration_le_3610": true,
+    "exit_code_zero": true,
+    "login_eq_50": true,
+    "refresh_gt_zero": true,
+    "list_gt_zero": true,
+    "by_id_gt_zero": true,
+    "business_after_900_gt_zero": true,
+    "by_id_after_900_gt_zero": true,
+    "events_outside_window_eq_zero": true
+  }
+}

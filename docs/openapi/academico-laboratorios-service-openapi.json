@@ -18,10 +18,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BloqueResponse"
-                  }
+                  "$ref": "#/components/schemas/PageBloqueResponse"
                 }
               }
             }
@@ -51,6 +48,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -252,10 +283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CampusResponse"
-                  }
+                  "$ref": "#/components/schemas/PageCampusResponse"
                 }
               }
             }
@@ -284,6 +312,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -485,10 +547,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CarreraResponse"
-                  }
+                  "$ref": "#/components/schemas/PageCarreraResponse"
                 }
               }
             }
@@ -526,6 +585,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -727,10 +820,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EquipoResponse"
-                  }
+                  "$ref": "#/components/schemas/PageEquipoResponse"
                 }
               }
             }
@@ -760,6 +850,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -941,10 +1065,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FacultadResponse"
-                  }
+                  "$ref": "#/components/schemas/PageFacultadResponse"
                 }
               }
             }
@@ -973,6 +1094,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -1645,10 +1800,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LaboratorioResponse"
-                  }
+                  "$ref": "#/components/schemas/PageLaboratorioResponse"
                 }
               }
             }
@@ -1677,6 +1829,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -1771,12 +1957,13 @@
         },
         "parameters": [
           {
-            "name": "60",
+            "name": "rangoMinutos",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "default": 60
             }
           }
         ],
@@ -2000,10 +2187,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MateriaResponse"
-                  }
+                  "$ref": "#/components/schemas/PageMateriaResponse"
                 }
               }
             }
@@ -2041,6 +2225,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -2203,10 +2421,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PeriodoLectivoResponse"
-                  }
+                  "$ref": "#/components/schemas/PagePeriodoLectivoResponse"
                 }
               }
             }
@@ -2219,6 +2434,40 @@
             "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -2379,10 +2628,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PisoResponse"
-                  }
+                  "$ref": "#/components/schemas/PagePisoResponse"
                 }
               }
             }
@@ -2404,6 +2650,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -2566,10 +2846,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TipoEquipoResponse"
-                  }
+                  "$ref": "#/components/schemas/PageTipoEquipoResponse"
                 }
               }
             }
@@ -2598,6 +2875,40 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina solicitado (0-index).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de elementos por pagina.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Criterios de orden, formato propiedad,(asc|desc). Repetible.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -2763,44 +3074,6 @@
       }
     },
     "schemas": {
-      "DiaSemana": {
-        "type": "string",
-        "enum": [
-          "LUNES",
-          "MARTES",
-          "MIERCOLES",
-          "JUEVES",
-          "VIERNES",
-          "SABADO",
-          "DOMINGO"
-        ]
-      },
-      "EstadoEquipo": {
-        "type": "string",
-        "enum": [
-          "OPERATIVO",
-          "CON_FALLAS",
-          "MANTENIMIENTO",
-          "FUERA_DE_SERVICIO"
-        ]
-      },
-      "EstadoLaboratorio": {
-        "type": "string",
-        "enum": [
-          "DISPONIBLE",
-          "OCUPADO",
-          "MANTENIMIENTO",
-          "INACTIVO"
-        ]
-      },
-      "EstadoPeriodo": {
-        "type": "string",
-        "enum": [
-          "PLANIFICADO",
-          "ACTIVO",
-          "FINALIZADO"
-        ]
-      },
       "ApiError": {
         "type": "object",
         "properties": {
@@ -3027,6 +3300,18 @@
           }
         }
       },
+      "DiaSemana": {
+        "type": "string",
+        "enum": [
+          "LUNES",
+          "MARTES",
+          "MIERCOLES",
+          "JUEVES",
+          "VIERNES",
+          "SABADO",
+          "DOMINGO"
+        ]
+      },
       "EquipoEstadoRequest": {
         "type": "object",
         "properties": {
@@ -3137,6 +3422,32 @@
             "description": "Valor Java OffsetDateTime"
           }
         }
+      },
+      "EstadoEquipo": {
+        "type": "string",
+        "enum": [
+          "OPERATIVO",
+          "CON_FALLAS",
+          "MANTENIMIENTO",
+          "FUERA_DE_SERVICIO"
+        ]
+      },
+      "EstadoLaboratorio": {
+        "type": "string",
+        "enum": [
+          "DISPONIBLE",
+          "OCUPADO",
+          "MANTENIMIENTO",
+          "INACTIVO"
+        ]
+      },
+      "EstadoPeriodo": {
+        "type": "string",
+        "enum": [
+          "PLANIFICADO",
+          "ACTIVO",
+          "FINALIZADO"
+        ]
       },
       "ExisteResponse": {
         "type": "object",
@@ -3550,6 +3861,526 @@
             "description": "Valor Java OffsetDateTime"
           }
         }
+      },
+      "PageBloqueResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BloqueResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageCampusResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampusResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageCarreraResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CarreraResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageEquipoResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EquipoResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageFacultadResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FacultadResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageLaboratorioResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LaboratorioResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageMateriaResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MateriaResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PagePeriodoLectivoResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodoLectivoResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PagePisoResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PisoResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
+      },
+      "PageTipoEquipoResponse": {
+        "type": "object",
+        "description": "Representacion serializada por defecto de org.springframework.data.domain.Page.",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TipoEquipoResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "totalElements",
+          "totalPages",
+          "number",
+          "size",
+          "numberOfElements",
+          "first",
+          "last",
+          "empty"
+        ]
       },
       "PeriodoLectivoRequest": {
         "type": "object",

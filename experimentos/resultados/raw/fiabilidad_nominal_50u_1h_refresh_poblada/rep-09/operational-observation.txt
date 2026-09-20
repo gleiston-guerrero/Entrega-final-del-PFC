@@ -1,0 +1,14 @@
+Durante rep-09 no se truncaron logs, no se reiniciaron contenedores,
+no se limpiaron volúmenes y no se modificó el dataset.
+
+Los HTTP 5xx observados permanecen íntegramente en locust_requests.csv
+y se derivaron a http5xx-events.json y http5xx-summary.json.
+
+La repetición no fue reiniciada ni descartada por esos fallos.
+
+Log Docker del OTel Collector:
+/var/lib/docker/containers/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7/d9ddc9f050ca041dd70d65b2fc5ab4e53a4e95ef1d1660082fc4e59a82ecf3a7-json.log
+Tamaño al cierre de rep-09: 5354988584 bytes.
+
+Cualquier limpieza posterior se realizará únicamente después de
+versionar rep-09 y antes de iniciar rep-10.
