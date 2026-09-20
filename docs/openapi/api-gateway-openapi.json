@@ -9814,6 +9814,7 @@
           "inicio",
           "fin",
           "equipmentStatus",
+          "equipmentActive",
           "equipmentSource"
         ]
       },
@@ -9868,7 +9869,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "AdminUsuarioUpdateRequest": {
         "type": "object",
@@ -9889,8 +9893,51 @@
         "required": [
           "username",
           "email",
-          "rol"
+          "rol",
+          "activo"
         ]
+      },
+      "Administrador": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdministradorInstitucionalResponse": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
+          }
+        }
       },
       "AdministradorRequest": {
         "type": "object",
@@ -9944,11 +9991,26 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
+          }
+        }
+      },
+      "Adscripcion": {
+        "type": "object",
+        "properties": {
+          "tipoAmbito": {
+            "type": "string"
+          },
+          "ambitoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activo": {
+            "type": "boolean"
           }
         }
       },
@@ -9975,11 +10037,26 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
+          }
+        }
+      },
+      "AdscripcionResponse": {
+        "type": "object",
+        "properties": {
+          "tipoAmbito": {
+            "$ref": "#/components/schemas/TipoAmbitoInstitucional"
+          },
+          "ambitoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activo": {
+            "type": "boolean"
           }
         }
       },
@@ -10234,11 +10311,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -10335,11 +10412,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -10378,7 +10455,11 @@
           "activa": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activa"
+        ]
       },
       "CarreraRequest": {
         "type": "object",
@@ -10428,25 +10509,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
-          }
-        }
-      },
-      "ConnectionInvocationHandler": {
-        "type": "object",
-        "properties": {
-          "delegate": {
-            "type": "string",
-            "description": "Valor Java Connection"
-          },
-          "proxy": {},
-          "method": {
-            "type": "string",
-            "description": "Valor Java Method"
+            "format": "date-time"
           }
         }
       },
@@ -10546,7 +10613,31 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "activo"
+        ]
+      },
+      "ContextoAdministrador": {
+        "type": "object",
+        "properties": {
+          "esAdministrador": {
+            "type": "boolean"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "administradorPisoOperativo": {
+            "type": "boolean"
           }
         }
       },
@@ -10576,7 +10667,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "ContextoInstitucional": {
         "type": "object",
@@ -10629,14 +10723,12 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java Administrador"
+            "$ref": "#/components/schemas/Administrador"
           },
           "adscripciones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Adscripcion"
+              "$ref": "#/components/schemas/Adscripcion"
             }
           }
         }
@@ -10661,14 +10753,12 @@
             }
           },
           "administrador": {
-            "type": "string",
-            "description": "Valor Java Administrador"
+            "$ref": "#/components/schemas/Administrador"
           },
           "adscripciones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Adscripcion"
+              "$ref": "#/components/schemas/Adscripcion"
             }
           }
         }
@@ -10837,6 +10927,33 @@
           "motivo"
         ]
       },
+      "Decision": {
+        "type": "object",
+        "properties": {
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "revisadaPorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "creadaEn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resueltaEn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "DesregistrarDispositivoRequest": {
         "type": "object",
         "properties": {
@@ -10911,7 +11028,10 @@
           "motivo": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "disponible"
+        ]
       },
       "DispositivoNotificacionResponse": {
         "type": "object",
@@ -10934,7 +11054,10 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "DocenteExternoResponse": {
         "type": "object",
@@ -10982,7 +11105,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "DocenteRequest": {
         "type": "object",
@@ -11045,11 +11171,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "nombres": {
             "type": "string"
@@ -11119,6 +11245,15 @@
           },
           "almacenamiento": {
             "type": "string"
+          },
+          "direccionIp": {
+            "type": "string"
+          },
+          "direccionMac": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string"
           }
         },
         "required": [
@@ -11180,11 +11315,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -11193,7 +11328,7 @@
         "properties": {
           "timestamp": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "status": {
             "type": "integer",
@@ -11379,7 +11514,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "EstudianteRequest": {
         "type": "object",
@@ -11435,11 +11573,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -11489,7 +11627,10 @@
           "existe": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe"
+        ]
       },
       "FacultadEstadoRequest": {
         "type": "object",
@@ -11541,11 +11682,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -11789,11 +11930,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -11895,7 +12036,8 @@
         "type": "object",
         "properties": {
           "principal": {
-            "$ref": "#/components/schemas/JwtPrincipal"
+            "type": "string",
+            "description": "Valor Java JwtPrincipal"
           },
           "authorities": {
             "type": "array",
@@ -11916,6 +12058,9 @@
           "perfilId": {
             "type": "string",
             "format": "uuid"
+          },
+          "username": {
+            "type": "string"
           }
         }
       },
@@ -11989,7 +12134,11 @@
             "type": "integer",
             "format": "int32"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "LaboratorioEstadoRequest": {
         "type": "object",
@@ -12088,11 +12237,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -12141,7 +12290,10 @@
           "usuario": {
             "$ref": "#/components/schemas/AuthUserResponse"
           }
-        }
+        },
+        "required": [
+          "expiresIn"
+        ]
       },
       "MateriaContextoExternoResponse": {
         "type": "object",
@@ -12187,7 +12339,11 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "MateriaRequest": {
         "type": "object",
@@ -12248,11 +12404,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -12319,11 +12475,30 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "leida"
+        ]
       },
       "ObservacionPlanificacionRequest": {
         "type": "object",
         "properties": {
+          "observacion": {
+            "type": "string"
+          }
+        }
+      },
+      "ObservacionResponse": {
+        "type": "object",
+        "properties": {
+          "bloqueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "laboratorioPropuestoId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "observacion": {
             "type": "string"
           }
@@ -13382,7 +13557,7 @@
           },
           "ocurridoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -13405,7 +13580,11 @@
               "type": "string"
             }
           }
-        }
+        },
+        "required": [
+          "existe",
+          "activo"
+        ]
       },
       "PerfilExternoResponse": {
         "type": "object",
@@ -13485,11 +13664,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -13650,11 +13829,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -13722,11 +13901,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -13773,8 +13952,7 @@
           "revisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java RevisionResponse"
+              "$ref": "#/components/schemas/RevisionResponse"
             }
           },
           "pisoGestionadoId": {
@@ -13974,11 +14152,11 @@
         "properties": {
           "instante": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "valor": {
-            "type": "string",
-            "description": "Valor Java double"
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -14013,18 +14191,18 @@
           },
           "emitidoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "expiraEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "revocado": {
             "type": "boolean"
           },
           "revocadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "reemplazadoPor": {
             "type": "string",
@@ -14249,7 +14427,10 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "version"
+        ]
       },
       "ResultadoDisponibilidad": {
         "type": "object",
@@ -14259,6 +14440,69 @@
           },
           "motivo": {
             "type": "string"
+          }
+        }
+      },
+      "Revision": {
+        "type": "object",
+        "properties": {
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "revisorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "resueltaEn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RevisionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pisoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string"
+          },
+          "ronda": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vigente": {
+            "type": "boolean"
+          },
+          "revisadaPorPerfilId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actualizadaEn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observaciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObservacionResponse"
+            }
           }
         }
       },
@@ -14449,8 +14693,7 @@
           "revisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Revision"
+              "$ref": "#/components/schemas/Revision"
             }
           },
           "materiaId": {
@@ -14588,11 +14831,14 @@
           "decisiones": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "Valor Java Decision"
+              "$ref": "#/components/schemas/Decision"
             }
           }
-        }
+        },
+        "required": [
+          "pisosAprobados",
+          "totalPisos"
+        ]
       },
       "SortOrder": {
         "type": "object",
@@ -14651,11 +14897,11 @@
           },
           "creadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "actualizadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           }
         }
       },
@@ -14819,7 +15065,8 @@
           "perfil",
           "username",
           "email",
-          "rol"
+          "rol",
+          "activo"
         ]
       },
       "Window": {

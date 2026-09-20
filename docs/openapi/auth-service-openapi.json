@@ -492,7 +492,10 @@
           "activo": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "activo"
+        ]
       },
       "AdminUsuarioUpdateRequest": {
         "type": "object",
@@ -513,7 +516,8 @@
         "required": [
           "username",
           "email",
-          "rol"
+          "rol",
+          "activo"
         ]
       },
       "AuthUserResponse": {
@@ -564,7 +568,7 @@
         "properties": {
           "timestamp": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "status": {
             "type": "integer",
@@ -660,7 +664,10 @@
           "usuario": {
             "$ref": "#/components/schemas/AuthUserResponse"
           }
-        }
+        },
+        "required": [
+          "expiresIn"
+        ]
       },
       "MessageResponse": {
         "type": "object",
@@ -738,18 +745,18 @@
           },
           "emitidoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "expiraEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "revocado": {
             "type": "boolean"
           },
           "revocadoEn": {
             "type": "string",
-            "description": "Valor Java OffsetDateTime"
+            "format": "date-time"
           },
           "reemplazadoPor": {
             "type": "string",

@@ -19,32 +19,35 @@ fachada expuesta por el API Gateway. Los contratos se conservan en
 La fuente autoritativa contrasta cada snapshot con los
 \texttt{RequestMappingInfo} que Spring registra en el
 \texttt{RequestMappingHandlerMapping} del contexto de prueba. Auth cubre 12/12
-operaciones, Usuarios 44/44 y Académico 71/71. Reservas cubre 79/79 con el
-componente experimental ARBITER habilitado; con su configuración predeterminada
-hay 77 operaciones y no existen los dos mappings experimentales. El contrato de
-79 describe, por tanto, la superficie habilitable y no afirma que ARBITER esté
-activo por defecto.
+operaciones, Usuarios 44/44 y Académico 71/71. Reservas cubre 80/80 con el
+componente experimental ARBITER habilitado e incluye
+\texttt{POST /api/v1/observabilidad/mobile/http-latency}; con su configuración
+predeterminada hay 78 operaciones y no existen los dos mappings experimentales.
+El contrato de 80 describe, por tanto, la superficie habilitable y no afirma que
+ARBITER esté activo por defecto.
 
-La fachada del Gateway contiene 159 rutas y 224/224 operaciones: 182 canónicas,
-8 alias de Auth y 34 alias de Usuarios. El Gateway solo acepta una petición si
-\texttt{GatewayRouteCatalog.accepts(método, ruta)} la reconoce en la lista
-blanca método+ruta cargada desde \texttt{gateway-route-catalog.json}; los seis
-\texttt{RouterFunction} de \texttt{GatewayRoutes} consultan esa política antes
-de enrutar. La prueba de completitud envía cada operación esperada a los
-routers reales y comprueba el backend elegido y la reescritura de los alias.
-Además, \texttt{RouterFunctionCatalogGuardTest} inspecciona con ASM todas las
-clases compiladas de producción, sin enumerar clases de configuración ni URLs.
-Exige que cada método \texttt{@Bean} con retorno \texttt{RouterFunction}
-alcance una llamada a \texttt{GatewayRouteCatalog.accepts}, incluyendo lambdas
-y llamadas entre clases. Detecta nuevos beans que omitan por completo el
-catálogo, independientemente de su ruta. Esta garantía arquitectónica de
-alcanzabilidad no demuestra por sí sola que el resultado controle todas las
-ramas; la revisión de los seis routers actuales confirma que condiciona su
-enrutamiento. La completitud de la fachada se define, por
-tanto, como todas las operaciones de backend públicas, previamente validadas
-contra Spring runtime y contra la lista blanca del catálogo, más los alias
-explícitos realmente enrutados y la ausencia demostrada de rutas aceptadas
-fuera de esa lista.
+La fachada del Gateway contiene 225/225 operaciones método+ruta: 183 canónicas,
+incluida \texttt{POST /api/v1/observabilidad/mobile/http-latency}, 8 alias de
+Auth y 34 alias de Usuarios. El archivo \texttt{gateway-route-catalog.json}
+actúa como lista blanca ejecutable: el Gateway solo acepta una petición si
+\texttt{GatewayRouteCatalog.accepts(método, ruta)} reconoce ese par
+método+ruta en el catálogo. Todas las rutas productivas actuales de
+\texttt{GatewayRoutes} pasan por el helper \texttt{acepta(...)} y este delega
+en \texttt{GatewayRouteCatalog.accepts(...)} antes de enrutar. La prueba de
+completitud envía cada operación esperada a los routers reales y comprueba el
+backend elegido y la reescritura de los alias. Además,
+\texttt{RouterFunctionCatalogGuardTest} inspecciona con ASM todas las clases
+compiladas de producción, sin enumerar clases de configuración ni URLs. Exige
+que cada método \texttt{@Bean} con retorno \texttt{RouterFunction} alcance una
+llamada a \texttt{GatewayRouteCatalog.accepts}, incluyendo lambdas y llamadas
+entre clases. Detecta nuevos beans productivos que omitan por completo el
+catálogo, independientemente de su ruta. Esta garantía arquitectónica comprueba
+que no existan \texttt{RouterFunction} productivos que evadan el catálogo; la
+revisión de los routers actuales confirma que esa consulta condiciona su
+enrutamiento. La completitud de la fachada se define, por tanto, como las 225
+operaciones método+ruta publicadas por el snapshot del Gateway, coincidentes
+con el conjunto del catálogo ejecutable, más la ausencia demostrada de rutas
+productivas que puedan enrutar fuera de esa lista blanca.
 
 \subsection{Seguridad contractual}
 
@@ -120,25 +123,36 @@ el extractor regex y el validador estructural comparten la misma
 interpretación del código fuente, por lo que un contrato correcto podría ser
 rechazado por un snapshot incorrecto generado por el mismo mecanismo, o un
 defecto real podría pasar inadvertido si ambos lados heredan el mismo error.
-Por eso la corrección de schemas y parámetros se acredita con
-\texttt{SchemaContractVerifier}, una clase Java independiente que usa
-reflexión sobre los \texttt{HandlerMethod} que Spring ya resolvió: obtiene el
-tipo de retorno real (\texttt{ResolvableType} sobre el método compilado) para
-decidir si una operación es paginada, y la anotación real
-\texttt{@RequestParam} (o el tipo \texttt{Pageable}) de cada parámetro para
-obtener su nombre, \texttt{required} efectivo (falso si existe
-\texttt{defaultValue}) y valor por defecto. Esa firma se contrasta contra el
-JSON publicado sin leer ni reutilizar el extractor Python. Las pruebas
-\texttt{OpenApiSchemaContractTest} de Académico, Usuarios y Reservas ejecutan
-esta comprobación en cada \texttt{mvn verify}.
+Por eso la corrección de las respuestas paginadas, los parámetros de consulta
+y los schemas de DTO se acredita con \texttt{SchemaContractVerifier}, una
+clase Java independiente que usa reflexión sobre los \texttt{HandlerMethod}
+que Spring ya resolvió. No lee las fuentes Java como texto ni reutiliza el
+extractor Python como fuente de verdad: obtiene cuerpos de request y response,
+\texttt{ResponseEntity}, \texttt{Page<T>} y \texttt{PaginaResponse<T>} desde
+las clases compiladas mediante \texttt{ResolvableType}, y lee
+\texttt{@RequestParam} o \texttt{Pageable} con \texttt{MethodParameter} para
+obtener nombre, \texttt{required} efectivo, defaults y tipos simples. Las
+pruebas \texttt{OpenApiSchemaContractTest} de Auth, Usuarios, Académico y
+Reservas ejecutan esta comprobación en cada \texttt{mvn verify}; Auth incluye
+además \texttt{SchemaContractVerifierNegativeTest} para mutaciones negativas
+del verificador.
 
-El verificador exige un objeto con las nueve propiedades de \texttt{Page} o
-todos los componentes del record \texttt{PaginaResponse}, derivados por
-reflexión; comprueba además que el contenido sea un array con referencia al
-tipo de elemento \texttt{T} obtenido mediante \texttt{ResolvableType}.
-Con \texttt{MethodParameter} verifica nombres, obligatoriedad, tipos simples
-y defaults derivables. Las cuatro copias de \texttt{SchemaContractVerifier}
-(canónica y tres servicios) se mantienen idénticas.
+El verificador contrasta campo por campo los DTO de request y response
+publicados: tipos básicos, UUID, fechas \texttt{date}/\texttt{date-time},
+números, arrays y colecciones, DTO anidados mediante \texttt{\$ref}, enums y
+obligatoriedad contextual según uso como request/response y evidencia de Bean
+Validation o serialización de Jackson. Para paginación exige un objeto con las
+nueve propiedades de \texttt{Page} o todos los componentes del record
+\texttt{PaginaResponse}, derivados por reflexión, y comprueba que el contenido
+sea un array con referencia al tipo de elemento \texttt{T}. El Gateway no tiene
+DTO propios equivalentes en esta verificación; su contrato se deriva de los
+servicios y su completitud se valida por rutas, alias y catálogo ejecutable.
+Esta validación no pretende demostrar reglas de negocio, ejemplos,
+descripciones ni toda posible restricción semántica de OpenAPI. Las cinco
+copias de \texttt{SchemaContractVerifier} (canónica y cuatro servicios) se
+mantienen idénticas, y el generador Python conserva pruebas unitarias propias
+para mappings de tipos, anotaciones complejas, records anidados y required
+contextual.
 
 La validación previa acreditó cuatro mutaciones negativas, todas revertidas:
 (1) un objeto paginado con propiedades falsas; (2) eliminar
@@ -149,6 +163,8 @@ Las tres primeras hicieron fallar el verificador semántico; la cuarta hizo
 fallar la garantía arquitectónica del Gateway.
 
 OpenAPI describe correctamente la superficie, los parámetros de consulta
-relevantes y los schemas de respuesta paginada solo a partir de esta
-corrección, y esa afirmación se sostiene en la validación independiente
-anterior, no en la comparación del extractor contra sí mismo.
+relevantes, los cuerpos request/response y los schemas DTO campo por campo solo
+a partir de esta corrección. La estructura general del contrato se valida con
+las comprobaciones OpenAPI y de consistencia del snapshot; la afirmación
+independiente adicional cubre los contratos HTTP y sus DTO publicados, sin
+extenderse a semántica funcional ni reglas de negocio.

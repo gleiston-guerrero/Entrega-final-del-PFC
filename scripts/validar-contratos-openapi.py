@@ -34,6 +34,7 @@ import re
 import sys
 import zlib
 from collections import Counter
+from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,12 +50,29 @@ MAP_METHOD = {"GetMapping": "get", "PostMapping": "post", "PutMapping": "put", "
 PRIMITIVES = {
     "String": {"type": "string"}, "UUID": {"type": "string", "format": "uuid"},
     "LocalDate": {"type": "string", "format": "date"}, "LocalDateTime": {"type": "string", "format": "date-time"},
-    "Instant": {"type": "string", "format": "date-time"}, "LocalTime": {"type": "string", "format": "time"},
+    "Instant": {"type": "string", "format": "date-time"}, "OffsetDateTime": {"type": "string", "format": "date-time"},
+    "LocalTime": {"type": "string", "format": "time"},
     "Boolean": {"type": "boolean"}, "boolean": {"type": "boolean"}, "Integer": {"type": "integer", "format": "int32"},
     "int": {"type": "integer", "format": "int32"}, "Long": {"type": "integer", "format": "int64"},
     "long": {"type": "integer", "format": "int64"}, "Double": {"type": "number", "format": "double"},
+    "double": {"type": "number", "format": "double"}, "Float": {"type": "number", "format": "float"},
+    "float": {"type": "number", "format": "float"},
     "BigDecimal": {"type": "number"}, "Void": {}, "void": {}, "Map": {"type": "object"}, "Object": {},
 }
+JAVA_PRIMITIVE_TYPES = {"boolean", "byte", "short", "int", "long", "float", "double", "char"}
+
+@dataclass(frozen=True)
+class FieldDef:
+    name: str
+    java_type: str
+    explicit_required: bool
+    java_primitive: bool
+
+@dataclass(frozen=True)
+class TypeDef:
+    name: str
+    fields: list[FieldDef]
+    record: bool
 
 def clean_java(text: str) -> str:
     text = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
@@ -72,16 +90,112 @@ def join_path(base: str, suffix: str) -> str:
 
 def split_top(value: str) -> list[str]:
     out, start, depth = [], 0, 0
+    in_string = False
+    escaped = False
     for i, ch in enumerate(value):
-        depth += ch in "<(["
-        depth -= ch in ">)]"
-        if ch == "," and depth == 0:
+        if escaped:
+            escaped = False
+            continue
+        if ch == "\\" and in_string:
+            escaped = True
+            continue
+        if ch == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if ch in "<([{":
+            depth += 1
+        elif ch in ">)]}":
+            depth = max(0, depth - 1)
+        elif ch == "," and depth == 0:
             out.append(value[start:i].strip()); start = i + 1
     tail = value[start:].strip()
     return out + ([tail] if tail else [])
 
+def strip_annotations(value: str) -> str:
+    out: list[str] = []
+    i = 0
+    while i < len(value):
+        if value[i] != "@":
+            out.append(value[i])
+            i += 1
+            continue
+        match = re.match(r"@[A-Za-z0-9_.]+", value[i:])
+        if not match:
+            out.append(value[i])
+            i += 1
+            continue
+        i += match.end()
+        while i < len(value) and value[i].isspace():
+            i += 1
+        if i < len(value) and value[i] == "(":
+            depth = 1
+            i += 1
+            in_string = False
+            escaped = False
+            while i < len(value) and depth > 0:
+                ch = value[i]
+                if escaped:
+                    escaped = False
+                elif ch == "\\" and in_string:
+                    escaped = True
+                elif ch == '"':
+                    in_string = not in_string
+                elif not in_string and ch == "(":
+                    depth += 1
+                elif not in_string and ch == ")":
+                    depth -= 1
+                i += 1
+        while i < len(value) and value[i].isspace():
+            i += 1
+        out.append(" ")
+    return re.sub(r"\s+", " ", "".join(out)).strip()
+
+def balanced_parenthesized_content(text: str, open_index: int) -> tuple[str, int] | None:
+    if open_index < 0 or open_index >= len(text) or text[open_index] != "(":
+        return None
+    depth = 1
+    start = open_index + 1
+    i = start
+    in_string = False
+    escaped = False
+    while i < len(text):
+        ch = text[i]
+        if escaped:
+            escaped = False
+        elif ch == "\\" and in_string:
+            escaped = True
+        elif ch == '"':
+            in_string = not in_string
+        elif not in_string and ch == "(":
+            depth += 1
+        elif not in_string and ch == ")":
+            depth -= 1
+            if depth == 0:
+                return text[start:i], i
+        i += 1
+    return None
+
+def record_definitions(text: str) -> list[tuple[str, str]]:
+    records: list[tuple[str, str]] = []
+    for match in re.finditer(r"\brecord\s+(\w+)\s*\(", text):
+        balanced = balanced_parenthesized_content(text, match.end() - 1)
+        if not balanced:
+            continue
+        content, close_index = balanced
+        if re.match(r"\s*\{", text[close_index + 1:]):
+            records.append((match.group(1), content))
+    return records
+
+def register_type(definitions: dict[str, TypeDef], definition: TypeDef, path: Path) -> None:
+    previous = definitions.get(definition.name)
+    if previous is not None and previous != definition:
+        raise ValueError(f"Tipo Java duplicado con distinto contrato: {definition.name} en {path}")
+    definitions[definition.name] = definition
+
 def strip_wrappers(value: str) -> str:
-    value = re.sub(r"@[A-Za-z0-9_.]+(?:\([^)]*\))?\s*", "", value).strip()
+    value = strip_annotations(value)
     value = value.replace("? extends ", "")
     for wrapper in ("ResponseEntity", "Optional"):
         if value.startswith(wrapper + "<"):
@@ -186,8 +300,8 @@ def schema_for_type(value: str, known: set[str]) -> dict:
         return {"$ref": f"#/components/schemas/{name}"}
     return {"type": "string", "description": f"Valor Java {name}"}
 
-def discover_types(root: Path) -> dict[str, dict]:
-    definitions: dict[str, list[tuple[str, str, bool]]] = {}
+def discover_type_definitions(root: Path) -> tuple[dict[str, TypeDef], dict[str, list[str]]]:
+    definitions: dict[str, TypeDef] = {}
     enums: dict[str, list[str]] = {}
     for path in root.glob("src/main/java/**/*.java"):
         text = clean_java(path.read_text(encoding="utf-8"))
@@ -195,33 +309,78 @@ def discover_types(root: Path) -> dict[str, dict]:
         if em:
             vals = [x.strip() for x in em.group(2).split(",") if re.fullmatch(r"[A-Z][A-Z0-9_]*", x.strip())]
             enums[em.group(1)] = vals
-        rm = re.search(r"\brecord\s+(\w+)\s*\((.*?)\)\s*\{", text, re.S)
-        if rm:
-            fields = []
-            for item in split_top(rm.group(2)):
-                required = bool(re.search(r"@(NotNull|NotBlank|NotEmpty)\b", item))
-                plain = re.sub(r"@[A-Za-z0-9_.]+(?:\([^)]*\))?\s*", "", item).strip()
-                fm = re.search(r"([\w.<>?, ]+)\s+(\w+)$", plain)
-                if fm: fields.append((fm.group(2), fm.group(1).strip(), required))
-            definitions[rm.group(1)] = fields
-            continue
+        records = record_definitions(text)
+        if records:
+            for record_name, record_components in records:
+                fields: list[FieldDef] = []
+                for item in split_top(record_components):
+                    required = bool(re.search(r"@(NotNull|NotBlank|NotEmpty)\b", item))
+                    required = required or bool(re.search(r"@(?:[A-Za-z0-9_.]+\.)?JsonProperty\s*\([^)]*\brequired\s*=\s*true\b", item))
+                    plain = strip_annotations(item)
+                    fm = re.search(r"([\w.<>?, ]+)\s+(\w+)$", plain)
+                    if fm:
+                        java_type = fm.group(1).strip()
+                        fields.append(FieldDef(fm.group(2), java_type, required, java_type in JAVA_PRIMITIVE_TYPES))
+                register_type(definitions, TypeDef(record_name, fields, True), path)
         cm = re.search(r"\b(?:class|interface)\s+(\w+)", text)
         if cm and ("dto" in str(path).lower() or path.name.endswith(("Request.java", "Response.java"))):
-            fields = []
+            fields: list[FieldDef] = []
             for fm in re.finditer(r"(?m)^\s*(?:private|public|protected)\s+(?!static\b)(?:final\s+)?([\w.<>?, ]+)\s+(\w+)\s*;", text):
-                fields.append((fm.group(2), fm.group(1).strip(), False))
-            definitions[cm.group(1)] = fields
+                java_type = fm.group(1).strip()
+                fields.append(FieldDef(fm.group(2), java_type, False, java_type in JAVA_PRIMITIVE_TYPES))
+            register_type(definitions, TypeDef(cm.group(1), fields, False), path)
+    return definitions, enums
+
+def type_usage(root: Path, known: set[str]) -> dict[str, set[str]]:
+    usage = {name: set() for name in known}
+    for path in controllers(root):
+        text = clean_java(path.read_text(encoding="utf-8"))
+        pattern = re.compile(r"@(GetMapping|PostMapping|PutMapping|DeleteMapping|PatchMapping)\s*(?:\((.*?)\))?\s*((?:@[\w.]+(?:\([^)]*\))?\s*)*)public\s+([\w.<>?, ]+)\s+(\w+)\s*\((.*?)\)\s*\{", re.S)
+        for match in pattern.finditer(text):
+            return_type = strip_wrappers(match.group(4).strip())
+            page_match = re.match(r"^(Page|PaginaResponse)<(.*)>$", return_type, re.S)
+            response_type = page_match.group(2).strip() if page_match else return_type
+            response_name, _ = unwrap_type(response_type)
+            if response_name in usage:
+                usage[response_name].add("response")
+            for raw in split_top(match.group(6)):
+                if "@RequestBody" not in raw:
+                    continue
+                plain = strip_annotations(raw)
+                pm = re.search(r"([\w.<>?, ]+)\s+\w+$", plain)
+                if pm:
+                    request_name, _ = unwrap_type(pm.group(1).strip())
+                    if request_name in usage:
+                        usage[request_name].add("request")
+    return usage
+
+def discover_types(root: Path) -> dict[str, dict]:
+    definitions, enums = discover_type_definitions(root)
     known = set(definitions) | set(enums)
+    usage = type_usage(root, known)
     schemas = {}
     for name, values in sorted(enums.items()):
         schemas[name] = {"type": "string", "enum": values}
-    for name, fields in sorted(definitions.items()):
-        props = {field: schema_for_type(kind, known) for field, kind, _ in fields}
+    for name, definition in sorted(definitions.items()):
+        props = {field.name: schema_for_type(field.java_type, known) for field in definition.fields}
         schema = {"type": "object", "properties": props}
-        required = [field for field, _, req in fields if req]
+        required = [
+            field.name for field in definition.fields
+            if field_required(field, definition, usage.get(name, set()))
+        ]
         if required: schema["required"] = required
         schemas[name] = schema
     return schemas
+
+def field_required(field: FieldDef, definition: TypeDef, usage: set[str]) -> bool:
+    if field.explicit_required:
+        return True
+    if not definition.record or not field.java_primitive:
+        return False
+    # Jackson serializa siempre componentes primitivos de records usados como response
+    # con la configuracion actual del proyecto, y falla para records request con
+    # primitivos omitidos/null por FAIL_ON_NULL_FOR_PRIMITIVES.
+    return bool(usage & {"request", "response"})
 
 def controllers(root: Path) -> list[Path]:
     return sorted(root.glob("src/main/java/**/*Controller.java"))
@@ -247,7 +406,7 @@ def discover_operations(root: Path, extra_schemas: dict[str, dict] | None = None
             params = split_top(match.group(6))
             op_params, body_type = [], None
             for raw in params:
-                plain = re.sub(r"@[A-Za-z0-9_.]+(?:\([^)]*\))?\s*", "", raw).strip()
+                plain = strip_annotations(raw)
                 pm = re.search(r"([\w.<>?, ]+)\s+(\w+)$", plain)
                 if not pm: continue
                 ptype, pname = pm.group(1).strip(), pm.group(2)
