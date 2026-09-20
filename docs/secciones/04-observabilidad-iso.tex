@@ -478,9 +478,21 @@ muestras nominales válidas de Esc-1.
 \end{table}
 
 La Tabla~\ref{tab:arbiter-http} presenta el censo HTTP de la población central
-r2--r9. Se deriva de los registros \texttt{REQUEST} de los raw, no del resumen
-estadístico. Todos los fallos encontrados fueron HTTP 500 y no hubo respuestas
-4xx.
+r2--r9, incluyendo las cinco corridas nominales fallidas de ese intervalo.
+Para Esc-2, Esc-3 y Esc-4 se deriva de los registros \texttt{REQUEST} de los
+JSON raw: el código explícito se conserva en
+\texttt{allocation.backend\_response.httpStatus}; una respuesta normal del
+endpoint se registra como 200. El estado de negocio \texttt{REJECTED} no
+equivale a un error HTTP. En Esc-1 los JSON identifican las corridas, pero
+contienen \texttt{records} vacío: sus conteos se reconstruyen desde
+\texttt{locust\_stats.csv} y \texttt{locust\_failures.csv} en los directorios
+\texttt{esc1-production-r02} a \texttt{esc1-production-r09}. Se incluye solo
+\texttt{GET /api/v1/reservas}, excluyendo los 400 login de Auth.
+El harness exige HTTP 200; al coincidir el detalle de fallos con
+\texttt{Failure Count}, los GET restantes se contabilizan como 200.
+En esta población central delimitada, todos los errores HTTP observados fueron
+500; no se encontraron 4xx ni otros códigos. La tasa de error es el cociente
+entre solicitudes no 2xx y solicitudes totales, no una media de tasas por corrida.
 
 \begin{table}[ht]
   \centering
@@ -490,6 +502,8 @@ estadístico. Todos los fallos encontrados fueron HTTP 500 y no hubo respuestas
   \begin{tabular}{|c|c|r|r|r|r|r|}
     \hline
     \textbf{Esc.} & \textbf{Estrategia} & \textbf{Requests} & \textbf{2xx} & \textbf{4xx} & \textbf{5xx} & \textbf{Error} \\
+    \hline
+    1 & Producción & 58\,040 & 57\,969 & 0 & 71 & 0,1223\% \\
     \hline
     2 & S0 & 400 & 400 & 0 & 0 & 0\% \\
     2 & S1 & 400 & 400 & 0 & 0 & 0\% \\
@@ -503,8 +517,34 @@ estadístico. Todos los fallos encontrados fueron HTTP 500 y no hubo respuestas
     3 & S3 & 1\,600 & 1\,600 & 0 & 0 & 0\% \\
     3 & S4 & 1\,600 & 1\,368 & 0 & 232 & 14,5000\% \\
     \hline
+    4 & S3 & 1\,600 & 1\,600 & 0 & 0 & 0\% \\
+    4 & S4 & 1\,600 & 1\,249 & 0 & 351 & 21,9375\% \\
+    \hline
   \end{tabular}
 \end{table}
+
+Para Esc-1, r2--r9 contienen respectivamente 7\,245, 7\,292, 7\,260,
+7\,272, 7\,286, 7\,279, 7\,252 y 7\,154 GET; sus conteos HTTP 500 son
+0, 26, 10, 31, 0, 0, 1 y 3. Este censo conserva las ocho corridas centrales,
+aunque solo r2, r6 y r7 terminaron con código cero; no convierte las cinco
+corridas fallidas en muestras válidas del análisis principal.
+En Esc-4 cada estrategia aporta 200 solicitudes por repetición: S3 conserva
+200 respuestas 2xx en cada una; S4 registra, en orden r2--r9, 62, 52, 93, 5,
+52, 5, 69 y 13 HTTP 500, con las restantes respuestas 2xx. La tasa de S4
+durante la caída controlada es 351/1600, es decir, 21,9375\% (21,94\%
+redondeado). La ausencia de doble adjudicación no implica ausencia de errores
+HTTP ni garantiza aislamiento absoluto.
+
+El censo y el detalle por repetición se reproducen con
+\texttt{auditar\_http\_arbiter.py --all-scenarios}, pasando como entrada
+\path{experimentos/resultados/arbiter/campaign/raw/}. La integridad de los
+archivos fuente se comprueba con el manifiesto existente
+\path{experimentos/resultados/arbiter/campaign/SHA256SUMS}.
+El workflow \path{.github/workflows/ci-cd.yml} verifica los manifiestos,
+contrasta las filas de esta tabla con el censo y las latencias con
+\texttt{summary/runs.json}, y ejecuta el análisis offline de las campañas ISO
+correctivas versionadas. Una prueba negativa altera una latencia en memoria
+y exige que la auditoría la rechace; no modifica el RAW preservado.
 
 S0 es el baseline formal y control negativo; S3 no lo es. La comparación
 descriptiva de 26,6875\% frente a 0\% corresponde a S1 frente a S3 en Esc-3.
@@ -512,7 +552,7 @@ Respecto del baseline formal S0, la comparación correcta en ese escenario es
 26,6875\% frente a 0,8750\%. Esta asimetría impide atribuir superioridad
 operacional global a S1--S4.
 
-Cada \texttt{HTTP\_ERROR} conserva \texttt{sent\_ns}, \texttt{received\_ns} y
+En Esc-2, Esc-3 y Esc-4, cada \texttt{HTTP\_ERROR} conserva \texttt{sent\_ns}, \texttt{received\_ns} y
 \texttt{latency\_ms}. Los HTTP 500 fueron incluidos en los promedios por corrida:
 la latencia publicada representa todos los intentos bajo carga, incluidas las
 respuestas 500, y no solo adjudicaciones exitosas. No hubo exclusión selectiva
@@ -691,7 +731,16 @@ vigente. La medición vigente del alcance completo \texttt{apps/web/src/**/*.\{t
 se documenta en la Tabla~\ref{tab:mantenibilidad-web-vigente}.
 
 Para Backend, las líneas se recalcularon desde los campos \texttt{LINE\_MISSED}
-y \texttt{LINE\_COVERED} de los \texttt{jacoco.csv} canónicos. La complejidad
+y \texttt{LINE\_COVERED} de los \texttt{jacoco.csv} canónicos, mediante
+\texttt{jacoco\_summary} de \texttt{analizar\_e3.py}, sin depender de XML no
+versionados. En
+\path{experimentos/resultados/evidencia-e3-canonica/e3_mantenibilidad/},
+las tres repeticiones \texttt{rep-01} a \texttt{rep-03} conservan
+\texttt{usuarios/report/jacoco.csv} con 1735 líneas cubiertas y 329 no cubiertas:
+$100(1735/2064)=84,06007751937985\%$; para
+\texttt{reservas/report/jacoco.csv}, 2730 cubiertas y 506 no cubiertas:
+$100(2730/3236)=84,36341161928307\%$. CI recalcula ambas coberturas desde
+esos CSV y contrasta su redondeo con la tabla. La complejidad
 JaCoCo se reporta solo de forma descriptiva (missed+covered): Auth 352/56
 clases, media 6,285714 y máximo 34; Usuarios 858/107, 8,018692 y 68;
 Académico 1204/141, 8,539007 y 57; Reservas 2029/203, 9,995074 y 178;
@@ -842,9 +891,10 @@ de doble adjudicación no operacionaliza disponibilidad ni corrección total.
 \textbf{Amenaza:} la tasa 5xx no operacionaliza tiempo disponible.
 \textbf{Efecto:} el cumplimiento del umbral de errores podría interpretarse
 erróneamente como disponibilidad. \textbf{Mitigación aplicada:} la campaña
-correctiva completó diez ventanas válidas de una hora con 0 HTTP 401 y
-0 HTTP 5xx; la campaña histórica con 401 permanece publicada por separado y
-no se calcula disponibilidad a partir de ninguna de las dos.
+correctiva poblada completó diez ventanas válidas de una hora con 0 HTTP 401 y
+42 HTTP 5xx. La campaña histórica con 401 y la primera correctiva con dataset
+vacío y 0 HTTP 5xx permanecen publicadas por separado; no se calcula
+disponibilidad a partir de ninguna de las tres.
 \textbf{Riesgo residual:} el tiempo apto frente al tiempo total sigue siendo
 desconocido.
 
