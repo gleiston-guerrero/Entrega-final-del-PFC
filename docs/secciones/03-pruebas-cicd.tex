@@ -217,12 +217,16 @@ en ese momento no se añadieron secretos ni complejidad de firma.
 release signed}: ejecuta \texttt{assembleRelease}, alinea el binario mediante
 \texttt{zipalign}, lo firma con \texttt{apksigner}, valida la firma con
 \texttt{apksigner verify}, genera y comprueba \texttt{SHA256SUMS.txt}, y publica
-el APK release firmado como artifact de GitHub Actions. El binario está
-incorporado en \path{release/apk/scli-mobile-0.1.0-release.apk} y su checksum en
-\path{release/apk/SHA256SUMS.txt}; procede del run \texttt{34688947156}, para el
-SHA \texttt{0b755310a0acf34da2456290a4f978475a8e17f9}, generado y verificado por
-CI. GitHub Actions continúa siendo la fuente reproducible; las claves privadas
-y contraseñas de firma permanecen fuera de Git.
+el APK release firmado como artifact de GitHub Actions en pushes segun el
+workflow vigente. La version Android actual es \texttt{versionName 1.0.1} y
+\texttt{versionCode 2}. El binario preservado en
+\path{release/apk/scli-mobile-0.1.0-release.apk} y su checksum en
+\path{release/apk/SHA256SUMS.txt} se mantienen solo como evidencia historica de
+una ejecucion anterior; no constituyen la evidencia definitiva del APK final
+1.0.1+. Esa evidencia definitiva queda pendiente hasta que CI genere, firme,
+verifique y publique oficialmente el APK 1.0.1+ con su checksum. GitHub Actions
+continua siendo la fuente reproducible; las claves privadas y contrasenas de
+firma permanecen fuera de Git.
 No se ejecutó un emulador manualmente durante la redacción; se usa la ejecución
 automatizada de CI como evidencia.
 
