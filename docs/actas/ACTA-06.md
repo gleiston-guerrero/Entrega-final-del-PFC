@@ -10,6 +10,11 @@
 
 **Medio:** Google Meet
 
+**Nota de revision posterior:** el 17/09/2026 se corrigio el alcance de esta
+acta para identificar el PR #10 como evidencia del repositorio historico
+`iavillamarin98-pred/ORA_entrega_F`, no del repositorio oficial actual. Esta
+revision adicional no formaba parte del acta original del 15/09/2026.
+
 ## Participantes
 
 - Isaías Urbina
@@ -19,9 +24,15 @@
   - GitHub: `iavillamarin98-pred`
   - Rol: revisión de cambios, validación de evidencias y observaciones sobre las correcciones.
 
+Nota objetiva: las capturas de Google Meet muestran 3 participantes conectados,
+pero solo permiten identificar nominalmente a Isaias e Ivan. No se atribuye
+identidad al tercer participante por falta de evidencia suficiente.
+
 ## Objetivo
 
-Revisar el cierre del punto #7 de la guía del PFC, validar la revisión cruzada realizada en el PR #10 del repositorio histórico y organizar el tratamiento de los puntos pendientes.
+Revisar el cierre del punto #7 de la guía del PFC, revisar el estado ya
+integrado del PR #10 del repositorio historico y organizar el tratamiento de
+los puntos pendientes.
 
 ## Temas tratados
 
@@ -46,9 +57,15 @@ cd apps/web && npm ci && npm run test:coverage
 
 ### 2. Revisión cruzada del PR #10 del repositorio histórico
 
-Durante la reunión se revisó el PR #10 del repositorio histórico
-`iavillamarin98-pred/ORA_entrega_F`, utilizado como evidencia verificable
-del proceso de revisión seguido por el equipo.
+Durante la reunion se reviso el estado ya integrado del PR #10 del repositorio
+historico `iavillamarin98-pred/ORA_entrega_F`, utilizado como evidencia
+verificable del proceso de revision seguido por el equipo.
+
+Las capturas disponibles muestran el PR #10 ya aprobado y fusionado antes de la
+revision visible en la reunion: a las 22:12 se observa la aprobacion como
+ocurrida hace 39 minutos y el merge como ocurrido hace 37 minutos. Por ello,
+esta acta no afirma que la aprobacion ni el merge ocurrieran durante la ventana
+21:58-22:45.
 
 - Repositorio: `iavillamarin98-pred/ORA_entrega_F`.
 - PR: #10 — `docs(web): precisar comando reproducible de cobertura`.
@@ -76,10 +93,14 @@ Se acordó el siguiente flujo de trabajo:
 
 ### 3. Estado general del PFC
 
-- Puntos cerrados: 27/37.
+La version original de esta acta registro "Puntos cerrados: 27/37". No se
+conserva en esta carpeta una fuente verificable para esa cifra, por lo que esta
+revision posterior no la usa como dato probado.
+
 - Punto parcial: #36 — Actas y revisión cruzada.
 
-Puntos pendientes:
+Puntos pendientes registrados como seguimiento de trabajo, sin que esta acta
+los use para reconstruir una cifra total verificable:
 
 - #9 — Cámara / FCM.
 - #15 — Pipeline y publicación etiquetada.
@@ -118,16 +139,18 @@ Puntos pendientes:
 
 ## Evidencias
 
-La captura `meet-revision-pr10.png` muestra la sesión activa de Google Meet
-durante la revisión técnica del PR #10 del repositorio histórico
-`iavillamarin98-pred/ORA_entrega_F`.
+La captura `meet-revision-pr10.png` muestra la sesión activa de Google Meet a
+las 22:14 durante la revision del estado ya fusionado del PR #10 del repositorio
+historico `iavillamarin98-pred/ORA_entrega_F`.
 
-![Sesión de Google Meet durante la revisión del PR #10 histórico](evidencias/acta-06/meet-revision-pr10.png)
+![Sesion de Google Meet revisando el PR #10 historico ya fusionado](evidencias/acta-06/meet-revision-pr10.png)
 
 La captura `pr10-aprobado-mergeado.png` documenta la aprobación de
-`iavillamarin98-pred` y la integración del PR #10 del repositorio histórico.
+`iavillamarin98-pred` y la integración del PR #10 del repositorio historico,
+visibles a las 22:12 como eventos ya ocurridos antes de la revision de la
+captura.
 
-![PR #10 histórico aprobado e integrado](evidencias/acta-06/pr10-aprobado-mergeado.png)
+![PR #10 historico aprobado e integrado antes de la revision visible](evidencias/acta-06/pr10-aprobado-mergeado.png)
 
 ## Cierre
 
