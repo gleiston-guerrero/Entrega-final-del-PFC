@@ -2,6 +2,11 @@
 
 **Fecha:** 17/09/2026
 
+**Rango temporal evidenciado por capturas:** 19:00-21:38 UTC-05:00
+
+**Hora formal de inicio/fin:** no se declara; las capturas solo permiten
+establecer el rango temporal evidenciado.
+
 **Medio:** Google Meet
 
 ## Participantes
@@ -85,6 +90,14 @@ y se distingue de la captura tomada durante la sesión, donde la opción
 
 ## Evidencias
 
+### Formato de evidencias
+
+La evidencia `pr12-creacion-reviewer.png` conserva su nombre historico, pero sus
+magic bytes corresponden a contenido JPEG. No se renombra ni se convierte en
+esta correccion para no alterar bytes ni romper trazabilidad; una correccion de
+formato posterior deberia renombrar el archivo y actualizar todas sus
+referencias de forma coordinada.
+
 ### PR #11
 
 La captura `pr11-aprobado-repo-oficial.png` documenta la revisión cruzada
@@ -96,16 +109,19 @@ todavía existían verificaciones automáticas en ejecución.
 
 ### Creación del PR #12
 
-La captura `pr12-creacion-reviewer.png` documenta la preparación del PR
-correspondiente a la corrección #20, con `feature/entrega-4` como rama base y
-la selección de Iván como reviewer.
+La captura `meet-revision-pr12.png` documenta la preparacion del PR
+correspondiente a la correccion #20, con `feature/entrega-4` como rama base y
+la seleccion de Ivan como reviewer. Aunque el nombre del archivo alude a Meet,
+la pantalla visible corresponde al formulario `Open a pull request`.
 
-![Creación del PR #12 y selección de reviewer](evidencias/acta-07/pr12-creacion-reviewer.png)
+![Creacion del PR #12 y seleccion de reviewer](evidencias/acta-07/meet-revision-pr12.png)
 
 ### Revisión del PR #12 durante la sesión
 
-La captura `meet-revision-pr12.png` documenta la sesión de Google Meet mientras
-se revisaba el PR #12. En la interfaz de GitHub se observa la opción `Approve`
-seleccionada antes de enviar la revisión.
+La captura `pr12-creacion-reviewer.png` documenta la sesion de Google Meet a
+las 21:38 mientras se revisaba el PR #12. En la interfaz de GitHub se observa
+el formulario `Finish your review` con la opcion `Approve` seleccionada antes
+de enviar la revision. Aunque el nombre del archivo alude a creacion/reviewer,
+la pantalla visible corresponde a la preparacion de la aprobacion.
 
-![Revisión del PR #12 durante la reunión](evidencias/acta-07/meet-revision-pr12.png)
+![Revision del PR #12 durante la reunion](evidencias/acta-07/pr12-creacion-reviewer.png)

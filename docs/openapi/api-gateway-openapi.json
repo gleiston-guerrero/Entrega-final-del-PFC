@@ -4360,6 +4360,35 @@
         "description": "Atendido por el servicio Reservas."
       }
     },
+    "/api/v1/observabilidad/mobile/http-latency": {
+      "post": {
+        "operationId": "ObservabilidadMobileController_registrarLatenciaHttp",
+        "tags": [
+          "ObservabilidadMobileController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Respuesta satisfactoria"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MobileHttpLatencyRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Atendido por el servicio Reservas."
+      }
+    },
     "/api/v1/perfiles": {
       "get": {
         "operationId": "PerfilController_listar",
@@ -10407,6 +10436,20 @@
           }
         }
       },
+      "ConnectionInvocationHandler": {
+        "type": "object",
+        "properties": {
+          "delegate": {
+            "type": "string",
+            "description": "Valor Java Connection"
+          },
+          "proxy": {},
+          "method": {
+            "type": "string",
+            "description": "Valor Java Method"
+          }
+        }
+      },
       "ConsultaDisponibilidad": {
         "type": "object",
         "properties": {
@@ -12220,6 +12263,34 @@
             "type": "string"
           }
         }
+      },
+      "MobileHttpLatencyRequest": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "durationMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "method",
+          "route",
+          "durationMs",
+          "success"
+        ]
       },
       "NotificacionInternaResponse": {
         "type": "object",

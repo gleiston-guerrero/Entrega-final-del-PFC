@@ -4,12 +4,14 @@ import ec.edu.scli.reservas.application.service.DisponibilidadService;
 import ec.edu.scli.reservas.config.SecurityConfig;
 import ec.edu.scli.reservas.infrastructure.audit.AuditLogger;
 import ec.edu.scli.reservas.presentation.controller.DisponibilidadController;
+import ec.edu.scli.reservas.presentation.controller.ObservabilidadMobileController;
 import ec.edu.scli.reservas.presentation.controller.SolicitudReservaController;
 import ec.edu.scli.reservas.application.service.SolicitudReservaService;
 import ec.edu.scli.reservas.application.service.PlanificacionService;
 import ec.edu.scli.reservas.presentation.controller.PlanificacionController;
 import ec.edu.scli.reservas.presentation.controller.AsistenciaController;
 import ec.edu.scli.reservas.application.service.AsistenciaService;
+import ec.edu.scli.reservas.observability.MobileHttpMetrics;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.security.access.AccessDeniedException;
 
-@WebMvcTest({DisponibilidadController.class, SolicitudReservaController.class, PlanificacionController.class, AsistenciaController.class})
+@WebMvcTest({DisponibilidadController.class, SolicitudReservaController.class, PlanificacionController.class,
+        AsistenciaController.class, ObservabilidadMobileController.class})
 @Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtTokenProvider.class,
         ExperimentalInternalApiKeyFilter.class})
 @TestPropertySource(properties = {
@@ -48,6 +51,7 @@ class ReservasSecurityIntegrationTest {
     @MockitoBean private AuditLogger auditLogger;
     @MockitoBean private PlanificacionService planificacionService;
     @MockitoBean private AsistenciaService asistenciaService;
+    @MockitoBean private MobileHttpMetrics mobileHttpMetrics;
 
     @Test
     void sinTokenResponde401() throws Exception {
@@ -79,6 +83,32 @@ class ReservasSecurityIntegrationTest {
 
         verify(auditLogger).registrarEvento(
                 eq("acceso_denegado"), any(), any(), org.mockito.ArgumentMatchers.contains("/api/v1/disponibilidad/laboratorios/"));
+    }
+
+    @Test
+    void metricasMobileRequiereJwt() throws Exception {
+        mockMvc.perform(post("/api/v1/observabilidad/mobile/http-latency")
+                        .contentType("application/json")
+                        .content(metricasJson()))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void metricasMobileAceptaAccessTokenSinPermisoArtificial() throws Exception {
+        mockMvc.perform(post("/api/v1/observabilidad/mobile/http-latency")
+                        .header("Authorization", "Bearer " + token("access", List.of()))
+                        .contentType("application/json")
+                        .content(metricasJson()))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    void metricasMobileValidaDto() throws Exception {
+        mockMvc.perform(post("/api/v1/observabilidad/mobile/http-latency")
+                        .header("Authorization", "Bearer " + token("access", List.of()))
+                        .contentType("application/json")
+                        .content("{\"method\":\"TRACE\",\"route\":\"\",\"durationMs\":-1,\"success\":true}"))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -171,6 +201,13 @@ class ReservasSecurityIntegrationTest {
                  "horaInicio":"08:00","horaFin":"10:00"}
                 """.formatted(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
                         UUID.randomUUID(), UUID.randomUUID());
+    }
+
+    private String metricasJson() {
+        return """
+                {"method":"GET","route":"/api/v1/incidentes/{id}",\
+                 "durationMs":125,"status":200,"success":true}
+                """;
     }
 
     private org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder consulta() {

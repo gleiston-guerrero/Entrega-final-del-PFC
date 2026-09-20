@@ -17,6 +17,8 @@ class GatewayRoutesTest {
         assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/incidentes")).isTrue();
         assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/notificaciones/dispositivos")).isTrue();
         assertThat(GatewayRoutes.esRutaReservasCanonica(
+                "/api/v1/observabilidad/mobile/http-latency")).isTrue();
+        assertThat(GatewayRoutes.esRutaReservasCanonica(
                 "/api/v1/planificaciones-agregadas/123/enviar")).isTrue();
     }
 
@@ -26,6 +28,7 @@ class GatewayRoutesTest {
         assertThat(GatewayRoutes.esRutaUsuarios("/api/v1/internal/perfiles/123")).isFalse();
         assertThat(GatewayRoutes.esRutaAcademica("/api/v1/internal/laboratorios/123/exists")).isFalse();
         assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/internal/reservas/123")).isFalse();
+        assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/internal/observabilidad/mobile")).isFalse();
         assertThat(GatewayRoutes.esRutaUsuariosLegacy(
                 "/usuarios-service/api/v1/internal/perfiles/123")).isFalse();
     }
@@ -35,5 +38,6 @@ class GatewayRoutesTest {
         assertThat(GatewayRoutes.esRutaUsuarios("/api/v1/docentes-internal")).isFalse();
         assertThat(GatewayRoutes.esRutaAcademica("/api/v1/laboratorios-internal")).isFalse();
         assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/reservas-internal")).isFalse();
+        assertThat(GatewayRoutes.esRutaReservasCanonica("/api/v1/observabilidad-internal")).isFalse();
     }
 }
