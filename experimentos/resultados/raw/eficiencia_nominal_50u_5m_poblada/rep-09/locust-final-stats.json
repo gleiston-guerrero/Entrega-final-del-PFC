@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "request_type": "GET",
+      "name": "GET /api/v1/reservas",
+      "request_count": 5533,
+      "failure_count": 0
+    },
+    {
+      "request_type": "GET",
+      "name": "GET /api/v1/reservas/{id}",
+      "request_count": 1885,
+      "failure_count": 0
+    },
+    {
+      "request_type": "POST",
+      "name": "POST /api/v1/auth/login",
+      "request_count": 50,
+      "failure_count": 0
+    }
+  ]
+}

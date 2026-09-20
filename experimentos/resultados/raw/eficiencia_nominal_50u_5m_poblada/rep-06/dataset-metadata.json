@@ -1,0 +1,22 @@
+{
+  "creation_mechanism": "API real: crear solicitud -> revision -> aprobacion",
+  "dataset_file": "dataset.csv",
+  "dataset_sha256": "f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78",
+  "date_range": [
+    "2026-11-03",
+    "2026-11-30"
+  ],
+  "deployed_reservas_image": "ghcr.io/ffarinangog2/scli-reservas-solicitudes-service:b01732b24dae728905e64612be1d307e4b377b43",
+  "docente_id": "30000000-0000-0000-0000-000000000001",
+  "generated_at_utc": "2026-09-19T23:28:54.741447+00:00",
+  "laboratorio_id": "10000000-0000-0000-0000-000000000008",
+  "materia_id": "10000000-0000-0000-0000-00000000000a",
+  "periodo_lectivo_id": "3f000000-0000-0000-0000-000000000002",
+  "purpose": "issue31-fiabilidad-dataset-correctivo",
+  "repo_branch": "fix/eval2-31-fiabilidad-ivan",
+  "repo_sha": "dd2e1923d7635857f4020c7ef5c8b6efee363d7a",
+  "repo_worktree_changes": 0,
+  "reservation_count": 20,
+  "solicitante_id": "20000000-0000-0000-0000-000000000001",
+  "test_user": "demo.docente"
+}

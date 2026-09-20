@@ -2,17 +2,23 @@
 
 ## Proveniencia
 
-- Host de ejecución: `servidor-proyectos`.
-- Repositorio de ejecución: `/home/ffarinangog2/proyectos/miscli`.
-- Git SHA probado: `a47f0441f644bea5f52944b7a11216f37b2242de`.
-- Locust: 2.31.6, Python 3.11.10.
-- Evidencia recuperada sin modificar los originales de la VM.
-- Integridad: `SHA256SUMS` contiene los hashes de los archivos seleccionados.
+Este resumen integra campañas ejecutadas en momentos y SHA distintos. Cada
+sección identifica el software realmente medido y, cuando corresponde, separa
+ese SHA del commit posterior que únicamente produce o documenta la evidencia.
 
-Los reportes HTML y los CSV `locust_stats_history.csv` completos permanecen en la
-VM. No se versionan porque son derivados voluminosos; se preservan aquí los CSV
-agregados canónicos, fallos, excepciones, logs, metadata, consultas/resultados
-Prometheus, salud del entorno y estadísticas de contenedores.
+La campaña histórica inicial de eficiencia fue ejecutada en
+`a47f0441f644bea5f52944b7a11216f37b2242de`. Las campañas correctivas
+posteriores conservan sus propios SHA de software e instrumentación en sus
+artefactos y en las secciones correspondientes de este documento.
+
+Los paquetes históricos compactos conservan únicamente la selección canónica
+documentada para cada campaña. En cambio, la campaña correctiva poblada de
+eficiencia conserva dentro de su árbol versionable los artefactos capturados
+por repetición, incluidos `locust_requests.csv`, estadísticas, historial,
+reporte HTML, logs, metadata y trazas de integridad.
+
+La integridad se verifica mediante los `SHA256SUMS` por repetición y los
+manifiestos globales documentados para cada paquete.
 
 ## Rampa exploratoria 0 → 200 usuarios, 10 minutos
 
@@ -74,6 +80,96 @@ Como contraste, los resultados Prometheus p95 de r2–r9 producen:
 
 Locust y Prometheus miden en puntos distintos del sistema y no deben presentarse
 como métricas intercambiables.
+
+## Corrección post-evaluación: eficiencia nominal poblada
+
+La campaña histórica de eficiencia descrita arriba se conserva como
+antecedente. Debido a que su dataset de Reservas estaba vacío y no ejercitaba
+de forma efectiva `GET /api/v1/reservas/{id}`, no se utiliza como cierre
+definitivo de PI1.
+
+Para corregir esa limitación se ejecutó la campaña
+`eficiencia_nominal_50u_5m_poblada` con 50 usuarios, spawn-rate 10/s,
+5 minutos y diez repeticiones oficiales independientes.
+
+Se reutilizó una población controlada de 20 reservas. El `dataset.csv`
+conservó el mismo SHA-256 en las diez ejecuciones:
+
+`f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78`
+
+El software desplegado medido fue:
+
+`dd2e1923d7635857f4020c7ef5c8b6efee363d7a`
+
+La instrumentación utilizada para producir la evidencia corresponde a:
+
+`a60f523921d3be5a80d54f723997f60a613701ed`
+
+La población de PI1 incluye exclusivamente todos los eventos de negocio:
+
+- `GET /api/v1/reservas`;
+- `GET /api/v1/reservas/{id}`.
+
+Login y refresh pertenecen al harness y no forman parte de la población. No se
+eliminaron respuestas por código HTTP, latencia o resultado.
+
+Las diez repeticiones oficiales contienen 74.098 GET de negocio, con
+0 HTTP 401 y 0 HTTP 5xx. Sus diez archivos `locust_requests.csv` poseen diez
+SHA-256 distintos, por lo que no son copias byte a byte entre repeticiones.
+El dataset, software desplegado y harness permanecieron constantes.
+
+La unidad inferencial es cada repetición completa, no cada solicitud
+individual. El análisis principal conserva r1 y r10 como evidencia y utiliza
+exclusivamente r2--r9 (`n=8`). Estas ocho repeticiones contienen 59.278 GET de
+negocio.
+
+| Métrica | n | Media | s muestral | IC95 | Límite superior | Umbral | Decisión |
+|---|---:|---:|---:|---|---:|---:|---|
+| p95 GET negocio | 8 | 9,952465 ms | 0,426872 ms | [9,595590; 10,309339] ms | 10,309339 ms | <500 ms | **CUMPLE** |
+| p99 GET negocio | 8 | 19,744969 ms | 3,437219 ms | [16,871382; 22,618556] ms | 22,618556 ms | <750 ms | **CUMPLE** |
+
+El cálculo utiliza `df=7` y `t(0,975;7)=2,364624251`. La decisión aplica la
+regla conservadora definida previamente: el límite superior del IC95 debe
+permanecer por debajo del umbral.
+
+El derivado reproducible se genera directamente desde los eventos raw:
+
+`python3 -m experimentos.analizar_iso25010 experimentos/resultados/iso25010.csv --raw-root experimentos/resultados/raw --write-populated-efficiency experimentos/resultados/iso25010-eficiencia-poblada.csv`
+
+El analizador valida además:
+
+- integridad `SHA256SUMS` de cada repetición;
+- mismo Git SHA de instrumentación;
+- mismo software desplegado;
+- mismo dataset;
+- mismo harness;
+- `deployment_after_valid=true`;
+- `locust_exit_code=0`;
+- presencia de ambos GET de negocio;
+- ausencia de pseudorreplicación byte a byte entre los diez raws de solicitudes.
+
+La suite del analizador contiene 14 pruebas y pasa completamente, incluidas
+pruebas negativas de corrupción SHA-256, inconsistencia cruzada y
+pseudorreplicación.
+
+El manifest global
+`iso25010-eficiencia-poblada.sha256` contiene 328 entradas y verifica
+328/328 sin fallos. Su SHA-256 es:
+
+`3981d70a2e6b597e5a10d03258f366ea187afb694c7541d37d162cb9bca7879f`
+
+Después de r3 y antes de r4 se detectó crecimiento del log `json-file` del
+OTel Collector hasta aproximadamente 7,2 GB. Se preservó una muestra y se
+truncó únicamente ese archivo de log entre ventanas. No se reiniciaron los
+servicios backend, no se modificaron volúmenes ni datos y ninguna repetición
+fue excluida o alterada por esta intervención.
+
+Los artefactos principales se conservan en:
+
+- `raw/eficiencia_nominal_50u_5m_poblada/rep-01..10/`;
+- `iso25010-eficiencia-poblada.csv`;
+- `iso25010-eficiencia-poblada.sha256`;
+- `../protocolo-e4-eficiencia-poblada.md`.
 
 ## Fiabilidad nominal, 50 usuarios, 1 hora
 

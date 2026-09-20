@@ -1,0 +1,17 @@
+{
+  "scenario": "eficiencia_nominal_50u_5m_poblada",
+  "repetition": 6,
+  "mode": "official",
+  "evidence_git_sha": "a60f523921d3be5a80d54f723997f60a613701ed",
+  "deployed_software_sha": "dd2e1923d7635857f4020c7ef5c8b6efee363d7a",
+  "planned_duration": "5m",
+  "planned_duration_seconds": 300,
+  "elapsed_seconds": 300,
+  "duration_completed": true,
+  "evidence_complete": true,
+  "dataset_verified": true,
+  "software_sha_consistent": true,
+  "deployment_after_valid": true,
+  "harness_consistent": true,
+  "locust_exit_code": 0
+}

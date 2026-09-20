@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import statistics
@@ -237,6 +238,98 @@ def percentile_nearest_rank(values: list[float], quantile: float) -> float:
     return sorted(values)[math.ceil(quantile * len(values)) - 1]
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _first_sha256(path: Path) -> str:
+    try:
+        content = path.read_text(encoding="utf-8-sig").strip()
+    except OSError as error:
+        raise ValueError(f"{path}: no se pudo leer el hash") from error
+
+    if not content:
+        raise ValueError(f"{path}: archivo de hash vacío")
+
+    value = content.split()[0].lower()
+
+    if len(value) != 64 or any(
+        char not in "0123456789abcdef" for char in value
+    ):
+        raise ValueError(f"{path}: SHA-256 inválido")
+
+    return value
+
+
+def _verify_portable_sha256_manifest(directory: Path) -> None:
+    """Valida SHA256SUMS aunque el manifest conserve rutas del host original."""
+    manifest = directory / "SHA256SUMS"
+
+    try:
+        lines = manifest.read_text(encoding="utf-8-sig").splitlines()
+    except OSError as error:
+        raise ValueError(
+            f"{manifest}: manifest ausente o ilegible"
+        ) from error
+
+    if not lines:
+        raise ValueError(f"{manifest}: manifest vacío")
+
+    seen_names: set[str] = set()
+
+    for line_number, line in enumerate(lines, start=1):
+        if not line.strip():
+            continue
+
+        parts = line.split(maxsplit=1)
+        if len(parts) != 2:
+            raise ValueError(
+                f"{manifest}:{line_number}: entrada SHA256SUMS inválida"
+            )
+
+        expected, recorded_path = parts
+        expected = expected.lower()
+
+        if len(expected) != 64 or any(
+            char not in "0123456789abcdef" for char in expected
+        ):
+            raise ValueError(
+                f"{manifest}:{line_number}: SHA-256 inválido"
+            )
+
+        filename = Path(recorded_path.lstrip("*")).name
+
+        if not filename:
+            raise ValueError(
+                f"{manifest}:{line_number}: nombre de archivo inválido"
+            )
+
+        if filename in seen_names:
+            raise ValueError(
+                f"{manifest}:{line_number}: basename duplicado: {filename}"
+            )
+
+        seen_names.add(filename)
+
+        target = directory / filename
+
+        if not target.is_file():
+            raise ValueError(
+                f"{manifest}:{line_number}: evidencia ausente: {filename}"
+            )
+
+        actual = _sha256_file(target)
+
+        if actual != expected:
+            raise ValueError(
+                f"{manifest}:{line_number}: SHA-256 no coincide para {filename}"
+            )
+
+
 def read_populated_efficiency_population(
     raw_root: Path, repetitions: list[int]
 ) -> dict[int, dict[str, float | int | str]]:
@@ -247,6 +340,20 @@ def read_populated_efficiency_population(
     """
     measurements: dict[int, dict[str, float | int | str]] = {}
     required = {"request_type", "name", "response_time_ms", "status_code"}
+
+    strict_campaign = (
+        len(repetitions) == len(EXPECTED_REPETITIONS)
+        and set(repetitions) == EXPECTED_REPETITIONS
+    )
+
+    campaign_values: dict[str, set[str]] = {
+        "evidence_git_sha": set(),
+        "deployed_software_sha": set(),
+        "dataset_sha256": set(),
+        "harness_manifest_sha256": set(),
+    }
+    request_raw_hashes: set[str] = set()
+
     for repetition in repetitions:
         directory = raw_root / POPULATED_EFFICIENCY_SCENARIO / f"rep-{repetition:02d}"
         metadata_path = directory / "metadata.json"
@@ -255,10 +362,35 @@ def read_populated_efficiency_population(
             metadata = json.loads(metadata_path.read_text(encoding="utf-8-sig"))
         except (OSError, ValueError) as error:
             raise ValueError(f"{metadata_path}: metadata ausente o inválida") from error
-        required_evidence = {"locust_stats.csv", "locust_stats_history.csv", "locust_failures.csv",
-                             "locust_exceptions.csv", "locust.log", "locust-report.html",
-                             "locust-final-stats.json", "deployed-software-sha.txt",
-                             "harness-sha256.txt", "dataset-sha256.txt", "SHA256SUMS"}
+        required_evidence = {
+            "locust_stats.csv",
+            "locust_stats_history.csv",
+            "locust_failures.csv",
+            "locust_exceptions.csv",
+            "locust.log",
+            "locust-report.html",
+            "locust-final-stats.json",
+            "deployed-software-sha.txt",
+            "harness-sha256.txt",
+            "dataset-sha256.txt",
+            "SHA256SUMS",
+        }
+
+        if strict_campaign:
+            required_evidence.update(
+                {
+                    "dataset.csv",
+                    "evidence-git-sha.txt",
+                    "deployment-before.txt",
+                    "deployment-after.txt",
+                    "harness-before-sha256.txt",
+                    "harness-after-sha256.txt",
+                    "locust-exit-code.txt",
+                    "elapsed-seconds.txt",
+                    "start_utc.txt",
+                    "end_utc.txt",
+                }
+            )
         absent = sorted(name for name in required_evidence if not (directory / name).is_file())
         if absent:
             raise ValueError(f"{directory}: evidencia incompleta: {', '.join(absent)}")
@@ -268,6 +400,118 @@ def read_populated_efficiency_population(
                 metadata.get("software_sha_consistent") is True and
                 metadata.get("harness_consistent") is True):
             raise ValueError(f"{directory}: repetición estructuralmente inválida")
+        if strict_campaign:
+            if metadata.get("scenario") != POPULATED_EFFICIENCY_SCENARIO:
+                raise ValueError(
+                    f"{directory}: escenario metadata inválido"
+                )
+
+            if metadata.get("mode") != "official":
+                raise ValueError(
+                    f"{directory}: mode debe ser official"
+                )
+
+            if metadata.get("repetition") != repetition:
+                raise ValueError(
+                    f"{directory}: número de repetición no coincide"
+                )
+
+            if metadata.get("planned_duration_seconds") != 300:
+                raise ValueError(
+                    f"{directory}: duración planificada distinta de 300 s"
+                )
+
+            if metadata.get("deployment_after_valid") is not True:
+                raise ValueError(
+                    f"{directory}: deployment_after_valid no es true"
+                )
+
+            if metadata.get("locust_exit_code") != 0:
+                raise ValueError(
+                    f"{directory}: locust_exit_code distinto de 0"
+                )
+
+            try:
+                recorded_exit = int(
+                    (directory / "locust-exit-code.txt")
+                    .read_text(encoding="utf-8-sig")
+                    .strip()
+                )
+            except (OSError, ValueError) as error:
+                raise ValueError(
+                    f"{directory}: locust-exit-code.txt inválido"
+                ) from error
+
+            if recorded_exit != 0:
+                raise ValueError(
+                    f"{directory}: locust-exit-code.txt distinto de 0"
+                )
+
+        if strict_campaign:
+            _verify_portable_sha256_manifest(directory)
+
+            evidence_git_sha = (
+                directory / "evidence-git-sha.txt"
+            ).read_text(
+                encoding="utf-8-sig"
+            ).strip()
+
+            deployed_software_sha = (
+                directory / "deployed-software-sha.txt"
+            ).read_text(
+                encoding="utf-8-sig"
+            ).strip()
+
+            if metadata.get("evidence_git_sha") != evidence_git_sha:
+                raise ValueError(
+                    f"{directory}: evidence_git_sha no coincide con archivo"
+                )
+
+            if metadata.get("deployed_software_sha") != deployed_software_sha:
+                raise ValueError(
+                    f"{directory}: deployed_software_sha no coincide con archivo"
+                )
+
+            dataset_sha = _sha256_file(directory / "dataset.csv")
+            captured_dataset_sha = _first_sha256(
+                directory / "dataset-sha256.txt"
+            )
+
+            if dataset_sha != captured_dataset_sha:
+                raise ValueError(
+                    f"{directory}: dataset.csv no coincide con dataset-sha256.txt"
+                )
+
+            harness_before = (
+                directory / "harness-before-sha256.txt"
+            ).read_bytes()
+
+            harness_after = (
+                directory / "harness-after-sha256.txt"
+            ).read_bytes()
+
+            if harness_before != harness_after:
+                raise ValueError(
+                    f"{directory}: harness cambió durante la repetición"
+                )
+
+            campaign_values["evidence_git_sha"].add(
+                evidence_git_sha
+            )
+            campaign_values["deployed_software_sha"].add(
+                deployed_software_sha
+            )
+            campaign_values["dataset_sha256"].add(
+                dataset_sha
+            )
+            campaign_values["harness_manifest_sha256"].add(
+                _sha256_file(directory / "harness-sha256.txt")
+            )
+
+            request_raw_hashes.add(
+                _sha256_file(events_path)
+            )
+
         response_times: list[float] = []
         listed = by_id = http_401 = http_5xx = 0
         with events_path.open(encoding="utf-8-sig", newline="") as stream:
@@ -298,6 +542,23 @@ def read_populated_efficiency_population(
             "p95_ms": percentile_nearest_rank(response_times, .95),
             "p99_ms": percentile_nearest_rank(response_times, .99), "source": str(events_path),
         }
+    if strict_campaign:
+        for label, values in campaign_values.items():
+            if len(values) != 1:
+                raise ValueError(
+                    f"{POPULATED_EFFICIENCY_SCENARIO}: "
+                    f"inconsistencia entre repeticiones en {label}: "
+                    f"{len(values)} valores distintos"
+                )
+
+        if len(request_raw_hashes) != len(EXPECTED_REPETITIONS):
+            raise ValueError(
+                f"{POPULATED_EFFICIENCY_SCENARIO}: "
+                "pseudorreplicación detectada; "
+                f"{len(request_raw_hashes)} raws distintos para "
+                f"{len(EXPECTED_REPETITIONS)} repeticiones"
+            )
+
     return measurements
 
 

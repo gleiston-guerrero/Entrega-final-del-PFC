@@ -1,0 +1,13 @@
+timestamp_utc=2026-09-20T17:52:54+00:00
+reason=prevenir agotamiento de disco entre repeticiones; no ocurrió durante una repetición
+container=scli-prod-otel-collector-1
+image=otel/opentelemetry-collector:0.110.0
+action=truncate únicamente json-file log del OTel Collector
+otel_log_before=7.2G
+otel_log_after=28K
+disk_free_before=4.5G
+disk_free_after=12G
+tail_sample_sha256=113f4d5ebd6bc63e7b4f134c2b51343d46aeee07ac154ceed5b5411c52470f59
+backend_containers_restarted=no
+volumes_modified=no
+database_modified=no
