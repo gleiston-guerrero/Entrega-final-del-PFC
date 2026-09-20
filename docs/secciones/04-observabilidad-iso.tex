@@ -178,28 +178,35 @@ la latencia p95 y p99 observada por Locust permanecen por debajo de los
 umbrales previamente declarados de 500 ms y 750 ms, respectivamente, en las
 ocho repeticiones centrales r2--r9 del despliegue SCLI evaluado?
 
-\textbf{Respuesta a PI1.} Sí. El análisis corregido delimita la población por
-identidad del request y utiliza las filas GET de Reservas/Solicitudes conservadas
-en los CSV raw. Para p95 obtiene media 45,500000 ms e IC95
-[27,304023; 63,695977] ms; para p99, media 371,250000 ms, desviación muestral
-364,032475 ms e IC95 [66,911235; 675,588765] ms. La dispersión del p99 es
-elevada y su límite superior queda 74,411235 ms por debajo del umbral de
-750 ms; por ello el resultado se interpreta como cumplimiento acotado al
-escenario observado, no como un margen holgado ni generalizable. Ambos límites
-superiores permanecen por debajo de 500 ms y 750 ms, respectivamente. La selección no filtra respuestas por código
-HTTP, latencia ni éxito/fallo. Excluye \texttt{POST /api/v1/auth/login}
-exclusivamente porque pertenece a Auth y no a las consultas de solo lectura de
-Reservas/Solicitudes. Los valores corregidos y la decisión están en
-\path{../../experimentos/resultados/RESUMEN-ISO25010-E4.md}; el diseño y la
-regla de ocho muestras están en
-\path{../../experimentos/protocolo-e4.md}; y las filas GET que sustentan cada
-percentil se conservan en
-\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m/rep-02/locust_stats.csv}
-hasta \path{../rep-09/locust_stats.csv}. No se repitió ni alteró la campaña.
-El análisis histórico sobre \texttt{Aggregated}, que mezclaba esos GET con
-login, permanece documentado y produjo p95 media 57,500000 ms e IC95
-[26,456064; 88,543936] ms, y p99 media 624,000000 ms e IC95
-[116,881810; 1131,118190] ms; bajo esa población incorrecta p99 no cumplía.
+\textbf{Respuesta a PI1.} Sí, para el escenario observado en la campaña
+poblada post-evaluación, que constituye el cierre oficial de PI1. Se midieron
+50 usuarios durante cinco minutos en diez repeticiones independientes, con un
+dataset controlado de 20 reservas y ambas rutas de negocio:
+\texttt{GET /api/v1/reservas} y \texttt{GET /api/v1/reservas/\{id\}}.
+Las ocho repeticiones centrales r2--r9 contienen 59\,278 GET:
+44\,546 listados y 14\,732 consultas por id, con 0 respuestas HTTP 401 y
+0 respuestas HTTP 5xx. Para p95 se obtiene media 9,952465 ms, desviación
+muestral 0,426872 ms e IC95 [9,595591; 10,309339] ms; para p99, media
+19,744969 ms, desviación muestral 3,437219 ms e IC95
+[16,871382; 22,618556] ms. Los límites superiores satisfacen
+$10,309339 < 500$ ms y $22,618556 < 750$ ms, respectivamente, según la
+regla t de ocho muestras del diseño existente.
+
+El software desplegado fue
+\texttt{dd2e1923d7635857f4020c7ef5c8b6efee363d7a}. El analizador reconstruye
+los percentiles por repetición desde todos los eventos GET de negocio de
+\texttt{locust\_requests.csv}, sin filtrar por código HTTP, latencia ni
+éxito/fallo; login y refresh quedan fuera por pertenecer a Auth.
+Las fuentes oficiales son
+\path{../../experimentos/resultados/iso25010-eficiencia-poblada.csv} y
+\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/};
+el protocolo está en
+\path{../../experimentos/protocolo-e4-eficiencia-poblada.md}.
+La conclusión queda acotada al escenario, datos, carga y entorno medidos:
+20 reservas no implican representatividad universal ni reconstrucción exacta
+del dataset histórico. La campaña vacía del 30 de agosto se conserva como
+antecedente en la Sección~\ref{subsec:eficiencia-nominal}, sin constituir la
+respuesta definitiva a toda la población declarada.
 
 \textbf{PI2.} ¿Al fijar como variable manipulada una carga nominal de 50
 usuarios concurrentes durante una hora sobre las consultas autenticadas de
@@ -274,7 +281,24 @@ la desviación se declara como amenaza a la comparabilidad.
 \subsection{Eficiencia nominal: 50 usuarios durante cinco minutos}
 \label{subsec:eficiencia-nominal}
 
-Las diez repeticiones terminaron con código cero y registraron 0 respuestas HTTP
+\subsubsection{Cierre post-evaluación poblado}
+
+La respuesta oficial a PI1 de la
+Sección~\ref{subsec:preguntas-investigacion} utiliza la campaña poblada:
+diez repeticiones con 74\,098 GET, incluidos 55\,800 listados y 18\,298
+consultas por id, con 0 HTTP 401 y 0 HTTP 5xx. Sus estadísticos centrales y
+la comparación con ambos umbrales se presentan allí para evitar duplicación.
+El dataset controlado de 20 reservas conserva el SHA-256
+\texttt{f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78}.
+
+\subsubsection{Antecedente histórico: campaña del 30 de agosto}
+
+La campaña original utilizó un dataset vacío y no ejercitó
+\texttt{GET /api/v1/reservas/\{id\}}. Esta amenaza de validez de constructo
+impide generalizar sus resultados a toda la población declarada en PI1.
+Se conservan sus cifras y trazabilidad en
+\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m/}.
+Las diez repeticiones históricas terminaron con código cero y registraron 0 respuestas HTTP
 5xx. La Tabla~\ref{tab:repeticiones-eficiencia} transcribe el CSV verificado; r1
 y r10 se muestran porque forman parte de la evidencia, aunque no intervienen en
 el análisis central.
@@ -282,7 +306,7 @@ el análisis central.
 \begin{table}[ht]
   \centering
   \small
-  \caption{Diez repeticiones de eficiencia nominal medidas por Locust.}
+  \caption{Antecedente histórico: eficiencia nominal con dataset vacío medida por Locust.}
   \label{tab:repeticiones-eficiencia}
   \begin{tabular}{|c|r|r|r|r|c|}
     \hline
@@ -302,19 +326,20 @@ el análisis central.
   \end{tabular}
 \end{table}
 
-Las ocho repeticiones centrales suman 57\,241 consultas GET de la población
-formal. Para p95, los valores 24, 80, 24, 54, 31, 58, 27 y 66 ms producen media
+Las ocho repeticiones centrales históricas suman 57\,241 consultas GET de
+listado. Para p95, los valores 24, 80, 24, 54, 31, 58, 27 y 66 ms producen media
 45,500000 ms, desviación muestral 21,764978 ms e IC95
 [27,304023; 63,695977] ms. Como el límite superior 63,695977 ms es menor que
-500 ms, la eficiencia \textbf{cumple} para este
-escenario nominal. La conclusión no se extrapola a cargas, duraciones o entornos
-distintos.
+500 ms, satisface el umbral numérico en el escenario histórico vacío, sin
+resolver la cobertura de ambas rutas requerida por PI1.
 
 El p99 se analiza como indicador secundario. Los valores 40, 1000, 45, 740, 85,
 410, 110 y 540 ms producen media 371,250000 ms, desviación 364,032475 ms e IC95
 [66,911235; 675,588765] ms. El límite superior permanece bajo el umbral
-secundario de 750 ms, por lo que ese indicador también cumple. La corrección es
-exclusivamente de delimitación de población y no cambia campaña, raws ni umbral.
+secundario de 750 ms, pero la dispersión es elevada y la distancia de
+74,411235 ms al umbral no se interpreta como margen holgado. Este resultado
+histórico no constituye el cierre definitivo de PI1; sus raws y umbrales se
+conservan intactos.
 
 Para trazabilidad, el análisis histórico de la fila \texttt{Aggregated} mezcló
 57\,241 GET con 400 login en r2--r9. Produjo p95 media 57,500000 ms e IC95
@@ -326,7 +351,7 @@ decir, 0\%, frente al objetivo menor que 1\%. Esto demuestra ausencia de 5xx en
 el escenario observado; no demuestra disponibilidad anual, ausencia de otros
 errores ni fiabilidad absoluta.
 
-\subsubsection{Contraste con Prometheus}
+\subsubsection{Contraste histórico con Prometheus}
 
 Las series Prometheus de r2--r9 contienen p95 de 10,004445; 30,067916;
 9,949600; 21,021640; 13,281961; 22,143963; 11,358052 y 28,439426 ms. Su media es
@@ -630,9 +655,9 @@ solo características con evidencia disponible.
     \hline
     \textbf{Característica} & \textbf{Métrica} & \textbf{Objetivo} & \textbf{Evidencia/resultado} & \textbf{Estado} \\
     \hline
-    Eficiencia & p95 nominal, 50 usuarios & IC95 superior $<500$ ms & Dataset vacío; media 45,50 ms e IC95 [27,30; 63,70] ms & NO CONCLUYENTE \\
+    Eficiencia & p95 nominal, 50 usuarios & IC95 superior $<500$ ms & Campaña poblada; media 9,952465 ms e IC95 [9,595591; 10,309339] ms & CUMPLE en escenario medido \\
     \hline
-    Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Dataset vacío; media 371,25 ms; IC95 [66,91; 675,59] ms & NO CONCLUYENTE \\
+    Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Campaña poblada; media 19,744969 ms; IC95 [16,871382; 22,618556] ms & CUMPLE en escenario medido \\
     \hline
     Fiabilidad acotada & HTTP 5xx correctivo poblado, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,005870\%; IC95 [-0,002938; 0,014677]\% en r2--r9 & CUMPLE en escenario \\
     \hline
@@ -789,7 +814,7 @@ multicapa y gates CI/CD ligados al SHA. La
 arquitectura permite relacionar un cambio con pruebas, imagen y despliegue, y el
 manifiesto hace detectables alteraciones en el conjunto experimental.
 
-Las limitaciones impiden una conclusión total. El p99 de eficiencia presenta
+Las limitaciones impiden una conclusión total. El p99 histórico de eficiencia presenta
 gran dispersión aunque cumple su umbral previo; la rampa contiene un máximo
 superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña histórica de
 fiabilidad registró decenas de miles de 401 por repetición; la primera campaña
@@ -897,6 +922,20 @@ vacío y 0 HTTP 5xx permanecen publicadas por separado; no se calcula
 disponibilidad a partir de ninguna de las tres.
 \textbf{Riesgo residual:} el tiempo apto frente al tiempo total sigue siendo
 desconocido.
+
+\subsubsection{Validez de constructo}
+
+\textbf{Amenaza:} la campaña histórica de PI1 usó un dataset vacío y no
+ejercitó \texttt{GET /api/v1/reservas/\{id\}}.
+\textbf{Efecto:} medir únicamente listados vacíos no representa todas las
+consultas autenticadas de solo lectura declaradas por la pregunta.
+\textbf{Mitigación aplicada:} la campaña poblada corrige esa degeneración
+para el cierre post-evaluación, con ambas rutas y 20 reservas controladas;
+el antecedente histórico y su alta dispersión se conservan por separado.
+\textbf{Riesgo residual:} no se reconstruyó exactamente el dataset histórico
+y no se afirma comparabilidad estricta entre poblaciones. Las 20 reservas
+no implican representatividad universal; las conclusiones de PI1 y PI2
+quedan acotadas al escenario, datos, carga y entorno medidos.
 
 \subsubsection{Validez externa}
 
@@ -1008,7 +1047,7 @@ cobertura configurados; la evidencia Mobile del HEAD permanece bajo 70\%, por
 lo que no se afirma cumplimiento global ni se atribuyen al HEAD cifras de un
 reporte anterior.
 
-La eficiencia nominal cumple los criterios p95 y p99 y no registró HTTP 5xx en
+La eficiencia nominal poblada cumple los criterios p95 y p99 y no registró HTTP 5xx en
 las muestras centrales; la rampa muestra picos de cola. La campaña correctiva
 poblada de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
 0,005870\,\% e IC95 [-0,002938; 0,014677]\,\%. Las diez repeticiones
