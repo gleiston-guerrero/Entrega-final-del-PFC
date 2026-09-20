@@ -45,31 +45,41 @@ modifican ni reinterpretan su alcance probatorio.
 ACTA-06 documenta una reunión contemporánea, pero la evidencia del PR #10 que
 allí se revisa pertenece al repositorio histórico
 `iavillamarin98-pred/ORA_entrega_F`, no al repositorio oficial actual.
+El documento fue corregido posteriormente el 17/09/2026 para declarar ese
+alcance historico y no presentar el PR #10 como evidencia del repositorio
+oficial actual.
 
 | Acta                  | Fecha      | Hora                  | Participantes                  | Tema principal                                                                                                                              | Evidencia                         |
 | --------------------- | ---------- | --------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| [ACTA-06](ACTA-06.md) | 15/09/2026 | 21:58–22:45 UTC-05:00 | Isaías Urbina, Iván Villamarín | Cierre del punto #7, revisión cruzada del PR #10 del repositorio histórico `iavillamarin98-pred/ORA_entrega_F` y organización de pendientes | [Evidencias](evidencias/acta-06/) |
-| [ACTA-07](ACTA-07.md) | 17/09/2026 | —                       | Isaías Urbina, Iván Villamarín | Revisión cruzada del PR #11 y proceso de revisión del PR #12 del repositorio oficial | [Evidencias](evidencias/acta-07/) |
+| [ACTA-06](ACTA-06.md) | 15/09/2026 | 21:58–22:45 UTC-05:00 | Isaías Urbina, Iván Villamarín | Cierre del punto #7, revisión del estado ya integrado del PR #10 del repositorio histórico `iavillamarin98-pred/ORA_entrega_F` y organización de pendientes | [Evidencias](evidencias/acta-06/) |
+| [ACTA-07](ACTA-07.md) | 17/09/2026 | Rango evidenciado: 19:00–21:38 UTC-05:00 | Isaías Urbina, Iván Villamarín | Revisión cruzada del PR #11 y proceso de revisión del PR #12 del repositorio oficial | [Evidencias](evidencias/acta-07/) |
 | [ACTA-08](ACTA-08.md) | 19/09/2026 | Primera evidencia: 23:05; última evidencia: 23:16 UTC-05:00 | Isaías Urbina, Iván Villamarín | Revisión cruzada del PR #29 del repositorio oficial y merge a `main` para evidencia de release final | [Evidencias](evidencias/acta-08/) |
 
 ### Evidencia asociada a ACTA-06
 
 La evidencia almacenada en [evidencias/acta-06/](evidencias/acta-06/) corresponde a elementos
-revisados durante la reunión:
+revisados durante la reunion como estado ya integrado del PR historico:
 
-- [meet-revision-pr10.png](evidencias/acta-06/meet-revision-pr10.png): sesión activa de Google Meet durante la revisión
-  técnica del PR #10 del repositorio histórico `iavillamarin98-pred/ORA_entrega_F`.
+- [meet-revision-pr10.png](evidencias/acta-06/meet-revision-pr10.png): sesion activa de Google Meet a las 22:14 durante la revision
+  del estado ya fusionado del PR #10 del repositorio historico `iavillamarin98-pred/ORA_entrega_F`.
 - [pr10-aprobado-mergeado.png](evidencias/acta-06/pr10-aprobado-mergeado.png): aprobación de `iavillamarin98-pred`,
-  integración del PR #10 histórico a `feature/entrega-4` y cierre de la solicitud.
+  integracion del PR #10 historico a `feature/entrega-4` y cierre de la solicitud, visibles a las 22:12 como eventos
+  ya ocurridos antes de la revision registrada en la captura.
 
 El ACTA-06 registra una reunión efectivamente realizada el 15/09/2026 y no se
 presenta como reconstrucción retrospectiva de actividades anteriores.
+Las capturas muestran 3 participantes conectados, pero solo permiten identificar
+nominalmente a Isaías Urbina e Iván Villamarín.
 
 ### Evidencia asociada a ACTA-07
 
 - [pr11-aprobado-repo-oficial.png](evidencias/acta-07/pr11-aprobado-repo-oficial.png): aprobación del PR #11 del repositorio oficial, con checks todavía en ejecución.
-- [pr12-creacion-reviewer.png](evidencias/acta-07/pr12-creacion-reviewer.png): creación del PR #12 hacia `feature/entrega-4` y selección de Iván como reviewer.
-- [meet-revision-pr12.png](evidencias/acta-07/meet-revision-pr12.png): revisión del PR #12 durante la sesión, con la opción `Approve` seleccionada antes de enviar; el estado final del PR quedó posteriormente registrado como `APPROVED` por `ivillamarinc` y fue integrado mediante el merge commit `29ee3d8`.
+- [meet-revision-pr12.png](evidencias/acta-07/meet-revision-pr12.png): creacion del PR #12 hacia `feature/entrega-4` y seleccion de Ivan como reviewer; la pantalla visible corresponde a `Open a pull request`.
+- [pr12-creacion-reviewer.png](evidencias/acta-07/pr12-creacion-reviewer.png): revision del PR #12 durante la sesion a las 21:38, con la opcion `Approve` seleccionada antes de enviar; el estado final del PR quedo posteriormente registrado como `APPROVED` por `ivillamarinc` y fue integrado mediante el merge commit `29ee3d8`.
+
+Nota de formato: `pr12-creacion-reviewer.png` conserva su nombre historico, pero
+sus magic bytes corresponden a contenido JPEG. No fue convertido ni renombrado
+en esta correccion documental para preservar trazabilidad.
 
 ### Evidencia asociada a ACTA-08
 
