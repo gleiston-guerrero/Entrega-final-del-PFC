@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences
+GET,GET /api/v1/reservas,"CatchResponseError('HTTP esperado 200, recibido 500')",1
