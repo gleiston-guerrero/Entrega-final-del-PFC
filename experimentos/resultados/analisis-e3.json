@@ -1,15 +1,21 @@
 {
   "security": {
-    "total": 21,
-    "correct": 21,
+    "total": 7,
+    "correct": 7,
     "proportion": 1.0,
     "wilson95": [
-      0.845360981013798,
+      0.6456695648259365,
       1.0
     ],
     "false_allowed": 0,
     "false_rejected": 0,
     "flaky": false,
+    "repetitions": 3,
+    "repeatability": {
+      "successful_repetitions": 3,
+      "identical_case_set": true,
+      "identical_results": true
+    },
     "decision": "CUMPLE",
     "unfavorable": []
   },
@@ -105,14 +111,14 @@
         "metric": "lines",
         "n": 3,
         "values": [
-          84.35857805255023,
-          84.35857805255023,
-          84.35857805255023
+          84.36341161928307,
+          84.36341161928307,
+          84.36341161928307
         ],
-        "mean": 84.35857805255023,
+        "mean": 84.36341161928307,
         "sample_sd": 0.0,
-        "ci95_low": 84.35857805255023,
-        "ci95_high": 84.35857805255023,
+        "ci95_low": 84.36341161928307,
+        "ci95_high": 84.36341161928307,
         "threshold": 80.0,
         "commands_ok": true,
         "decision": "CUMPLE"
@@ -122,14 +128,14 @@
         "metric": "lines",
         "n": 3,
         "values": [
-          84.0523509452254,
-          84.0523509452254,
-          84.0523509452254
+          84.06007751937985,
+          84.06007751937985,
+          84.06007751937985
         ],
-        "mean": 84.0523509452254,
+        "mean": 84.06007751937985,
         "sample_sd": 0.0,
-        "ci95_low": 84.0523509452254,
-        "ci95_high": 84.0523509452254,
+        "ci95_low": 84.06007751937985,
+        "ci95_high": 84.06007751937985,
         "threshold": 70.0,
         "commands_ok": true,
         "decision": "CUMPLE"
@@ -203,6 +209,78 @@
         "decision": "CUMPLE"
       }
     ],
+    "complexity": {
+      "auth": {
+        "line_missed": 102,
+        "line_covered": 751,
+        "line_percentage": 88.042203985932,
+        "complexity_missed": 133,
+        "complexity_covered": 219,
+        "complexity_total": 352,
+        "classes": 56,
+        "complexity_mean_per_class": 6.285714285714286,
+        "complexity_max_class": 34,
+        "complexity_max_classes": [
+          "ec.edu.uteq.scli.auth_service.application.service.PasswordRecoveryService"
+        ]
+      },
+      "usuarios": {
+        "line_missed": 329,
+        "line_covered": 1735,
+        "line_percentage": 84.06007751937985,
+        "complexity_missed": 239,
+        "complexity_covered": 619,
+        "complexity_total": 858,
+        "classes": 107,
+        "complexity_mean_per_class": 8.018691588785046,
+        "complexity_max_class": 68,
+        "complexity_max_classes": [
+          "ec.edu.scli.usuarios.infrastructure.bootstrap.InitialProfilesBootstrap"
+        ]
+      },
+      "academico": {
+        "line_missed": 472,
+        "line_covered": 2331,
+        "line_percentage": 83.16089903674634,
+        "complexity_missed": 260,
+        "complexity_covered": 944,
+        "complexity_total": 1204,
+        "classes": 141,
+        "complexity_mean_per_class": 8.539007092198581,
+        "complexity_max_class": 57,
+        "complexity_max_classes": [
+          "ec.edu.scli.academico.security.PoliticaAmbitoAcademico"
+        ]
+      },
+      "reservas": {
+        "line_missed": 506,
+        "line_covered": 2730,
+        "line_percentage": 84.36341161928307,
+        "complexity_missed": 711,
+        "complexity_covered": 1318,
+        "complexity_total": 2029,
+        "classes": 203,
+        "complexity_mean_per_class": 9.995073891625616,
+        "complexity_max_class": 178,
+        "complexity_max_classes": [
+          "ec.edu.scli.reservas.application.service.PlanificacionAgregadaService"
+        ]
+      },
+      "gateway": {
+        "line_missed": 15,
+        "line_covered": 120,
+        "line_percentage": 88.88888888888889,
+        "complexity_missed": 17,
+        "complexity_covered": 44,
+        "complexity_total": 61,
+        "classes": 9,
+        "complexity_mean_per_class": 6.777777777777778,
+        "complexity_max_class": 28,
+        "complexity_max_classes": [
+          "ec.edu.uteq.scli.api_gateway.routes.GatewayRoutes"
+        ]
+      }
+    },
     "decision": "NO CUMPLE",
     "unfavorable": [
       {
@@ -227,42 +305,60 @@
   "compatibility": {
     "motors": {
       "chromium": {
-        "total": 24,
-        "passed": 24,
+        "total": 8,
+        "passed": 8,
         "failed": 0,
         "skipped": 0,
         "flaky": 0,
         "proportion": 1.0,
         "wilson95": [
-          0.862023795269197,
-          1.0
+          0.6755924350132556,
+          1.0000000000000002
         ],
+        "repetitions": 3,
+        "repeatability": {
+          "successful_repetitions": 3,
+          "identical_summary": true,
+          "case_identity_verifiable": false
+        },
         "decision": "CUMPLE"
       },
       "firefox": {
-        "total": 24,
-        "passed": 24,
+        "total": 8,
+        "passed": 8,
         "failed": 0,
         "skipped": 0,
         "flaky": 0,
         "proportion": 1.0,
         "wilson95": [
-          0.862023795269197,
-          1.0
+          0.6755924350132556,
+          1.0000000000000002
         ],
+        "repetitions": 3,
+        "repeatability": {
+          "successful_repetitions": 3,
+          "identical_summary": true,
+          "case_identity_verifiable": false
+        },
         "decision": "CUMPLE"
       },
       "webkit": {
-        "total": 24,
-        "passed": 24,
+        "total": 8,
+        "passed": 8,
         "failed": 0,
         "skipped": 0,
         "flaky": 0,
         "proportion": 1.0,
         "wilson95": [
-          0.862023795269197,
-          1.0
+          0.6755924350132556,
+          1.0000000000000002
         ],
+        "repetitions": 3,
+        "repeatability": {
+          "successful_repetitions": 3,
+          "identical_summary": true,
+          "case_identity_verifiable": false
+        },
         "decision": "CUMPLE"
       }
     },

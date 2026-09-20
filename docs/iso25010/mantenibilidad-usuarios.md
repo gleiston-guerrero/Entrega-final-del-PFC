@@ -50,9 +50,9 @@ SHA `fa7d75ec0f75573938bf46ed6a68f0aee99606ac`.
 | Componente | Métrica | Media/IC95 | Umbral | Decisión |
 |---|---|---:|---:|---|
 | Auth | Líneas | 88,042203985932 % | 70 % | CUMPLE |
-| Usuarios | Líneas | 84,0523509452254 % | 70 % | CUMPLE |
+| Usuarios | Líneas | 84,06007751937985 % | 70 % | CUMPLE |
 | Académico | Líneas | 83,16089903674634 % | 70 % | CUMPLE |
-| Reservas | Líneas | 84,35857805255023 % | 80 % | CUMPLE |
+| Reservas | Líneas | 84,36341161928307 % | 80 % | CUMPLE |
 | Reservas | Ramas | 56,72559569561876 % | 48 % | CUMPLE |
 | Gateway | Líneas | 88,88888888888889 % | 70 % | CUMPLE |
 | Web | Líneas (HISTÓRICA / E3) | 89,91 % | 70 % | CUMPLE |
@@ -64,6 +64,19 @@ SHA `fa7d75ec0f75573938bf46ed6a68f0aee99606ac`.
 Las cifras Web de la tabla anterior pertenecen a una medición E3 previa que no
 incluía la totalidad de `src/` y quedan marcadas como **HISTÓRICA / E3**; no
 representan la cobertura vigente del cliente Web.
+
+Las cinco coberturas backend se derivan de `LINE_COVERED / (LINE_COVERED +
+LINE_MISSED)` en los `jacoco.csv` canónicos de cada repetición. La complejidad
+JaCoCo se presenta solamente como evidencia descriptiva: Auth 133 missed, 219
+covered, total 352, 56 clases, media 6,285714 y máximo 34
+(`PasswordRecoveryService`); Usuarios 239, 619, 858, 107, 8,018692 y 68
+(`InitialProfilesBootstrap`); Académico 260, 944, 1204, 141, 8,539007 y 57
+(`PoliticaAmbitoAcademico`); Reservas 711, 1318, 2029, 203, 9,995074 y 178
+(`PlanificacionAgregadaService`); Gateway 17, 44, 61, 9, 6,777778 y 28
+(`GatewayRoutes`). No se interpreta el porcentaje de complejidad cubierta como
+puntuación de calidad. El prerregistro contempló Checkstyle, pero el paquete E3
+canónico no preserva una salida cuantitativa con exit code para reconstruirlo;
+el CI actual, si se cita, es evidencia posterior separada.
 
 ## MEDICIÓN WEB VIGENTE
 

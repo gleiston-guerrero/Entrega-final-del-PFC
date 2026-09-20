@@ -1,0 +1,11 @@
+escenario,repeticion,usuarios,duracion,total_requests,failures,failure_rate_percent,p95_ms,p99_ms,valida,observacion
+eficiencia_nominal_50u_5m_poblada,1,50,5m,7381,0,0.0,11.112583,22.72256,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-01/locust_requests.csv; listado=5644; by_id=1737; 401=0
+eficiencia_nominal_50u_5m_poblada,2,50,5m,7412,0,0.0,10.623542,23.206113,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-02/locust_requests.csv; listado=5605; by_id=1807; 401=0
+eficiencia_nominal_50u_5m_poblada,3,50,5m,7342,0,0.0,10.141351,17.435166,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-03/locust_requests.csv; listado=5514; by_id=1828; 401=0
+eficiencia_nominal_50u_5m_poblada,4,50,5m,7364,0,0.0,9.7515,17.247952,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-04/locust_requests.csv; listado=5586; by_id=1778; 401=0
+eficiencia_nominal_50u_5m_poblada,5,50,5m,7418,0,0.0,9.940737,20.343033,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-05/locust_requests.csv; listado=5595; by_id=1823; 401=0
+eficiencia_nominal_50u_5m_poblada,6,50,5m,7446,0,0.0,9.572328,17.766397,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-06/locust_requests.csv; listado=5576; by_id=1870; 401=0
+eficiencia_nominal_50u_5m_poblada,7,50,5m,7434,0,0.0,10.044374,24.397058,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-07/locust_requests.csv; listado=5555; by_id=1879; 401=0
+eficiencia_nominal_50u_5m_poblada,8,50,5m,7444,0,0.0,9.257392,14.820793,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-08/locust_requests.csv; listado=5582; by_id=1862; 401=0
+eficiencia_nominal_50u_5m_poblada,9,50,5m,7418,0,0.0,10.288494,22.74324,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-09/locust_requests.csv; listado=5533; by_id=1885; 401=0
+eficiencia_nominal_50u_5m_poblada,10,50,5m,7439,0,0.0,9.431054,16.729927,si,raw=experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-10/locust_requests.csv; listado=5610; by_id=1829; 401=0

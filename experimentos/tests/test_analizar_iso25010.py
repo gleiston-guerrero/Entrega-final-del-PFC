@@ -8,6 +8,7 @@ from experimentos.analizar_iso25010 import (
     build_corrective_document_blocks,
     read_corrective_reliability_population,
     read_efficiency_population,
+    read_populated_efficiency_population,
 )
 
 
@@ -381,6 +382,54 @@ class CorrectiveReliabilityPopulationTest(unittest.TestCase):
                     rows,
                     root,
                 )
+
+
+class PopulatedEfficiencyPopulationTest(unittest.TestCase):
+    fields = ["request_type", "name", "response_time_ms", "status_code"]
+
+    def write_population(self, root, events, *, valid=True):
+        target = root / "eficiencia_nominal_50u_5m_poblada" / "rep-02"
+        target.mkdir(parents=True)
+        for name in ("locust_stats.csv", "locust_stats_history.csv", "locust_failures.csv",
+                     "locust_exceptions.csv", "locust.log", "locust-report.html",
+                     "locust-final-stats.json", "deployed-software-sha.txt", "harness-sha256.txt",
+                     "dataset-sha256.txt", "SHA256SUMS"):
+            (target / name).write_text("evidence\n", encoding="utf-8")
+        (target / "metadata.json").write_text(__import__("json").dumps({
+            "duration_completed": valid, "evidence_complete": valid,
+            "dataset_verified": valid, "software_sha_consistent": valid,
+            "harness_consistent": valid}), encoding="utf-8")
+        with (target / "locust_requests.csv").open("w", newline="", encoding="utf-8") as stream:
+            writer = csv.DictWriter(stream, fieldnames=self.fields); writer.writeheader(); writer.writerows(events)
+
+    def test_combines_both_gets_excludes_auth_and_preserves_5xx(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_population(root, [
+                {"request_type":"GET", "name":"GET /api/v1/reservas", "response_time_ms":"10", "status_code":"200"},
+                {"request_type":"GET", "name":"GET /api/v1/reservas/{id}", "response_time_ms":"20", "status_code":"500"},
+                {"request_type":"POST", "name":"POST /api/v1/auth/login", "response_time_ms":"999", "status_code":"200"},
+                {"request_type":"POST", "name":"POST /api/v1/auth/refresh", "response_time_ms":"999", "status_code":"200"},
+            ])
+            result = read_populated_efficiency_population(root, [2])[2]
+            self.assertEqual((result["total_get"], result["listado"], result["by_id"], result["http_5xx"]), (2, 1, 1, 1))
+            self.assertEqual((result["p95_ms"], result["p99_ms"]), (20.0, 20.0))
+
+    def test_degenerate_or_unclassified_population_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_population(root, [{"request_type":"GET", "name":"GET /api/v1/reservas", "response_time_ms":"10", "status_code":"200"}])
+            with self.assertRaisesRegex(ValueError, "población degenerada"):
+                read_populated_efficiency_population(root, [2])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_population(root, [
+                {"request_type":"GET", "name":"GET /api/v1/reservas", "response_time_ms":"10", "status_code":"200"},
+                {"request_type":"GET", "name":"GET /api/v1/reservas/{id}", "response_time_ms":"20", "status_code":"200"},
+                {"request_type":"GET", "name":"GET /api/v1/otra", "response_time_ms":"30", "status_code":"200"},
+            ])
+            with self.assertRaisesRegex(ValueError, "no clasificada"):
+                read_populated_efficiency_population(root, [2])
 
 
 if __name__ == "__main__":

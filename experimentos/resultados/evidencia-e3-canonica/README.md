@@ -20,10 +20,10 @@ anteriores, que permanecen separadas y etiquetadas como antecedentes.
 | `e3_study.json` | Identifica el SHA y la rama comunes del estudio. |
 | `e3_*/campaign.json` | Registra metadatos consolidados y las tres repeticiones de cada campaña. |
 | `e3_*/rep-NN/manifest.json` | Registra SHA, entorno, comando, estado e integridad de cada repetición. |
-| `e3_seguridad/rep-NN/decisiones.csv` | Fuente que `analizar_e3.py` usa para calcular 21/21, errores de decisión y Wilson 95 %. |
-| `e3_compatibilidad/rep-NN/<motor>/summary.json` | Fuente que el analizador usa para sumar aprobados, fallidos, omitidos y flaky por motor. |
-| `e3_mantenibilidad/rep-NN/metricas.csv` | Fuente que el analizador usa para medias, desviación, IC95, umbrales y decisiones. |
-| `e3_mantenibilidad/rep-NN/<servicio>/report/jacoco.csv` | Reporte fuente compacto de cobertura para los cinco servicios Java. |
+| `e3_seguridad/rep-NN/decisiones.csv` | Fuente de siete decisiones distintas. El analizador valida los mismos casos y resultados en tres repeticiones, informa repetibilidad 3/3 por separado y calcula Wilson sobre n=7, no n=21. |
+| `e3_compatibilidad/rep-NN/<motor>/summary.json` | Fuente de ocho casos distintos por motor. Las tres ejecuciones se usan para repetibilidad; Wilson se calcula sobre n=8 por motor, no n=24. |
+| `e3_mantenibilidad/rep-NN/metricas.csv` | Conserva porcentajes históricos, umbrales y códigos de salida de E3; no se modifica para adecuarlo al análisis posterior. |
+| `e3_mantenibilidad/rep-NN/<servicio>/report/jacoco.csv` | Fuente vigente #32 para recalcular líneas de los cinco servicios Java desde `LINE_MISSED` y `LINE_COVERED`, y para derivar contadores `COMPLEXITY`; no se alteran los CSV históricos. |
 | `e3_mantenibilidad/rep-NN/web/report/coverage-summary.json` | Reporte fuente compacto de cobertura Web. |
 | `e3_mantenibilidad/rep-NN/android/report/jacocoTestReport.xml` | Reporte fuente compacto de cobertura Android. |
 | `MANIFEST-SHA256.txt` | Hash SHA-256 de cada archivo incluido en este paquete, salvo el propio manifiesto. |

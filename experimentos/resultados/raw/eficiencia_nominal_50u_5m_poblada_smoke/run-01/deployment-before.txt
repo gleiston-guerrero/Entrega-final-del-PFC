@@ -1,0 +1,35 @@
+container=scli-prod-api-gateway-1
+Config.Image=ghcr.io/gleiston-guerrero/scli-api-gateway:dd2e1923d7635857f4020c7ef5c8b6efee363d7a
+Image ID=sha256:57c3678c4df29b9323bcbedf872131ecfeeb4314fba8c23da2821195f31edbab
+compose project=scli-prod
+compose working_dir=/home/ubuntu/ORA_entrega_F
+compose config_files=/home/ubuntu/ORA_entrega_F/docker-compose.prod.yml,/tmp/issue31-image-override.yml
+
+container=scli-prod-auth-service-1
+Config.Image=ghcr.io/gleiston-guerrero/scli-auth-service:dd2e1923d7635857f4020c7ef5c8b6efee363d7a
+Image ID=sha256:cc0de1627221d006f542d3a112f642fd72c32e5de45d3f6130bec8baa2fbb0cc
+compose project=scli-prod
+compose working_dir=/home/ubuntu/ORA_entrega_F
+compose config_files=/home/ubuntu/ORA_entrega_F/docker-compose.prod.yml,/tmp/issue31-image-override.yml
+
+container=scli-prod-usuarios-service-1
+Config.Image=ghcr.io/gleiston-guerrero/scli-usuarios-service:dd2e1923d7635857f4020c7ef5c8b6efee363d7a
+Image ID=sha256:02df1b521092acdc7c3a1ea8aea7e3827ac6e629cb6e7947fdabef837db82aa6
+compose project=scli-prod
+compose working_dir=/home/ubuntu/ORA_entrega_F
+compose config_files=/home/ubuntu/ORA_entrega_F/docker-compose.prod.yml,/tmp/issue31-image-override.yml
+
+container=scli-prod-academico-laboratorios-service-1
+Config.Image=ghcr.io/gleiston-guerrero/scli-academico-laboratorios-service:dd2e1923d7635857f4020c7ef5c8b6efee363d7a
+Image ID=sha256:bfadbd55db2467e4c64604902b19dcc198499c3dbfc6793af74a376be58e6577
+compose project=scli-prod
+compose working_dir=/home/ubuntu/ORA_entrega_F
+compose config_files=/home/ubuntu/ORA_entrega_F/docker-compose.prod.yml,/tmp/issue31-image-override.yml
+
+container=scli-prod-reservas-solicitudes-service-1
+Config.Image=ghcr.io/gleiston-guerrero/scli-reservas-solicitudes-service:dd2e1923d7635857f4020c7ef5c8b6efee363d7a
+Image ID=sha256:d9907bf2db85e395a8e44479888db4b92185358827530003ce3c3096aa1bbabe
+compose project=scli-prod
+compose working_dir=/home/ubuntu/ORA_entrega_F
+compose config_files=/home/ubuntu/ORA_entrega_F/docker-compose.prod.yml,/tmp/issue31-image-override.yml
+

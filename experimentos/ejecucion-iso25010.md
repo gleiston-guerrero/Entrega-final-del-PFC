@@ -57,26 +57,40 @@ Docker, estado de CockroachDB, logs de Reservas, huella del despliegue y manifie
 entorno. `metadata.json` registra rama, SHA, estado Git, versiones, ventana UTC, duración
 real y planificada, código real de Locust y señales separadas de ejecución y evidencia.
 
-`raw/.gitignore` permite exclusivamente los artefactos canónicos seleccionados de
-Entrega 4. Los HTML y los historiales completos de Locust permanecen en la VM porque
-son derivados voluminosos. La procedencia, resultados y alcance de la selección se
-documentan en `resultados/RESUMEN-ISO25010-E4.md`; `resultados/SHA256SUMS` permite
-verificar su integridad.
+Las campañas históricas de Entrega 4 pueden conservar una selección canónica
+compacta cuando los derivados completos permanecen en el entorno de ejecución.
+La campaña correctiva `eficiencia_nominal_50u_5m_poblada`, en cambio, conserva
+dentro de su árbol versionable los artefactos capturados por repetición,
+incluidos eventos individuales, estadísticas, historial, reporte HTML, logs,
+metadata y trazas de integridad.
+
+La procedencia y alcance de cada paquete se documentan en
+`resultados/RESUMEN-ISO25010-E4.md`. La campaña poblada de eficiencia dispone
+además de `resultados/iso25010-eficiencia-poblada.sha256`, que cubre el derivado
+y su paquete de evidencia.
 
 ## Obtener métricas reales
 
-Para PI1, los percentiles se toman por identidad del request en `locust_stats.csv`.
-Pertenecen a la población `GET /api/v1/reservas` y
-`GET /api/v1/reservas/{id}` cuando tengan observaciones. No pertenece a ella
-`POST /api/v1/auth/login`, porque es una operación de Auth y no una consulta de solo
-lectura de Reservas/Solicitudes. La selección no filtra por código HTTP, latencia ni
-éxito/fallo: toda respuesta de los GET incluidos permanece en la población.
+Para PI1, la campaña histórica conserva el análisis por identidad del request en
+`locust_stats.csv` y la fila `Aggregated` únicamente como antecedente. Esta última
+mezcla GET de Reservas/Solicitudes con operaciones de autenticación y no define la
+población del cierre correctivo.
 
-La instrucción histórica tomaba el total, p95 y p99 de la fila `Aggregated`. Para PI1
-ese método es incorrecto porque mezcla los GET de Reservas/Solicitudes con el login.
-Se conserva esta explicación para poder reproducir el análisis histórico, pero el
-resultado oficial corregido se obtiene de las filas GET anteriores y se contrasta con
-`prometheus-p95.promql`.
+En la campaña post-evaluación `eficiencia_nominal_50u_5m_poblada`, el resultado
+reproducible se reconstruye desde cada evento de `locust_requests.csv`. Pertenecen
+a la población todos los eventos:
+
+- `GET /api/v1/reservas`;
+- `GET /api/v1/reservas/{id}`.
+
+Login y refresh pertenecen al harness y quedan fuera de PI1. No se filtran
+observaciones por código HTTP, latencia ni éxito/fallo: toda respuesta de los dos
+GET incluidos permanece en la población. p95 y p99 se calculan mediante
+nearest-rank dentro de cada repetición.
+
+La unidad inferencial posterior es la repetición completa: r2--r9 forman `n=8`;
+r1 y r10 se conservan como evidencia. Las solicitudes individuales no se tratan
+como réplicas estadísticas independientes.
 
 Los fallos de Locust no se copian automáticamente a `failures`: pueden incluir errores
 de contenido o conectividad. Para Freddy, `failures` significa exclusivamente respuestas

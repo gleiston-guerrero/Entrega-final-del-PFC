@@ -62,12 +62,16 @@ La campaña oficial ejecutó tres repeticiones completas por motor sobre el SHA
 
 | Motor | Aprobados | Fallidos | Omitidos | Flaky | IC95 Wilson | Decisión |
 |---|---:|---:|---:|---:|---|---|
-| Chromium | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| Firefox | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| WebKit | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
+| Chromium | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| Firefox | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| WebKit | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
 
-La decisión experimental global es **CUMPLE** dentro de la suite, versiones de
-los motores y entorno ensayados. No demuestra compatibilidad universal ni
+Cada motor tiene tres resúmenes exitosos e idénticos; se separa 3/3 de la
+estimación Wilson basada en ocho casos distintos. El paquete compacto no
+conserva identificadores individuales para verificar retrospectivamente la
+identidad de cada caso. La decisión experimental acredita solo comportamiento
+cross-browser dentro de la suite, versiones de motores y entorno ensayados: no
+demuestra la característica ISO completa de coexistencia/interoperabilidad ni
 reemplaza el antecedente Android/API 29. Véanse
 [`analisis-e3.json`](../../experimentos/resultados/analisis-e3.json) y la
 [`matriz de trazabilidad`](../../experimentos/resultados/TRAZABILIDAD-E3-E4.md).

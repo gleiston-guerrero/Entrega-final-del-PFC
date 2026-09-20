@@ -94,18 +94,22 @@ prerregistradas por repetición, para 21 observaciones binarias en total.
 
 | Indicador | Resultado |
 |---|---:|
-| Decisiones correctas | 21/21 |
+| Casos distintos correctos | 7/7 |
 | Proporción observada | 1,0 |
-| IC95 Wilson | [0,845360981013798; 1,0] |
+| IC95 Wilson (n=7) | [0,6456695648259365; 1,0] |
 | Accesos incorrectamente permitidos | 0 |
 | Accesos incorrectamente rechazados | 0 |
 | Flaky | 0 |
-| Decisión | **CUMPLE** |
+| Repetibilidad | 3/3; mismo conjunto y mismos resultados |
+| Decisión | **CUMPLE en alcance dinámico reducido** |
 
-El resultado **CUMPLE** dentro de la matriz dinámica, fixtures, Gateway y entorno
-ensayados. No garantiza seguridad universal ni reemplaza las limitaciones de la
-auditoría estática anterior. El 111/111 histórico mide cobertura JWT estática;
-el 21/21 oficial mide decisiones HTTP dinámicas y no comparte su denominador.
+El resultado **CUMPLE** dentro de las siete decisiones dinámicas, fixtures,
+Gateway y entorno ensayados. Las tres repeticiones son deterministas: no se
+sumaron como 21 observaciones independientes. No garantiza seguridad universal
+ni reemplaza las limitaciones de la auditoría estática anterior. Las 198 filas
+de la matriz son antecedente estático/análisis de superficie, no pruebas
+dinámicas; las rutas dinámicas se limitan a login, reservas y solicitudes,
+incluidas revisión y propuesta.
 La fuente consolidada es
 [`analisis-e3.json`](../../experimentos/resultados/analisis-e3.json) y su cadena
 de evidencia se documenta en

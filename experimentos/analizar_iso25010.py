@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
+import json
 import math
 import statistics
 from collections import defaultdict
@@ -28,6 +30,7 @@ T_CRITICAL_95_DF7 = 2.364624251
 EXPECTED_REPETITIONS = set(range(1, 11))
 ANALYZED_REPETITIONS = set(range(2, 10))
 EFFICIENCY_SCENARIO = "eficiencia_nominal_50u_5m"
+POPULATED_EFFICIENCY_SCENARIO = "eficiencia_nominal_50u_5m_poblada"
 
 LEGACY_RELIABILITY_SCENARIO = "fiabilidad_nominal_50u_1h_refresh"
 POPULATED_RELIABILITY_SCENARIO = "fiabilidad_nominal_50u_1h_refresh_poblada"
@@ -71,6 +74,11 @@ def parse_args() -> argparse.Namespace:
         "--emit-latex",
         action="store_true",
         help="Emite la fila LaTeX E2 reconstruida directamente desde raw.",
+    )
+    parser.add_argument(
+        "--write-populated-efficiency",
+        type=Path,
+        help="Genera este CSV únicamente desde los diez raws reales de eficiencia poblada.",
     )
     return parser.parse_args()
 
@@ -221,6 +229,357 @@ def read_efficiency_population(
             "source": str(stats_path),
         }
     return measurements
+
+
+def percentile_nearest_rank(values: list[float], quantile: float) -> float:
+    """Percentil discreto: ceil(q*n), sin excluir ninguna observación."""
+    if not values:
+        raise ValueError("No existen observaciones para calcular percentiles")
+    return sorted(values)[math.ceil(quantile * len(values)) - 1]
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _first_sha256(path: Path) -> str:
+    try:
+        content = path.read_text(encoding="utf-8-sig").strip()
+    except OSError as error:
+        raise ValueError(f"{path}: no se pudo leer el hash") from error
+
+    if not content:
+        raise ValueError(f"{path}: archivo de hash vacío")
+
+    value = content.split()[0].lower()
+
+    if len(value) != 64 or any(
+        char not in "0123456789abcdef" for char in value
+    ):
+        raise ValueError(f"{path}: SHA-256 inválido")
+
+    return value
+
+
+def _verify_portable_sha256_manifest(directory: Path) -> None:
+    """Valida SHA256SUMS aunque el manifest conserve rutas del host original."""
+    manifest = directory / "SHA256SUMS"
+
+    try:
+        lines = manifest.read_text(encoding="utf-8-sig").splitlines()
+    except OSError as error:
+        raise ValueError(
+            f"{manifest}: manifest ausente o ilegible"
+        ) from error
+
+    if not lines:
+        raise ValueError(f"{manifest}: manifest vacío")
+
+    seen_names: set[str] = set()
+
+    for line_number, line in enumerate(lines, start=1):
+        if not line.strip():
+            continue
+
+        parts = line.split(maxsplit=1)
+        if len(parts) != 2:
+            raise ValueError(
+                f"{manifest}:{line_number}: entrada SHA256SUMS inválida"
+            )
+
+        expected, recorded_path = parts
+        expected = expected.lower()
+
+        if len(expected) != 64 or any(
+            char not in "0123456789abcdef" for char in expected
+        ):
+            raise ValueError(
+                f"{manifest}:{line_number}: SHA-256 inválido"
+            )
+
+        filename = Path(recorded_path.lstrip("*")).name
+
+        if not filename:
+            raise ValueError(
+                f"{manifest}:{line_number}: nombre de archivo inválido"
+            )
+
+        if filename in seen_names:
+            raise ValueError(
+                f"{manifest}:{line_number}: basename duplicado: {filename}"
+            )
+
+        seen_names.add(filename)
+
+        target = directory / filename
+
+        if not target.is_file():
+            raise ValueError(
+                f"{manifest}:{line_number}: evidencia ausente: {filename}"
+            )
+
+        actual = _sha256_file(target)
+
+        if actual != expected:
+            raise ValueError(
+                f"{manifest}:{line_number}: SHA-256 no coincide para {filename}"
+            )
+
+
+def read_populated_efficiency_population(
+    raw_root: Path, repetitions: list[int]
+) -> dict[int, dict[str, float | int | str]]:
+    """Reconstruye PI1 desde cada evento GET de la campaña poblada.
+
+    Login y refresh son necesarios para el harness, pero no pertenecen a la
+    población. Un 4xx/5xx sí pertenece y nunca se descarta.
+    """
+    measurements: dict[int, dict[str, float | int | str]] = {}
+    required = {"request_type", "name", "response_time_ms", "status_code"}
+
+    strict_campaign = (
+        len(repetitions) == len(EXPECTED_REPETITIONS)
+        and set(repetitions) == EXPECTED_REPETITIONS
+    )
+
+    campaign_values: dict[str, set[str]] = {
+        "evidence_git_sha": set(),
+        "deployed_software_sha": set(),
+        "dataset_sha256": set(),
+        "harness_manifest_sha256": set(),
+    }
+    request_raw_hashes: set[str] = set()
+
+    for repetition in repetitions:
+        directory = raw_root / POPULATED_EFFICIENCY_SCENARIO / f"rep-{repetition:02d}"
+        metadata_path = directory / "metadata.json"
+        events_path = directory / "locust_requests.csv"
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8-sig"))
+        except (OSError, ValueError) as error:
+            raise ValueError(f"{metadata_path}: metadata ausente o inválida") from error
+        required_evidence = {
+            "locust_stats.csv",
+            "locust_stats_history.csv",
+            "locust_failures.csv",
+            "locust_exceptions.csv",
+            "locust.log",
+            "locust-report.html",
+            "locust-final-stats.json",
+            "deployed-software-sha.txt",
+            "harness-sha256.txt",
+            "dataset-sha256.txt",
+            "SHA256SUMS",
+        }
+
+        if strict_campaign:
+            required_evidence.update(
+                {
+                    "dataset.csv",
+                    "evidence-git-sha.txt",
+                    "deployment-before.txt",
+                    "deployment-after.txt",
+                    "harness-before-sha256.txt",
+                    "harness-after-sha256.txt",
+                    "locust-exit-code.txt",
+                    "elapsed-seconds.txt",
+                    "start_utc.txt",
+                    "end_utc.txt",
+                }
+            )
+        absent = sorted(name for name in required_evidence if not (directory / name).is_file())
+        if absent:
+            raise ValueError(f"{directory}: evidencia incompleta: {', '.join(absent)}")
+        if not (metadata.get("duration_completed") is True and
+                metadata.get("evidence_complete") is True and
+                metadata.get("dataset_verified") is True and
+                metadata.get("software_sha_consistent") is True and
+                metadata.get("harness_consistent") is True):
+            raise ValueError(f"{directory}: repetición estructuralmente inválida")
+        if strict_campaign:
+            if metadata.get("scenario") != POPULATED_EFFICIENCY_SCENARIO:
+                raise ValueError(
+                    f"{directory}: escenario metadata inválido"
+                )
+
+            if metadata.get("mode") != "official":
+                raise ValueError(
+                    f"{directory}: mode debe ser official"
+                )
+
+            if metadata.get("repetition") != repetition:
+                raise ValueError(
+                    f"{directory}: número de repetición no coincide"
+                )
+
+            if metadata.get("planned_duration_seconds") != 300:
+                raise ValueError(
+                    f"{directory}: duración planificada distinta de 300 s"
+                )
+
+            if metadata.get("deployment_after_valid") is not True:
+                raise ValueError(
+                    f"{directory}: deployment_after_valid no es true"
+                )
+
+            if metadata.get("locust_exit_code") != 0:
+                raise ValueError(
+                    f"{directory}: locust_exit_code distinto de 0"
+                )
+
+            try:
+                recorded_exit = int(
+                    (directory / "locust-exit-code.txt")
+                    .read_text(encoding="utf-8-sig")
+                    .strip()
+                )
+            except (OSError, ValueError) as error:
+                raise ValueError(
+                    f"{directory}: locust-exit-code.txt inválido"
+                ) from error
+
+            if recorded_exit != 0:
+                raise ValueError(
+                    f"{directory}: locust-exit-code.txt distinto de 0"
+                )
+
+        if strict_campaign:
+            _verify_portable_sha256_manifest(directory)
+
+            evidence_git_sha = (
+                directory / "evidence-git-sha.txt"
+            ).read_text(
+                encoding="utf-8-sig"
+            ).strip()
+
+            deployed_software_sha = (
+                directory / "deployed-software-sha.txt"
+            ).read_text(
+                encoding="utf-8-sig"
+            ).strip()
+
+            if metadata.get("evidence_git_sha") != evidence_git_sha:
+                raise ValueError(
+                    f"{directory}: evidence_git_sha no coincide con archivo"
+                )
+
+            if metadata.get("deployed_software_sha") != deployed_software_sha:
+                raise ValueError(
+                    f"{directory}: deployed_software_sha no coincide con archivo"
+                )
+
+            dataset_sha = _sha256_file(directory / "dataset.csv")
+            captured_dataset_sha = _first_sha256(
+                directory / "dataset-sha256.txt"
+            )
+
+            if dataset_sha != captured_dataset_sha:
+                raise ValueError(
+                    f"{directory}: dataset.csv no coincide con dataset-sha256.txt"
+                )
+
+            harness_before = (
+                directory / "harness-before-sha256.txt"
+            ).read_bytes()
+
+            harness_after = (
+                directory / "harness-after-sha256.txt"
+            ).read_bytes()
+
+            if harness_before != harness_after:
+                raise ValueError(
+                    f"{directory}: harness cambió durante la repetición"
+                )
+
+            campaign_values["evidence_git_sha"].add(
+                evidence_git_sha
+            )
+            campaign_values["deployed_software_sha"].add(
+                deployed_software_sha
+            )
+            campaign_values["dataset_sha256"].add(
+                dataset_sha
+            )
+            campaign_values["harness_manifest_sha256"].add(
+                _sha256_file(directory / "harness-sha256.txt")
+            )
+
+            request_raw_hashes.add(
+                _sha256_file(events_path)
+            )
+
+        response_times: list[float] = []
+        listed = by_id = http_401 = http_5xx = 0
+        with events_path.open(encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            missing = required.difference(reader.fieldnames or [])
+            if missing:
+                raise ValueError(f"{events_path}: faltan columnas: {', '.join(sorted(missing))}")
+            for line, event in enumerate(reader, start=2):
+                method, name = event["request_type"], event["name"]
+                if method == "GET" and name not in {item[1] for item in EFFICIENCY_REQUESTS}:
+                    raise ValueError(f"{events_path}:{line}: ruta GET no clasificada: {name}")
+                if (method, name) not in EFFICIENCY_REQUESTS:
+                    continue
+                try:
+                    latency, status = float(event["response_time_ms"]), int(event["status_code"])
+                except ValueError as error:
+                    raise ValueError(f"{events_path}:{line}: evento inválido") from error
+                response_times.append(latency)
+                listed += name == "GET /api/v1/reservas"
+                by_id += name == "GET /api/v1/reservas/{id}"
+                http_401 += status == 401
+                http_5xx += 500 <= status <= 599
+        if listed == 0 or by_id == 0:
+            raise ValueError(f"{events_path}: población degenerada (listado={listed}, by-id={by_id})")
+        measurements[repetition] = {
+            "total_get": len(response_times), "listado": listed, "by_id": by_id,
+            "http_401": http_401, "http_5xx": http_5xx,
+            "p95_ms": percentile_nearest_rank(response_times, .95),
+            "p99_ms": percentile_nearest_rank(response_times, .99), "source": str(events_path),
+        }
+    if strict_campaign:
+        for label, values in campaign_values.items():
+            if len(values) != 1:
+                raise ValueError(
+                    f"{POPULATED_EFFICIENCY_SCENARIO}: "
+                    f"inconsistencia entre repeticiones en {label}: "
+                    f"{len(values)} valores distintos"
+                )
+
+        if len(request_raw_hashes) != len(EXPECTED_REPETITIONS):
+            raise ValueError(
+                f"{POPULATED_EFFICIENCY_SCENARIO}: "
+                "pseudorreplicación detectada; "
+                f"{len(request_raw_hashes)} raws distintos para "
+                f"{len(EXPECTED_REPETITIONS)} repeticiones"
+            )
+
+    return measurements
+
+
+def write_populated_efficiency_csv(raw_root: Path, output: Path) -> None:
+    """Escribe el derivado solamente tras validar los diez directorios raw."""
+    population = read_populated_efficiency_population(raw_root, sorted(EXPECTED_REPETITIONS))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fields = ["escenario", "repeticion", "usuarios", "duracion", "total_requests",
+              "failures", "failure_rate_percent", "p95_ms", "p99_ms", "valida", "observacion"]
+    with output.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer.writeheader()
+        for repetition in sorted(population):
+            item = population[repetition]
+            total = int(item["total_get"])
+            writer.writerow({"escenario": POPULATED_EFFICIENCY_SCENARIO, "repeticion": repetition,
+                             "usuarios": 50, "duracion": "5m", "total_requests": total,
+                             "failures": item["http_5xx"],
+                             "failure_rate_percent": 100 * int(item["http_5xx"]) / total,
+                             "p95_ms": item["p95_ms"], "p99_ms": item["p99_ms"], "valida": "si",
+                             "observacion": f"raw={item['source']}; listado={item['listado']}; by_id={item['by_id']}; 401={item['http_401']}"})
 
 
 def read_corrective_reliability_population(
@@ -516,6 +875,18 @@ def analyze_scenario(
         print_summary("historical_aggregated_p95_ms", historical_p95_values, 500.0, "ms")
         print_summary("historical_aggregated_p99_ms", historical_p99_values, 750.0, "ms")
 
+    if scenario == POPULATED_EFFICIENCY_SCENARIO:
+        repetitions = [int(row["_repetition"]) for row in selected]
+        population = read_populated_efficiency_population(raw_root, repetitions)
+        p95_values = [float(population[r]["p95_ms"]) for r in repetitions]
+        p99_values = [float(population[r]["p99_ms"]) for r in repetitions]
+        print("  procedencia oficial: locust_requests.csv; ambos GET de negocio, sin filtros por HTTP, éxito o latencia")
+        for repetition in repetitions:
+            item = population[repetition]
+            print(f"  r{repetition:02d}: n={item['total_get']}; listado={item['listado']}; by-id={item['by_id']}; "
+                  f"401={item['http_401']}; 5xx={item['http_5xx']}; p95={item['p95_ms']:.6f}; "
+                  f"p99={item['p99_ms']:.6f}; fuente={item['source']}")
+
     print_summary("failure_rate_percent", failure_rates, 1.0, "%")
     if scenario in RELIABILITY_RAW_DIRS:
         print_descriptive_summary("p95_ms", p95_values, "ms")
@@ -545,12 +916,15 @@ def print_summary(name: str, values: list[float], threshold: float, unit: str) -
 def main() -> int:
     args = parse_args()
     try:
+        raw_root = args.raw_root or args.csv_path.parent / "raw"
+        if args.write_populated_efficiency:
+            write_populated_efficiency_csv(raw_root, args.write_populated_efficiency)
+            print(f"Derivado creado desde raw: {args.write_populated_efficiency}")
+            return 0
         scenarios = read_rows(args.csv_path)
         if not scenarios:
             print("SIN DATOS: la plantilla no contiene escenarios")
             return 0
-        raw_root = args.raw_root or args.csv_path.parent / "raw"
-
         if args.emit_markdown or args.emit_latex:
             scenario = next(
                 (

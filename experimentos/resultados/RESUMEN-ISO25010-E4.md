@@ -2,17 +2,23 @@
 
 ## Proveniencia
 
-- Host de ejecución: `servidor-proyectos`.
-- Repositorio de ejecución: `/home/ffarinangog2/proyectos/miscli`.
-- Git SHA probado: `a47f0441f644bea5f52944b7a11216f37b2242de`.
-- Locust: 2.31.6, Python 3.11.10.
-- Evidencia recuperada sin modificar los originales de la VM.
-- Integridad: `SHA256SUMS` contiene los hashes de los archivos seleccionados.
+Este resumen integra campañas ejecutadas en momentos y SHA distintos. Cada
+sección identifica el software realmente medido y, cuando corresponde, separa
+ese SHA del commit posterior que únicamente produce o documenta la evidencia.
 
-Los reportes HTML y los CSV `locust_stats_history.csv` completos permanecen en la
-VM. No se versionan porque son derivados voluminosos; se preservan aquí los CSV
-agregados canónicos, fallos, excepciones, logs, metadata, consultas/resultados
-Prometheus, salud del entorno y estadísticas de contenedores.
+La campaña histórica inicial de eficiencia fue ejecutada en
+`a47f0441f644bea5f52944b7a11216f37b2242de`. Las campañas correctivas
+posteriores conservan sus propios SHA de software e instrumentación en sus
+artefactos y en las secciones correspondientes de este documento.
+
+Los paquetes históricos compactos conservan únicamente la selección canónica
+documentada para cada campaña. En cambio, la campaña correctiva poblada de
+eficiencia conserva dentro de su árbol versionable los artefactos capturados
+por repetición, incluidos `locust_requests.csv`, estadísticas, historial,
+reporte HTML, logs, metadata y trazas de integridad.
+
+La integridad se verifica mediante los `SHA256SUMS` por repetición y los
+manifiestos globales documentados para cada paquete.
 
 ## Rampa exploratoria 0 → 200 usuarios, 10 minutos
 
@@ -44,8 +50,8 @@ de solo lectura de Reservas/Solicitudes:
 | Métrica | n | Media | s muestral | IC95 | Decisión |
 | --- | ---: | ---: | ---: | --- | --- |
 | HTTP 5xx | 8 | 0 % | 0 % | [0; 0] % | CUMPLE `<1 %` |
-| p95 Locust | 8 | 45,500000 ms | 21,764978 ms | [27,304023; 63,695977] ms | CUMPLE `<500 ms` |
-| p99 Locust | 8 | 371,250000 ms | 364,032475 ms | [66,911235; 675,588765] ms | CUMPLE `<750 ms` |
+| p95 Locust | 8 | 45,500000 ms | 21,764978 ms | [27,304023; 63,695977] ms | Descriptivo; NO CONCLUYENTE para el escenario prerregistrado |
+| p99 Locust | 8 | 371,250000 ms | 364,032475 ms | [66,911235; 675,588765] ms | Descriptivo; NO CONCLUYENTE para el escenario prerregistrado |
 
 El cálculo usa `df=7` y `t(0,975;7)=2,364624251`. Las ocho repeticiones
 centrales contienen 57.241 observaciones de la población formal.
@@ -74,6 +80,96 @@ Como contraste, los resultados Prometheus p95 de r2–r9 producen:
 
 Locust y Prometheus miden en puntos distintos del sistema y no deben presentarse
 como métricas intercambiables.
+
+## Corrección post-evaluación: eficiencia nominal poblada
+
+La campaña histórica de eficiencia descrita arriba se conserva como
+antecedente. Debido a que su dataset de Reservas estaba vacío y no ejercitaba
+de forma efectiva `GET /api/v1/reservas/{id}`, no se utiliza como cierre
+definitivo de PI1.
+
+Para corregir esa limitación se ejecutó la campaña
+`eficiencia_nominal_50u_5m_poblada` con 50 usuarios, spawn-rate 10/s,
+5 minutos y diez repeticiones oficiales independientes.
+
+Se reutilizó una población controlada de 20 reservas. El `dataset.csv`
+conservó el mismo SHA-256 en las diez ejecuciones:
+
+`f2c07cc4698715939a9eaf6b47e694ccdf39fcd2de0502aec6164a90321f9b78`
+
+El software desplegado medido fue:
+
+`dd2e1923d7635857f4020c7ef5c8b6efee363d7a`
+
+La instrumentación utilizada para producir la evidencia corresponde a:
+
+`a60f523921d3be5a80d54f723997f60a613701ed`
+
+La población de PI1 incluye exclusivamente todos los eventos de negocio:
+
+- `GET /api/v1/reservas`;
+- `GET /api/v1/reservas/{id}`.
+
+Login y refresh pertenecen al harness y no forman parte de la población. No se
+eliminaron respuestas por código HTTP, latencia o resultado.
+
+Las diez repeticiones oficiales contienen 74.098 GET de negocio, con
+0 HTTP 401 y 0 HTTP 5xx. Sus diez archivos `locust_requests.csv` poseen diez
+SHA-256 distintos, por lo que no son copias byte a byte entre repeticiones.
+El dataset, software desplegado y harness permanecieron constantes.
+
+La unidad inferencial es cada repetición completa, no cada solicitud
+individual. El análisis principal conserva r1 y r10 como evidencia y utiliza
+exclusivamente r2--r9 (`n=8`). Estas ocho repeticiones contienen 59.278 GET de
+negocio.
+
+| Métrica | n | Media | s muestral | IC95 | Límite superior | Umbral | Decisión |
+|---|---:|---:|---:|---|---:|---:|---|
+| p95 GET negocio | 8 | 9,952465 ms | 0,426872 ms | [9,595590; 10,309339] ms | 10,309339 ms | <500 ms | **CUMPLE** |
+| p99 GET negocio | 8 | 19,744969 ms | 3,437219 ms | [16,871382; 22,618556] ms | 22,618556 ms | <750 ms | **CUMPLE** |
+
+El cálculo utiliza `df=7` y `t(0,975;7)=2,364624251`. La decisión aplica la
+regla conservadora definida previamente: el límite superior del IC95 debe
+permanecer por debajo del umbral.
+
+El derivado reproducible se genera directamente desde los eventos raw:
+
+`python3 -m experimentos.analizar_iso25010 experimentos/resultados/iso25010.csv --raw-root experimentos/resultados/raw --write-populated-efficiency experimentos/resultados/iso25010-eficiencia-poblada.csv`
+
+El analizador valida además:
+
+- integridad `SHA256SUMS` de cada repetición;
+- mismo Git SHA de instrumentación;
+- mismo software desplegado;
+- mismo dataset;
+- mismo harness;
+- `deployment_after_valid=true`;
+- `locust_exit_code=0`;
+- presencia de ambos GET de negocio;
+- ausencia de pseudorreplicación byte a byte entre los diez raws de solicitudes.
+
+La suite del analizador contiene 14 pruebas y pasa completamente, incluidas
+pruebas negativas de corrupción SHA-256, inconsistencia cruzada y
+pseudorreplicación.
+
+El manifest global
+`iso25010-eficiencia-poblada.sha256` contiene 328 entradas y verifica
+328/328 sin fallos. Su SHA-256 es:
+
+`3b6a953108f0077cce6ed4aa0047e699fe283fefe21df58976ff62bfc76d61da`
+
+Después de r3 y antes de r4 se detectó crecimiento del log `json-file` del
+OTel Collector hasta aproximadamente 7,2 GB. Se preservó una muestra y se
+truncó únicamente ese archivo de log entre ventanas. No se reiniciaron los
+servicios backend, no se modificaron volúmenes ni datos y ninguna repetición
+fue excluida o alterada por esta intervención.
+
+Los artefactos principales se conservan en:
+
+- `raw/eficiencia_nominal_50u_5m_poblada/rep-01..10/`;
+- `iso25010-eficiencia-poblada.csv`;
+- `iso25010-eficiencia-poblada.sha256`;
+- `../protocolo-e4-eficiencia-poblada.md`.
 
 ## Fiabilidad nominal, 50 usuarios, 1 hora
 
@@ -146,16 +242,33 @@ mayor o igual que 99,5 %**.
 
 ## Consolidación oficial E3: seguridad, mantenibilidad y compatibilidad
 
+> Corrección #32. Seguridad: las tres repeticiones verifican los mismos siete
+> casos y resultados; el intervalo Wilson usa 7/7, mientras 3/3 se informa como
+> repetibilidad. Compatibilidad: cada motor tiene 8/8 observaciones distintas y
+> 3/3 resúmenes exitosos e idénticos; el paquete compacto no permite verificar
+> retrospectivamente los identificadores individuales de esos ocho casos. La
+> evidencia se limita a comportamiento cross-browser de la suite Web ensayada,
+> no a coexistencia/interoperabilidad ISO completa ni Android. La matriz estática
+> de 198 operaciones de seguridad es antecedente de superficie, no prueba dinámica.
+
 Las tres campañas se ejecutaron sobre el software del SHA
 `fa7d75ec0f75573938bf46ed6a68f0aee99606ac`. El HEAD documental posterior
 incorpora análisis y documentación y no se presenta como el software medido.
 La fuente consolidada inalterada es [`analisis-e3.json`](analisis-e3.json).
+Las líneas backend se recalculan desde los `jacoco.csv` canónicos:
+Usuarios 329 missed/1735 covered = 84,06007751937985 % y Reservas 506/2730 =
+84,36341161928307 %. La complejidad JaCoCo es descriptiva, no una puntuación de
+calidad: Auth 133+219=352 (56 clases, media 6,285714, máximo 34);
+Usuarios 239+619=858 (107, 8,018692, máximo 68); Académico 260+944=1204
+(141, 8,539007, máximo 57); Reservas 711+1318=2029 (203, 9,995074, máximo
+178); Gateway 17+44=61 (9, 6,777778, máximo 28). El paquete canónico no
+conserva salida cuantitativa y exit code de Checkstyle para reconstruir E3.
 
 ### Seguridad
 
 | Repeticiones | Correctas | Proporción | IC95 Wilson | Falsos permitidos | Falsos rechazados | Flaky | Decisión |
 |---:|---:|---:|---|---:|---:|---:|---|
-| 3 | 21/21 | 1,0 | [0,845360981013798; 1,0] | 0 | 0 | 0 | **CUMPLE** |
+| 3 (repetibilidad 3/3) | 7/7 casos distintos | 1,0 | [0,6456695648259365; 1,0] | 0 | 0 | 0 | **CUMPLE en alcance dinámico reducido** |
 
 La decisión se limita a las siete decisiones dinámicas por repetición, fixtures,
 Gateway y entorno ensayados. No constituye una garantía universal de seguridad.
@@ -165,9 +278,9 @@ Gateway y entorno ensayados. No constituye una garantía universal de seguridad.
 | Componente | Métrica | Media/IC95 | Umbral | Decisión |
 |---|---|---:|---:|---|
 | Auth | Líneas | 88,042203985932 % | 70 % | CUMPLE |
-| Usuarios | Líneas | 84,0523509452254 % | 70 % | CUMPLE |
+| Usuarios | Líneas | 84,06007751937985 % | 70 % | CUMPLE |
 | Académico | Líneas | 83,16089903674634 % | 70 % | CUMPLE |
-| Reservas | Líneas | 84,35857805255023 % | 80 % | CUMPLE |
+| Reservas | Líneas | 84,36341161928307 % | 80 % | CUMPLE |
 | Reservas | Ramas | 56,72559569561876 % | 48 % | CUMPLE |
 | Gateway | Líneas | 88,88888888888889 % | 70 % | CUMPLE |
 | Web | Líneas | 89,91 % | 70 % | CUMPLE |
@@ -185,9 +298,9 @@ por Android**.
 
 | Motor | Aprobados | Fallidos | Omitidos | Flaky | IC95 Wilson | Decisión |
 |---|---:|---:|---:|---:|---|---|
-| Chromium | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| Firefox | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
-| WebKit | 24/24 | 0 | 0 | 0 | [0,862023795269197; 1,0] | CUMPLE |
+| Chromium | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| Firefox | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
+| WebKit | 8/8 | 0 | 0 | 0 | [0,6755924350132556; 1,0] | CUMPLE en suite |
 
 La decisión global es **CUMPLE** para la suite, motores y entorno ensayados; no
 se extrapola a todos los navegadores, versiones o dispositivos.
