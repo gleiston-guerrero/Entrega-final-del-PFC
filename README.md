@@ -168,21 +168,25 @@ cd apps/mobile
 En Windows use `gradlew.bat`. CI ejecuta unitarias, lint y las pruebas
 `src/androidTest` en un emulador API 29; estas pruebas instrumentadas forman parte
 del gate previo al APK. El APK debug se publica como artifact por SHA. El
-workflow también prepara un APK release firmado como artifact cuando los cuatro
-secrets de firma están configurados en un push autorizado; el procedimiento se
-documenta en [`apps/mobile/README.md`](apps/mobile/README.md). Firebase/FCM fue
+workflow vigente tambien prepara un APK release firmado como artifact en pushes
+cuando los secrets requeridos estan configurados; el procedimiento se documenta
+en [`apps/mobile/README.md`](apps/mobile/README.md). La version Android actual es
+`versionName` 1.0.1 y `versionCode` 2. Firebase/FCM fue
 validado extremo a extremo con un dispositivo Android físico. El cliente obtiene
 y registra el token FCM, el backend persiste el dispositivo y envía
 notificaciones mediante Firebase Admin SDK. La evidencia de recepción real se
 conserva en [`docs/evidencias/fcm-e2e.md`](docs/evidencias/fcm-e2e.md).
 
-El APK release firmado procedente del run `34688947156`, correspondiente al SHA
-`0b755310a0acf34da2456290a4f978475a8e17f9`, está incorporado en
+Como evidencia historica, el APK release firmado procedente del run
+`34688947156`, correspondiente al SHA
+`0b755310a0acf34da2456290a4f978475a8e17f9`, esta incorporado en
 [`release/apk/scli-mobile-0.1.0-release.apk`](release/apk/scli-mobile-0.1.0-release.apk),
-junto con [`release/apk/SHA256SUMS.txt`](release/apk/SHA256SUMS.txt). CI lo firmó
-y verificó; Git no contiene las claves privadas ni las contraseñas de firma.
-GitHub Actions continúa siendo la fuente reproducible de generación y
-verificación.
+junto con [`release/apk/SHA256SUMS.txt`](release/apk/SHA256SUMS.txt). CI lo firmo
+y verifico, pero ese binario no representa el release final 1.0.1+. El APK final
+1.0.1+ sigue pendiente de generacion oficial por CI, publicacion en GitHub
+Release y preservacion con checksum. Git no contiene las claves privadas ni las
+contrasenas de firma. GitHub Actions continua siendo la fuente reproducible de
+generacion y verificacion.
 
 ## Pruebas
 

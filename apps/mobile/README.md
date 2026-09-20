@@ -93,8 +93,8 @@ El resultado sin firma queda en:
 app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-La firma de publicación se realiza en GitHub Actions únicamente para pushes a
-`feature/entrega-4` y cuando estén configurados estos secrets del repositorio:
+La firma de publicacion se realiza en GitHub Actions para pushes, segun el
+workflow vigente, cuando esten configurados estos secrets del repositorio:
 
 - `ANDROID_SIGNING_KEYSTORE_BASE64`
 - `ANDROID_SIGNING_STORE_PASSWORD`
@@ -103,25 +103,29 @@ La firma de publicación se realiza en GitHub Actions únicamente para pushes a
 
 CI reconstruye temporalmente el keystore dentro de `$RUNNER_TEMP`, alinea el APK
 con `zipalign`, firma con `apksigner` y verifica la firma y el certificado con
-`apksigner verify --verbose --print-certs`. Después genera y comprueba
+`apksigner verify --verbose --print-certs`. Despues genera y comprueba
 `SHA256SUMS.txt` y publica ambos archivos en el artifact
-`scli-mobile-release-<SHA>`:
+`scli-mobile-release-<SHA>`. La version Android actual es `versionName` 1.0.1 y
+`versionCode` 2; el APK final 1.0.1+ aun esta pendiente de publicacion y
+preservacion oficial. Cuando CI lo genere oficialmente, el artifact esperado es:
 
 ```text
 scli-mobile-1.0.1-release.apk
 SHA256SUMS.txt
 ```
 
-Para el SHA fuente `0b755310a0acf34da2456290a4f978475a8e17f9`, el job
-`Build - Android release signed` terminó con estado `completed/success`. El
+Como evidencia historica, para el SHA fuente
+`0b755310a0acf34da2456290a4f978475a8e17f9`, el job
+`Build - Android release signed` termino con estado `completed/success`. El
 artifact `scli-mobile-release-0b755310a0acf34da2456290a4f978475a8e17f9` fue
 generado, firmado y verificado correctamente en GitHub Actions, dentro del run
-de CI `34688947156`. Se preserva una copia verificada en
+de CI `34688947156`. Esa evidencia corresponde al APK historico
 `release/apk/scli-mobile-0.1.0-release.apk`, con su checksum en
-`release/apk/SHA256SUMS.txt`; Actions continúa siendo la fuente reproducible del
-proceso. El identificador del paquete es `ec.edu.uteq.scli.mobile`.
+`release/apk/SHA256SUMS.txt`; no representa el release final 1.0.1+. Actions
+continua siendo la fuente reproducible del proceso. El identificador del paquete
+es `ec.edu.uteq.scli.mobile`.
 
-Para instalar el APK descargado y comprobar su `applicationId`:
+Para instalar el APK final cuando exista y comprobar su `applicationId`:
 
 ```bash
 adb install -r scli-mobile-1.0.1-release.apk
