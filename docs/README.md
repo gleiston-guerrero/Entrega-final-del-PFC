@@ -3,8 +3,15 @@
 ## Fuente oficial
 
 La única fuente oficial y acumulativa del informe final es [`docs/main.tex`](main.tex).
-GitHub Actions la compila desde `docs/` y publica `main.pdf` como artifact
-`informe-final-scli`. El PDF oficial no se versiona necesariamente en Git.
+El workflow [`docs.yml`](../.github/workflows/docs.yml) la compila desde `docs/`
+en los pushes a `feature/entrega-4` o mediante ejecución manual
+(`workflow_dispatch`), y publica `main.pdf` como artifact `informe-final-scli`.
+Un push a `main` no activa ese workflow ni genera automáticamente ese artifact.
+En [`ci-cd.yml`](../.github/workflows/ci-cd.yml), el job
+`build-release-documentation` compila el manuscrito solo para tags `v*` y publica
+`SCLI-PFC-<tag>.pdf` como artifact `release-manuscript-<sha>`; el job
+`publish-release` lo adjunta a la release cuando sus dependencias concluyen
+correctamente. El PDF oficial no se versiona necesariamente en Git.
 
 Para reproducir el mismo procedimiento desde la raíz:
 
@@ -25,8 +32,11 @@ OpenAPI e informes ISO son documentación complementaria trazable.
 Los [registros retrospectivos del equipo](actas/README.md) consolidan cinco
 bloques de trabajo, los roles generales, los acuerdos respaldados por el
 proyecto y su seguimiento mediante commits, ADR, workflows y documentos
-versionados. Los cinco registros fueron creados el 12/09/2026 en el commit
-`1ce91ba05e8048fda75a8479d368684a2c338430`. Git acredita los resultados
+versionados. Los cinco registros (ACTA-01 a ACTA-05) se crearon inicialmente
+el 12/09/2026 en el commit `1ce91ba05e8048fda75a8479d368684a2c338430` y se
+reescribieron como registros retrospectivos el 13/09/2026 en el commit
+`88d4a80a0273c704cd3971d62718a0ca6f4c0795`, que también revisó su README.
+Git acredita los resultados
 técnicos, pero no una reunión, su modalidad, hora o asistencia.
 
 ## Documentación histórica

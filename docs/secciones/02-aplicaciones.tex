@@ -275,13 +275,15 @@ mismas API, el esquema Bearer y las decisiones de autorización del backend.
 
 \begin{figure}[ht]
   \centering
-  \begin{minipage}{0.88\linewidth}
-\begin{verbatim}
-WEB ------\
-           > API Gateway --> microservicios --> CockroachDB
-MOBILE ---/
-\end{verbatim}
-  \end{minipage}
+  \begin{tabular}{c}
+    \texttt{WEB}\quad\texttt{MOBILE} \\
+    $\searrow\quad\swarrow$ \\
+    \texttt{API Gateway} \\
+    $\downarrow$ \\
+    \texttt{microservicios} \\
+    $\downarrow$ \\
+    \texttt{CockroachDB}
+  \end{tabular}
   \caption{Integración conceptual de clientes, Gateway y servicios.}
   \label{fig:integracion-clientes}
 \end{figure}
