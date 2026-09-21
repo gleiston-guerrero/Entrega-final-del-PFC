@@ -145,11 +145,14 @@ observación temporal propia; no se infiere de una tasa puntual de errores.
 
 El protocolo nominal define diez repeticiones equivalentes con 50 usuarios. La
 eficiencia dura cinco minutos y exige p95 menor que 500 ms. La fiabilidad
-preveía una hora por repetición y menos de 1\% de HTTP 5xx. La regla se fijó
-antes de observar resultados: r1 y r10 se conservan, mientras r2--r9 forman las
-ocho muestras centrales. Esto trata de forma uniforme los bordes del lote y,
-sobre todo, impide elegir exclusiones después de conocer los valores; no se
-eliminaron ejecuciones desfavorables por conveniencia.
+preveía una hora por repetición y menos de 1\% de HTTP 5xx. El criterio
+original fijó antes de observar resultados que r1 y r10 se conservan, mientras
+r2--r9 forman las ocho muestras centrales. La regla operativa sobre códigos de
+salida de Locust fue precisada posteriormente mediante una enmienda post hoc:
+un exit code distinto de cero no excluye por sí solo una repetición completa
+cuando refleja precisamente HTTP 5xx observados. Esto conserva de forma
+uniforme los bordes del lote y evita eliminar ejecuciones desfavorables por
+conveniencia, pero la cronología de la enmienda se declara explícitamente.
 
 Para cada métrica central se usa $n=8$, desviación estándar muestral con siete
 grados de libertad e intervalo bilateral
@@ -216,16 +219,28 @@ declarado de 1\,\% en las ocho repeticiones centrales r2--r9 del despliegue
 SCLI evaluado, y qué comportamiento operacional adicional registra Locust?
 
 \textbf{Respuesta a PI2.} Sí para el indicador formal acotado en la
-campaña correctiva poblada post-evaluación. Las diez repeticiones sumaron
+campaña correctiva poblada post-evaluación, entendido como cumplimiento
+descriptivo medido y no como atribución causal plena. Las diez repeticiones sumaron
 895\,136 GET de negocio, de los cuales 224\,164 fueron consultas por id, con
 0 respuestas HTTP 401 y 42 respuestas HTTP 5xx. Los 5xx observados se
 preservaron: r7 registró 1, r8 registró 21 y r9 registró 20.
+
+Durante la campaña se identificó un confusor ambiental de CockroachDB: ausencia
+de licencia activa y logs con inicio declarado de throttling desde
+2026-09-20 06:18:38 UTC. Las repeticiones r1--r5 son pre-throttling, r6 cruza
+ese instante y se trata como transición, y r7--r10 son post-throttling. En ese
+régimen posterior, r7--r9 contienen errores \texttt{XXC02}; los 42 HTTP 5xx
+coinciden temporalmente con esos errores y con el periodo posterior al inicio
+declarado del throttling, sin que los logs permitan afirmar causalidad absoluta.
 
 Sobre r2--r9 se analizaron 716\,099 GET de negocio. La tasa 5xx tuvo media
 0,005870\,\%, desviación muestral 0,010535\,\% e IC95
 [-0,002938; 0,014677]\,\%. El intervalo t se reporta sin truncamiento;
 su límite superior, 0,014677\,\%, permanece por debajo del 1\,\%
-prerregistrado.
+prerregistrado. Este IC95 oficial mezcla repeticiones pre-throttling, la
+transición r6 y repeticiones post-throttling; por tanto se interpreta como
+estadístico descriptivo global de la campaña y no como estimación bajo
+condiciones homogéneas.
 
 Como métricas descriptivas, p95 tuvo media 11,256521 ms e IC95
 [11,069649; 11,443394] ms, y p99 media 23,945109 ms e IC95
@@ -398,6 +413,20 @@ Las diez repeticiones contienen 895\,136 GET de negocio: 670\,972 de listado
 y 224\,164 por id. Registraron 0 HTTP 401 y 42 HTTP 5xx. Los errores 5xx no
 se descartaron: r7 conservó 1, r8 conservó 21 y r9 conservó 20.
 
+El entorno CockroachDB no tenía licencia activa y sus logs indicaron
+\texttt{Throttling will begin after 2026-09-20 06:18:38 +0000 UTC}. Con esa
+marca temporal, r1--r5 quedan como repeticiones pre-throttling, r6 como
+transición porque cruza el instante indicado, y r7--r10 como post-throttling.
+En r7--r9 aparecen errores \texttt{XXC02}. Los 42 HTTP 5xx coinciden
+temporalmente con esos errores y con el régimen posterior al inicio declarado
+del throttling; se documentan como confusor ambiental sin atribución causal
+absoluta.
+
+Por régimen, el tramo pre-throttling contiene 447\,599 GET de negocio y
+0 HTTP 5xx; r6 contiene 89\,500 GET de negocio y 0 HTTP 5xx; el tramo
+post-throttling contiene 358\,037 GET de negocio y 42 HTTP 5xx
+(0,011730631\,\%).
+
 Además, todas las repeticiones mantuvieron consultas por id después de 900 s,
 lo que aporta evidencia de carga autenticada sostenida más allá del TTL que
 había degradado la campaña histórica.
@@ -407,7 +436,11 @@ Sobre r2--r9 se analizaron 716\,099 GET de negocio. La tasa HTTP 5xx tuvo media
 [-0,002938; 0,014677]\,\%. El intervalo Student t no está acotado a valores
 físicamente posibles, por lo que el límite inferior negativo se reporta sin
 truncarlo. El límite superior 0,014677\,\% es menor que 1\,\%; por tanto,
-\textbf{E2 cumple} el criterio acotado prerregistrado en la campaña poblada.
+\textbf{E2 cumple descriptivamente} el criterio acotado prerregistrado en la
+campaña poblada. El IC95 oficial mezcla repeticiones pre-throttling, la
+transición r6 y repeticiones post-throttling, por lo que se interpreta como
+estadístico descriptivo global y no como estimación bajo condiciones
+homogéneas.
 
 Como métricas descriptivas, p95 presentó media 11,256521 ms, desviación
 muestral 0,223526 ms e IC95 [11,069649; 11,443394] ms. P99 presentó media
@@ -424,11 +457,20 @@ es por sí solo criterio de exclusión cuando refleja fallos HTTP observados.
 Así, r7--r9 permanecen en la población aun cuando finalizaron con exit code 1;
 excluirlas habría eliminado observaciones desfavorables.
 
+La enmienda sobre ese criterio operativo fue posterior a parte de la evidencia:
+\texttt{rep-07} fue preservada en \texttt{5fa1bba} a 2026-09-20 07:40:12 UTC,
+\texttt{rep-08} fue preservada en \texttt{034b1d4} a 2026-09-20 08:44:28 UTC,
+y la enmienda fue versionada en \texttt{82b119f} a 2026-09-20 08:45:33 UTC.
+Por tanto, se declara como enmienda post hoc posterior a observar r7 y r8. No
+se alteraron crudos ni se eliminaron resultados desfavorables; se conserva la
+trazabilidad del criterio original y del criterio modificado.
+
 La tasa HTTP 5xx y la disponibilidad temporal no son equivalentes. Para afirmar
 una disponibilidad de al menos 99,5\,\% sería necesario operacionalizar tiempo
-apto frente a tiempo total. En consecuencia, E2 es concluyente para su criterio
-acotado de errores, mientras la disponibilidad temporal permanece
-\textbf{no concluyente}.
+apto frente a tiempo total. En consecuencia, E2 cumple el umbral descriptivo
+medido con confusor ambiental declarado; la disponibilidad temporal permanece
+\textbf{no concluyente} y los 42 HTTP 5xx no se atribuyen limpiamente a la
+lógica de la aplicación.
 
 \subsection{Experimento de arbitraje concurrente S0--S4}
 \label{subsec:arbiter-resultados}
@@ -659,7 +701,7 @@ solo características con evidencia disponible.
     \hline
     Eficiencia secundaria & p99 nominal & IC95 superior $<750$ ms & Campaña poblada; media 19,744969 ms; IC95 [16,871382; 22,618556] ms & CUMPLE en escenario medido \\
     \hline
-    Fiabilidad acotada & HTTP 5xx correctivo poblado, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,005870\%; IC95 [-0,002938; 0,014677]\% en r2--r9 & CUMPLE en escenario \\
+    Fiabilidad acotada & HTTP 5xx correctivo poblado, 50 usuarios/1 h & IC95 superior $<1\%$ & Media 0,005870\%; IC95 [-0,002938; 0,014677]\% en r2--r9; 42 HTTP 5xx preservados con confusor CockroachDB & CUMPLE descriptivamente \\
     \hline
     Disponibilidad & Tiempo apto/tiempo total & $\geq99,5\%$ & Diez horas ejecutadas, sin indicador temporal operacionalizado & NO CONCLUYENTE \\
     \hline
@@ -810,7 +852,7 @@ como resultado oficial E3.
 
 Las fortalezas principales son una p95 nominal con margen respecto de
 500 ms, una tasa 5xx correctiva poblada cuyo IC95 superior permanece por debajo
-de 1\%, instrumentación de las tres señales, evidencia raw trazable, pruebas
+de 1\% como descriptivo global, instrumentación de las tres señales, evidencia raw trazable, pruebas
 multicapa y gates CI/CD ligados al SHA. La
 arquitectura permite relacionar un cambio con pruebas, imagen y despliegue, y el
 manifiesto hace detectables alteraciones en el conjunto experimental.
@@ -820,7 +862,10 @@ gran dispersión aunque cumple su umbral previo; la rampa contiene un máximo
 superior a 14 segundos; Mobile permanece bajo 70\% de cobertura; la campaña histórica de
 fiabilidad registró decenas de miles de 401 por repetición; la primera campaña
 con refresh quedó limitada por un dataset vacío, mientras la campaña poblada
-registró 0 HTTP 401 y 42 HTTP 5xx preservados. La disponibilidad temporal no
+registró 0 HTTP 401 y 42 HTTP 5xx preservados. Esa campaña tuvo además un
+confusor CockroachDB declarado: ausencia de licencia, inicio de throttling
+registrado desde 2026-09-20 06:18:38 UTC y errores \texttt{XXC02} en r7--r9,
+coincidentes temporalmente con los 5xx. La disponibilidad temporal no
 fue operacionalizada. A ello se suman la falta de una captura runtime final
 del panel Mobile E2E poblado bajo carga, falta de rollback automático,
 ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
@@ -893,6 +938,17 @@ repeticiones que no provienen del cambio evaluado. \textbf{Mitigación aplicada:
 protocolo previo, diez repeticiones nominales, conservación de r1 y r10 y uso
 uniforme de r2--r9 para el análisis central. \textbf{Riesgo residual:} no se
 aislaron por completo CPU, red, cachés ni pausas del runtime en el host.
+
+\textbf{Amenaza:} la campaña correctiva poblada de fiabilidad atravesó un
+cambio de régimen de CockroachDB por ausencia de licencia y throttling
+declarado desde 2026-09-20 06:18:38 UTC. \textbf{Efecto:} r1--r5 pertenecen al
+régimen pre-throttling, r6 cruza la transición, y r7--r10 pertenecen al régimen
+post-throttling; los 42 HTTP 5xx coinciden temporalmente con errores
+\texttt{XXC02} en r7--r9. \textbf{Mitigación aplicada:} no se eliminan las
+observaciones desfavorables, se conserva el IC95 global r2--r9 y se declara el
+confusor. \textbf{Riesgo residual:} el cumplimiento de E2 debe leerse como
+umbral descriptivo medido, no como inferencia causal bajo condiciones
+homogéneas.
 
 \textbf{Amenaza:} las preguntas PI1 y PI2 se formalizaron en el manuscrito
 después de ejecutadas las campañas, aunque el protocolo, la población y los
@@ -1025,7 +1081,7 @@ posteriormente se presenta en la Sección~\ref{sec:contratos-openapi}.
     \hline
     D6.2 & Dashboard de seis paneles & JSON canónico; panel 6 con latencia HTTP E2E móvil reportada desde Android; falta captura runtime poblada bajo carga & Dashboard & PARCIAL \\
     \hline
-    D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 CUMPLE $<1\%$; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
+    D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 cumple descriptivamente $<1\%$ con confusor CockroachDB; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
     \hline
     D7.2 & Experimento ARBITER & 130 planificadas; 123 completadas; 99 muestras analíticas válidas & ARBITER/oráculo & PARCIAL \\
     \hline
@@ -1050,12 +1106,15 @@ reporte anterior.
 
 La eficiencia nominal poblada cumple los criterios p95 y p99 y no registró HTTP 5xx en
 las muestras centrales; la rampa muestra picos de cola. La campaña correctiva
-poblada de fiabilidad cumple el criterio acotado de 5xx: r2--r9 presenta media
-0,005870\,\% e IC95 [-0,002938; 0,014677]\,\%. Las diez repeticiones
-pobladas preservan 0 HTTP 401 y 42 HTTP 5xx; los 401 de la campaña histórica y
-la campaña intermedia con dataset vacío permanecen como antecedentes. Este resultado no demuestra
-disponibilidad de 99,5\,\%; la conclusión profesional sigue siendo parcial
-para la evaluación ISO completa.
+poblada de fiabilidad cumple descriptivamente el criterio acotado de 5xx:
+r2--r9 presenta media 0,005870\,\% e IC95 [-0,002938; 0,014677]\,\%. Las diez
+repeticiones pobladas preservan 0 HTTP 401 y 42 HTTP 5xx; estos 5xx coinciden
+temporalmente con errores \texttt{XXC02} posteriores al inicio declarado del
+throttling de CockroachDB, por lo que no pueden atribuirse limpiamente a la
+lógica de la aplicación. Los 401 de la campaña histórica y la campaña
+intermedia con dataset vacío permanecen como antecedentes. Este resultado no
+demuestra disponibilidad de 99,5\,\%; la conclusión profesional sigue siendo
+parcial para la evaluación ISO completa.
 
 El experimento ARBITER confirmó la utilidad del control negativo: S0 presentó
 dobles adjudicaciones en las 16 muestras analíticas de contención. No se
