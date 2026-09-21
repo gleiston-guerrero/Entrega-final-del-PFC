@@ -39,15 +39,21 @@
     },
     {
       "id": 4,
-      "title": "COCKROACHDB - NODOS VIVOS Y RANGOS NO DISPONIBLES",
+      "title": "COCKROACHDB - SALUD Y OPERACION",
+      "description": "Estado del cluster CockroachDB y metricas de acceso JDBC observadas por Reservas. Las series de retries y conexiones pueden valer cero legitimamente.",
       "type": "timeseries",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "targets": [
         {"refId": "A", "expr": "max(liveness_livenodes{job=\"crdb-e3-cluster\"})", "legendFormat": "nodos vivos"},
-        {"refId": "B", "expr": "sum(ranges_unavailable{job=\"crdb-e3-cluster\"})", "legendFormat": "rangos no disponibles"}
+        {"refId": "B", "expr": "sum(ranges_unavailable{job=\"crdb-e3-cluster\"})", "legendFormat": "rangos no disponibles"},
+        {"refId": "C", "expr": "max(crdb_pool_active_connections{job=\"reservas-solicitudes-service\"})", "legendFormat": "conexiones activas"},
+        {"refId": "D", "expr": "increase(crdb_transaction_retries_total{job=\"reservas-solicitudes-service\"}[5m])", "legendFormat": "reintentos 5m"},
+        {"refId": "E", "expr": "histogram_quantile(0.95, sum by (le) (rate(crdb_query_duration_seconds_bucket{job=\"reservas-solicitudes-service\"}[5m])))", "legendFormat": "p95 JDBC"}
       ],
       "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
-      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []},
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": [
+        {"matcher": {"id": "byFrameRefID", "options": "E"}, "properties": [{"id": "unit", "value": "s"}, {"id": "custom.axisPlacement", "value": "right"}]}
+      ]},
       "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}}
     },
     {
