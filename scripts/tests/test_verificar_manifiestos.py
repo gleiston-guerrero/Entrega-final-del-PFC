@@ -90,6 +90,7 @@ class ManifestTests(unittest.TestCase):
         self.assertGreater(len(manifests), 1)
         self.assertIn("experimentos/evidencia-17/20260916/SHA256SUMS.txt", manifests)
         self.assertIn("experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt", manifests)
+        self.assertIn("experimentos/resultados/iso25010-eficiencia-poblada.sha256", manifests)
 
     def test_root_based_historical_manifest(self):
         manifest = "experimentos/resultados/SHA256SUMS"
@@ -97,6 +98,18 @@ class ManifestTests(unittest.TestCase):
         target.parent.mkdir(parents=True)
         digest = hashlib.sha256(b"historico\r\n").hexdigest()
         target.write_text(f"{digest} *a/dato con espacio.bin\n")
+        self.assertEqual(self.run_cli([manifest]).returncode, 0)
+
+    def test_root_based_efficiency_manifest(self):
+        manifest = "experimentos/resultados/iso25010-eficiencia-poblada.sha256"
+        target = self.root / "experimentos/resultados/dato.bin"
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b"historico\r\n")
+        manifest_path = self.root / manifest
+        manifest_path.write_text(
+            f"{hashlib.sha256(target.read_bytes()).hexdigest()}  "
+            "experimentos/resultados/dato.bin\n"
+        )
         self.assertEqual(self.run_cli([manifest]).returncode, 0)
 
     def test_invalid_paths_and_duplicates_fail(self):
