@@ -1,0 +1,1411 @@
+{
+  "traces": [
+    {
+      "traceID": "108884231aca2326f5074f16d4a6837d",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021551298045990",
+      "durationMs": 4
+    },
+    {
+      "traceID": "3f7a5c1a9ee12513cc304e759c77b07a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021542334706705",
+      "durationMs": 6
+    },
+    {
+      "traceID": "3da47bda40522913a76090a2928092e3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021541256212440",
+      "durationMs": 4
+    },
+    {
+      "traceID": "4efd12146c025f2a2b37e7c87a410253",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021537802971416",
+      "durationMs": 5
+    },
+    {
+      "traceID": "16edcb4384e720b74d2d064b2ed0050e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021531217341709",
+      "durationMs": 4
+    },
+    {
+      "traceID": "518c393024c4239d21bd0a7681ab010a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021521172812048",
+      "durationMs": 4
+    },
+    {
+      "traceID": "3e0393bf8ceca2bf8dc881ae6560bdcc",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021512335221396",
+      "durationMs": 6
+    },
+    {
+      "traceID": "748cc6eb995ef474aad3cb20cfed3cd5",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021511131056083",
+      "durationMs": 3
+    },
+    {
+      "traceID": "3f7e32194911059b2ed44360a2c9735a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021501089562187",
+      "durationMs": 4
+    },
+    {
+      "traceID": "4a3ad766ac5f7da1642d84d442377963",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021482335549483",
+      "durationMs": 12
+    },
+    {
+      "traceID": "5202fe7ad3671b295db234e7271a3046",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021481003001971",
+      "durationMs": 4
+    },
+    {
+      "traceID": "56cff36dd0d2862078549bbd554e7641",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021477796884414",
+      "durationMs": 5
+    },
+    {
+      "traceID": "33750827768c3231fd32d6d707eb5a6b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021470956178845",
+      "durationMs": 4
+    },
+    {
+      "traceID": "20d11cfc18c1c670ffcebc9f09cdbd65",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021460914147847",
+      "durationMs": 4
+    },
+    {
+      "traceID": "898b4e78c45b5d81ea71f6bf70cc86bd",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021440828243044",
+      "durationMs": 4
+    },
+    {
+      "traceID": "1569bf38cc4dc605e984328f9f26223f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021437334702380",
+      "durationMs": 7
+    },
+    {
+      "traceID": "847a5fcc09f4162fe2e39932f63733c9",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021430785332842",
+      "durationMs": 5
+    },
+    {
+      "traceID": "dd40ee191b9b2bd1be5fd1f91828a28",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021422335195796",
+      "durationMs": 8
+    },
+    {
+      "traceID": "de13a9edd226f8451467d40f53e73dd",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021420743293100",
+      "durationMs": 4
+    },
+    {
+      "traceID": "87bd1c3906106597967d174b6850ec51",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021417789459327",
+      "durationMs": 7
+    },
+    {
+      "traceID": "447b93bf104579d45eb11e3ea47fdbf4",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021407334407605",
+      "durationMs": 6
+    },
+    {
+      "traceID": "34653588f74a9d0d1e25f976d0ce71f3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021400648013733",
+      "durationMs": 4
+    },
+    {
+      "traceID": "8eeda244c8b1d0e93d60bbc20185895",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021392334393206",
+      "durationMs": 8
+    },
+    {
+      "traceID": "56dad2629bea24839ed355f3c1e93245",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021390601643388",
+      "durationMs": 6
+    },
+    {
+      "traceID": "64d5bfd99a424121ea1796b83a62edfc",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021380546592870",
+      "durationMs": 6
+    },
+    {
+      "traceID": "30fed70b04f421b7b4c161eabfd957eb",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021377334810689",
+      "durationMs": 8
+    },
+    {
+      "traceID": "65d63976cbc92f61540544d05dca9558",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021362334569620",
+      "durationMs": 8
+    },
+    {
+      "traceID": "4a084ee5a507399ffb7e023189b3ff19",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021360452701594",
+      "durationMs": 5
+    },
+    {
+      "traceID": "967beb293f41ff3f13d39012588ea7a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021357783735979",
+      "durationMs": 5
+    },
+    {
+      "traceID": "908facc26f771a32e8d329e2546dcbe7",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021350410832191",
+      "durationMs": 5
+    },
+    {
+      "traceID": "1d6f1feba759911a5a031816c89341d1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021340357346567",
+      "durationMs": 6
+    },
+    {
+      "traceID": "598a7cab0ba9c69a0c25e83d9d129990",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021320268519613",
+      "durationMs": 4
+    },
+    {
+      "traceID": "ac676ace2a74ba5519425b584d9c0c1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021317334947254",
+      "durationMs": 7
+    },
+    {
+      "traceID": "3ee821b75cb9e1de421ed63340cd4f96",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021290143681226",
+      "durationMs": 4
+    },
+    {
+      "traceID": "9e3ce04bdb6f68dd6fc7dd75768a422f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021287335077853",
+      "durationMs": 28
+    },
+    {
+      "traceID": "5ef6abb2585e6e6ffd13c8355b12597a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021272334682203",
+      "durationMs": 11
+    },
+    {
+      "traceID": "96ec20e44fef2cfd493d15c5825f0c8",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021260001388815",
+      "durationMs": 5
+    },
+    {
+      "traceID": "22c291d65ccf14315b3caf94fcdd8f64",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021249953957712",
+      "durationMs": 5
+    },
+    {
+      "traceID": "427c7fc7086053ea0a97246e6988fa32",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021242335159730",
+      "durationMs": 20
+    },
+    {
+      "traceID": "31115a9d7e640434d75fa0825dc9a5ae",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021239912161590",
+      "durationMs": 5
+    },
+    {
+      "traceID": "3b205c476db7372614fecb14ed324221",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021237770362145",
+      "durationMs": 6
+    },
+    {
+      "traceID": "6d844647245756e4cdd25d8760562b63",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021227334740267",
+      "durationMs": 15
+    },
+    {
+      "traceID": "1e3b3377f1e60b00143b1ebebed5dd3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021219826311840",
+      "durationMs": 6
+    },
+    {
+      "traceID": "528ba0903554fbb4b1ee00eebc610d79",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021199742132121",
+      "durationMs": 5
+    },
+    {
+      "traceID": "5292a5192dbb8b5b2ec60bf785ed0ce3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021197334858887",
+      "durationMs": 17
+    },
+    {
+      "traceID": "84ff610590b63b7a3bd44915e025c89a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021189700078991",
+      "durationMs": 7
+    },
+    {
+      "traceID": "5ba50a165f295ad00136aff4523158aa",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021182338016744",
+      "durationMs": 77
+    },
+    {
+      "traceID": "6f5edb707d7a26fa6ebb3a09ef6ae5a9",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021179581055410",
+      "durationMs": 81
+    },
+    {
+      "traceID": "9eb0672800741990dd61474f5e9ae702",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021177502078869",
+      "durationMs": 267
+    },
+    {
+      "traceID": "5526846324267bc977929609c2d4f9c5",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021128253720820",
+      "durationMs": 1
+    },
+    {
+      "traceID": "2a5cdaa0fcc137121d7c0812ffd5076c",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021107334347897",
+      "durationMs": 90
+    },
+    {
+      "traceID": "7f695df48badb38014dcc638d41a1ec3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021106017078653",
+      "durationMs": 26
+    },
+    {
+      "traceID": "83e4f52f17f967e5fd3184d7d4830b4b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021105870780769",
+      "durationMs": 5718
+    },
+    {
+      "traceID": "3ac8b8c2d9f4a1d891d31fa752767524",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021092334843624",
+      "durationMs": 5
+    },
+    {
+      "traceID": "4e706d5c0998976c0f26a145d54336e4",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021075769048108",
+      "durationMs": 1
+    },
+    {
+      "traceID": "7f266fac8e9c1bfbef2267f264bb2f14",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021065730881242",
+      "durationMs": 1
+    },
+    {
+      "traceID": "8bb696e6bcff8606f695bf4762598e28",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021062334415656",
+      "durationMs": 5
+    },
+    {
+      "traceID": "2f6b496f44a8d18ea38905ac26ff9ed9",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021055695667884",
+      "durationMs": 1
+    },
+    {
+      "traceID": "52cf26cdb1907164722b62e34cdc63a3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021047334102235",
+      "durationMs": 4
+    },
+    {
+      "traceID": "7be2366cba6e73296ed6b0aec6eda14f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790021045866383591",
+      "durationMs": 3
+    },
+    {
+      "traceID": "2bc221c29256a014b6b7b365593a61c0",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021035619288200",
+      "durationMs": 1
+    },
+    {
+      "traceID": "84155d25453550545003f3c60d68164e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021032333959998",
+      "durationMs": 5
+    },
+    {
+      "traceID": "57dfffd50eb63da744ee91a76c9074ca",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021025578356540",
+      "durationMs": 1
+    },
+    {
+      "traceID": "8bb5585094910711edbcef08aa3616c0",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021017334348431",
+      "durationMs": 5
+    },
+    {
+      "traceID": "4c26218595d70caa1c885a779b76b6e4",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021015542459551",
+      "durationMs": 1
+    },
+    {
+      "traceID": "a203cea522e353887a97b638374129e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021005504563858",
+      "durationMs": 1
+    },
+    {
+      "traceID": "83e7f4193560d1c8775b8a8fe7bc2804",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021002334273161",
+      "durationMs": 5
+    },
+    {
+      "traceID": "75043aed986354897da22b9923b0fb45",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020987334764788",
+      "durationMs": 6
+    },
+    {
+      "traceID": "692a3ab3c5bc874c6704ba40e628c4cf",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020985862398752",
+      "durationMs": 3
+    },
+    {
+      "traceID": "320b755795df14c0fd465ac956eb1b6e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020985431274994",
+      "durationMs": 1
+    },
+    {
+      "traceID": "2d8c67700d288fffd98779801881ee08",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020975392784606",
+      "durationMs": 1
+    },
+    {
+      "traceID": "5691aa1b3c67d8566148e9ecd7b0b206",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020972334096802",
+      "durationMs": 6
+    },
+    {
+      "traceID": "458d2b60bb1ea5537536878be914669e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020955315405570",
+      "durationMs": 1
+    },
+    {
+      "traceID": "76115f4a63a733dc2671199166e86eaa",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020945276351860",
+      "durationMs": 1
+    },
+    {
+      "traceID": "653b40105a7870e97fd509012b36d5d4",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020942334035973",
+      "durationMs": 4
+    },
+    {
+      "traceID": "6df96b4e773625225893b0fea72fe3f1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020927334385627",
+      "durationMs": 5
+    },
+    {
+      "traceID": "91bb2b5c7be27ea1a5dddec474062f9b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020925858278010",
+      "durationMs": 3
+    },
+    {
+      "traceID": "6237d218b46ef2b72a3674ba6bd10537",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020915153971949",
+      "durationMs": 1
+    },
+    {
+      "traceID": "3056965d8d1e7516055864224aa67f15",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020912334205290",
+      "durationMs": 4
+    },
+    {
+      "traceID": "bf3c8198b66e7b731ca23dd59f7e846",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020895077091678",
+      "durationMs": 1
+    },
+    {
+      "traceID": "85f315c184a97e0bcc4f49e91e03b381",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020885038452717",
+      "durationMs": 1
+    },
+    {
+      "traceID": "78f72063b91da7e2b5b30e84da758c5b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020882334413223",
+      "durationMs": 5
+    },
+    {
+      "traceID": "7c5c4750b578e45a8ac9b29ede73527d",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020874998149711",
+      "durationMs": 1
+    },
+    {
+      "traceID": "df313047219344cecd2233cb6534758",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020867335585106",
+      "durationMs": 8
+    },
+    {
+      "traceID": "2a00e928779e3343550eec41878d0f01",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020852334368040",
+      "durationMs": 4
+    },
+    {
+      "traceID": "980aa2c7576bd160a6a57aac345af359",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020834831604286",
+      "durationMs": 1
+    },
+    {
+      "traceID": "70eb9442317facff7d4edd4cc4f45904",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020822334118643",
+      "durationMs": 5
+    },
+    {
+      "traceID": "7443622c159de22002e521f5a154004e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020814754930083",
+      "durationMs": 1
+    },
+    {
+      "traceID": "adaad96bffab9593655c82e1293d307",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020807334756628",
+      "durationMs": 4
+    },
+    {
+      "traceID": "199f05e44c3a302166d7ede63a6cdf5e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020805849082181",
+      "durationMs": 4
+    },
+    {
+      "traceID": "7a9727a7fcd88c800bbea9b3e7b43493",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020804718330377",
+      "durationMs": 1
+    },
+    {
+      "traceID": "233af030d937f384e69953fe655e9048",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020794682985432",
+      "durationMs": 1
+    },
+    {
+      "traceID": "5457f75fb80cf9a9c140077ac9b8fad5",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020792334452816",
+      "durationMs": 5
+    },
+    {
+      "traceID": "1503f477fa2ea9238e7c54f6d5f9af07",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020784643755734",
+      "durationMs": 1
+    },
+    {
+      "traceID": "7c4fc8b73ed493a6c2b8c44b90b95d3b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020777334134448",
+      "durationMs": 5
+    },
+    {
+      "traceID": "8a3926c5b19ee398d55c12fa2d808b55",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020764558474783",
+      "durationMs": 1
+    },
+    {
+      "traceID": "153e1d8ffef78c9c28009a088f576351",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020762333939832",
+      "durationMs": 6
+    },
+    {
+      "traceID": "75fbdacb4d8e186cece60c87270710cd",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020754520649586",
+      "durationMs": 1
+    },
+    {
+      "traceID": "381f184030227bc9e2396f60da605ddf",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020747334639719",
+      "durationMs": 4
+    },
+    {
+      "traceID": "419846d3abf7800f3cf9afd9e0e5a526",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020745842523061",
+      "durationMs": 6
+    },
+    {
+      "traceID": "9cc8f1cd51d63fa2ab4d17b54f4ac19c",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020744478356388",
+      "durationMs": 1
+    },
+    {
+      "traceID": "1b7a7cf6cd58f3fa608cc304e7dc7102",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020732334525698",
+      "durationMs": 5
+    },
+    {
+      "traceID": "442d4f1b662cf70ff52840bb63a3157b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020724394935329",
+      "durationMs": 1
+    },
+    {
+      "traceID": "66fa3a0ebd78a348859e55c63d9090de",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020717334830812",
+      "durationMs": 6
+    },
+    {
+      "traceID": "9457bf3fef5ecce17bd4e6a430645b39",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020674161845055",
+      "durationMs": 1
+    },
+    {
+      "traceID": "70ef1445127d082ae2d24be27a8706b5",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020672334852615",
+      "durationMs": 5
+    },
+    {
+      "traceID": "4ab739b60f066616791406e79f70b4b6",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020664125803102",
+      "durationMs": 1
+    },
+    {
+      "traceID": "43c0756a0bc782ed691706d91f809437",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020657333945267",
+      "durationMs": 7
+    },
+    {
+      "traceID": "744917513394be3d47511e68ccbe3b11",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020654090409459",
+      "durationMs": 1
+    },
+    {
+      "traceID": "6998a344bd72f053e13ede089e671fc5",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020644051729812",
+      "durationMs": 1
+    },
+    {
+      "traceID": "b95eada863b7eb09f32eb0d0d40e7f3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020625831732961",
+      "durationMs": 4
+    },
+    {
+      "traceID": "4c52a313a7a45bc0e7039a19d12ae2db",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020623976969050",
+      "durationMs": 1
+    },
+    {
+      "traceID": "641d1693fe41a96c9449bf5c05ea8844",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020603903180437",
+      "durationMs": 1
+    },
+    {
+      "traceID": "4f9f97ff0a7b214375ca611ddd81ab25",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020567334119023",
+      "durationMs": 4
+    },
+    {
+      "traceID": "6b28126d8d8f86caff54d31706205763",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020523603347936",
+      "durationMs": 1
+    },
+    {
+      "traceID": "b7c8aac9329ae785bd7f61c13834e2b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020513559558760",
+      "durationMs": 1
+    },
+    {
+      "traceID": "59e9e2646073242c2775842cab297dfe",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020503520973845",
+      "durationMs": 1
+    },
+    {
+      "traceID": "81b6f2afd49aba0dbba9c42a64c0cc62",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020493484652407",
+      "durationMs": 1
+    },
+    {
+      "traceID": "333aac812c14b18d1f14118466c6e41",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020492334112772",
+      "durationMs": 4
+    },
+    {
+      "traceID": "9e5ff3ec5a04029da526623d82967ec",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020483446768978",
+      "durationMs": 2
+    },
+    {
+      "traceID": "347b6d704268044f683b21829b2e6ab8",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020463356572631",
+      "durationMs": 1
+    },
+    {
+      "traceID": "1efd5951a5f885be8b6dff3884e224fb",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020462334392444",
+      "durationMs": 10
+    },
+    {
+      "traceID": "5bfdc960d66597b30d5475e6f77c0d1a",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020447333869635",
+      "durationMs": 4
+    },
+    {
+      "traceID": "3638ab58494e3ed295e17a1c70b8fef1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020443271007768",
+      "durationMs": 1
+    },
+    {
+      "traceID": "52d70b4c186f4f81904e1a78c8c34e3c",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020433233054555",
+      "durationMs": 1
+    },
+    {
+      "traceID": "55bcba2fd76b18bd8192538484bd8ac",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020432334051830",
+      "durationMs": 4
+    },
+    {
+      "traceID": "798fc9d8c2a6570a30730181df186efc",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020413156440116",
+      "durationMs": 1
+    },
+    {
+      "traceID": "701c601f670103d208524d64d6067900",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020403114604007",
+      "durationMs": 2
+    },
+    {
+      "traceID": "12c89a96e6f726d05bf10ecbdb0eed92",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020402334064913",
+      "durationMs": 4
+    },
+    {
+      "traceID": "b81e2d96c2f0b66fa4fc3c3f34dad08",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020393074225293",
+      "durationMs": 2
+    },
+    {
+      "traceID": "a33d88a11e45aa10c0dee472ec70713d",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020385809590838",
+      "durationMs": 5
+    },
+    {
+      "traceID": "4a0cef978e6f2134066159f166a88318",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020372987448721",
+      "durationMs": 1
+    },
+    {
+      "traceID": "46f484fb0b068003795218f1c538123e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020372334493328",
+      "durationMs": 7
+    },
+    {
+      "traceID": "18c0496428f43986c87c6229917222b8",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020362948505791",
+      "durationMs": 1
+    },
+    {
+      "traceID": "83fd75d8f6c03abd972345bd72b83069",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020357333916171",
+      "durationMs": 5
+    },
+    {
+      "traceID": "36d852b621bb1fab885d37531cc49647",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020352908210972",
+      "durationMs": 1
+    },
+    {
+      "traceID": "390b08e24c51756d78fdf941014f3d1c",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020332820974719",
+      "durationMs": 2
+    },
+    {
+      "traceID": "2c0927ed78a2ccb20172c38b40da9407",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020327334093553",
+      "durationMs": 5
+    },
+    {
+      "traceID": "2138a9b184d3ab8ab947544952b10a32",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020322770637534",
+      "durationMs": 1
+    },
+    {
+      "traceID": "427f101960550b2fa48a8ed0d0eae488",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020312732478584",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9e0b9dfea49a580b56f2e2e794e0a693",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020312334886205",
+      "durationMs": 4
+    },
+    {
+      "traceID": "48300061ec5c8ee13df106427d9db050",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020302694879554",
+      "durationMs": 1
+    },
+    {
+      "traceID": "4813ce7a5e7691d3c637af451e14d9f0",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020297334739212",
+      "durationMs": 8
+    },
+    {
+      "traceID": "23b59f7a0fae3fb217e787410b249f33",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020282620855373",
+      "durationMs": 1
+    },
+    {
+      "traceID": "5b4837fc6dc664e0a4ae5264c2a1d94f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020272583403725",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9583b9ad824870d71f1ca6376458248e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020267334041051",
+      "durationMs": 5
+    },
+    {
+      "traceID": "9c8d4a4290497b75f24d62c070fa0a1f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020252508330928",
+      "durationMs": 1
+    },
+    {
+      "traceID": "41af6cb094968d6dd920ea5d8601e0bc",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020252333896821",
+      "durationMs": 5
+    },
+    {
+      "traceID": "80f6d6f3186bacf35511d901c3dbbc49",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020242470340397",
+      "durationMs": 1
+    },
+    {
+      "traceID": "388157e6174ae3cd22f20daf5b6ea77",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020237334355985",
+      "durationMs": 5
+    },
+    {
+      "traceID": "773da80137d386c4e1ba209720d35201",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020232433096587",
+      "durationMs": 1
+    },
+    {
+      "traceID": "77e2c9983930080840690bf3904c2fcc",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020207334699652",
+      "durationMs": 5
+    },
+    {
+      "traceID": "4369b94924574eecb2cebffd9010b1c2",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020202317336730",
+      "durationMs": 2
+    },
+    {
+      "traceID": "89b153d783cbf8fde90522e341375e7d",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020192333941707",
+      "durationMs": 4
+    },
+    {
+      "traceID": "1b7cbc332dca27abaed67ec08626cc7b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020192258935067",
+      "durationMs": 1
+    },
+    {
+      "traceID": "8128566a816b0e964f6c9896f77a52bb",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020162334441999",
+      "durationMs": 5
+    },
+    {
+      "traceID": "c30559a6b8fd51c9ef97f26a411f643",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020152104779379",
+      "durationMs": 1
+    },
+    {
+      "traceID": "27523ad1544ba158d641c9df27478c58",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020147333912306",
+      "durationMs": 5
+    },
+    {
+      "traceID": "22d728c731788521bc53fef29fcdd089",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020145792097265",
+      "durationMs": 4
+    },
+    {
+      "traceID": "27315fa3f7ff0346f90617996f0c3c47",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020132333934447",
+      "durationMs": 6
+    },
+    {
+      "traceID": "9c72276183850fe2da6c33f691e03b88",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020121973619165",
+      "durationMs": 1
+    },
+    {
+      "traceID": "77bd79fe04c318a60a8b2fdc8504e8e",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020117334694934",
+      "durationMs": 6
+    },
+    {
+      "traceID": "78e703698dc08abf8feaa4cc6e8d78e1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020102334584436",
+      "durationMs": 5
+    },
+    {
+      "traceID": "6d3c83fc49b2f7222c4ca830a27c1b75",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020091848565800",
+      "durationMs": 1
+    },
+    {
+      "traceID": "40c42e26e6ec1b745321b1f89e6ccae1",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020087334407956",
+      "durationMs": 4
+    },
+    {
+      "traceID": "268c69257483e7067fdbcb561c2f5864",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020085787664715",
+      "durationMs": 4
+    },
+    {
+      "traceID": "1cf1fd21fa231e01392d22dd0cb73647",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020081812182519",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9871a197a864e62ab4d214869e6fdf73",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020071759582729",
+      "durationMs": 11
+    },
+    {
+      "traceID": "17bb622f5a0bbb5c0c202d603639a42b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020061685393206",
+      "durationMs": 3
+    },
+    {
+      "traceID": "1c0adceebc2da442200dfb4cb1cea99",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020051640620783",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9484edccb4fcead299a7e308a149f1be",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020027334046776",
+      "durationMs": 4
+    },
+    {
+      "traceID": "39ee71feb9e32136b2e2b98b1066bd61",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790020025782754324",
+      "durationMs": 4
+    },
+    {
+      "traceID": "944281fc3cb256766349c95a1fcc427",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790020021500179225",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9ae9b3f82b36586f72bdab93afc6c12f",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790020012334004333",
+      "durationMs": 6
+    },
+    {
+      "traceID": "24b8d58632538e779e0cb16a07a58e14",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019982334414418",
+      "durationMs": 5
+    },
+    {
+      "traceID": "86f4c0b15ab667a2500dc56c423f779",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019971290667053",
+      "durationMs": 1
+    },
+    {
+      "traceID": "835b3490c8ad74e4d1d2f40389192786",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019967334077216",
+      "durationMs": 5
+    },
+    {
+      "traceID": "80661855d646cb5df54ac0f9ab367d2c",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790019965778137240",
+      "durationMs": 4
+    },
+    {
+      "traceID": "687912f00a456832d0c94514a2f376a8",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019961239537187",
+      "durationMs": 1
+    },
+    {
+      "traceID": "946318ada4eea47959f7c2520cfd1253",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019952334427134",
+      "durationMs": 8
+    },
+    {
+      "traceID": "8121cface21d561b703fb135f308fdc3",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019937334539858",
+      "durationMs": 5
+    },
+    {
+      "traceID": "84bc467b57c8caf412722eff07af9628",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019922334211710",
+      "durationMs": 5
+    },
+    {
+      "traceID": "d1ba363e8f478448ef7e61bc4d0e642",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019921073928559",
+      "durationMs": 1
+    },
+    {
+      "traceID": "57c9a011d2eff6d94b72f21776d26c89",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019911035495860",
+      "durationMs": 1
+    },
+    {
+      "traceID": "9ba3c9be4cfdf5181f9613e80e841582",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019907333914591",
+      "durationMs": 4
+    },
+    {
+      "traceID": "5f64a10490fae6a994405233efcb1e58",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790019905772945962",
+      "durationMs": 4
+    },
+    {
+      "traceID": "1cd1b047e93b642779bdc67bc5eabd37",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019900996862986",
+      "durationMs": 1
+    },
+    {
+      "traceID": "402f83a6fb1f7f7d3183dc9ac4130be",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019890958620967",
+      "durationMs": 1
+    },
+    {
+      "traceID": "21103f01ea5c135d64e2de7d365e74cb",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019880919444762",
+      "durationMs": 1
+    },
+    {
+      "traceID": "2e0c5b841bf12ec0a00f889fb7639998",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019877334414594",
+      "durationMs": 6
+    },
+    {
+      "traceID": "49eacc2216b2c6d0de4460fdb951a815",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "task solicitud-expiration-scheduler.expire",
+      "startTimeUnixNano": "1790019845768486007",
+      "durationMs": 4
+    },
+    {
+      "traceID": "3e199c3b48099be9a9dbb5f54dcbd61b",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019830728188561",
+      "durationMs": 1
+    },
+    {
+      "traceID": "444fd02fff40a8fbe8fa67fc132dd892",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019817334895491",
+      "durationMs": 5
+    },
+    {
+      "traceID": "3f2c1beca0e51456ec9031a4eb3580d7",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019802334311930",
+      "durationMs": 5
+    },
+    {
+      "traceID": "2ba38208cd15bce2a69b35ed83d89df2",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019800597656062",
+      "durationMs": 2
+    },
+    {
+      "traceID": "4b981af5a275e9811a2e20a748996afd",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019790555573799",
+      "durationMs": 1
+    },
+    {
+      "traceID": "2a3e4b6c711c54f2aef389a05c39d9d2",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019780514289830",
+      "durationMs": 1
+    },
+    {
+      "traceID": "a03efa6b81644a802b22f720ee8a53b9",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019772333957872",
+      "durationMs": 5
+    },
+    {
+      "traceID": "3ca66a103798d52e05e6720cf6c12bbe",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790019770476854584",
+      "durationMs": 1
+    },
+    {
+      "traceID": "18bac3d0a1078864f3917b4f86dbfbac",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790019757333952955",
+      "durationMs": 5
+    }
+  ],
+  "metrics": {
+    "inspectedBytes": "90683",
+    "totalBlocks": 2,
+    "completedJobs": 1,
+    "totalJobs": 3,
+    "totalBlockBytes": "3493959"
+  }
+}

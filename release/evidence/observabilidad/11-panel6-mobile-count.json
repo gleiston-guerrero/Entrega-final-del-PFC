@@ -1,0 +1,18 @@
+{
+  "query": "sum(app_mobile_http_latency_seconds_count{job=\"reservas-solicitudes-service\"})",
+  "response": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1790024746.741,
+            "408"
+          ]
+        }
+      ]
+    }
+  }
+}

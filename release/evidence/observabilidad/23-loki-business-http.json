@@ -1,0 +1,985 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "streams",
+    "result": [
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022169557113296",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "275973c2c8ca1aae",
+          "span_id": "275973c2c8ca1aae",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-10",
+          "traceId": "3302a606e9fb236618a03f4b06b5a6a7",
+          "trace_id": "3302a606e9fb236618a03f4b06b5a6a7"
+        },
+        "values": [
+          [
+            "1790022169556236691",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022167505949743",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "e9ba8f1fedd4c53c",
+          "span_id": "e9ba8f1fedd4c53c",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "be25fc1d02073e100ceff59a9019e464",
+          "trace_id": "be25fc1d02073e100ceff59a9019e464"
+        },
+        "values": [
+          [
+            "1790022167505674684",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022165260699189",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "ab8829202d520312",
+          "span_id": "ab8829202d520312",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "c1de1dd043cc8d200293af06eace434d",
+          "trace_id": "c1de1dd043cc8d200293af06eace434d"
+        },
+        "values": [
+          [
+            "1790022165260043841",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022160237420307",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "16439fffc04d8840",
+          "span_id": "16439fffc04d8840",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "61661062af58fa716a6f25a9e8587cb6",
+          "trace_id": "61661062af58fa716a6f25a9e8587cb6"
+        },
+        "values": [
+          [
+            "1790022160237079097",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022158147145404",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "e9d72051e86de054",
+          "span_id": "e9d72051e86de054",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "bf05c047f08f084711c1ded6af6fe9e7",
+          "trace_id": "bf05c047f08f084711c1ded6af6fe9e7"
+        },
+        "values": [
+          [
+            "1790022158146839909",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022155387532963",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "6bed17c1a0b4f691",
+          "span_id": "6bed17c1a0b4f691",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "860dd1de0708a07abd9a93df0d4dfb1c",
+          "trace_id": "860dd1de0708a07abd9a93df0d4dfb1c"
+        },
+        "values": [
+          [
+            "1790022155386704701",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022152748851862",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "48cb4c5a6fbdf02b",
+          "span_id": "48cb4c5a6fbdf02b",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "2f387a5f7e3e164a4dedef922e199bc2",
+          "trace_id": "2f387a5f7e3e164a4dedef922e199bc2"
+        },
+        "values": [
+          [
+            "1790022152748593869",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022151314532850",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "35f8aa9d0425a04a",
+          "span_id": "35f8aa9d0425a04a",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-10",
+          "traceId": "0b7dd65176da00ef74b5b0251e50a63a",
+          "trace_id": "0b7dd65176da00ef74b5b0251e50a63a"
+        },
+        "values": [
+          [
+            "1790022151314250720",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022151256925891",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "36fee3419423ac54",
+          "span_id": "36fee3419423ac54",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-9",
+          "traceId": "f12f9a13f852622d38e3955e2d62487d",
+          "trace_id": "f12f9a13f852622d38e3955e2d62487d"
+        },
+        "values": [
+          [
+            "1790022151256445368",
+            "Peticion procesada: GET /api/v1/materias -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022151173337055",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "fe695cea97191349",
+          "span_id": "fe695cea97191349",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "7e812f6e8ad97b541b100a89cd79e3f7",
+          "trace_id": "7e812f6e8ad97b541b100a89cd79e3f7"
+        },
+        "values": [
+          [
+            "1790022151173008584",
+            "Peticion procesada: GET /api/v1/periodos-lectivos/actual -> 404"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022146062494179",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0b277f14d60aa34e",
+          "span_id": "0b277f14d60aa34e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "ca858ea96a881dbe01793c66d5594a55",
+          "trace_id": "ca858ea96a881dbe01793c66d5594a55"
+        },
+        "values": [
+          [
+            "1790022146062191598",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022142927911976",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "bf0c61d346894453",
+          "span_id": "bf0c61d346894453",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-3",
+          "traceId": "a0ef5a27170435d9610001aabfaa25b5",
+          "trace_id": "a0ef5a27170435d9610001aabfaa25b5"
+        },
+        "values": [
+          [
+            "1790022142927625409",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022140282629597",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "dfff3e75d8f7f43e",
+          "span_id": "dfff3e75d8f7f43e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "1f2243cb78b4b779f33059a19f4a1198",
+          "trace_id": "1f2243cb78b4b779f33059a19f4a1198"
+        },
+        "values": [
+          [
+            "1790022140282027461",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022126855681958",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "e6a2fae3a25ca61e",
+          "span_id": "e6a2fae3a25ca61e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-9",
+          "traceId": "e7a3ea4759062af2c2106ae5d94d78d1",
+          "trace_id": "e7a3ea4759062af2c2106ae5d94d78d1"
+        },
+        "values": [
+          [
+            "1790022126855417947",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022123491029933",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "5844b50c841b983d",
+          "span_id": "5844b50c841b983d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "980b07fdfcbbc102c336918a361aada1",
+          "trace_id": "980b07fdfcbbc102c336918a361aada1"
+        },
+        "values": [
+          [
+            "1790022123490759121",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022122169317469",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "4f1c4fa3cb2db84f",
+          "span_id": "4f1c4fa3cb2db84f",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "ba1115c14b1b1bfee2b719ea2d67211a",
+          "trace_id": "ba1115c14b1b1bfee2b719ea2d67211a"
+        },
+        "values": [
+          [
+            "1790022122169030342",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022122121684847",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "691385a92e17deae",
+          "span_id": "691385a92e17deae",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "23b9c5fcdc56e7506c2817e12c8756e1",
+          "trace_id": "23b9c5fcdc56e7506c2817e12c8756e1"
+        },
+        "values": [
+          [
+            "1790022122121432932",
+            "Peticion procesada: GET /api/v1/materias -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022122073826510",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "d62c03a74a6d6d91",
+          "span_id": "d62c03a74a6d6d91",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "c4041b2a7982e37971ac8d0d438df811",
+          "trace_id": "c4041b2a7982e37971ac8d0d438df811"
+        },
+        "values": [
+          [
+            "1790022122073391978",
+            "Peticion procesada: GET /api/v1/periodos-lectivos/actual -> 404"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021852130778405",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "87310edc003623df",
+          "span_id": "87310edc003623df",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "8a53256cc0e26f70131394465f9a1c33",
+          "trace_id": "8a53256cc0e26f70131394465f9a1c33"
+        },
+        "values": [
+          [
+            "1790021852130452688",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021838126616534",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "15a2830b20206bf6",
+          "span_id": "15a2830b20206bf6",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-3",
+          "traceId": "ecf4ac5a7a46aabce1ef902f7ece943b",
+          "trace_id": "ecf4ac5a7a46aabce1ef902f7ece943b"
+        },
+        "values": [
+          [
+            "1790021838126027407",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021838075787362",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "fcf2da4f9b07fa4c",
+          "span_id": "fcf2da4f9b07fa4c",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "3254c16fe1cd153ab384f5f28bb2b37d",
+          "trace_id": "3254c16fe1cd153ab384f5f28bb2b37d"
+        },
+        "values": [
+          [
+            "1790021838075484961",
+            "Peticion procesada: GET /api/v1/materias -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021838017661972",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "b32488c9d9814a58",
+          "span_id": "b32488c9d9814a58",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "61af6d218588e8a0249c513641180d36",
+          "trace_id": "61af6d218588e8a0249c513641180d36"
+        },
+        "values": [
+          [
+            "1790021838017381836",
+            "Peticion procesada: GET /api/v1/periodos-lectivos/actual -> 404"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021835330345734",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "b01fbacc3a46c134",
+          "span_id": "b01fbacc3a46c134",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "7507dc7c28bb956824ec10a4074e57ae",
+          "trace_id": "7507dc7c28bb956824ec10a4074e57ae"
+        },
+        "values": [
+          [
+            "1790021835330001760",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021758536011406",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "971f32dd3cc046c3",
+          "span_id": "971f32dd3cc046c3",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "fb78008d991ff3984caff11a70b79822",
+          "trace_id": "fb78008d991ff3984caff11a70b79822"
+        },
+        "values": [
+          [
+            "1790021758535211578",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021729948996498",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3d4075b92448f8ff",
+          "span_id": "3d4075b92448f8ff",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "a26d5bcfdd8e2cdfc932b5fd171029e4",
+          "trace_id": "a26d5bcfdd8e2cdfc932b5fd171029e4"
+        },
+        "values": [
+          [
+            "1790021729948702580",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021722645282476",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "17166af205088902",
+          "span_id": "17166af205088902",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "f864688ec6bdc0b3f909756cb4e32cd7",
+          "trace_id": "f864688ec6bdc0b3f909756cb4e32cd7"
+        },
+        "values": [
+          [
+            "1790021722643766577",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021721612993122",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "a5db69fa9ecf9162",
+          "span_id": "a5db69fa9ecf9162",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "51aaca70bd8bf42657ef6c7c645bae86",
+          "trace_id": "51aaca70bd8bf42657ef6c7c645bae86"
+        },
+        "values": [
+          [
+            "1790021721612488634",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021721539837934",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c4f491f814155209",
+          "span_id": "c4f491f814155209",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "e3cb2ff46faf53674506b8c3dc6c353d",
+          "trace_id": "e3cb2ff46faf53674506b8c3dc6c353d"
+        },
+        "values": [
+          [
+            "1790021721539426748",
+            "Peticion procesada: GET /api/v1/materias -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021721460185286",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "ce6ae606b905edf3",
+          "span_id": "ce6ae606b905edf3",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "2b380c23c413dbc5a13c7989a5f2d2a4",
+          "trace_id": "2b380c23c413dbc5a13c7989a5f2d2a4"
+        },
+        "values": [
+          [
+            "1790021721459884798",
+            "Peticion procesada: GET /api/v1/periodos-lectivos/actual -> 404"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021717560810047",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0b784dbd6e029103",
+          "span_id": "0b784dbd6e029103",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "5f58594d4599bed0e199b51e09e99111",
+          "trace_id": "5f58594d4599bed0e199b51e09e99111"
+        },
+        "values": [
+          [
+            "1790021717560367482",
+            "Peticion procesada: GET /api/v1/laboratorios -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021717424515220",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "99510f67ef609c67",
+          "span_id": "99510f67ef609c67",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "8b4e206aa77e9cd4e93d8d1c76ef93a7",
+          "trace_id": "8b4e206aa77e9cd4e93d8d1c76ef93a7"
+        },
+        "values": [
+          [
+            "1790021717424039835",
+            "Peticion procesada: GET /api/v1/materias -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021717217047265",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "90d6006038bc2ec1",
+          "span_id": "90d6006038bc2ec1",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "be5c9e000fdd84cc4d4a87eddba1a1ec",
+          "trace_id": "be5c9e000fdd84cc4d4a87eddba1a1ec"
+        },
+        "values": [
+          [
+            "1790021717216507773",
+            "Peticion procesada: GET /api/v1/periodos-lectivos/actual -> 404"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021715643561010",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "9b19381f5d41ffea",
+          "span_id": "9b19381f5d41ffea",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-1",
+          "traceId": "1e37269370ca1a3752c97730d49bc32b",
+          "trace_id": "1e37269370ca1a3752c97730d49bc32b"
+        },
+        "values": [
+          [
+            "1790021715643205269",
+            "Peticion procesada: GET /api/v1/internal/perfiles/{perfilId} -> 200"
+          ]
+        ]
+      }
+    ],
+    "stats": {
+      "summary": {
+        "bytesProcessedPerSecond": 146101971,
+        "linesProcessedPerSecond": 457382,
+        "totalBytesProcessed": 2443007,
+        "totalLinesProcessed": 7648,
+        "execTime": 0.016721,
+        "queueTime": 0.000226,
+        "subqueries": 0,
+        "totalEntriesReturned": 33,
+        "splits": 2,
+        "shards": 2,
+        "totalPostFilterLines": 121,
+        "totalStructuredMetadataBytesProcessed": 1981336
+      },
+      "querier": {
+        "store": {
+          "totalChunksRef": 0,
+          "totalChunksDownloaded": 0,
+          "chunksDownloadTime": 0,
+          "queryReferencedStructuredMetadata": false,
+          "chunk": {
+            "headChunkBytes": 0,
+            "headChunkLines": 0,
+            "decompressedBytes": 0,
+            "decompressedLines": 0,
+            "compressedBytes": 0,
+            "totalDuplicates": 0,
+            "postFilterLines": 0,
+            "headChunkStructuredMetadataBytes": 0,
+            "decompressedStructuredMetadataBytes": 0
+          },
+          "chunkRefsFetchTime": 0,
+          "congestionControlLatency": 0,
+          "pipelineWrapperFilteredLines": 0
+        }
+      },
+      "ingester": {
+        "totalReached": 2,
+        "totalChunksMatched": 6,
+        "totalBatches": 3,
+        "totalLinesSent": 33,
+        "store": {
+          "totalChunksRef": 5,
+          "totalChunksDownloaded": 5,
+          "chunksDownloadTime": 6564740,
+          "queryReferencedStructuredMetadata": false,
+          "chunk": {
+            "headChunkBytes": 166221,
+            "headChunkLines": 1128,
+            "decompressedBytes": 2276786,
+            "decompressedLines": 6520,
+            "compressedBytes": 146413,
+            "totalDuplicates": 0,
+            "postFilterLines": 121,
+            "headChunkStructuredMetadataBytes": 119296,
+            "decompressedStructuredMetadataBytes": 1862040
+          },
+          "chunkRefsFetchTime": 306857,
+          "congestionControlLatency": 0,
+          "pipelineWrapperFilteredLines": 0
+        }
+      },
+      "cache": {
+        "chunk": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "index": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "result": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "statsResult": {
+          "entriesFound": 0,
+          "entriesRequested": 1,
+          "entriesStored": 1,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 2,
+          "downloadTime": 9475,
+          "queryLengthServed": 0
+        },
+        "volumeResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "seriesResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "labelResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "instantMetricResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        }
+      },
+      "index": {
+        "totalChunks": 0,
+        "postFilterChunks": 0,
+        "shardsDuration": 0,
+        "usedBloomFilters": false
+      }
+    }
+  }
+}

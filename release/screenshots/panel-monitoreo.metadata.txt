@@ -1,0 +1,24 @@
+Evidencia: Dashboard Grafana SCLI - Observabilidad consolidada
+Archivo: panel-monitoreo.png
+Commit desplegado: 1720c7745bf9573ecfba8231c71774eab0c1e5e0
+Entorno: pfc-pruebas-e1
+Fecha registro: 2026-09-21T15:45:36-05:00
+Zona horaria captura: browser / Ecuador UTC-05:00
+Rango Grafana: Last 15 minutes
+Refresh: 5s
+SHA256 captura: 26360b9d4b09f0d43d6bfbda9440dbef6540fde2554b85925c8aad7b483ac5e6
+
+Validaciones runtime:
+- Request rate: poblado
+- Latencia HTTP p50/p95/p99: poblado
+- HTTP 5xx: 0 para los cinco servicios con tráfico
+- CockroachDB: 3 nodos vivos, 0 rangos no disponibles
+- Métricas CRDB custom: presentes
+- Recursos cAdvisor CPU/RAM: poblados
+- Mobile E2E: 17 observaciones; p95=0.1096111439 s
+- Tempo: trazas runtime presentes
+- Loki: logs runtime presentes
+- Correlación Loki/Tempo: OK
+- Trace correlacionado: 3302a606e9fb236618a03f4b06b5a6a7
+- Operación correlacionada: GET /api/v1/laboratorios -> 200
+- Tempo batches correlacionados: 12

@@ -1,0 +1,2660 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "streams",
+    "result": [
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022074702745134",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "ee890bdc4f274e88",
+          "span_id": "ee890bdc4f274e88",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-7",
+          "traceId": "2c8d1a2e215b6601a1dc137dcf48c698",
+          "trace_id": "2c8d1a2e215b6601a1dc137dcf48c698"
+        },
+        "values": [
+          [
+            "1790022074702484948",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022064666832605",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "a20d17b2be37627a",
+          "span_id": "a20d17b2be37627a",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-5",
+          "traceId": "106add2851f3e96480296273f89c0d93",
+          "trace_id": "106add2851f3e96480296273f89c0d93"
+        },
+        "values": [
+          [
+            "1790022064666467349",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022061949545594",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "6672569729403e1b",
+          "span_id": "6672569729403e1b",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-6",
+          "traceId": "f7153d20e99eb7486c47fd3ffdf51d79",
+          "trace_id": "f7153d20e99eb7486c47fd3ffdf51d79"
+        },
+        "values": [
+          [
+            "1790022061949245027",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022054630912401",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "0fe31ee82d334f50",
+          "span_id": "0fe31ee82d334f50",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-8",
+          "traceId": "987efa4901032f6061b43d87844029bf",
+          "trace_id": "987efa4901032f6061b43d87844029bf"
+        },
+        "values": [
+          [
+            "1790022054630610792",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022046950164791",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "fa454f77d9069239",
+          "span_id": "fa454f77d9069239",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-9",
+          "traceId": "c75b496a62385a532233a759224d5447",
+          "trace_id": "c75b496a62385a532233a759224d5447"
+        },
+        "values": [
+          [
+            "1790022046949886348",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022044593888715",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "a0d76724d397a22d",
+          "span_id": "a0d76724d397a22d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-4",
+          "traceId": "e33c61457d26e09e10099e5a15703afc",
+          "trace_id": "e33c61457d26e09e10099e5a15703afc"
+        },
+        "values": [
+          [
+            "1790022044593575538",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022034549411281",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "7b3fdebaf0324940",
+          "span_id": "7b3fdebaf0324940",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-3",
+          "traceId": "df5d66704f6ffbd0f47906e9d5ec80dc",
+          "trace_id": "df5d66704f6ffbd0f47906e9d5ec80dc"
+        },
+        "values": [
+          [
+            "1790022034549131956",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022031949883667",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "93a6e30a73dde991",
+          "span_id": "93a6e30a73dde991",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-1",
+          "traceId": "d45050076b82d27b33973e0adedb52d3",
+          "trace_id": "d45050076b82d27b33973e0adedb52d3"
+        },
+        "values": [
+          [
+            "1790022031949510268",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022024513798105",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "d0c82d9a3fecd631",
+          "span_id": "d0c82d9a3fecd631",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-10",
+          "traceId": "1b58f9ebaa9e994b5cd410d134024a22",
+          "trace_id": "1b58f9ebaa9e994b5cd410d134024a22"
+        },
+        "values": [
+          [
+            "1790022024513544208",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022016949268505",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "c327ddbc295c0d4e",
+          "span_id": "c327ddbc295c0d4e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-2",
+          "traceId": "257d295f3b3264ca1d29598beeddc1ad",
+          "trace_id": "257d295f3b3264ca1d29598beeddc1ad"
+        },
+        "values": [
+          [
+            "1790022016948961527",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022014477085480",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "e34b3e9d92ba80e8",
+          "span_id": "e34b3e9d92ba80e8",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-7",
+          "traceId": "e926def60e87e6bff8dda528a5f17096",
+          "trace_id": "e926def60e87e6bff8dda528a5f17096"
+        },
+        "values": [
+          [
+            "1790022014476776139",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022004442698385",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "704b6e9aa1a09101",
+          "span_id": "704b6e9aa1a09101",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-5",
+          "traceId": "87483b6fc5e09810a1b4a038b334109f",
+          "trace_id": "87483b6fc5e09810a1b4a038b334109f"
+        },
+        "values": [
+          [
+            "1790022004442383656",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790022001949674041",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "14f7de064ca69a2d",
+          "span_id": "14f7de064ca69a2d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-6",
+          "traceId": "10295c03400f4c45c9d7b5b5a953d153",
+          "trace_id": "10295c03400f4c45c9d7b5b5a953d153"
+        },
+        "values": [
+          [
+            "1790022001949381675",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021994405242566",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "a796f36ebd9f0b42",
+          "span_id": "a796f36ebd9f0b42",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-8",
+          "traceId": "c354321dc43a21fcbd474dbac4803567",
+          "trace_id": "c354321dc43a21fcbd474dbac4803567"
+        },
+        "values": [
+          [
+            "1790021994404932364",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021986950199335",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "076092a88cfe011d",
+          "span_id": "076092a88cfe011d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-9",
+          "traceId": "d50e1b458734a17f5aefc5076de831c8",
+          "trace_id": "d50e1b458734a17f5aefc5076de831c8"
+        },
+        "values": [
+          [
+            "1790021986949879888",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021984368729175",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "c96a0e44b6491de5",
+          "span_id": "c96a0e44b6491de5",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-4",
+          "traceId": "32d9c641333fa2ba08ed9b6c14077b17",
+          "trace_id": "32d9c641333fa2ba08ed9b6c14077b17"
+        },
+        "values": [
+          [
+            "1790021984368464691",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021974333590845",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "9b70450c09eceb56",
+          "span_id": "9b70450c09eceb56",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-3",
+          "traceId": "2de4744139ef12fda777968bd0a68f33",
+          "trace_id": "2de4744139ef12fda777968bd0a68f33"
+        },
+        "values": [
+          [
+            "1790021974333333423",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021971950326831",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "77115971486ba044",
+          "span_id": "77115971486ba044",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-1",
+          "traceId": "cf68a1273b73f2e546755035e5b90b7d",
+          "trace_id": "cf68a1273b73f2e546755035e5b90b7d"
+        },
+        "values": [
+          [
+            "1790021971950046764",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021964294163337",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "d119def773a282a0",
+          "span_id": "d119def773a282a0",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-10",
+          "traceId": "1c3ed264fa9bb572a3d438645c724a58",
+          "trace_id": "1c3ed264fa9bb572a3d438645c724a58"
+        },
+        "values": [
+          [
+            "1790021964293156663",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021956950945356",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "012e5613062bbbc9",
+          "span_id": "012e5613062bbbc9",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-2",
+          "traceId": "4b1c50e01b6b4ac591024db204697fb1",
+          "trace_id": "4b1c50e01b6b4ac591024db204697fb1"
+        },
+        "values": [
+          [
+            "1790021956949693549",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021954250159300",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "0f9d164e14195246",
+          "span_id": "0f9d164e14195246",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-7",
+          "traceId": "ee3d3bd3a5338e4525e29527e1880a25",
+          "trace_id": "ee3d3bd3a5338e4525e29527e1880a25"
+        },
+        "values": [
+          [
+            "1790021954249759590",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021944209922591",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "c9c16c4134397920",
+          "span_id": "c9c16c4134397920",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-5",
+          "traceId": "60245a7d92966560317b0cff256a1b5b",
+          "trace_id": "60245a7d92966560317b0cff256a1b5b"
+        },
+        "values": [
+          [
+            "1790021944209619339",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021941949371623",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "85f58c25e2d47259",
+          "span_id": "85f58c25e2d47259",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-6",
+          "traceId": "541047bf72792934a30d82049b867767",
+          "trace_id": "541047bf72792934a30d82049b867767"
+        },
+        "values": [
+          [
+            "1790021941949085827",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021934173472172",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "857487e58c417765",
+          "span_id": "857487e58c417765",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-8",
+          "traceId": "5884472377b5c8348dd42fd4aace4b91",
+          "trace_id": "5884472377b5c8348dd42fd4aace4b91"
+        },
+        "values": [
+          [
+            "1790021934173195560",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021926949916483",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "ac8d0cd35442a42b",
+          "span_id": "ac8d0cd35442a42b",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-9",
+          "traceId": "8a951cf91693edcfa32b5d67557968ad",
+          "trace_id": "8a951cf91693edcfa32b5d67557968ad"
+        },
+        "values": [
+          [
+            "1790021926949613962",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021924136687400",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "2034b6bff95b8882",
+          "span_id": "2034b6bff95b8882",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-4",
+          "traceId": "f5fc2e6bbbd6e4d552e870d2f2a5cd21",
+          "trace_id": "f5fc2e6bbbd6e4d552e870d2f2a5cd21"
+        },
+        "values": [
+          [
+            "1790021924136419041",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021914096986995",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "5d52b701146792b1",
+          "span_id": "5d52b701146792b1",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-3",
+          "traceId": "ba9e82c429225cb793ecd92825905cab",
+          "trace_id": "ba9e82c429225cb793ecd92825905cab"
+        },
+        "values": [
+          [
+            "1790021914096613375",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021911950482810",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "2e966d9bb0284dae",
+          "span_id": "2e966d9bb0284dae",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-5",
+          "traceId": "ae3b0f5d92dd561635fad0385366085d",
+          "trace_id": "ae3b0f5d92dd561635fad0385366085d"
+        },
+        "values": [
+          [
+            "1790021911950112025",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021904048933315",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "e379082157b8a997",
+          "span_id": "e379082157b8a997",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-6",
+          "traceId": "b2e7bbb4d8d37a7fdd4c9a6fb8294f4a",
+          "trace_id": "b2e7bbb4d8d37a7fdd4c9a6fb8294f4a"
+        },
+        "values": [
+          [
+            "1790021904048673338",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021896949933396",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "55bdac3a1d86e9ec",
+          "span_id": "55bdac3a1d86e9ec",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-8",
+          "traceId": "c27ab629d33fbae0a808e6c22045ea6c",
+          "trace_id": "c27ab629d33fbae0a808e6c22045ea6c"
+        },
+        "values": [
+          [
+            "1790021896949666881",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021894014207649",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "357f3a04f7634ee9",
+          "span_id": "357f3a04f7634ee9",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-9",
+          "traceId": "a248029cca69dab28a92badf5a24c22a",
+          "trace_id": "a248029cca69dab28a92badf5a24c22a"
+        },
+        "values": [
+          [
+            "1790021894013924097",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021883976827984",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "868067111ada30b7",
+          "span_id": "868067111ada30b7",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-4",
+          "traceId": "11c938cf3fb232ba0f1c8faedaf13a02",
+          "trace_id": "11c938cf3fb232ba0f1c8faedaf13a02"
+        },
+        "values": [
+          [
+            "1790021883976562440",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "trace",
+          "flags": "3",
+          "observed_timestamp": "1790021881949890530",
+          "scope_name": "org.springframework.cloud.gateway.server.mvc.filter.WeightCalculatorFilter",
+          "service_name": "api-gateway",
+          "severity_number": "1",
+          "severity_text": "TRACE",
+          "spanId": "040326d28913d242",
+          "span_id": "040326d28913d242",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.62.0",
+          "thread_name": "http-nio-8080-exec-3",
+          "traceId": "998ee992b673ed11e3e16e4ec57b8afd",
+          "trace_id": "998ee992b673ed11e3e16e4ec57b8afd"
+        },
+        "values": [
+          [
+            "1790021881949626719",
+            "Weights attr: {}"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022074048237840",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "d56361e881a46948",
+          "span_id": "d56361e881a46948",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-1",
+          "traceId": "fdbcb84511c3b5a0b06d4764120ef0e0",
+          "trace_id": "fdbcb84511c3b5a0b06d4764120ef0e0"
+        },
+        "values": [
+          [
+            "1790022074047903641",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022071013726426",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "b5f5d733964b91ce",
+          "span_id": "b5f5d733964b91ce",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "6a3a3b9cf6399199327bdd2c44a456f7",
+          "trace_id": "6a3a3b9cf6399199327bdd2c44a456f7"
+        },
+        "values": [
+          [
+            "1790022071013403404",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022069115680113",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "f5d158c33c30b927",
+          "span_id": "f5d158c33c30b927",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "d767662bbbb41a64c8fa75682ec70e08",
+          "trace_id": "d767662bbbb41a64c8fa75682ec70e08"
+        },
+        "values": [
+          [
+            "1790022069115350512",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022064009899227",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c3bbfae5d9b57627",
+          "span_id": "c3bbfae5d9b57627",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-6",
+          "traceId": "6665a0c960f7825439d888d4aa77fb23",
+          "trace_id": "6665a0c960f7825439d888d4aa77fb23"
+        },
+        "values": [
+          [
+            "1790022064009627923",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022060349315373",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "08300b0dee9e5bf9",
+          "span_id": "08300b0dee9e5bf9",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-10",
+          "traceId": "13df9715163b40a3150b02d638fce58c",
+          "trace_id": "13df9715163b40a3150b02d638fce58c"
+        },
+        "values": [
+          [
+            "1790022060349020234",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022059075503572",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "ba6ae7ab670ff71c",
+          "span_id": "ba6ae7ab670ff71c",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-3",
+          "traceId": "a68259bd331e2464afcf7b72772b2a15",
+          "trace_id": "a68259bd331e2464afcf7b72772b2a15"
+        },
+        "values": [
+          [
+            "1790022059075233080",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022056008443539",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3161b6d4a8f4bb88",
+          "span_id": "3161b6d4a8f4bb88",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "64b63d89ca2f6d00669070ec9af4fdbe",
+          "trace_id": "64b63d89ca2f6d00669070ec9af4fdbe"
+        },
+        "values": [
+          [
+            "1790022056008164585",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022053971680310",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "9947a6530fb92565",
+          "span_id": "9947a6530fb92565",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-8",
+          "traceId": "25f18328f510f22771f6a708ec91e163",
+          "trace_id": "25f18328f510f22771f6a708ec91e163"
+        },
+        "values": [
+          [
+            "1790022053971378389",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022049037633646",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "1452e6a2ce5051fc",
+          "span_id": "1452e6a2ce5051fc",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "81a71051d2f77d30dd6e69cb1f035f74",
+          "trace_id": "81a71051d2f77d30dd6e69cb1f035f74"
+        },
+        "values": [
+          [
+            "1790022049037355332",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022045349973200",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3369481c0d3d16bc",
+          "span_id": "3369481c0d3d16bc",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-9",
+          "traceId": "07fbe2670eab01b9fa1f5b56d3127b04",
+          "trace_id": "07fbe2670eab01b9fa1f5b56d3127b04"
+        },
+        "values": [
+          [
+            "1790022045349675577",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022043934070250",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "b167774955cf327c",
+          "span_id": "b167774955cf327c",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-7",
+          "traceId": "f0ec31e9252e14660b59c62f7e58e1f3",
+          "trace_id": "f0ec31e9252e14660b59c62f7e58e1f3"
+        },
+        "values": [
+          [
+            "1790022043933759486",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022041010966046",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c5da3c7259359135",
+          "span_id": "c5da3c7259359135",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "4a24db3c8dc31853235e0bf43f55288b",
+          "trace_id": "4a24db3c8dc31853235e0bf43f55288b"
+        },
+        "values": [
+          [
+            "1790022041010603654",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022039000909997",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "12cb41c358f6e6e7",
+          "span_id": "12cb41c358f6e6e7",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-10",
+          "traceId": "9727fbf0c052e360f18c5de442ad450e",
+          "trace_id": "9727fbf0c052e360f18c5de442ad450e"
+        },
+        "values": [
+          [
+            "1790022039000545311",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022033896506750",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "20c6717f147d6b27",
+          "span_id": "20c6717f147d6b27",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-5",
+          "traceId": "23893d5a5518f81060e6d089b93f67ea",
+          "trace_id": "23893d5a5518f81060e6d089b93f67ea"
+        },
+        "values": [
+          [
+            "1790022033896198651",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022030350442609",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "71abfe67cedeb6fe",
+          "span_id": "71abfe67cedeb6fe",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-4",
+          "traceId": "dd9613b351cdc48686a66c3bd9516e73",
+          "trace_id": "dd9613b351cdc48686a66c3bd9516e73"
+        },
+        "values": [
+          [
+            "1790022030349415795",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022028960410394",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "fd467aab940f32b6",
+          "span_id": "fd467aab940f32b6",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-9",
+          "traceId": "5b0120a5419abf70af6627b8e06644fd",
+          "trace_id": "5b0120a5419abf70af6627b8e06644fd"
+        },
+        "values": [
+          [
+            "1790022028959959677",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022026010377413",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0de54221268bfcb5",
+          "span_id": "0de54221268bfcb5",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "99c2c0b51679a2a38690be572161f498",
+          "trace_id": "99c2c0b51679a2a38690be572161f498"
+        },
+        "values": [
+          [
+            "1790022026010092910",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022023857837267",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c6990ba5c8de1d4b",
+          "span_id": "c6990ba5c8de1d4b",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-2",
+          "traceId": "94f3643b4f315f0dc2a210c22cd84fa9",
+          "trace_id": "94f3643b4f315f0dc2a210c22cd84fa9"
+        },
+        "values": [
+          [
+            "1790022023857514004",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022018919196176",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "34ff46fa0097fc39",
+          "span_id": "34ff46fa0097fc39",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "b183f0c5d00cb43872a43148c22d1f7d",
+          "trace_id": "b183f0c5d00cb43872a43148c22d1f7d"
+        },
+        "values": [
+          [
+            "1790022018918935298",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022015348170820",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3cc466b9a91df656",
+          "span_id": "3cc466b9a91df656",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-3",
+          "traceId": "227983dbbe476dff2cc22180266ba5b0",
+          "trace_id": "227983dbbe476dff2cc22180266ba5b0"
+        },
+        "values": [
+          [
+            "1790022015347909412",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022013821200208",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "040b7917c9ce3af5",
+          "span_id": "040b7917c9ce3af5",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-1",
+          "traceId": "e709e382aa320013e6c83c372e5fa656",
+          "trace_id": "e709e382aa320013e6c83c372e5fa656"
+        },
+        "values": [
+          [
+            "1790022013820929024",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022011020540049",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "59fb0423ed8b467a",
+          "span_id": "59fb0423ed8b467a",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "27ebb4c2990a92bdd0a5a3bdfca6177b",
+          "trace_id": "27ebb4c2990a92bdd0a5a3bdfca6177b"
+        },
+        "values": [
+          [
+            "1790022011020187032",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022008880898747",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "f78b0b12e5ce9977",
+          "span_id": "f78b0b12e5ce9977",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "be8085cc81ec0c08c21f452b8736f9b7",
+          "trace_id": "be8085cc81ec0c08c21f452b8736f9b7"
+        },
+        "values": [
+          [
+            "1790022008880579570",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022003783423328",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "7ad4ab65d0ba5f81",
+          "span_id": "7ad4ab65d0ba5f81",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-6",
+          "traceId": "63f08f911fb8bf1d202527227cc904ae",
+          "trace_id": "63f08f911fb8bf1d202527227cc904ae"
+        },
+        "values": [
+          [
+            "1790022003782965300",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790022000347675155",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "1daf30da7b8cd927",
+          "span_id": "1daf30da7b8cd927",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-10",
+          "traceId": "070fbdb592d605b8f1b9c69daf5a7179",
+          "trace_id": "070fbdb592d605b8f1b9c69daf5a7179"
+        },
+        "values": [
+          [
+            "1790022000347334036",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021998841063302",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "8d22b1018d028ba2",
+          "span_id": "8d22b1018d028ba2",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-3",
+          "traceId": "45a002cc94faba7907f9d57bb2efa16e",
+          "trace_id": "45a002cc94faba7907f9d57bb2efa16e"
+        },
+        "values": [
+          [
+            "1790021998840699278",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021996010013745",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "a38a75fa51c7c2b1",
+          "span_id": "a38a75fa51c7c2b1",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "564a2cebdc72df0f372077d93361d9a5",
+          "trace_id": "564a2cebdc72df0f372077d93361d9a5"
+        },
+        "values": [
+          [
+            "1790021996009151110",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021993746594324",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "bf71454a6490916d",
+          "span_id": "bf71454a6490916d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-8",
+          "traceId": "5c83c3dffb6fcc28646980a97824e23e",
+          "trace_id": "5c83c3dffb6fcc28646980a97824e23e"
+        },
+        "values": [
+          [
+            "1790021993746244331",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021988793944341",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c270670fa93efe8d",
+          "span_id": "c270670fa93efe8d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "beef739a96410933e5a64cf2689d321c",
+          "trace_id": "beef739a96410933e5a64cf2689d321c"
+        },
+        "values": [
+          [
+            "1790021988793690785",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021985351028429",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "5c97a9d3949f538e",
+          "span_id": "5c97a9d3949f538e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-9",
+          "traceId": "f4e580e59f55d1fbbd2e3c530bbb1ffb",
+          "trace_id": "f4e580e59f55d1fbbd2e3c530bbb1ffb"
+        },
+        "values": [
+          [
+            "1790021985350719638",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021983707027331",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "659a603b6e83c8fa",
+          "span_id": "659a603b6e83c8fa",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-7",
+          "traceId": "c050ea07a3d257556ba781b31d683ed0",
+          "trace_id": "c050ea07a3d257556ba781b31d683ed0"
+        },
+        "values": [
+          [
+            "1790021983706632960",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021981011397357",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "16565a018f492b82",
+          "span_id": "16565a018f492b82",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "c336e9468d72a4e9875bce2f307e1abf",
+          "trace_id": "c336e9468d72a4e9875bce2f307e1abf"
+        },
+        "values": [
+          [
+            "1790021981011079924",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021978755959768",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "fef27552632fcc02",
+          "span_id": "fef27552632fcc02",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-10",
+          "traceId": "85862ada65e815607d1b5821fdda094b",
+          "trace_id": "85862ada65e815607d1b5821fdda094b"
+        },
+        "values": [
+          [
+            "1790021978754992935",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021973669887573",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "a78cadc7c5a894d1",
+          "span_id": "a78cadc7c5a894d1",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-5",
+          "traceId": "9735b0c1fd2717703e267c80e6ca3910",
+          "trace_id": "9735b0c1fd2717703e267c80e6ca3910"
+        },
+        "values": [
+          [
+            "1790021973669582347",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021970349053032",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "17a3d20054a4b249",
+          "span_id": "17a3d20054a4b249",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-4",
+          "traceId": "0d9854fa5667a9f4b04eff568376a606",
+          "trace_id": "0d9854fa5667a9f4b04eff568376a606"
+        },
+        "values": [
+          [
+            "1790021970348772234",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021968709394741",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c117982748a0ade7",
+          "span_id": "c117982748a0ade7",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-9",
+          "traceId": "9a9ab87dda2a53125eec1503989cef69",
+          "trace_id": "9a9ab87dda2a53125eec1503989cef69"
+        },
+        "values": [
+          [
+            "1790021968709048753",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021966010379621",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "aa72d4a2d798249b",
+          "span_id": "aa72d4a2d798249b",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "f02a43785bcca47dd9b0ffc6e996feae",
+          "trace_id": "f02a43785bcca47dd9b0ffc6e996feae"
+        },
+        "values": [
+          [
+            "1790021966010099464",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021963633780683",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c7af06f94f0dfb04",
+          "span_id": "c7af06f94f0dfb04",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-2",
+          "traceId": "5d9acf670b4599bf3bdfc4b50e3b5803",
+          "trace_id": "5d9acf670b4599bf3bdfc4b50e3b5803"
+        },
+        "values": [
+          [
+            "1790021963633468408",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021958670610976",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0ed3888d790b1403",
+          "span_id": "0ed3888d790b1403",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "37907cf1697186303fa99f3c504276ef",
+          "trace_id": "37907cf1697186303fa99f3c504276ef"
+        },
+        "values": [
+          [
+            "1790021958670299451",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021955348703613",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0e72090d16fa51f8",
+          "span_id": "0e72090d16fa51f8",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-3",
+          "traceId": "d246daafbe62be08ab217bbdc1f472fc",
+          "trace_id": "d246daafbe62be08ab217bbdc1f472fc"
+        },
+        "values": [
+          [
+            "1790021955348240077",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021953596804744",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "51ae86c2535fa594",
+          "span_id": "51ae86c2535fa594",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-1",
+          "traceId": "ec3d5f204e30db6daa79b855cdb2b290",
+          "trace_id": "ec3d5f204e30db6daa79b855cdb2b290"
+        },
+        "values": [
+          [
+            "1790021953596514151",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021951009210135",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "939fed9f351a3f82",
+          "span_id": "939fed9f351a3f82",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "c4f4c467dbf77def5de36f269ddf6b14",
+          "trace_id": "c4f4c467dbf77def5de36f269ddf6b14"
+        },
+        "values": [
+          [
+            "1790021951008896496",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021948630787628",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "018d7f7bd43729cd",
+          "span_id": "018d7f7bd43729cd",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "92dbc6dd6310e2ab1564238c9bf766b5",
+          "trace_id": "92dbc6dd6310e2ab1564238c9bf766b5"
+        },
+        "values": [
+          [
+            "1790021948630486840",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021943557204554",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "53e80f2645c1c723",
+          "span_id": "53e80f2645c1c723",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-6",
+          "traceId": "711bc9e6ebf05144eff6500a0a7edf18",
+          "trace_id": "711bc9e6ebf05144eff6500a0a7edf18"
+        },
+        "values": [
+          [
+            "1790021943556854221",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021940349133252",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3076f31f60b3a216",
+          "span_id": "3076f31f60b3a216",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-10",
+          "traceId": "d551b8c825e47d33b94bc79c097e641d",
+          "trace_id": "d551b8c825e47d33b94bc79c097e641d"
+        },
+        "values": [
+          [
+            "1790021940348823650",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021938591659298",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "97a6424b3028eaeb",
+          "span_id": "97a6424b3028eaeb",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-3",
+          "traceId": "fab9b2f51697e25cc522a22c5d49b3ab",
+          "trace_id": "fab9b2f51697e25cc522a22c5d49b3ab"
+        },
+        "values": [
+          [
+            "1790021938589338812",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021936010610591",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "e10f87a4a4b82bfe",
+          "span_id": "e10f87a4a4b82bfe",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "1346769d01fca6688e840acaf1a0c9d5",
+          "trace_id": "1346769d01fca6688e840acaf1a0c9d5"
+        },
+        "values": [
+          [
+            "1790021936010301621",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021933513930830",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "4ffd7fe1350b7c02",
+          "span_id": "4ffd7fe1350b7c02",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-8",
+          "traceId": "064861186f6ef739c139d8d5e3ecc605",
+          "trace_id": "064861186f6ef739c139d8d5e3ecc605"
+        },
+        "values": [
+          [
+            "1790021933513594658",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021928541889179",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "3bc961eb20a54495",
+          "span_id": "3bc961eb20a54495",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "6bb12e49c243ad91bd88984940d41ec8",
+          "trace_id": "6bb12e49c243ad91bd88984940d41ec8"
+        },
+        "values": [
+          [
+            "1790021928541437422",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021925349808912",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "6700661375d8d2d0",
+          "span_id": "6700661375d8d2d0",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-9",
+          "traceId": "ba8f1b3bb440513b287eaa4a53448675",
+          "trace_id": "ba8f1b3bb440513b287eaa4a53448675"
+        },
+        "values": [
+          [
+            "1790021925349498800",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021923473549048",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "297894a9738342fb",
+          "span_id": "297894a9738342fb",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-7",
+          "traceId": "99f026c936f45f8e08d524c41218f3ed",
+          "trace_id": "99f026c936f45f8e08d524c41218f3ed"
+        },
+        "values": [
+          [
+            "1790021923473182389",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021921009224503",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "0b9685d82ab68e1d",
+          "span_id": "0b9685d82ab68e1d",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-2",
+          "traceId": "c8062f9b90a99f67eee9a2eab209f544",
+          "trace_id": "c8062f9b90a99f67eee9a2eab209f544"
+        },
+        "values": [
+          [
+            "1790021921008938667",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021918495641659",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "5a3a992929ef6a4c",
+          "span_id": "5a3a992929ef6a4c",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-10",
+          "traceId": "beea86143f702e92bb9818478a4d5c02",
+          "trace_id": "beea86143f702e92bb9818478a4d5c02"
+        },
+        "values": [
+          [
+            "1790021918495249321",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021913435234124",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "40dfd156cbb62c08",
+          "span_id": "40dfd156cbb62c08",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-5",
+          "traceId": "197df13fc91a9987e64761288cfbaebb",
+          "trace_id": "197df13fc91a9987e64761288cfbaebb"
+        },
+        "values": [
+          [
+            "1790021913434961609",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021910355434847",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "d8153ebc550e7edd",
+          "span_id": "d8153ebc550e7edd",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-4",
+          "traceId": "fa512c475f7a07da9fa14e827b6a9250",
+          "trace_id": "fa512c475f7a07da9fa14e827b6a9250"
+        },
+        "values": [
+          [
+            "1790021910355114009",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021908457788200",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "617b9e81b0f00e65",
+          "span_id": "617b9e81b0f00e65",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-9",
+          "traceId": "19ed3c45765c1d0f5055880d7364a637",
+          "trace_id": "19ed3c45765c1d0f5055880d7364a637"
+        },
+        "values": [
+          [
+            "1790021908457387098",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021906010808181",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "183646b52c93b706",
+          "span_id": "183646b52c93b706",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-8",
+          "traceId": "78998bc5384a6607ad7ab93f0859ef57",
+          "trace_id": "78998bc5384a6607ad7ab93f0859ef57"
+        },
+        "values": [
+          [
+            "1790021906010448603",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021903397453195",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "a77a2cda6079b14e",
+          "span_id": "a77a2cda6079b14e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-2",
+          "traceId": "e9332d727403fcf7aa3fd3d9f47ace5c",
+          "trace_id": "e9332d727403fcf7aa3fd3d9f47ace5c"
+        },
+        "values": [
+          [
+            "1790021903397103432",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021898411727452",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "58a3791ae54a6318",
+          "span_id": "58a3791ae54a6318",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-7",
+          "traceId": "d9cc1193995ff33fe57002ec4c4cf3c7",
+          "trace_id": "d9cc1193995ff33fe57002ec4c4cf3c7"
+        },
+        "values": [
+          [
+            "1790021898411445152",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021895348077844",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "be9ade4c80390471",
+          "span_id": "be9ade4c80390471",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-3",
+          "traceId": "b76d47a9024b807cb9d8f7893ae63480",
+          "trace_id": "b76d47a9024b807cb9d8f7893ae63480"
+        },
+        "values": [
+          [
+            "1790021895347817147",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021893358011644",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "75d0b09276686d4a",
+          "span_id": "75d0b09276686d4a",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-1",
+          "traceId": "d58d7ff7162eaf199c9a5a325bd26bd8",
+          "trace_id": "d58d7ff7162eaf199c9a5a325bd26bd8"
+        },
+        "values": [
+          [
+            "1790021893357674240",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021891010083952",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "6d603d0cb6505973",
+          "span_id": "6d603d0cb6505973",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-5",
+          "traceId": "790509c69c4657a633208820648f6f51",
+          "trace_id": "790509c69c4657a633208820648f6f51"
+        },
+        "values": [
+          [
+            "1790021891009788171",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021888374623379",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "ed2d3cb1a862ed0e",
+          "span_id": "ed2d3cb1a862ed0e",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-6",
+          "traceId": "696e3c94208805f7a33b9e73eb51def1",
+          "trace_id": "696e3c94208805f7a33b9e73eb51def1"
+        },
+        "values": [
+          [
+            "1790021888374337273",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021883318858488",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "c2acdd044c915019",
+          "span_id": "c2acdd044c915019",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-6",
+          "traceId": "3ac4871ce372871d051c3a43b009aa00",
+          "trace_id": "3ac4871ce372871d051c3a43b009aa00"
+        },
+        "values": [
+          [
+            "1790021883318528355",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021880350304485",
+          "scope_name": "ec.edu.scli.usuarios.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "usuarios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "8d36ce74fba4fb86",
+          "span_id": "8d36ce74fba4fb86",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8082-exec-10",
+          "traceId": "6d2dad258a4314f688fb185679c6e7f2",
+          "trace_id": "6d2dad258a4314f688fb185679c6e7f2"
+        },
+        "values": [
+          [
+            "1790021880349960872",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021878336505741",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "4ba5ecef9f303e30",
+          "span_id": "4ba5ecef9f303e30",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-1",
+          "traceId": "cac0b7c935a9a226ecdc7d2d4b5a6e47",
+          "trace_id": "cac0b7c935a9a226ecdc7d2d4b5a6e47"
+        },
+        "values": [
+          [
+            "1790021878336070237",
+            "Peticion procesada: GET /actuator/health -> 200"
+          ]
+        ]
+      },
+      {
+        "stream": {
+          "detected_level": "info",
+          "flags": "1",
+          "observed_timestamp": "1790021876011351547",
+          "scope_name": "ec.edu.scli.academico.infrastructure.observability.HttpMetricsFilter",
+          "service_name": "academico-laboratorios-service",
+          "severity_number": "9",
+          "severity_text": "INFO",
+          "spanId": "2c2f7a64763c59e9",
+          "span_id": "2c2f7a64763c59e9",
+          "telemetry_sdk_language": "java",
+          "telemetry_sdk_name": "opentelemetry",
+          "telemetry_sdk_version": "1.49.0",
+          "thread_name": "http-nio-8083-exec-4",
+          "traceId": "cd385f0c441cc30b4c10493484bf0062",
+          "trace_id": "cd385f0c441cc30b4c10493484bf0062"
+        },
+        "values": [
+          [
+            "1790021876011040172",
+            "Peticion procesada: GET /actuator/prometheus -> 200"
+          ]
+        ]
+      }
+    ],
+    "stats": {
+      "summary": {
+        "bytesProcessedPerSecond": 22700000,
+        "linesProcessedPerSecond": 73941,
+        "totalBytesProcessed": 1027838,
+        "totalLinesProcessed": 3348,
+        "execTime": 0.045279,
+        "queueTime": 4.9e-05,
+        "subqueries": 0,
+        "totalEntriesReturned": 100,
+        "splits": 1,
+        "shards": 1,
+        "totalPostFilterLines": 3348,
+        "totalStructuredMetadataBytesProcessed": 809366
+      },
+      "querier": {
+        "store": {
+          "totalChunksRef": 0,
+          "totalChunksDownloaded": 0,
+          "chunksDownloadTime": 0,
+          "queryReferencedStructuredMetadata": false,
+          "chunk": {
+            "headChunkBytes": 0,
+            "headChunkLines": 0,
+            "decompressedBytes": 0,
+            "decompressedLines": 0,
+            "compressedBytes": 0,
+            "totalDuplicates": 0,
+            "postFilterLines": 0,
+            "headChunkStructuredMetadataBytes": 0,
+            "decompressedStructuredMetadataBytes": 0
+          },
+          "chunkRefsFetchTime": 0,
+          "congestionControlLatency": 0,
+          "pipelineWrapperFilteredLines": 0
+        }
+      },
+      "ingester": {
+        "totalReached": 1,
+        "totalChunksMatched": 5,
+        "totalBatches": 1,
+        "totalLinesSent": 100,
+        "store": {
+          "totalChunksRef": 2,
+          "totalChunksDownloaded": 2,
+          "chunksDownloadTime": 2508402,
+          "queryReferencedStructuredMetadata": false,
+          "chunk": {
+            "headChunkBytes": 120052,
+            "headChunkLines": 793,
+            "decompressedBytes": 907786,
+            "decompressedLines": 2555,
+            "compressedBytes": 58875,
+            "totalDuplicates": 0,
+            "postFilterLines": 3348,
+            "headChunkStructuredMetadataBytes": 81776,
+            "decompressedStructuredMetadataBytes": 727590
+          },
+          "chunkRefsFetchTime": 152792,
+          "congestionControlLatency": 0,
+          "pipelineWrapperFilteredLines": 0
+        }
+      },
+      "cache": {
+        "chunk": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "index": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "result": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "statsResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "volumeResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "seriesResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "labelResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        },
+        "instantMetricResult": {
+          "entriesFound": 0,
+          "entriesRequested": 0,
+          "entriesStored": 0,
+          "bytesReceived": 0,
+          "bytesSent": 0,
+          "requests": 0,
+          "downloadTime": 0,
+          "queryLengthServed": 0
+        }
+      },
+      "index": {
+        "totalChunks": 0,
+        "postFilterChunks": 0,
+        "shardsDuration": 0,
+        "usedBloomFilters": false
+      }
+    }
+  }
+}

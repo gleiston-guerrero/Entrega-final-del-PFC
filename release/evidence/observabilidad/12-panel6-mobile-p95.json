@@ -1,0 +1,18 @@
+{
+  "query": "histogram_quantile(0.95, sum by (le) (rate(app_mobile_http_latency_seconds_bucket{job=\"reservas-solicitudes-service\"}[5m])))",
+  "response": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1790024746.742,
+            "0.15155418327499998"
+          ]
+        }
+      ]
+    }
+  }
+}

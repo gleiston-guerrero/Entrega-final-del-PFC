@@ -1,0 +1,483 @@
+{
+  "batches": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "usuarios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "Hjcmk3DKGjdSyXcw1JvDKw==",
+              "spanId": "+k50urzRCTE=",
+              "parentSpanId": "BqZvnXdPn8M=",
+              "name": "security filterchain before",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790021715504200282",
+              "endTimeUnixNano": "1790021715505210182",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "AuthorizationFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "before"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before DisableEncodeUrlFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before JwtAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715504000000",
+                  "name": "before AuthorizationFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "usuarios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "Hjcmk3DKGjdSyXcw1JvDKw==",
+              "spanId": "DBzqZI2wQeU=",
+              "parentSpanId": "BqZvnXdPn8M=",
+              "name": "security filterchain after",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790021715643750730",
+              "endTimeUnixNano": "1790021715643939237",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "DisableEncodeUrlFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "after"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after AuthorizationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after JwtAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790021715643000000",
+                  "name": "after DisableEncodeUrlFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "usuarios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "Hjcmk3DKGjdSyXcw1JvDKw==",
+              "spanId": "BqZvnXdPn8M=",
+              "name": "http get /api/v1/internal/perfiles/{perfilId}",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1790021715502515696",
+              "endTimeUnixNano": "1790021715644100503",
+              "attributes": [
+                {
+                  "key": "exception",
+                  "value": {
+                    "stringValue": "none"
+                  }
+                },
+                {
+                  "key": "method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "outcome",
+                  "value": {
+                    "stringValue": "SUCCESS"
+                  }
+                },
+                {
+                  "key": "status",
+                  "value": {
+                    "stringValue": "200"
+                  }
+                },
+                {
+                  "key": "uri",
+                  "value": {
+                    "stringValue": "/api/v1/internal/perfiles/{perfilId}"
+                  }
+                },
+                {
+                  "key": "http.url",
+                  "value": {
+                    "stringValue": "/api/v1/internal/perfiles/20000000-0000-0000-0000-000000000001"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "usuarios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "Hjcmk3DKGjdSyXcw1JvDKw==",
+              "spanId": "dYhD6PTKjQc=",
+              "parentSpanId": "+k50urzRCTE=",
+              "name": "authorize request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790021715504481381",
+              "endTimeUnixNano": "1790021715505140035",
+              "attributes": [
+                {
+                  "key": "spring.security.authentication.authorities",
+                  "value": {
+                    "stringValue": "n/a"
+                  }
+                },
+                {
+                  "key": "spring.security.authentication.type",
+                  "value": {
+                    "stringValue": "n/a"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision",
+                  "value": {
+                    "stringValue": "true"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision.details",
+                  "value": {
+                    "stringValue": "AuthorizationDecision [granted=true]"
+                  }
+                },
+                {
+                  "key": "spring.security.object",
+                  "value": {
+                    "stringValue": "request"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "usuarios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "Hjcmk3DKGjdSyXcw1JvDKw==",
+              "spanId": "mxk4H11B/+o=",
+              "parentSpanId": "BqZvnXdPn8M=",
+              "name": "secured request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790021715505223742",
+              "endTimeUnixNano": "1790021715643695956",
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

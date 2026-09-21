@@ -1,0 +1,1151 @@
+{
+  "batches": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "XQ5vieCZFDU=",
+              "parentSpanId": "b4wfAldJfRs=",
+              "name": "secured request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169544920409",
+              "endTimeUnixNano": "1790022169558913819",
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "lTZIU4AoJJ4=",
+              "parentSpanId": "XQ5vieCZFDU=",
+              "name": "http get",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1790022169545890106",
+              "endTimeUnixNano": "1790022169557788514",
+              "attributes": [
+                {
+                  "key": "client.name",
+                  "value": {
+                    "stringValue": "academico-laboratorios-service"
+                  }
+                },
+                {
+                  "key": "exception",
+                  "value": {
+                    "stringValue": "none"
+                  }
+                },
+                {
+                  "key": "method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "outcome",
+                  "value": {
+                    "stringValue": "SUCCESS"
+                  }
+                },
+                {
+                  "key": "status",
+                  "value": {
+                    "stringValue": "200"
+                  }
+                },
+                {
+                  "key": "uri",
+                  "value": {
+                    "stringValue": "none"
+                  }
+                },
+                {
+                  "key": "http.url",
+                  "value": {
+                    "stringValue": "http://academico-laboratorios-service:8083/api/v1/laboratorios?page=0&size=100"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "VP+ScMpWahg=",
+              "parentSpanId": "b4wfAldJfRs=",
+              "name": "security filterchain before",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169543716705",
+              "endTimeUnixNano": "1790022169544913268",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "14"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "14"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "AuthorizationFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "before"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before DisableEncodeUrlFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before CorsFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before OAuth2ProtectedResourceMetadataFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169543000000",
+                  "name": "before BearerTokenAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169544000000",
+                  "name": "before AuthorizationFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "7hfDon1+AVo=",
+              "parentSpanId": "b4wfAldJfRs=",
+              "name": "security filterchain after",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169558942884",
+              "endTimeUnixNano": "1790022169559134575",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "14"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "14"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "DisableEncodeUrlFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "after"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after AuthorizationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after BearerTokenAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after OAuth2ProtectedResourceMetadataFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169558000000",
+                  "name": "after LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169559000000",
+                  "name": "after CorsFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169559000000",
+                  "name": "after HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169559000000",
+                  "name": "after SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169559000000",
+                  "name": "after WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169559000000",
+                  "name": "after DisableEncodeUrlFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "DQwibNKsNBo=",
+              "parentSpanId": "VP+ScMpWahg=",
+              "name": "authenticate bearertoken",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169543945424",
+              "endTimeUnixNano": "1790022169544612460",
+              "attributes": [
+                {
+                  "key": "authentication.failure.type",
+                  "value": {
+                    "stringValue": "n/a"
+                  }
+                },
+                {
+                  "key": "authentication.method",
+                  "value": {
+                    "stringValue": "ProviderManager"
+                  }
+                },
+                {
+                  "key": "authentication.request.type",
+                  "value": {
+                    "stringValue": "BearerTokenAuthenticationToken"
+                  }
+                },
+                {
+                  "key": "authentication.result.type",
+                  "value": {
+                    "stringValue": "JwtAuthenticationToken"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "L+1tszxEsNs=",
+              "parentSpanId": "VP+ScMpWahg=",
+              "name": "authorize request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169544733675",
+              "endTimeUnixNano": "1790022169544874489",
+              "attributes": [
+                {
+                  "key": "spring.security.authentication.authorities",
+                  "value": {
+                    "stringValue": "[FactorGrantedAuthority [authority=FACTOR_BEARER, issuedAt=2026-09-21T20:22:49.544500830Z]]"
+                  }
+                },
+                {
+                  "key": "spring.security.authentication.type",
+                  "value": {
+                    "stringValue": "JwtAuthenticationToken"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision",
+                  "value": {
+                    "stringValue": "true"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision.details",
+                  "value": {
+                    "stringValue": "AuthorizationDecision [granted=true]"
+                  }
+                },
+                {
+                  "key": "spring.security.object",
+                  "value": {
+                    "stringValue": "request"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.62.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "api-gateway"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "4.1.0"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "b4wfAldJfRs=",
+              "name": "http get",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1790022169543538584",
+              "endTimeUnixNano": "1790022169559272306",
+              "attributes": [
+                {
+                  "key": "exception",
+                  "value": {
+                    "stringValue": "none"
+                  }
+                },
+                {
+                  "key": "method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "outcome",
+                  "value": {
+                    "stringValue": "SUCCESS"
+                  }
+                },
+                {
+                  "key": "status",
+                  "value": {
+                    "stringValue": "200"
+                  }
+                },
+                {
+                  "key": "uri",
+                  "value": {
+                    "stringValue": "UNKNOWN"
+                  }
+                },
+                {
+                  "key": "http.url",
+                  "value": {
+                    "stringValue": "/api/v1/laboratorios"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "academico-laboratorios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "J1lzwsjKGq4=",
+              "parentSpanId": "V8vjawUzqbE=",
+              "name": "secured request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169550378214",
+              "endTimeUnixNano": "1790022169557174588",
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "academico-laboratorios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "QNCipaRyKTo=",
+              "parentSpanId": "V8vjawUzqbE=",
+              "name": "security filterchain before",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169547879146",
+              "endTimeUnixNano": "1790022169550369180",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "AuthorizationFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "before"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before DisableEncodeUrlFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169547000000",
+                  "name": "before JwtAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169549000000",
+                  "name": "before AuthorizationFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "academico-laboratorios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "ivW+KZPPik4=",
+              "parentSpanId": "V8vjawUzqbE=",
+              "name": "security filterchain after",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169557206587",
+              "endTimeUnixNano": "1790022169557324347",
+              "attributes": [
+                {
+                  "key": "spring.security.filterchain.position",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.filterchain.size",
+                  "value": {
+                    "stringValue": "12"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.name",
+                  "value": {
+                    "stringValue": "DisableEncodeUrlFilter"
+                  }
+                },
+                {
+                  "key": "spring.security.reached.filter.section",
+                  "value": {
+                    "stringValue": "after"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after AuthorizationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after ExceptionTranslationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after SessionManagementFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after AnonymousAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after SecurityContextHolderAwareRequestFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after RequestCacheAwareFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after JwtAuthenticationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after LogoutFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after HeaderWriterFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after SecurityContextHolderFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after WebAsyncManagerIntegrationFilter"
+                },
+                {
+                  "timeUnixNano": "1790022169557000000",
+                  "name": "after DisableEncodeUrlFilter"
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "academico-laboratorios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "9Sei27RVmAI=",
+              "parentSpanId": "QNCipaRyKTo=",
+              "name": "authorize request",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1790022169549089550",
+              "endTimeUnixNano": "1790022169550291592",
+              "attributes": [
+                {
+                  "key": "spring.security.authentication.authorities",
+                  "value": {
+                    "stringValue": "[ROLE_DOCENTE, ACADEMICO_LEER, INCIDENTE_CREAR, INCIDENTE_LEER, LABORATORIO_LEER, NOTIFICACION_DISPOSITIVO, RESERVA_CANCELAR, RESERVA_LEER, SOLICITUD_CANCELAR, SOLICITUD_CREAR, SOLICITUD_LEER]"
+                  }
+                },
+                {
+                  "key": "spring.security.authentication.type",
+                  "value": {
+                    "stringValue": "UsernamePasswordAuthenticationToken"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision",
+                  "value": {
+                    "stringValue": "true"
+                  }
+                },
+                {
+                  "key": "spring.security.authorization.decision.details",
+                  "value": {
+                    "stringValue": "AuthorityAuthorizationDecision [granted=true, authorities=[ACADEMICO_LEER, LABORATORIO_LEER]]"
+                  }
+                },
+                {
+                  "key": "spring.security.object",
+                  "value": {
+                    "stringValue": "request"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_OK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.49.0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "academico-laboratorios-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "org.springframework.boot",
+            "version": "3.5.3"
+          },
+          "spans": [
+            {
+              "traceId": "MwKmBun7I2YYoD9LBrWmpw==",
+              "spanId": "V8vjawUzqbE=",
+              "parentSpanId": "lTZIU4AoJJ4=",
+              "name": "http get /api/v1/laboratorios",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1790022169547551317",
+              "endTimeUnixNano": "1790022169557447945",
+              "attributes": [
+                {
+                  "key": "exception",
+                  "value": {
+                    "stringValue": "none"
+                  }
+                },
+                {
+                  "key": "method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "outcome",
+                  "value": {
+                    "stringValue": "SUCCESS"
+                  }
+                },
+                {
+                  "key": "status",
+                  "value": {
+                    "stringValue": "200"
+                  }
+                },
+                {
+                  "key": "uri",
+                  "value": {
+                    "stringValue": "/api/v1/laboratorios"
+                  }
+                },
+                {
+                  "key": "http.url",
+                  "value": {
+                    "stringValue": "/api/v1/laboratorios"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

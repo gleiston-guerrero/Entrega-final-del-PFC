@@ -1,0 +1,21 @@
+{
+  "query": "increase(crdb_transaction_retries_total{job=\"reservas-solicitudes-service\"}[5m])",
+  "response": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "instance": "reservas-solicitudes-service:8084",
+            "job": "reservas-solicitudes-service"
+          },
+          "value": [
+            1790021596.138,
+            "0"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "traces": [
+    {
+      "traceID": "33f5eef825f44614cc345f827d77c971",
+      "rootServiceName": "api-gateway",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021581949273906",
+      "durationMs": 12
+    },
+    {
+      "traceID": "4e136501548f0da9e19a4d48e5fcf042",
+      "rootServiceName": "auth-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021581947179876",
+      "durationMs": 3
+    },
+    {
+      "traceID": "5187ad8145c53f4202a03efa77d1eb80",
+      "rootServiceName": "auth-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021580827368209",
+      "durationMs": 11
+    },
+    {
+      "traceID": "5f29ed347ca95b9d83c506b98901ae55",
+      "rootServiceName": "academico-laboratorios-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021577014194923",
+      "durationMs": 3
+    },
+    {
+      "traceID": "33c6946750f198d3dfc169757c4c3028",
+      "rootServiceName": "api-gateway",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021572731565551",
+      "durationMs": 3
+    },
+    {
+      "traceID": "f443379fed83287212d08299f5da77a2",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021572334495081",
+      "durationMs": 6
+    },
+    {
+      "traceID": "a7a410c7057ebde6d0772f7d0f31d71f",
+      "rootServiceName": "usuarios-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021572004912996",
+      "durationMs": 4
+    },
+    {
+      "traceID": "34f9b2d6272dd4d59d9cbf13f6b42444",
+      "rootServiceName": "auth-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021571910138409",
+      "durationMs": 3
+    },
+    {
+      "traceID": "ed84f372aac4259d505d33bc8f3da565",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021571379548891",
+      "durationMs": 5
+    },
+    {
+      "traceID": "d19ffead82a344e9b4e582d4b8ffc2c7",
+      "rootServiceName": "academico-laboratorios-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021566960032471",
+      "durationMs": 10
+    },
+    {
+      "traceID": "344dd4357f5ca6013e462244ee73e2f6",
+      "rootServiceName": "api-gateway",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021566953345432",
+      "durationMs": 23
+    },
+    {
+      "traceID": "c8822a863a5908f7e53cc1676b555af7",
+      "rootServiceName": "auth-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021565827297104",
+      "durationMs": 14
+    },
+    {
+      "traceID": "640e8c1520784b69da30043914e288ac",
+      "rootServiceName": "usuarios-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021565343865315",
+      "durationMs": 8
+    },
+    {
+      "traceID": "8a1b701f3ce149d7103dfbd2a367404",
+      "rootServiceName": "api-gateway",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021562692660995",
+      "durationMs": 3
+    },
+    {
+      "traceID": "fd5dfb8efce296656f05ae9d325d4fa7",
+      "rootServiceName": "usuarios-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021561962461605",
+      "durationMs": 5
+    },
+    {
+      "traceID": "550d64fa164dac189e680c44b7bb409a",
+      "rootServiceName": "auth-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021561836627386",
+      "durationMs": 29
+    },
+    {
+      "traceID": "d71b2a03dd5408bea0e6244b4d7697c4",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021561338528751",
+      "durationMs": 3
+    },
+    {
+      "traceID": "38e90a44a1af6f751be52297b4b9e9dc",
+      "rootServiceName": "academico-laboratorios-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021560998638641",
+      "durationMs": 14
+    },
+    {
+      "traceID": "7fdf8445b3e85ab355d49a42d073a512",
+      "rootServiceName": "reservas-solicitudes-service",
+      "rootTraceName": "http get /actuator/prometheus",
+      "startTimeUnixNano": "1790021557335241107",
+      "durationMs": 7
+    },
+    {
+      "traceID": "ebd712dc840d8551d4ecfdeeed472784",
+      "rootServiceName": "academico-laboratorios-service",
+      "rootTraceName": "http get /actuator/health",
+      "startTimeUnixNano": "1790021556902705533",
+      "durationMs": 4
+    }
+  ],
+  "metrics": {
+    "inspectedTraces": 26,
+    "inspectedBytes": "70329",
+    "totalBlocks": 2,
+    "completedJobs": 1,
+    "totalJobs": 3,
+    "totalBlockBytes": "3493959"
+  }
+}

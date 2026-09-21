@@ -1,0 +1,142 @@
+[
+  {
+    "traceID": "4efd12146c025f2a2b37e7c87a410253",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021537802971416",
+    "durationMs": 5
+  },
+  {
+    "traceID": "56cff36dd0d2862078549bbd554e7641",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021477796884414",
+    "durationMs": 5
+  },
+  {
+    "traceID": "87bd1c3906106597967d174b6850ec51",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021417789459327",
+    "durationMs": 7
+  },
+  {
+    "traceID": "967beb293f41ff3f13d39012588ea7a",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021357783735979",
+    "durationMs": 5
+  },
+  {
+    "traceID": "3b205c476db7372614fecb14ed324221",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021237770362145",
+    "durationMs": 6
+  },
+  {
+    "traceID": "9eb0672800741990dd61474f5e9ae702",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021177502078869",
+    "durationMs": 267
+  },
+  {
+    "traceID": "83e4f52f17f967e5fd3184d7d4830b4b",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021105870780769",
+    "durationMs": 5718
+  },
+  {
+    "traceID": "7be2366cba6e73296ed6b0aec6eda14f",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790021045866383591",
+    "durationMs": 3
+  },
+  {
+    "traceID": "692a3ab3c5bc874c6704ba40e628c4cf",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020985862398752",
+    "durationMs": 3
+  },
+  {
+    "traceID": "91bb2b5c7be27ea1a5dddec474062f9b",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020925858278010",
+    "durationMs": 3
+  },
+  {
+    "traceID": "199f05e44c3a302166d7ede63a6cdf5e",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020805849082181",
+    "durationMs": 4
+  },
+  {
+    "traceID": "419846d3abf7800f3cf9afd9e0e5a526",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020745842523061",
+    "durationMs": 6
+  },
+  {
+    "traceID": "b95eada863b7eb09f32eb0d0d40e7f3",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020625831732961",
+    "durationMs": 4
+  },
+  {
+    "traceID": "a33d88a11e45aa10c0dee472ec70713d",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020385809590838",
+    "durationMs": 5
+  },
+  {
+    "traceID": "22d728c731788521bc53fef29fcdd089",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020145792097265",
+    "durationMs": 4
+  },
+  {
+    "traceID": "268c69257483e7067fdbcb561c2f5864",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020085787664715",
+    "durationMs": 4
+  },
+  {
+    "traceID": "39ee71feb9e32136b2e2b98b1066bd61",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790020025782754324",
+    "durationMs": 4
+  },
+  {
+    "traceID": "80661855d646cb5df54ac0f9ab367d2c",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790019965778137240",
+    "durationMs": 4
+  },
+  {
+    "traceID": "5f64a10490fae6a994405233efcb1e58",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790019905772945962",
+    "durationMs": 4
+  },
+  {
+    "traceID": "49eacc2216b2c6d0de4460fdb951a815",
+    "rootServiceName": "reservas-solicitudes-service",
+    "rootTraceName": "task solicitud-expiration-scheduler.expire",
+    "startTimeUnixNano": "1790019845768486007",
+    "durationMs": 4
+  }
+]

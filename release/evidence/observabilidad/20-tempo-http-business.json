@@ -1,0 +1,9 @@
+[
+  {
+    "traceID": "1e37269370ca1a3752c97730d49bc32b",
+    "rootServiceName": "usuarios-service",
+    "rootTraceName": "http get /api/v1/internal/perfiles/{perfilId}",
+    "startTimeUnixNano": "1790021715502515696",
+    "durationMs": 141
+  }
+]
