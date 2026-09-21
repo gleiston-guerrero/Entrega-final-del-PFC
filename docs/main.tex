@@ -1640,8 +1640,13 @@ exclusión de reservas solapadas bajo concurrencia, el ownership del docente,
 el ámbito operativo por piso y la coherencia transaccional de las
 cancelaciones.
 
-Las capturas de la aplicación web SCLI ejecutándose en el entorno desplegado
-presentan las vistas de dashboard, laboratorios, reservas e incidentes.
+La Figura~\ref{fig:web-release} presenta capturas existentes y versionadas
+previamente de la aplicación web SCLI en el entorno desplegado. El dashboard
+resume usuarios, laboratorios, reservas e incidentes activos; la vista de
+laboratorios muestra los laboratorios DEMO y su estado operativo; la vista de
+reservas conserva una solicitud real pendiente; y la vista de incidentes muestra
+el registro de una incidencia reportada. En conjunto, las capturas evidencian
+datos reales del despliegue usados durante la validación.
 
 \begin{figure*}[t]
   \centering
@@ -1669,12 +1674,14 @@ presentan las vistas de dashboard, laboratorios, reservas e incidentes.
   \label{fig:web-release}
 \end{figure*}
 
-Estas capturas permiten constatar visualmente que las interfaces principales de
-la aplicación web estaban disponibles durante la ejecución del sistema y
-mostraban información operativa del entorno utilizado para la evidencia.
-
-Las capturas de la aplicación Android ejecutándose en el entorno desplegado
-presentan las vistas de inicio, reservas, incidentes y acceso al lector QR.
+La Figura~\ref{fig:mobile-release} presenta la aplicación Android ejecutándose
+en el entorno desplegado, con las vistas de inicio, reservas, incidentes y el
+resultado posterior a un escaneo QR real. Esta validación móvil corresponde al
+APK oficial release \texttt{scli-mobile-v1.0.1-release.apk}, versión
+\texttt{v1.0.1}, con SHA-256
+\texttt{a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8}.
+La evidencia fue registrada el 2026-09-20 y se respalda en
+\texttt{docs/evidencias/qr-e2e-2026-09-20.md}.
 
 \begin{figure*}[t]
   \centering
@@ -1695,13 +1702,13 @@ presentan las vistas de inicio, reservas, incidentes y acceso al lector QR.
     \includegraphics[width=\linewidth]{mobile-qr-release.png}
   \end{minipage}
   \caption{Capturas de la interfaz móvil desplegada en la E4: inicio,
-  reservas, incidentes y acceso al lector QR.}
+  reservas, incidentes y resultado posterior a un escaneo QR real.}
   \label{fig:mobile-release}
 \end{figure*}
 
 Estas capturas permiten constatar visualmente la ejecución del cliente móvil y
 el acceso a sus principales funciones dentro del entorno utilizado para la
-validación.
+validación, incluyendo la consulta de laboratorio obtenida tras leer el QR.
 
 La evaluación de calidad mantiene una separación explícita entre evidencia
 automatizada disponible y mediciones finales pendientes. Esta distinción
