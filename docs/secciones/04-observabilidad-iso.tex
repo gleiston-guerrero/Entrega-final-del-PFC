@@ -198,10 +198,10 @@ los percentiles por repetición desde todos los eventos GET de negocio de
 \texttt{locust\_requests.csv}, sin filtrar por código HTTP, latencia ni
 éxito/fallo; login y refresh quedan fuera por pertenecer a Auth.
 Las fuentes oficiales son
-\path{../../experimentos/resultados/iso25010-eficiencia-poblada.csv} y
-\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/};
+\path{experimentos/resultados/iso25010-eficiencia-poblada.csv} y
+\path{experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/};
 el protocolo está en
-\path{../../experimentos/protocolo-e4-eficiencia-poblada.md}.
+\path{experimentos/protocolo-e4-eficiencia-poblada.md}.
 La conclusión queda acotada al escenario, datos, carga y entorno medidos:
 20 reservas no implican representatividad universal ni reconstrucción exacta
 del dataset histórico. La campaña vacía del 30 de agosto se conserva como
@@ -245,9 +245,9 @@ comparabilidad estricta entre datasets queda limitada y declarada.
 
 La tasa 5xx no se interpreta como disponibilidad temporal. El consolidado
 oficial es
-\path{../../experimentos/resultados/iso25010-correctiva-poblada.csv};
+\path{experimentos/resultados/iso25010-correctiva-poblada.csv};
 la evidencia raw está en
-\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}.
+\path{experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}.
 El analizador reconstruye las métricas directamente desde
 \texttt{locust\_requests.csv}.
 
@@ -261,18 +261,18 @@ refresh y dataset vacío se ejecutó sobre
 antecedentes.
 
 La campaña que cierra la corrección de fiabilidad es
-\path{../../experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}
+\path{experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/}
 y midió el software desplegado
 \texttt{dd2e1923d7635857f4020c7ef5c8b6efee363d7a}. Se ejecutó con Locust
 2.31.6 y Python 3.12.3 en la VM \texttt{pfc-pruebas-e1}.
 
 Cada repetición poblada conserva un manifiesto SHA-256. El manifiesto global
-\path{../../experimentos/resultados/SHA256SUMS} contiene 1.339 entradas.
+\path{experimentos/resultados/SHA256SUMS} contiene 1.339 entradas.
 Incluye los 550 archivos actualmente versionados de la campaña correctiva
 anterior, su consolidado
-\path{../../experimentos/resultados/iso25010-correctiva.csv}, las 319
+\path{experimentos/resultados/iso25010-correctiva.csv}, las 319
 evidencias de la campaña poblada y el consolidado
-\path{../../experimentos/resultados/iso25010-correctiva-poblada.csv}.
+\path{experimentos/resultados/iso25010-correctiva-poblada.csv}.
 
 La población de 20 reservas y su hash están fijados en la evidencia de
 preflight. No se atribuye a esa población identidad con el dataset histórico;
@@ -297,7 +297,7 @@ La campaña original utilizó un dataset vacío y no ejercitó
 \texttt{GET /api/v1/reservas/\{id\}}. Esta amenaza de validez de constructo
 impide generalizar sus resultados a toda la población declarada en PI1.
 Se conservan sus cifras y trazabilidad en
-\path{../../experimentos/resultados/raw/eficiencia_nominal_50u_5m/}.
+\path{experimentos/resultados/raw/eficiencia_nominal_50u_5m/}.
 Las diez repeticiones históricas terminaron con código cero y registraron 0 respuestas HTTP
 5xx. La Tabla~\ref{tab:repeticiones-eficiencia} transcribe el CSV verificado; r1
 y r10 se muestran porque forman parte de la evidencia, aunque no intervienen en
@@ -632,7 +632,7 @@ se observaron modificaciones en las tablas productivas que fueron verificadas,
 no impacto cero absoluto sobre toda la producción.
 
 La evidencia versionada de la campaña está disponible en
-\path{../../experimentos/resultados/arbiter/campaign/}. Corresponde al SHA
+\path{experimentos/resultados/arbiter/campaign/}. Corresponde al SHA
 experimental \texttt{e43967eda31410b7fef060cfc7903cea94efbe96} e incluye
 \path{manifest/checkpoint.json}, \path{summary/runs.json},
 \path{summary/runs.csv}, \path{analysis/comparisons.json},
@@ -677,9 +677,9 @@ experimental
 \texttt{fa7d75ec0f75573938bf46ed6a68f0aee99606ac}. Los commits posteriores
 incorporan análisis y documentación; no cambian retrospectivamente el software
 medido. El resultado consolidado se conserva en
-\path{../../experimentos/resultados/analisis-e3.json} y su relación con el
+\path{experimentos/resultados/analisis-e3.json} y su relación con el
 protocolo, productores y raw se explicita en
-\path{../../experimentos/resultados/TRAZABILIDAD-E3-E4.md}.
+\path{experimentos/resultados/TRAZABILIDAD-E3-E4.md}.
 
 En seguridad se realizaron tres repeticiones de los mismos siete casos. Los 7/7
 casos distintos fueron correctos, con proporción 1 e IC95 Wilson
