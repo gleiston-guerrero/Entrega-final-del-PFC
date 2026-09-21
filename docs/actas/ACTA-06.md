@@ -47,6 +47,16 @@ Se revisaron los siguientes resultados de las pruebas de la aplicación Web:
 - Functions: 78.43 %.
 - Lines: 84.87 %.
 
+> **Nota de rectificación posterior — 21/09/2026:** el 70,25 % de branches
+> fue el valor consignado en esta acta y se conserva como registro histórico.
+> La reproducción independiente posterior del docente (1558/2219 ramas) y
+> [GitHub Actions CI #536, job `Test web`](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293)
+> sobre el SHA `00947b366b0484af7c5ea997e13d07e018484339` producen 70,21 %,
+> que se adopta como cifra vigente documentada. Statements/functions/lines permanecen
+> en 81,89 / 78,43 / 84,87 %. Esta nota no formaba parte del acta original ni
+> acredita el cierre de la corrección #7 actual; los acuerdos originales que
+> siguen se conservan como antecedentes.
+
 La revisión abarcó los porcentajes de cobertura y la reproducibilidad de los resultados. Se revisó el procedimiento para reproducir la medición desde la raíz del repositorio:
 
 ```bash

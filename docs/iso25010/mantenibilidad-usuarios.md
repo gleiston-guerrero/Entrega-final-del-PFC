@@ -24,7 +24,7 @@ No se ejecutaron suites pesadas. Los runs consultados fueron [push 33838233548](
 | Académico | El job `mvn verify` del HEAD pasó; implica líneas >=70%, sin porcentaje persistido | JaCoCo LINE >=70% | Checkstyle configurado y lint CI verde; sin media global persistida | Backend y Checkstyle: verdes | PARCIAL |
 | Reservas | Sin porcentaje válido del HEAD porque `mvn verify` falló | JaCoCo LINE >=80%; BRANCH >=48% | Sin medición global versionada | Backend: rojo | NO CONCLUYENTE |
 | Gateway | El job `mvn verify` del HEAD pasó; implica líneas >=70%, sin porcentaje persistido | JaCoCo LINE >=70% | Sin medición global versionada | Backend: verde | PARCIAL |
-| Web | Reporte local actual: líneas 86,55%, statements 82,96%, functions 74,81%, branches 70,33%; `Test web` y ESLint verdes en CI | Vitest: 70% en líneas, statements, functions y branches | Sin complejidad ciclomática global | Web y ESLint: verdes | PARCIAL |
+| Web | Reporte local HISTÓRICO del SHA `cd61b64325480cbe132af7e56328f7fa5d8b99ef`: líneas 86,55%, statements 82,96%, functions 74,81%, branches 70,33%; `Test web` y ESLint verdes en ese CI histórico | Vitest: 70% en líneas, statements, functions y branches | Sin complejidad ciclomática global | Web y ESLint: verdes | PARCIAL |
 | Android | Reporte JaCoCo histórico: líneas 45,69%, branches 12,92% | No existe umbral JaCoCo que falle el build | Sin complejidad global | Unit tests/lint verdes; instrumentado verde en push y rojo en PR | PARCIAL |
 
 ## Interpretación
@@ -83,15 +83,26 @@ el CI actual, si se cita, es evidencia posterior separada.
 | Métrica | Resultado | Umbral | Decisión |
 |---|---:|---:|---|
 | Sentencias (statements) | 81,89 % | 70 % | CUMPLE |
-| Ramas (branches) | 70,25 % | 70 % | CUMPLE |
+| Ramas (branches) | 70,21 % | 70 % | CUMPLE |
 | Funciones (functions) | 78,43 % | 70 % | CUMPLE |
 | Líneas (lines) | 84,87 % | 70 % | CUMPLE |
 
 - **Comando exacto:** `npm run test:coverage` (equivalente a `vitest run --coverage`), ejecutado en `apps/web`.
 - **Alcance:** `apps/web/src/**/*.{ts,tsx}`.
 - **Threshold del gate:** 70 % mínimo en statements, branches, functions y lines (sin reducir).
-- **Suite:** 43 archivos, 296 pruebas; 3/3 repeticiones consecutivas en PASS.
-- **Contexto:** rama `fix/eval2-7-web-ivan`, base en el commit `c10abc0` del repositorio oficial `gleiston-guerrero/Entrega-final-del-PFC`.
+- **Procedencia:** [GitHub Actions CI #536, job `Test web`](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293), SHA `00947b366b0484af7c5ea997e13d07e018484339`.
+- **Entorno y suite:** Node `22.22.2`, instalación con `npm ci`; 43/43 archivos y 296/296 pruebas en PASS, duración 22,53 s.
+
+El log de ese CI publica 81,89 / 70,21 / 78,43 / 84,87 % en statements,
+branches, functions y lines. La reproducción independiente del docente aporta
+1558/2219 ramas cubiertas, cuyo porcentaje a dos decimales coincide con 70,21 %.
+La cifra anterior de 70,25 % queda rectificada; no se ha demostrado la causa
+de la diferencia ni se atribuye a Node/V8. Ese run no conserva un artifact
+`coverage-summary.json`: el workflow queda configurado en esta corrección para
+publicarlo en ejecuciones futuras como `web-coverage-summary-${{ github.sha }}`.
+No se modificaron pruebas, timeouts ni umbrales.
+
+## Replicación histórica de la campaña E3
 
 En las tres repeticiones cada métrica produjo el mismo valor: `sample_sd = 0`
 y el IC95 t degeneró en `[media; media]`. Ese resultado refleja el carácter

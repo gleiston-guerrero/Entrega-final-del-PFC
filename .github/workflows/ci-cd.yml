@@ -333,6 +333,13 @@ jobs:
         working-directory: apps/web
         run: npm run test:coverage
 
+      - name: Upload web coverage summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-coverage-summary-${{ github.sha }}
+          path: apps/web/coverage/coverage-summary.json
+          if-no-files-found: error
+
       - name: Build web
         working-directory: apps/web
         run: npm run build

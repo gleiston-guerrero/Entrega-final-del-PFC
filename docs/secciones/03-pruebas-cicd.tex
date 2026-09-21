@@ -126,10 +126,12 @@ de fuentes de la aplicación, incluyendo archivos no ejercitados por las pruebas
 por ello el reporte conserva explícitamente archivos con cobertura cero en lugar
 de excluirlos del denominador. Sobre el árbol integrado evaluado, la ejecución
 reproducible de \texttt{npm run test:coverage} produjo 81.89\% de statements,
-70.25\% de branches, 78.43\% de functions y 84.87\% de lines. Estos valores
+70.21\% de branches, 78.43\% de functions y 84.87\% de lines. Estos valores
 superan el umbral configurado de 70\% en las cuatro métricas y corresponden al
-reporte generado sobre el estado actual del repositorio, no a una medición
-trasladada desde un SHA anterior.
+log de \href{https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293}{CI \#536, job Test web},
+SHA \texttt{00947b366b0484af7c5ea997e13d07e018484339}, con Node 22.22.2:
+43/43 archivos y 296/296 pruebas aprobadas. Esta es la procedencia de la
+medición vigente.
 
 El pipeline ejecuta \texttt{npm run test:coverage} y \texttt{npm run build}; por
 tanto, una promoción solo continúa si los umbrales configurados y el build se
@@ -291,9 +293,14 @@ Las imágenes se publican en GHCR con el SHA Git completo, nunca con
 aplica a las seis imágenes, estableciendo la cadena
 commit $\rightarrow$ ejecución CI $\rightarrow$ imagen $\rightarrow$ despliegue.
 Los demás artefactos publicados son los contratos Pact, \texttt{dist.tar.gz} de
-Web, el informe JaCoCo Mobile, los resultados instrumentados y el APK debug. No
-se publican actualmente los reportes JaCoCo Backend, la cobertura Web ni un
-reporte Playwright; permanecen en los logs o en el espacio temporal del runner.
+Web, el informe JaCoCo Mobile, los resultados instrumentados y el APK debug.
+Antes de esta corrección no se conservaba el resumen de cobertura Web como
+artefacto, incluido el CI \#536. El workflow queda configurado para publicar en
+ejecuciones futuras únicamente \texttt{apps/web/coverage/coverage-summary.json}
+como \texttt{web-coverage-summary-<SHA>}, después de las pruebas y antes del
+build, con error si falta el archivo. No se publican actualmente los reportes
+JaCoCo Backend ni un reporte Playwright; permanecen en los logs o en el espacio
+temporal del runner.
 
 \subsubsection{Despliegue controlado}
 
