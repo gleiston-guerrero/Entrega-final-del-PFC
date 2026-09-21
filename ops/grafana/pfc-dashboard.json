@@ -32,7 +32,7 @@
       "title": "ERRORES HTTP 5XX",
       "type": "timeseries",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
-      "targets": [{"refId": "A", "expr": "sum by (job) (rate(http_server_requests_seconds_count{status=~\"5..\"}[5m]))", "legendFormat": "{{job}}"}],
+      "targets": [{"refId": "A", "expr": "sum by (job) (rate(http_server_requests_seconds_count{status=~\"5..\"}[5m])) or (sum by (job) (rate(http_server_requests_seconds_count[5m])) * 0)", "legendFormat": "{{job}}"}],
       "gridPos": {"h": 8, "w": 8, "x": 16, "y": 0},
       "fieldConfig": {"defaults": {"unit": "reqps"}, "overrides": []},
       "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}}
