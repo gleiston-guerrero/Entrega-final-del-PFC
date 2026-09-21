@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "data": [
+    "academico-laboratorios-service",
+    "api-gateway",
+    "auth-service",
+    "reservas-solicitudes-service",
+    "usuarios-service"
+  ]
+}

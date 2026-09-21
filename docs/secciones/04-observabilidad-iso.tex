@@ -112,19 +112,25 @@ tiempo HTTP observado por OkHttp, lo reporta a
 Reservas expone las familias \texttt{app.mobile.http.latency} y
 \texttt{app.mobile.http.requests} para Prometheus. El panel calcula p95 con
 \texttt{app\_mobile\_http\_latency\_seconds\_bucket} y el job
-\texttt{reservas-solicitudes-service}. La evidencia runtime final sigue
-pendiente: aún debe capturarse el dashboard en la VM con esta serie poblada bajo
-carga.
+\texttt{reservas-solicitudes-service}. La validación runtime final se ejecutó en la VM
+\texttt{pfc-pruebas-e1} sobre el SHA
+\texttt{1720c7745bf9573ecfba8231c71774eab0c1e5e0}. Tras tráfico real desde
+Android, Prometheus registró 408 observaciones acumuladas de latencia móvil y un p95
+de 0,151554183275 s en la consulta final de cinco minutos. Los resultados raw se conservan en
+\texttt{release/evidence/observabilidad/}.
 
-La Figura~\ref{fig:panel-monitoreo-carga-real} muestra el dashboard consolidado
-versionado como evidencia visual de su estructura y provisionamiento. La imagen
-actual no se atribuye a una nueva validación de 50 usuarios, cinco minutos ni
-22,64 solicitudes por segundo, porque esa relación debe provenir de la evidencia
-runtime correspondiente. Cuando se ejecute la validación final en la VM será
-necesaria una nueva captura bajo carga que muestre la serie
-\texttt{app\_mobile\_http\_latency\_seconds\_bucket} poblada. Esta captura no
-sustituye ni modifica las diez repeticiones nominales analizadas en la
-Sección~\ref{subsec:eficiencia-nominal}.
+La Figura~\ref{fig:panel-monitoreo-carga-real} corresponde a la captura runtime
+final del dashboard en esa VM, con rango de 15 minutos y refresco de 5 s. Los
+seis paneles presentan series: tráfico HTTP, percentiles de latencia, tasa 5xx
+en cero para servicios con tráfico, salud y métricas de CockroachDB, recursos
+cAdvisor y p95 E2E móvil. La captura se acompaña de
+\texttt{panel-monitoreo.metadata.txt} y de manifiestos SHA-256. Esta validación
+operacional no se atribuye a la campaña nominal de 50 usuarios y cinco minutos
+ni sustituye las diez repeticiones analizadas en la
+Sección~\ref{subsec:eficiencia-nominal}. Tempo y Loki también se verificaron en
+runtime: se correlacionó el trace ID
+\texttt{3302a606e9fb236618a03f4b06b5a6a7} para
+\texttt{GET /api/v1/laboratorios} con respuesta 200 y 12 batches de Tempo.
 
 \begin{figure*}[htbp]
   \centering
@@ -866,8 +872,7 @@ registró 0 HTTP 401 y 42 HTTP 5xx preservados. Esa campaña tuvo además un
 confusor CockroachDB declarado: ausencia de licencia, inicio de throttling
 registrado desde 2026-09-20 06:18:38 UTC y errores \texttt{XXC02} en r7--r9,
 coincidentes temporalmente con los 5xx. La disponibilidad temporal no
-fue operacionalizada. A ello se suman la falta de una captura runtime final
-del panel Mobile E2E poblado bajo carga, falta de rollback automático,
+fue operacionalizada. Persisten además la falta de rollback automático,
 ausencia de Pact Broker, Testcontainers no uniforme y artefactos de calidad no
 persistidos para todos los componentes. Estas restricciones se documentan como
 amenazas a la generalización, no se ocultan mediante promedios o extrapolaciones.
@@ -1020,8 +1025,7 @@ en puntos diferentes. \textbf{Efecto:} tratarlas como equivalentes mezclaría
 latencia desde generador, latencia interna del backend y tiempo HTTP observado
 desde Android; además, ninguna de ellas mide renderizado de UI.
 \textbf{Mitigación aplicada:} se reportan por separado y se explica el punto de
-medición de cada una. \textbf{Riesgo residual:} falta una captura runtime final
-del dashboard con la métrica móvil poblada bajo carga en la VM.
+medición de cada una. \textbf{Riesgo residual:} la captura runtime final usa tráfico funcional real desde Android y no constituye por sí sola una campaña nominal de 50 usuarios ni una medición del renderizado de UI.
 
 \textbf{Amenaza:} el estimando de latencia ARBITER mezcla respuestas válidas y
 HTTP 500, con tasas de fallo diferentes entre estrategias. \textbf{Efecto:} no
@@ -1079,7 +1083,7 @@ posteriormente se presenta en la Sección~\ref{sec:contratos-openapi}.
     \hline
     D6.1 & Métricas, trazas y logs & Prometheus, OTel, Tempo, Loki, cAdvisor y Grafana & Observabilidad & CUMPLE \\
     \hline
-    D6.2 & Dashboard de seis paneles & JSON canónico; panel 6 con latencia HTTP E2E móvil reportada desde Android; falta captura runtime poblada bajo carga & Dashboard & PARCIAL \\
+    D6.2 & Dashboard de seis paneles & JSON canónico; seis paneles poblados en VM; Mobile E2E desde Android y evidencia runtime versionada & Dashboard & CUMPLE \\
     \hline
     D7.1 & Experimento ISO 25010 & Eficiencia 10/10; fiabilidad correctiva 10/10 y E2 cumple descriptivamente $<1\%$ con confusor CockroachDB; disponibilidad temporal no operacionalizada & ISO/experimentos & PARCIAL \\
     \hline
@@ -1130,8 +1134,7 @@ resolución y healthcheck descritas en la Sección~\ref{subsec:arbiter-resultado
 La observabilidad mejora la capacidad de diagnóstico mediante Prometheus,
 OpenTelemetry, Tempo, Loki, cAdvisor y Grafana. Su dashboard satisface la
 estructura de seis paneles y el panel Mobile ya usa una métrica E2E medida desde
-Android y expuesta por Reservas a Prometheus. La evidencia visual final de esa
-serie poblada bajo carga en la VM sigue pendiente. En conjunto, la entrega está
+Android y expuesta por Reservas a Prometheus. La evidencia visual final quedó versionada con los seis paneles poblados en la VM y metadata ligada al SHA desplegado. En conjunto, la entrega está
 sustentada para informe y defensa siempre que las limitaciones experimentales y
 técnicas permanezcan explícitas.
 
@@ -1141,7 +1144,7 @@ técnicas permanezcan explícitas.
 Las prioridades son elevar la cobertura Mobile con casos de ramas y UI de valor,
 diagnosticar mediante una campaña independiente el patrón de respuestas 401,
 operacionalizar y validar disponibilidad, investigar y reducir la variabilidad
-p99, y capturar bajo carga la latencia E2E móvil ya medida desde Android.
+p99, y ampliar la medición E2E móvil a campañas reproducibles de carga.
 También conviene automatizar rollback, incorporar Pact
 Broker con \emph{can-i-deploy}, extender Testcontainers a Académico, persistir
 reportes Backend/Web/Playwright y fijar versiones inmutables y uniformes de las

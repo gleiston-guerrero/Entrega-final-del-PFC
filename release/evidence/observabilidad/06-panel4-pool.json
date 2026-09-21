@@ -1,0 +1,18 @@
+{
+  "query": "max(crdb_pool_active_connections{job=\"reservas-solicitudes-service\"})",
+  "response": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1790021596.137,
+            "0"
+          ]
+        }
+      ]
+    }
+  }
+}
