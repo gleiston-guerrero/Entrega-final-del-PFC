@@ -876,8 +876,11 @@ def analyze_scenario(
         print_summary("historical_aggregated_p99_ms", historical_p99_values, 750.0, "ms")
 
     if scenario == POPULATED_EFFICIENCY_SCENARIO:
-        repetitions = [int(row["_repetition"]) for row in selected]
-        population = read_populated_efficiency_population(raw_root, repetitions)
+        population = read_populated_efficiency_population(
+            raw_root,
+            sorted(EXPECTED_REPETITIONS),
+        )
+        repetitions = sorted(ANALYZED_REPETITIONS)
         p95_values = [float(population[r]["p95_ms"]) for r in repetitions]
         p99_values = [float(population[r]["p99_ms"]) for r in repetitions]
         print("  procedencia oficial: locust_requests.csv; ambos GET de negocio, sin filtros por HTTP, éxito o latencia")
