@@ -128,6 +128,28 @@ degenerada.
 Los HTTP 5xx observados no se eliminan: r7 conserva 1, r8 conserva 21 y r9
 conserva 20.
 
+## Confusor CockroachDB y regímenes operativos
+
+La campaña se ejecutó en un entorno CockroachDB sin licencia activa. Los logs
+del motor declaran: `Throttling will begin after 2026-09-20 06:18:38 +0000
+UTC`. La repetición r6 cruza ese instante, mientras r7--r9 contienen errores
+`XXC02`. En consecuencia, los HTTP 5xx conservados coinciden temporalmente con
+errores `XXC02` y con el régimen posterior al inicio declarado del throttling;
+esta coincidencia se documenta como confusor ambiental, sin afirmar causalidad
+absoluta desde los logs disponibles.
+
+La lectura operacional queda separada en tres regímenes:
+
+- **pre-throttling**: r1--r5 completos, 447.599 GET de negocio, 0 HTTP 5xx
+  (0 %);
+- **transición**: r6, porque cruza 2026-09-20 06:18:38 UTC, con 89.500 GET de
+  negocio y 0 HTTP 5xx;
+- **post-throttling**: r7--r10, con 358.037 GET de negocio, 42 HTTP 5xx
+  (0,011730631 %).
+
+Por repetición, r1--r6 registran 0 HTTP 5xx; r7 registra 1, r8 registra 21,
+r9 registra 20 y r10 registra 0.
+
 ## Persistencia de carga después del TTL
 
 El tráfico por id continúa después de 900 s en todas las repeticiones. Los
@@ -173,7 +195,15 @@ La enmienda metodológica está preservada en:
 
 `resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/enmienda-criterio-validez-locust.md`
 
-No se elimina ninguna observación desfavorable.
+La cronología versionada muestra que `rep-07` fue preservada en el commit
+`5fa1bba` a 2026-09-20 07:40:12 UTC, `rep-08` fue preservada en el commit
+`034b1d4` a 2026-09-20 08:44:28 UTC y la enmienda fue versionada en
+`82b119f` a 2026-09-20 08:45:33 UTC. Por tanto, la modificación del criterio
+operativo ocurrió después de observar r7 y r8.
+
+La enmienda se declara post hoc. No se elimina ninguna observación
+desfavorable, no se alteran crudos y se conserva trazabilidad tanto del criterio
+original como del criterio modificado.
 
 ## Análisis estadístico principal r2--r9
 
@@ -205,8 +235,13 @@ El límite inferior negativo de la tasa es una consecuencia matemática del
 intervalo t no acotado aplicado a las ocho tasas por repetición; se reporta sin
 truncarlo retrospectivamente. La regla de decisión usa el límite superior.
 
-Como `0,014677 % < 1 %`, **E2 CUMPLE el criterio acotado de HTTP 5xx en la
-campaña poblada medida**.
+Como `0,014677 % < 1 %`, **E2 cumple descriptivamente el criterio acotado de
+HTTP 5xx en la campaña poblada medida**.
+
+Este IC95 oficial mezcla repeticiones pre-throttling, la transición r6 y
+repeticiones post-throttling. Por ello debe interpretarse como estadístico
+descriptivo global de la campaña y no como estimación bajo condiciones
+homogéneas.
 
 p95 y p99 son métricas descriptivas. No constituyen criterios adicionales de
 aceptación para esta campaña.
@@ -285,7 +320,12 @@ La tasa HTTP 5xx y la disponibilidad temporal no son equivalentes.
 
 La campaña permite concluir únicamente que, para la población correctiva
 controlada y la infraestructura medida, el límite superior del IC95 de la tasa
-HTTP 5xx por repetición queda por debajo de 1 %.
+HTTP 5xx por repetición queda por debajo de 1 % como resultado descriptivo
+global. Su interpretación causal está condicionada por el cambio de régimen del
+entorno CockroachDB: los 42 HTTP 5xx se conservan íntegramente y coinciden
+temporalmente con errores `XXC02` posteriores al inicio declarado del
+throttling, por lo que no pueden atribuirse de forma limpia a la lógica de la
+aplicación.
 
 No se debe inferir de este resultado una disponibilidad temporal de 99,5 %,
 porque tiempo apto frente a tiempo total no fue operacionalizado.
@@ -309,9 +349,13 @@ Se puede defender que:
 5. r2--r9 contienen 716.099 GET y producen una tasa HTTP 5xx media de
    0,005870 % e IC95 [-0,002938; 0,014677] %;
 6. el límite superior 0,014677 % cumple el criterio `<1 %`;
-7. p95 y p99 son descriptivos;
-8. el dataset nuevo es controlado y no se presenta como reconstrucción exacta
+7. el IC95 oficial es un descriptivo global que mezcla régimen pre-throttling,
+   transición r6 y régimen post-throttling;
+8. los 42 HTTP 5xx coinciden temporalmente con `XXC02` y el régimen posterior
+   al throttling de CockroachDB sin que se afirme causalidad absoluta;
+9. p95 y p99 son descriptivos;
+10. el dataset nuevo es controlado y no se presenta como reconstrucción exacta
    del histórico;
-9. los raws, intentos desfavorables y códigos de salida permanecen preservados;
-10. la disponibilidad temporal de 99,5 % continúa no operacionalizada y no se
+11. los raws, intentos desfavorables y códigos de salida permanecen preservados;
+12. la disponibilidad temporal de 99,5 % continúa no operacionalizada y no se
     infiere desde la tasa HTTP 5xx.
