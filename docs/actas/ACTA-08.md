@@ -25,9 +25,10 @@ identidad al tercer participante por falta de evidencia suficiente.
 
 ## Objetivo
 
-Registrar contemporaneamente la revision cruzada del PR #29 del repositorio
-oficial para el punto #36, usando las evidencias disponibles de la sesion y del
-flujo de revision en GitHub.
+Registrar contemporaneamente la verificacion del estado del PR #29 del
+repositorio oficial para el punto #36, usando las evidencias disponibles de la
+sesion y del flujo de revision en GitHub, sin presentar como realizadas durante
+la reunion acciones ocurridas antes de la primera evidencia temporal disponible.
 
 ## PR revisado
 
@@ -43,7 +44,7 @@ flujo de revision en GitHub.
 ### 23:05
 
 - Meet activo.
-- Revision del PR #29 durante la reunion.
+- Verificacion del estado del PR #29 durante la reunion.
 - La evidencia muestra el PR #29 abierto y la conversacion de revision visible.
 - En la sesion se identifican nominalmente Isaias e Ivan; tambien se observa un
   total de 3 participantes conectados, sin identidad suficiente para el tercero.
@@ -70,6 +71,12 @@ flujo de revision en GitHub.
 
 La evidencia muestra que `ivillamarinc` realizo la revision del PR #29, dejo un
 comentario escrito y aprobo los cambios antes del merge.
+
+Salvedad cronologica: la aprobacion del PR #29 por `ivillamarinc` ocurrio antes
+del inicio de la ventana documentada de esta reunion. Durante la reunion se
+verificaron el estado del PR, los checks disponibles y su posterior fusion. Por
+tanto, la aprobacion no se presenta como una accion realizada durante la
+reunion.
 
 Comentario visible del reviewer:
 

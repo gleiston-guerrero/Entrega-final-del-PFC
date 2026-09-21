@@ -162,6 +162,11 @@ captura.
 
 ![PR #10 historico aprobado e integrado antes de la revision visible](evidencias/acta-06/pr10-aprobado-mergeado.png)
 
+Nota de formato: `meet-revision-pr10.png` y `pr10-aprobado-mergeado.png`
+conservan su extension historica `.png`, pero su contenido real esta codificado
+como JPEG segun los magic bytes `FFD8FFE0`. No fueron renombrados ni
+convertidos para preservar la trazabilidad de la evidencia.
+
 ## Cierre
 
 - Hora final: 22:45 (UTC-05:00) del 15/09/2026.

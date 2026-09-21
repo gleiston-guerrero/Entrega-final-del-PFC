@@ -7,6 +7,12 @@ commit [`1ce91ba05e8048fda75a8479d368684a2c338430`](https://github.com/gleiston-
 retrospectivos**, no actas contemporáneas de reuniones en las fechas de los
 trabajos asociados.
 
+ACTA-01 a ACTA-05 ya existian en el commit `1ce91ba`, pero fueron reescritas,
+ajustadas y corregidas posteriormente el 13/09/2026 mediante el commit
+`88d4a80`. Por tanto, no deben presentarse unicamente como registros creados
+conjuntamente en `1ce91ba`; su contenido actual incorpora esas correcciones
+posteriores.
+
 Git y GitHub permiten comprobar commits, autores, artefactos y ejecuciones, pero
 no demuestran por sí solos que hubiera reuniones por Google Meet, una hora de
 inicio o una lista de asistencia. Se retiraron esas afirmaciones. Los nombres y
@@ -71,6 +77,10 @@ presenta como reconstrucción retrospectiva de actividades anteriores.
 Las capturas muestran 3 participantes conectados, pero solo permiten identificar
 nominalmente a Isaías Urbina e Iván Villamarín.
 
+Nota de formato: `meet-revision-pr10.png` y `pr10-aprobado-mergeado.png`
+conservan su extension `.png`, pero su contenido real corresponde a JPEG segun
+los magic bytes `FFD8FFE0`. No fueron convertidos ni renombrados.
+
 ### Evidencia asociada a ACTA-07
 
 - [pr11-aprobado-repo-oficial.png](evidencias/acta-07/pr11-aprobado-repo-oficial.png): aprobación del PR #11 del repositorio oficial, con checks todavía en ejecución.
@@ -89,3 +99,28 @@ en esta correccion documental para preservar trazabilidad.
 - [acta-08-pr29-checks-aprobados-2314.png](evidencias/acta-08/acta-08-pr29-checks-aprobados-2314.png): checks en estado satisfactorio a las 23:14 con el PR todavía abierto.
 - [acta-08-pr29-confirmacion-merge-2315.png](evidencias/acta-08/acta-08-pr29-confirmacion-merge-2315.png): pantalla de confirmación del merge a las 23:15.
 - [acta-08-pr29-merge-completado-2316.png](evidencias/acta-08/acta-08-pr29-merge-completado-2316.png): PR #29 fusionado a `main` y cerrado a las 23:16.
+
+Nota cronologica: la aprobacion del PR #29 por `ivillamarinc` ocurrio antes de
+la primera evidencia temporal disponible de ACTA-08. La reunion documenta la
+verificacion posterior del estado del PR, los checks disponibles y el merge, no
+la aprobacion como accion realizada durante la reunion.
+
+## Limitaciones de revision cruzada
+
+El historial disponible no debe interpretarse como evidencia de revision cruzada
+profunda en todos los PR. Existen PR fusionados sin review registrada, no hay
+comentarios inline registrados, no hay reviews `CHANGES_REQUESTED` y algunas
+aprobaciones ocurrieron en intervalos muy breves. Por ello, las aprobaciones se
+conservan como evidencia historica, pero no se presentan todas como revisiones
+tecnicas exhaustivas.
+
+Despues de ACTA-08 hubo PR fusionados sin una reunion contemporanea documentada
+en este directorio. No se crean actas retroactivas para esos PR.
+
+## Identificadores de Ivan
+
+La evidencia interna revisada asocia `iavillamarin98-pred` con referencias a
+Ivan en ACTA-06 y `.mailmap`, y asocia `ivillamarinc` con referencias a Ivan en
+ACTA-08. La equivalencia entre ambos identificadores no queda explicitada en el
+repositorio, por lo que no se modifica `.mailmap` ni se afirma aqui que
+correspondan necesariamente a la misma persona.
