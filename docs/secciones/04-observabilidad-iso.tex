@@ -646,12 +646,12 @@ Observabilidad apoya la eficiencia, la tasa de fallos y el diagnóstico, pero no
 certifica ISO 25010 por sí sola. La Tabla~\ref{tab:resultado-iso25010} integra
 solo características con evidencia disponible.
 
-\begin{table}[ht]
+\begin{table*}[t]
   \centering
   \small
   \caption{Resultado de las características ISO/IEC 25010 seleccionadas.}
   \label{tab:resultado-iso25010}
-  \begin{tabular}{|p{2.3cm}|p{2.5cm}|p{2.2cm}|p{4.0cm}|p{1.8cm}|}
+  \begin{tabular}{|p{\dimexpr.17\textwidth-2\tabcolsep-1.2\arrayrulewidth\relax}|p{\dimexpr.18\textwidth-2\tabcolsep-1.2\arrayrulewidth\relax}|p{\dimexpr.20\textwidth-2\tabcolsep-1.2\arrayrulewidth\relax}|p{\dimexpr.29\textwidth-2\tabcolsep-1.2\arrayrulewidth\relax}|p{\dimexpr.16\textwidth-2\tabcolsep-1.2\arrayrulewidth\relax}|}
     \hline
     \textbf{Característica} & \textbf{Métrica} & \textbf{Objetivo} & \textbf{Evidencia/resultado} & \textbf{Estado} \\
     \hline
@@ -670,7 +670,7 @@ solo características con evidencia disponible.
     Compatibilidad & Suite Web en tres motores & 100\%; cero fallidos, omitidos y flaky & Chromium, Firefox y WebKit: 8/8; repetibilidad 3/3; Wilson [0,675592; 1] & CUMPLE en suite Web \\
     \hline
   \end{tabular}
-\end{table}
+\end{table*}
 
 Seguridad, mantenibilidad y compatibilidad se midieron en E3 sobre el SHA
 experimental

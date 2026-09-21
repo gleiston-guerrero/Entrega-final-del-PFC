@@ -17,12 +17,12 @@ y un promedio ocultaría, por ejemplo, una cobertura móvil insuficiente detrás
 resultados altos del Gateway. La Tabla~\ref{tab:piramide-pruebas} resume la
 pirámide realmente implementada.
 
-\begin{table}[ht]
+\begin{table*}[t]
   \centering
   \small
   \caption{Niveles de prueba implementados en la Entrega 4.}
   \label{tab:piramide-pruebas}
-  \begin{tabular}{|p{2.0cm}|p{2.8cm}|p{3.0cm}|p{4.8cm}|}
+  \begin{tabular}{|p{\dimexpr.14\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.24\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.20\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.42\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|}
     \hline
     \textbf{Nivel} & \textbf{Tecnología} & \textbf{Componente} & \textbf{Propósito y evidencia} \\
     \hline
@@ -37,7 +37,7 @@ pirámide realmente implementada.
     Carga & Locust & Gateway y Reservas & Autenticación real, consultas nominales y rampa; CSV y archivos crudos analizados en el capítulo ISO. \\
     \hline
   \end{tabular}
-\end{table}
+\end{table*}
 
 \subsection{Backend: pruebas unitarias, integración y cobertura}
 \label{subsec:pruebas-backend}
@@ -56,12 +56,12 @@ La ejecución de push del SHA funcional
 Backend, incluido el control reforzado de Reservas, sin sustituir esos reportes
 por una cifra agregada entre servicios.
 
-\begin{table}[ht]
+\begin{table*}[t]
   \centering
   \small
   \caption{Controles de pruebas y cobertura Backend configurados.}
   \label{tab:cobertura-backend}
-  \begin{tabular}{|p{4.2cm}|p{3.2cm}|p{3.0cm}|p{2.3cm}|}
+  \begin{tabular}{|p{\dimexpr.31\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.24\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.25\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|p{\dimexpr.20\textwidth-2\tabcolsep-1.25\arrayrulewidth\relax}|}
     \hline
     \textbf{Servicio} & \textbf{Herramienta} & \textbf{Fuente de resultado} & \textbf{Criterio} \\
     \hline
@@ -76,7 +76,7 @@ por una cifra agregada entre servicios.
     api-gateway & JUnit/Mockito/JaCoCo & Surefire y JaCoCo del job Backend & Gate $\geq 70\%$ \\
     \hline
   \end{tabular}
-\end{table}
+\end{table*}
 
 Superar un umbral en una ejecución no significa que cada ruta esté probada ni
 que el sistema sea inmune a fallos. La cobertura de líneas no sustituye la
