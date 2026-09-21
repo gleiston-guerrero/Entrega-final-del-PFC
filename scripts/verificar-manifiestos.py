@@ -13,9 +13,17 @@ import re
 import subprocess
 from pathlib import Path, PurePosixPath
 
-NAMES = frozenset({"SHA256SUMS", "SHA256SUMS.txt", "MANIFEST-SHA256.txt"})
+NAMES = frozenset({
+    "SHA256SUMS",
+    "SHA256SUMS.txt",
+    "MANIFEST-SHA256.txt",
+    "iso25010-eficiencia-poblada.sha256",
+})
 # Única excepción histórica: sus rutas parten de la raíz, no de su carpeta.
-ROOT_BASED = frozenset({"experimentos/resultados/SHA256SUMS"})
+ROOT_BASED = frozenset({
+    "experimentos/resultados/SHA256SUMS",
+    "experimentos/resultados/iso25010-eficiencia-poblada.sha256",
+})
 LINE = re.compile(r"([0-9a-fA-F]{64}) ([ *])(.+)")
 
 
