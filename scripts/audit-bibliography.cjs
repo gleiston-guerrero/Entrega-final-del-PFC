@@ -44,6 +44,7 @@ if (!headings.length) throw Error('Bibliography heading missing in extracted PDF
 const start = headings.at(-1).index;
 const pdf = new Map([...pdfText.slice(start).matchAll(/(?:^|\n)\[(\d+)\]\s([\s\S]*?)(?=\n\[\d+\]\s|$)/g)].map(m => [Number(m[1]), m[2]]));
 equal(new Set(items.map((_, i) => i + 1)), new Set(pdf.keys()), 'BBL/PDF numbering mismatch');
+const bibliographyPdfText = pdfText.slice(start);
 function validIsbn(value) {
   const digits = normalizeIdentifier('isbn', value);
   return /^\d{13}$/.test(digits) && [...digits].reduce((sum, d, i) => sum + Number(d) * (i % 2 ? 3 : 1), 0) % 10 === 0;
@@ -66,6 +67,10 @@ function normalizeIdentifier(type, value) {
     return normalized;
   }
   throw new Error(`Unsupported identifier type: ${type}`);
+}
+function normalizePdfIdentifier(type, value) {
+  const normalized = normalizeIdentifier(type, value);
+  return type === 'doi' ? normalized.replace(/-/g, '') : normalized;
 }
 function normalizeName(value) {
   return value
@@ -103,11 +108,14 @@ for (const [i, item] of items.entries()) {
   const id = field(type);
   if (type === 'isbn' && !validIsbn(id)) errors.push('Invalid ISBN: ' + key);
   const target = id && normalizeIdentifier(type, id);
+  const pdfTarget = id && normalizePdfIdentifier(type, id);
   const bblText = normalizeIdentifier(type, item[2]);
-  const rendered = normalizeIdentifier(type, pdf.get(i + 1) || '');
-  if (!target || !bblText.includes(target) || !rendered.includes(target)) missing.push(key);
-  if (target && (bblText.split(target).length !== 2 || rendered.split(target).length !== 2)) errors.push('Identifier missing/duplicated: ' + key);
-  console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${Boolean(target && bblText.includes(target))} PDF=${Boolean(target && rendered.includes(target))}`);
+  const rendered = normalizePdfIdentifier(type, bibliographyPdfText);
+  const bblPresent = Boolean(target && bblText.includes(target));
+  const pdfPresent = Boolean(pdfTarget && rendered.includes(pdfTarget));
+  if (!target || !bblPresent || !pdfPresent) missing.push(key);
+  if (target && bblText.split(target).length !== 2) errors.push('Identifier missing/duplicated: ' + key);
+  console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${bblPresent} PDF=${pdfPresent}`);
 }
 const log = read('main.log');
 const blg = read('main.blg');
