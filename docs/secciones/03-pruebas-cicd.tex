@@ -219,7 +219,7 @@ en ese momento no se añadieron secretos ni complejidad de firma.
 release signed}: ejecuta \texttt{assembleRelease}, alinea el binario mediante
 \texttt{zipalign}, lo firma con \texttt{apksigner}, valida la firma con
 \texttt{apksigner verify}, genera y comprueba \texttt{SHA256SUMS.txt}. La
-release oficial verificada correspondiente al punto 35 es \texttt{v1.0.1},
+release histórica verificada correspondiente al punto 35 es \texttt{v1.0.1},
 publicada por GitHub Actions sobre el commit etiquetado
 \texttt{166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8}. Sus assets incluyen
 \texttt{scli-mobile-v1.0.1-release.apk}, \texttt{SHA256SUMS.txt},
@@ -231,11 +231,41 @@ confirmo APK Signature Scheme v2 y v3, un firmante RSA de 2048 bits y el
 certificado \texttt{CN=scli, OU=uteq, O=uteq, L=Quevedo, ST=Los Rios, C=EC}.
 El binario preservado en \path{release/apk/scli-mobile-0.1.0-release.apk} y su
 checksum en \path{release/apk/SHA256SUMS.txt} se mantienen solo como evidencia
-historica de una ejecucion anterior; no constituyen la release vigente
-\texttt{v1.0.1}. GitHub Actions continua siendo la fuente reproducible; las
+historica de una ejecucion anterior. GitHub Actions continua siendo la fuente reproducible; las
 claves privadas y contrasenas de firma permanecen fuera de Git.
 No se ejecutó un emulador manualmente durante la redacción; se usa la ejecución
 automatizada de CI como evidencia.
+
+\paragraph{Identidad y mecanismo reproducible de release.}
+Este documento identifica la release como \texttt{\SCLIReleaseVersion},
+con SHA fuente \texttt{\SCLIReleaseCommit}. La compilación local usa valores
+indicativos; CI inyecta el tag y el SHA mediante un archivo de entrada temporal,
+sin modificar el manuscrito. Para un tag \texttt{vX.Y.Z}, el APK recibe
+\texttt{SCLI\_VERSION\_NAME=X.Y.Z}; \texttt{SCLI\_VERSION\_CODE} procede
+del número de ejecución CI y se valida entre 1 y 2100000000. Los pushes sin
+tag usan un identificador de desarrollo con número de ejecución y SHA.
+Gradle rechaza tareas release sin URL, nombre o código de versión válidos.
+Después de firmar, \texttt{aapt dump badging} verifica ambas versiones internas.
+La publicación comprueba primero la suma original del APK firmado y después
+genera \texttt{SHA256SUMS.txt} con dos entradas de nombre base, APK y PDF,
+que verifica antes de adjuntar los tres archivos a la release. El tag se
+resuelve a su commit real, incluso si está anotado; \texttt{git merge-base
+--is-ancestor} exige que pertenezca a \texttt{origin/main}. La publicación
+solo se habilita para tags y conserva los gates de imágenes, manifiestos,
+contratos OpenAPI y documentación. Los assets de cada release publicada
+constituyen la evidencia de esa ejecución, sin atribuirles resultados de
+una versión histórica.
+
+\paragraph{Limitación de transporte del entorno demostrativo.}
+La URL procede de la Repository Variable
+\texttt{SCLI\_RELEASE\_API\_BASE\_URL}, sin backend fijo en el código.
+La política general bloquea cleartext. Si la URL usa HTTP, CI genera
+temporalmente una excepción limitada al hostname configurado, sin subdominios;
+con HTTPS no habilita cleartext. HTTP no proporciona confidencialidad ni
+autenticidad de transporte: credenciales y tokens pueden ser interceptados
+o manipulados en una red hostil. La excepción corresponde únicamente al
+entorno académico/demostrativo actual. Un despliegue de producción debe
+utilizar HTTPS/TLS y retirar la excepción cleartext.
 
 \subsection{Contratos HTTP con Pact}
 \label{subsec:pact}

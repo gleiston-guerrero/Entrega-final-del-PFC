@@ -4,10 +4,9 @@ App Android (Kotlin + Jetpack Compose), arquitectura MVVM + repositorio por feat
 
 - `minSdk`: 26
 - `targetSdk` / `compileSdk`: 34
-- El Gateway puede sobrescribirse con `SCLI_API_BASE_URL` como propiedad Gradle
-  o variable de entorno. Por defecto, debug usa `http://10.0.2.2:8080/` para el
-  emulador Android y release usa `http://157.137.221.157:8080/` para el API
-  Gateway publico (la barra final es obligatoria).
+- El Gateway se configura con `SCLI_API_BASE_URL` como propiedad Gradle
+  o variable de entorno (barra final obligatoria). Debug usa por defecto
+  `http://10.0.2.2:8080/`; release exige una URL explícita, sin fallback.
 
 ## Wrapper de Gradle
 
@@ -83,13 +82,16 @@ artefacto únicamente después de superar esos gates.
 
 ## APK release firmado
 
-La compilación release local sin credenciales se ejecuta en Windows con:
+Las tareas release exigen `SCLI_API_BASE_URL`, `SCLI_VERSION_NAME` y
+`SCLI_VERSION_CODE`, mediante propiedades Gradle o variables de entorno.
+No se necesita configurar esos valores para pruebas debug:
 
 ```powershell
-.\gradlew.bat clean assembleRelease
+.\gradlew.bat testDebugUnitTest lint
 ```
 
-El resultado sin firma queda en:
+Una compilación `assembleRelease` con los valores requeridos deja el resultado
+sin firma en:
 
 ```text
 app/build/outputs/apk/release/app-release-unsigned.apk
@@ -106,8 +108,7 @@ workflow vigente, cuando esten configurados estos secrets del repositorio:
 CI reconstruye temporalmente el keystore dentro de `$RUNNER_TEMP`, alinea el APK
 con `zipalign`, firma con `apksigner` y verifica la firma y el certificado con
 `apksigner verify --verbose --print-certs`. Despues genera y comprueba
-`SHA256SUMS.txt`. La version Android actual es `versionName` 1.0.1 y
-`versionCode` 2. La release oficial verificada correspondiente al punto #35 fue
+`SHA256SUMS.txt`. La release histórica verificada correspondiente al punto #35 fue
 publicada por GitHub Actions como `v1.0.1`, asociada al commit etiquetado
 `166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8`, y contiene:
 
@@ -133,7 +134,7 @@ artifact `scli-mobile-release-0b755310a0acf34da2456290a4f978475a8e17f9` fue
 generado, firmado y verificado correctamente en GitHub Actions, dentro del run
 de CI `34688947156`. Esa evidencia corresponde al APK historico
 `release/apk/scli-mobile-0.1.0-release.apk`, con su checksum en
-`release/apk/SHA256SUMS.txt`; no representa la release vigente `v1.0.1`. Actions
+`release/apk/SHA256SUMS.txt`. Actions
 continua siendo la fuente reproducible del proceso. El identificador del paquete
 es `ec.edu.uteq.scli.mobile`.
 
@@ -148,3 +149,38 @@ El keystore privado y las contraseñas de firma nunca se suben a Git. Debe
 conservarse cifrado y respaldado
 en una ubicación externa controlada por el equipo: perderlo impediría firmar
 futuras actualizaciones con la misma identidad.
+
+### Configuración reproducible del criterio #35
+
+CI obtiene el backend de la GitHub Actions Repository Variable
+`SCLI_RELEASE_API_BASE_URL` y lo pasa a Gradle como `SCLI_API_BASE_URL`.
+Debe ser una URL `http://` o `https://`, con hostname y barra final, sin
+credenciales, query ni fragmento. No hay backend release fijo en el código.
+`SCLI_VERSION_NAME` se deriva de `vX.Y.Z` como `X.Y.Z`; en pushes sin tag usa
+`0.0.0-dev.<run>.<SHA corto>`. `SCLI_VERSION_CODE` usa `github.run_number`,
+validado como entero entre 1 y 2100000000. Gradle rechaza tareas release si
+faltan estos valores. Tras firmar, `aapt dump badging` compara las versiones
+internas del APK con las entradas de CI y falla ante cualquier diferencia.
+
+La política general de red bloquea cleartext. Si `SCLI_RELEASE_API_BASE_URL`
+usa HTTP, CI genera temporalmente un recurso exclusivo de release con una
+excepción limitada al hostname configurado, sin incluir subdominios; HTTPS no
+habilita cleartext. Debug tiene una excepción propia limitada a `10.0.2.2`.
+HTTP no proporciona confidencialidad ni autenticidad de transporte:
+credenciales y tokens pueden ser interceptados o manipulados en una red hostil.
+Esta excepción corresponde únicamente al entorno académico/demostrativo actual.
+Un despliegue de producción debe utilizar HTTPS/TLS y retirar la excepción
+cleartext.
+
+El PDF recibe el tag y SHA mediante `SCLIReleaseVersion` y `SCLIReleaseCommit`,
+inicializados por una entrada LaTeX temporal de CI, con valores locales por
+defecto. La publicación verifica la suma original del APK firmado, reúne
+`scli-mobile-vX.Y.Z-release.apk` y `SCLI-PFC-vX.Y.Z.pdf` en una carpeta final y
+genera allí `SHA256SUMS.txt` con exactamente dos entradas de nombre base.
+Los tres assets descargados juntos se validan con
+`sha256sum --check SHA256SUMS.txt`. Antes de publicar, CI obtiene la historia
+completa, resuelve el commit real del tag (incluidos tags anotados) y exige
+`git merge-base --is-ancestor <commit> origin/main`. Se mantienen los gates de
+firma, Firebase obligatorio, imágenes, manifiestos, contratos y documentación;
+la publicación se limita a `refs/tags/v*`. Las referencias a `v1.0.1` anteriores
+son evidencia histórica, no la versión de futuras releases.

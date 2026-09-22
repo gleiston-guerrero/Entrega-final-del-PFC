@@ -170,8 +170,8 @@ En Windows use `gradlew.bat`. CI ejecuta unitarias, lint y las pruebas
 del gate previo al APK. El APK debug se publica como artifact por SHA. El
 workflow vigente tambien prepara un APK release firmado como artifact en pushes
 cuando los secrets requeridos estan configurados; el procedimiento se documenta
-en [`apps/mobile/README.md`](apps/mobile/README.md). La version Android actual es
-`versionName` 1.0.1 y `versionCode` 2. Firebase/FCM fue
+en [`apps/mobile/README.md`](apps/mobile/README.md). La versión Android se deriva
+del tag y del número de ejecución CI. Firebase/FCM fue
 validado extremo a extremo con un dispositivo Android físico. El cliente obtiene
 y registra el token FCM, el backend persiste el dispositivo y envía
 notificaciones mediante Firebase Admin SDK. La evidencia de recepción real se
@@ -181,7 +181,7 @@ El flujo QR con CameraX/ML Kit también cuenta con evidencia E2E real contra el
 laboratorio `DEMO-LAB-A` en
 [`docs/evidencias/qr-e2e-2026-09-20.md`](docs/evidencias/qr-e2e-2026-09-20.md).
 
-La release oficial verificada correspondiente al punto #35 es `v1.0.1`,
+La release histórica verificada correspondiente al punto #35 es `v1.0.1`,
 generada por GitHub Actions y asociada al commit etiquetado
 `166a2c4c48f1f6dfebc3ef087652d60b9f7ed3a8`. Publica el APK
 `scli-mobile-v1.0.1-release.apk`, `SHA256SUMS.txt`, `SCLI-PFC-v1.0.1.pdf` y los
@@ -406,3 +406,38 @@ producidos por ejecuciones trazables y artefactos verificables.
 
 Este proyecto se distribuye bajo la licencia **MIT**. Consulte el archivo
 [LICENSE](LICENSE) para conocer los términos completos.
+
+### Configuración reproducible del criterio #35
+
+CI obtiene el backend de la GitHub Actions Repository Variable
+`SCLI_RELEASE_API_BASE_URL` y lo pasa a Gradle como `SCLI_API_BASE_URL`.
+Debe ser una URL `http://` o `https://`, con hostname y barra final, sin
+credenciales, query ni fragmento. No hay backend release fijo en el código.
+`SCLI_VERSION_NAME` se deriva de `vX.Y.Z` como `X.Y.Z`; en pushes sin tag usa
+`0.0.0-dev.<run>.<SHA corto>`. `SCLI_VERSION_CODE` usa `github.run_number`,
+validado como entero entre 1 y 2100000000. Gradle rechaza tareas release si
+faltan estos valores. Tras firmar, `aapt dump badging` compara las versiones
+internas del APK con las entradas de CI y falla ante cualquier diferencia.
+
+La política general de red bloquea cleartext. Si `SCLI_RELEASE_API_BASE_URL`
+usa HTTP, CI genera temporalmente un recurso exclusivo de release con una
+excepción limitada al hostname configurado, sin incluir subdominios; HTTPS no
+habilita cleartext. Debug tiene una excepción propia limitada a `10.0.2.2`.
+HTTP no proporciona confidencialidad ni autenticidad de transporte:
+credenciales y tokens pueden ser interceptados o manipulados en una red hostil.
+Esta excepción corresponde únicamente al entorno académico/demostrativo actual.
+Un despliegue de producción debe utilizar HTTPS/TLS y retirar la excepción
+cleartext.
+
+El PDF recibe el tag y SHA mediante `SCLIReleaseVersion` y `SCLIReleaseCommit`,
+inicializados por una entrada LaTeX temporal de CI, con valores locales por
+defecto. La publicación verifica la suma original del APK firmado, reúne
+`scli-mobile-vX.Y.Z-release.apk` y `SCLI-PFC-vX.Y.Z.pdf` en una carpeta final y
+genera allí `SHA256SUMS.txt` con exactamente dos entradas de nombre base.
+Los tres assets descargados juntos se validan con
+`sha256sum --check SHA256SUMS.txt`. Antes de publicar, CI obtiene la historia
+completa, resuelve el commit real del tag (incluidos tags anotados) y exige
+`git merge-base --is-ancestor <commit> origin/main`. Se mantienen los gates de
+firma, Firebase obligatorio, imágenes, manifiestos, contratos y documentación;
+la publicación se limita a `refs/tags/v*`. Las referencias a `v1.0.1` anteriores
+son evidencia histórica, no la versión de futuras releases.
