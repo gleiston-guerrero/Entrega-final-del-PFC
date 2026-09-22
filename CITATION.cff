@@ -1,9 +1,9 @@
 cff-version: 1.2.0
-message: "Si utiliza este proyecto, cite la version v1.0.0 y a sus autores."
+message: "Si utiliza este proyecto, cite la version v1.0.2 y a sus autores."
 title: "SCLI — Sistema de Control de Laboratorios Informáticos"
 type: software
-version: "v1.0.0"
-date-released: 2026-09-18
+version: "v1.0.2"
+date-released: 2026-09-22
 repository-code: "https://github.com/gleiston-guerrero/Entrega-final-del-PFC"
 license: MIT
 authors:
