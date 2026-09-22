@@ -1,4 +1,4 @@
-# Pruebas de carga de Reservas/Solicitudes
+# Pruebas de carga de Reservas
 
 Este módulo usa Locust 2.x y solo ejecuta consultas de lectura contra endpoints reales
 de `reservas-solicitudes-service`.
