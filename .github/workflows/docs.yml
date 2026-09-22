@@ -43,7 +43,7 @@ jobs:
 
       - name: Extract report text
         working-directory: docs
-        run: pdftotext main.pdf main.text.txt
+        run: pdftotext -raw main.pdf main.text.txt
 
       - name: Bibliography audit
         run: node scripts/audit-bibliography.cjs
