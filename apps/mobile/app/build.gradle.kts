@@ -1,4 +1,5 @@
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import java.net.URI
 
 plugins {
     id("com.android.application")
@@ -10,7 +11,34 @@ plugins {
 val configuredApiBaseUrl = providers.gradleProperty("SCLI_API_BASE_URL")
     .orElse(providers.environmentVariable("SCLI_API_BASE_URL"))
 val debugApiBaseUrl = configuredApiBaseUrl.orElse("http://10.0.2.2:8080/")
-val releaseApiBaseUrl = configuredApiBaseUrl.orElse("http://157.137.221.157:8080/")
+val releaseApiBaseUrl = configuredApiBaseUrl.orElse("")
+val configuredVersionName = providers.gradleProperty("SCLI_VERSION_NAME")
+    .orElse(providers.environmentVariable("SCLI_VERSION_NAME"))
+val configuredVersionCode = providers.gradleProperty("SCLI_VERSION_CODE")
+    .orElse(providers.environmentVariable("SCLI_VERSION_CODE"))
+
+// Check the resolved graph, including aggregate tasks and abbreviated task names.
+// Debug-only builds (including lint's default debug variant) need no release inputs.
+gradle.taskGraph.whenReady {
+    if (allTasks.any { it.project == project && it.name.contains("Release", ignoreCase = true) }) {
+        require(configuredVersionName.orNull?.isNotBlank() == true) {
+            "Release requires SCLI_VERSION_NAME"
+        }
+        require(configuredVersionCode.orNull?.toIntOrNull() in 1..2100000000) {
+            "Release requires numeric SCLI_VERSION_CODE in 1..2100000000"
+        }
+        val uri = runCatching { URI(releaseApiBaseUrl.get()) }.getOrNull()
+        require(uri != null && uri.scheme in listOf("http", "https") &&
+            !uri.host.isNullOrBlank() && uri.rawUserInfo == null &&
+            uri.rawQuery == null && uri.rawFragment == null && uri.path.endsWith("/")) {
+            "Release requires SCLI_API_BASE_URL: http(s) URL ending in / without credentials, query or fragment"
+        }
+    }
+}
+
+fun buildConfigString(value: String) = "\"" + value
+    .replace("\\", "\\\\").replace("\"", "\\\"")
+    .replace("\n", "\\n").replace("\r", "\\r") + "\""
 
 // El plugin de Firebase necesita google-services.json, que todavía no existe
 // en este repo (ver apps/mobile/README.md). Se aplica solo si el archivo está
@@ -27,19 +55,19 @@ android {
         applicationId = "ec.edu.uteq.scli.mobile"
         minSdk = 26
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = configuredVersionCode.orNull?.toIntOrNull() ?: 1
+        versionName = configuredVersionName.orElse("0.0.0-dev").get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"${debugApiBaseUrl.get()}\"")
+            buildConfigField("String", "API_BASE_URL", buildConfigString(debugApiBaseUrl.get()))
         }
         release {
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"${releaseApiBaseUrl.get()}\"")
+            buildConfigField("String", "API_BASE_URL", buildConfigString(releaseApiBaseUrl.get()))
         }
     }
 

@@ -539,6 +539,13 @@ jobs:
             exit 1
           fi
 
+      - name: Prepare release version and network policy
+        env:
+          SCLI_RELEASE_API_BASE_URL: ${{ vars.SCLI_RELEASE_API_BASE_URL }}
+        run: |
+          python3 -m unittest discover -s scripts/tests -p test_mobile_release.py -v
+          python3 scripts/ci/prepare-mobile-release.py
+
       - name: Build unsigned release APK
         if: ${{ steps.signing.outputs.configured == 'true' }}
         working-directory: apps/mobile
@@ -557,11 +564,6 @@ jobs:
           ANDROID_SIGNING_KEYSTORE_BASE64: ${{ secrets.ANDROID_SIGNING_KEYSTORE_BASE64 }}
         shell: bash
         run: |
-          version="1.0.1"
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            version="$GITHUB_REF_NAME"
-          fi
-          echo "RELEASE_APK=scli-mobile-${version}-release.apk" >> "$GITHUB_ENV"
           mkdir -p apps/mobile/app/build/outputs/release
           printf '%s' "$ANDROID_SIGNING_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/scli-release.jks"
 
@@ -590,10 +592,18 @@ jobs:
         if: ${{ steps.signing.outputs.configured == 'true' }}
         shell: bash
         run: |
+          set -Eeuo pipefail
           build_tools="$ANDROID_HOME/build-tools/34.0.0"
           output_dir="apps/mobile/app/build/outputs/release"
           "$build_tools/apksigner" verify --verbose --print-certs \
             "$output_dir/$RELEASE_APK"
+          badging="$("$build_tools/aapt" dump badging "$output_dir/$RELEASE_APK")"
+          actual_version="$(printf '%s\n' "$badging" | sed -n "s/^package: .*versionName='\([^']*\)'.*/\1/p")"
+          actual_code="$(printf '%s\n' "$badging" | sed -n "s/^package: .*versionCode='\([^']*\)'.*/\1/p")"
+          if [[ "$actual_version" != "$SCLI_VERSION_NAME" || "$actual_code" != "$SCLI_VERSION_CODE" ]]; then
+            echo "::error::Signed APK internal version does not match CI release inputs."
+            exit 1
+          fi
           cd "$output_dir"
           sha256sum "$RELEASE_APK" > SHA256SUMS.txt
           sha256sum --check SHA256SUMS.txt
@@ -632,13 +642,16 @@ jobs:
             texlive-lang-spanish \
             texlive-bibtex-extra
 
+      - name: Prepare manuscript release identity
+        run: python3 scripts/ci/prepare-mobile-release.py documentation
+
       - name: Compile release manuscript
         working-directory: docs
         run: |
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -jobname=main -interaction=nonstopmode -halt-on-error release-entry.tex
           bibtex main
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -jobname=main -interaction=nonstopmode -halt-on-error release-entry.tex
+          pdflatex -jobname=main -interaction=nonstopmode -halt-on-error release-entry.tex
           test -f main.pdf
           cp main.pdf "SCLI-PFC-${GITHUB_REF_NAME}.pdf"
 
@@ -874,6 +887,22 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout full tag history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require tag commit on main
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          git fetch origin +refs/heads/main:refs/remotes/origin/main
+          tag_commit="$(git rev-parse --verify "refs/tags/${GITHUB_REF_NAME}^{commit}")"
+          if ! git merge-base --is-ancestor "$tag_commit" origin/main; then
+            echo "::error::Release tag commit does not belong to origin/main."
+            exit 1
+          fi
+
       - name: Download signed APK and checksum
         uses: actions/download-artifact@v4
         with:
@@ -912,6 +941,14 @@ jobs:
             sha256sum --check SHA256SUMS.txt
             sha256sum "${apk##*/}" | cmp - SHA256SUMS.txt
           )
+          mkdir -p release-assets/final
+          cp "$apk" "$pdf" release-assets/final/
+          cd release-assets/final
+          apk="scli-mobile-${GITHUB_REF_NAME}-release.apk"
+          pdf="SCLI-PFC-${GITHUB_REF_NAME}.pdf"
+          checksum="SHA256SUMS.txt"
+          sha256sum "$apk" "$pdf" > "$checksum"
+          sha256sum --check "$checksum"
           ls -lah "$pdf" "$apk" "$checksum"
 
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
