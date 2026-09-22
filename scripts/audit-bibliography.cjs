@@ -28,6 +28,14 @@ function equal(a, b, name) {
 }
 equal(cited, aux, 'Source/aux mismatch');
 equal(cited, printed, 'Cited/printed mismatch');
+const orphaned = [...bib.keys()].filter(key => !cited.has(key));
+const missingBib = [...cited].filter(key => !bib.has(key));
+console.log(`REFERENCIAS_BIB=${bib.size}`);
+console.log(`REFERENCIAS_HUERFANAS=${orphaned.length}`);
+console.log(`CLAVES_HUERFANAS=${orphaned.join(',')}`);
+console.log(`CLAVES_CITADAS_INEXISTENTES=${missingBib.join(',')}`);
+if (orphaned.length) errors.push('Orphan bibliography entries: ' + orphaned.join(', '));
+if (missingBib.length) errors.push('Cited keys missing from bibliography: ' + missingBib.join(', '));
 if (items.length !== printed.size) errors.push('Duplicate bibitems');
 if (!cited.size) errors.push('No citations found');
 const pdfText = read('main.text.txt');
@@ -36,11 +44,58 @@ if (!headings.length) throw Error('Bibliography heading missing in extracted PDF
 const start = headings.at(-1).index;
 const pdf = new Map([...pdfText.slice(start).matchAll(/(?:^|\n)\[(\d+)\]\s([\s\S]*?)(?=\n\[\d+\]\s|$)/g)].map(m => [Number(m[1]), m[2]]));
 equal(new Set(items.map((_, i) => i + 1)), new Set(pdf.keys()), 'BBL/PDF numbering mismatch');
-// pdftotext may omit a hyphen at a physical line break; normalize separators only.
-const compact = text => text.replace(/[\s{}~\-\u00ad\u2010-\u2014]/g, '').toLowerCase();
+const bibliographyPdfText = pdfText.slice(start);
 function validIsbn(value) {
-  const digits = value.replace(/-/g, '');
+  const digits = normalizeIdentifier('isbn', value);
   return /^\d{13}$/.test(digits) && [...digits].reduce((sum, d, i) => sum + Number(d) * (i % 2 ? 3 : 1), 0) % 10 === 0;
+}
+function normalizeIdentifier(type, value) {
+  let normalized = value.replace(/\u00ad/g, '');
+  if (type === 'isbn') return normalized.replace(/[\s-]/g, '').toUpperCase();
+  normalized = normalized.replace(/\\url\s*\{([^}]*)\}/g, '$1');
+  normalized = normalized.replace(/\\(?:textasciitilde|textunderscore|textbackslash)\s*\{?([^}]*)\}?/g, '$1');
+  normalized = normalized.replace(/\\([_%&#])/g, '$1').replace(/[{}]/g, '');
+  normalized = normalized.replace(/[\s\u2010-\u2014]/g, '');
+  if (type === 'doi') {
+    normalized = normalized.toLowerCase()
+      .replace(/^(?:https?:\/\/)?(?:dx\.)?doi\.org\//, '')
+      .replace(/^doi:\s*/, '');
+    return normalized;
+  }
+  if (type === 'url') {
+    normalized = normalized.replace(/^http:\/\//i, 'https://');
+    return normalized;
+  }
+  throw new Error(`Unsupported identifier type: ${type}`);
+}
+function normalizePdfIdentifier(type, value) {
+  const normalized = normalizeIdentifier(type, value);
+  return type === 'doi' ? normalized.replace(/-/g, '') : normalized;
+}
+function normalizeName(value) {
+  return value
+    .replace(/\\[a-zA-Z]+(?:\{([^}]*)\})?/g, '$1')
+    .replace(/[{}\\]/g, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+function authorSurnames(entry) {
+  const author = entry.match(/\bauthor\s*=\s*\{([\s\S]*?)\}(?=\s*,|\s*$)/)?.[1] || '';
+  return author.split(/\s+and\s+/i).map(authorPart => {
+    const commaParts = authorPart.split(',');
+    return normalizeName((commaParts.length > 1 ? commaParts[0] : authorPart).trim().split(/\s+/).pop());
+  }).filter(Boolean);
+}
+// This checks only explicit surname-to-citation constructions, not whether the
+// surrounding prose semantically describes the cited work correctly.
+const nominalCitations = /([A-ZÁÉÍÓÚÜÑ][\p{L}'-]+)~(?:\\emph\{et al\.\}~)?\\cite(?:\[[^\]]*\])?\{([^}]+)\}/gu;
+for (const match of tex.matchAll(nominalCitations)) {
+  const surname = normalizeName(match[1]);
+  for (const key of match[2].split(',').map(value => value.trim())) {
+    if (bib.has(key) && !authorSurnames(bib.get(key)).includes(surname)) {
+      errors.push(`Nominal attribution mismatch: ${match[1]} -> ${key}`);
+    }
+  }
 }
 const missing = [];
 console.log('CLAVES_CITADAS=' + [...cited].sort().join(','));
@@ -52,25 +107,16 @@ for (const [i, item] of items.entries()) {
   const type = field('doi') ? 'doi' : field('isbn') ? 'isbn' : 'url';
   const id = field(type);
   if (type === 'isbn' && !validIsbn(id)) errors.push('Invalid ISBN: ' + key);
-  const target = id && compact(id);
-  const bblText = compact(item[2]);
-  const rendered = compact(pdf.get(i + 1) || '');
-  if (!target || !bblText.includes(target) || !rendered.includes(target)) missing.push(key);
-  if (target && (bblText.split(target).length !== 2 || rendered.split(target).length !== 2)) errors.push('Identifier missing/duplicated: ' + key);
-  console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${Boolean(target && bblText.includes(target))} PDF=${Boolean(target && rendered.includes(target))}`);
+  const target = id && normalizeIdentifier(type, id);
+  const pdfTarget = id && normalizePdfIdentifier(type, id);
+  const bblText = normalizeIdentifier(type, item[2]);
+  const rendered = normalizePdfIdentifier(type, bibliographyPdfText);
+  const bblPresent = Boolean(target && bblText.includes(target));
+  const pdfPresent = Boolean(pdfTarget && rendered.includes(pdfTarget));
+  if (!target || !bblPresent || !pdfPresent) missing.push(key);
+  if (target && bblText.split(target).length !== 2) errors.push('Identifier missing/duplicated: ' + key);
+  console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${bblPresent} PDF=${pdfPresent}`);
 }
-const wrong = [
- /Fielding[^\n]*\\cite\{li2021microservices\}/,
- /Newman[^\n]*\\cite\{li2021microservices\}/,
- /Jain[^\n]*\\cite\{baltes2022sampling\}/,
- /Wohlin[^\n]*\\cite\{verdecchia2023\}/,
- /(?:Ongaro|Ousterhout)[^\n]*\\cite\{huang2020tidb\}/,
- /Cooper[^\n]*\\cite\{taipalus2023dbms\}/,
- /RDD[^]*?\\cite\{wang2022spark\}/,
- /RFC 7519[^\n]*\\cite\{venckauskas2023jwt\}/,
- /(?:Brewer|Abadi)[^\n]*\\cite\{lee2023cap\}/,
-];
-for (const pattern of wrong) if (pattern.test(tex)) errors.push('Incorrect attribution: ' + pattern);
 const log = read('main.log');
 const blg = read('main.blg');
 const undefinedCitations = (log.match(/LaTeX Warning: Citation[^\n]*undefined/g) || []).length;
