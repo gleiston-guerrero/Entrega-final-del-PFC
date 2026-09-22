@@ -118,6 +118,8 @@ jobs:
 
       - name: Validate service and gateway contracts
         run: python scripts/validar-contratos-openapi.py
+      - name: Test OpenAPI generator
+        run: python -m unittest discover -s scripts/tests -p "test_validar_contratos_openapi.py" -v
 
   test-backend:
     name: Build and test - ${{ matrix.service }}
@@ -868,7 +870,7 @@ jobs:
     name: Publish versioned GitHub Release
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    needs: [build-mobile-release-signed, build-release-documentation, build-images, verify-experimental-manifest]
+    needs: [build-mobile-release-signed, build-release-documentation, build-images, verify-experimental-manifest, validate-openapi-contracts]
     permissions:
       contents: write
     steps:

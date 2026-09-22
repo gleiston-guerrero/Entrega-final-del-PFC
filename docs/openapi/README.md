@@ -40,11 +40,26 @@ La utilidad común normaliza únicamente el nombre de las variables de path y re
 
 El resultado independiente es Auth 12/12, Usuarios 44/44, Académico 71/71 y Reservas 79/79 con ARBITER habilitado. Reservas tiene 77 operaciones activas por defecto: las dos rutas bajo `/api/v1/internal/experimentos/arbiter` solo aparecen con `app.experimental.arbiter.enabled=true`. Por tanto, el contrato de 79 representa la **superficie habilitable**, no la superficie activa predeterminada. Una segunda prueba arranca el contexto con el flag deshabilitado y acredita 77 operaciones y ausencia de ambas rutas.
 
-El Gateway usa `RouterFunction`, no controladores MVC. Su prueba forma la población desde los contratos de backend previamente contrastados con Spring runtime y envía cada operación mediante `MockMvc` a los routers reales. `ProxyExchangeHandlerFunction` está sustituido por un doble Mockito que devuelve 204 y registra el backend y la ruta transformada; no se levantan servicios locales ni se realiza una llamada de red. La definición formal de completitud es bidireccional: todas las operaciones runtime aceptadas por el `RouterFunction` deben aparecer en OpenAPI y todas las operaciones documentadas deben ser aceptadas, incluyendo los alias explícitos realmente enrutados. El Gateway aplica además una allowlist método+ruta cargada desde el artefacto generado `services/api-gateway/src/main/resources/gateway-route-catalog.json`; el catálogo se deriva de este snapshot y su hash y cantidad se verifican en la prueba. El resultado es 182 operaciones canónicas, 8 alias Auth y 34 alias Usuarios: 224/224.
+El Gateway usa `RouterFunction`, no controladores MVC. Su prueba forma la población desde los contratos de backend previamente contrastados con Spring runtime y envía cada operación mediante `MockMvc` a los routers reales. `ProxyExchangeHandlerFunction` está sustituido por un doble Mockito que devuelve 204 y registra el backend y la ruta transformada; no se levantan servicios locales ni se realiza una llamada de red. La definición formal de completitud es bidireccional: todas las operaciones runtime aceptadas por el `RouterFunction` deben aparecer en OpenAPI y todas las operaciones documentadas deben ser aceptadas, incluyendo los alias explícitos realmente enrutados. El Gateway aplica además una allowlist método+ruta cargada desde el artefacto generado `services/api-gateway/src/main/resources/gateway-route-catalog.json`; el catálogo se deriva de este snapshot y su hash y cantidad se verifican en la prueba. El resultado es 183 operaciones canónicas, 8 alias Auth y 34 alias Usuarios: 225/225.
 
-Además, `RouterFunctionCatalogGuardTest` inspecciona mediante ASM todas las clases compiladas de producción del Gateway, sin enumerar clases de configuración ni URLs. Construye el grafo de llamadas, incluyendo lambdas y llamadas entre clases, y exige que cada método `@Bean` con retorno `RouterFunction` alcance `GatewayRouteCatalog.accepts(...)`. Detecta así nuevos beans que omitan por completo el catálogo, cualquiera que sea su ruta. Es una garantía arquitectónica de consulta al catálogo: la alcanzabilidad de una llamada no prueba por sí sola que su resultado controle todas las ramas. En los seis routers actuales, la revisión del código confirma que la aceptación del catálogo condiciona el enrutamiento; la prueba runtime comprueba las 224 operaciones y sus destinos.
+Además, los seis beans delegan la construcción completa en `GatewayRoutes.rutaContratada`.
+El helper construye `.route(..., http())` con la condición obligatoria
+`GatewayRouteCatalog.accepts(method, path) && scope.test(path)`; el alcance solo
+recibe el path. Conserva destinos y `stripPrefix` de los alias.
+`RouterFunctionCatalogGuardTest` inspecciona el bytecode de producción mediante
+ASM: exige delegación en ese helper, rechaza llamadas de construcción o
+composición de routers Spring fuera de él (también indirectas) y comprueba que
+el helper alcanza el catálogo. No interpreta operadores del código fuente ni
+pretende demostrar por alcanzabilidad la semántica de una expresión booleana.
+`ContractedRouteTest` prueba el router real: rechaza
+`/api/v1/sin-contrato/recurso` incluso con alcance siempre verdadero, acepta una
+operación catalogada con alcance compatible y la rechaza con alcance falso.
 
-No es necesario modificar el workflow: el job matricial existente ejecuta `mvn verify` sin flags opcionales para los cinco módulos en cada `push` y `pull_request`; una discrepancia hace fallar el pipeline.
+CI ejecuta las pruebas unitarias Python del generador en
+`validate-openapi-contracts`, además de validar los snapshots. Este job es una
+dependencia de `publish-release`; se ejecuta también en pushes de tags `v*`,
+sin filtro de ramas a nivel del job. El job matricial conserva `mvn verify`
+para los cinco módulos.
 
 ## Validación independiente de schemas y parámetros
 
@@ -52,20 +67,26 @@ La completitud método+ruta no implica que los *schemas* de respuesta ni los
 parámetros de consulta sean correctos: ambos se derivan del mismo extractor
 regex que genera el snapshot, por lo que compararlo contra sí mismo no prueba
 nada sobre su exactitud semántica. Para eso existe `SchemaContractVerifier`
-(`tests/openapi-runtime`, con copias idénticas en Académico, Usuarios y Reservas, igual que
-`RuntimeContractVerifier`): usa reflexión sobre los `HandlerMethod` que Spring
+(`tests/openapi-runtime/src/main/java/ec/edu/scli/contracts/SchemaContractVerifier.java`, única fuente canónica): usa reflexión sobre los `HandlerMethod` que Spring
 ya resolvió para obtener, del código compilado y no de texto Java, (a) si el
 tipo de retorno real es `Page<T>` o `PaginaResponse<T>` y (b) el nombre real,
 `required` efectivo y `defaultValue` de cada `@RequestParam`, así como los
 parámetros `page`/`size`/`sort` cuando el controlador recibe `Pageable`. Esa
 firma se contrasta contra el JSON publicado. Las pruebas
-`OpenApiSchemaContractTest` de Académico, Usuarios y Reservas ejecutan esta
+`OpenApiSchemaContractTest` de Auth, Académico, Usuarios y Reservas ejecutan esta
 comprobación en cada `mvn verify`. El verificador exige un objeto con las nueve
 propiedades de `Page` o todos los componentes reales del record
 `PaginaResponse`, un contenido de tipo array y la referencia al elemento `T`
 derivado mediante `ResolvableType`. No basta con sustituir el array por
 cualquier objeto. Con `MethodParameter` contrasta nombres, obligatoriedad,
 tipos simples y defaults derivables de los parámetros compilados.
+
+Los cuatro servicios incorporan `../../tests/openapi-runtime/src/main/java`
+como fuente de pruebas mediante `build-helper-maven-plugin:add-test-source`
+en `generate-test-sources`. No hay copias locales de `SchemaContractVerifier`.
+También se retiraron las cuatro copias idénticas de `RuntimeContractVerifier`
+para evitar clases duplicadas al compilar esa carpeta; ambos verificadores se
+compilan desde la fuente compartida, sin copiar archivos en CI ni usar symlinks.
 
 Se corrigieron 25 GET paginados de backend: 14 `Page<T>` y 11
 `PaginaResponse<T>`, además de 23 parámetros mal nombrados. `pagina`,
@@ -93,3 +114,18 @@ OpenAPI describe la superficie HTTP; sus parámetros de consulta relevantes (inc
 Los cuatro contratos de servicio incluyen sus APIs externas e internas. El contrato del Gateway representa únicamente rutas que el código de routing expone y reutiliza los schemas de los servicios; no atribuye controladores propios al Gateway.
 
 La extracción estática no ejecuta validaciones de negocio ni demuestra que todos los códigos de error ocurran en producción. Las respuestas documentadas son las derivables de las firmas y construcciones explícitas de los controladores. Los contratos deben regenerarse y pasar tanto la validación estructural Python como la validación independiente Spring cuando cambien controladores, DTO, seguridad o rutas del Gateway.
+
+## Verificación del cierre de #30
+
+Validación local ejecutada en Windows con Maven y Java 21:
+
+- `validar-contratos-openapi.py`: OK, cero errores estructurales.
+- `test_validar_contratos_openapi.py`: 5 pruebas, todas correctas.
+- `api-gateway` (`mvn test`): 41 pruebas, sin fallos, errores ni omisiones.
+- `OpenApiSchemaContractTest`: 1 prueba correcta en cada uno de Auth, Usuarios,
+  Académico y Reservas. Los cuatro registros de entradas del compilador apuntan
+  a la fuente canónica compartida de `SchemaContractVerifier`.
+- Dos mutaciones temporales de producción hicieron fallar el guard y nombraron
+  `bypassDocenteTemporal` (consulta el catálogo y el helper, pero construye otra
+  ruta con una alternativa booleana) y `sinHelperTemporal` (omite el helper).
+  Ambas se retiraron antes de la ejecución final satisfactoria.
