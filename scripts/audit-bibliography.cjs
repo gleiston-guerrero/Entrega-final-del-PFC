@@ -44,11 +44,28 @@ if (!headings.length) throw Error('Bibliography heading missing in extracted PDF
 const start = headings.at(-1).index;
 const pdf = new Map([...pdfText.slice(start).matchAll(/(?:^|\n)\[(\d+)\]\s([\s\S]*?)(?=\n\[\d+\]\s|$)/g)].map(m => [Number(m[1]), m[2]]));
 equal(new Set(items.map((_, i) => i + 1)), new Set(pdf.keys()), 'BBL/PDF numbering mismatch');
-// pdftotext may omit a hyphen at a physical line break; normalize separators only.
-const compact = text => text.replace(/[\s{}~\-\u00ad\u2010-\u2014]/g, '').toLowerCase();
 function validIsbn(value) {
-  const digits = value.replace(/-/g, '');
+  const digits = normalizeIdentifier('isbn', value);
   return /^\d{13}$/.test(digits) && [...digits].reduce((sum, d, i) => sum + Number(d) * (i % 2 ? 3 : 1), 0) % 10 === 0;
+}
+function normalizeIdentifier(type, value) {
+  let normalized = value.replace(/\u00ad/g, '');
+  if (type === 'isbn') return normalized.replace(/[\s-]/g, '').toUpperCase();
+  normalized = normalized.replace(/\\url\s*\{([^}]*)\}/g, '$1');
+  normalized = normalized.replace(/\\(?:textasciitilde|textunderscore|textbackslash)\s*\{?([^}]*)\}?/g, '$1');
+  normalized = normalized.replace(/\\([_%&#])/g, '$1').replace(/[{}]/g, '');
+  normalized = normalized.replace(/[\s\u2010-\u2014]/g, '');
+  if (type === 'doi') {
+    normalized = normalized.toLowerCase()
+      .replace(/^(?:https?:\/\/)?(?:dx\.)?doi\.org\//, '')
+      .replace(/^doi:\s*/, '');
+    return normalized;
+  }
+  if (type === 'url') {
+    normalized = normalized.replace(/^http:\/\//i, 'https://');
+    return normalized;
+  }
+  throw new Error(`Unsupported identifier type: ${type}`);
 }
 function normalizeName(value) {
   return value
@@ -85,9 +102,9 @@ for (const [i, item] of items.entries()) {
   const type = field('doi') ? 'doi' : field('isbn') ? 'isbn' : 'url';
   const id = field(type);
   if (type === 'isbn' && !validIsbn(id)) errors.push('Invalid ISBN: ' + key);
-  const target = id && compact(id);
-  const bblText = compact(item[2]);
-  const rendered = compact(pdf.get(i + 1) || '');
+  const target = id && normalizeIdentifier(type, id);
+  const bblText = normalizeIdentifier(type, item[2]);
+  const rendered = normalizeIdentifier(type, pdf.get(i + 1) || '');
   if (!target || !bblText.includes(target) || !rendered.includes(target)) missing.push(key);
   if (target && (bblText.split(target).length !== 2 || rendered.split(target).length !== 2)) errors.push('Identifier missing/duplicated: ' + key);
   console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${Boolean(target && bblText.includes(target))} PDF=${Boolean(target && rendered.includes(target))}`);
