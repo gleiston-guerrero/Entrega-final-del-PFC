@@ -237,10 +237,10 @@ transparencia de fragmentación, replicación y ubicación establecidos por
 Özsu y Valduriez~\cite{ozsu2020}, quienes caracterizan un sistema de base de
 datos distribuido como un conjunto de bases lógicamente relacionadas que se
 perciben como una única base ante el usuario. Kleppmann~\cite{kleppmann2022}
-complementa esta perspectiva con un tratamiento orientado a la ingeniería de
-sistemas de datos modernos, discutiendo de forma extensa los compromisos
-entre consistencia, disponibilidad y particionamiento que enmarcan
-decisiones como las tomadas en este proyecto.
+analiza la convergencia como una propiedad que permite que réplicas que
+reciben actualizaciones en distinto orden alcancen finalmente un estado común,
+una perspectiva útil para interpretar la coordinación entre los nodos de este
+proyecto.
 
 El teorema CAP de Brewer~\cite{brewer2012cap} y su extensión posterior como
 PACELC por Abadi~\cite{abadi2012pacelc} son el marco teórico bajo el cual se

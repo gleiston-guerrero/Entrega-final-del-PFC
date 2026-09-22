@@ -28,6 +28,14 @@ function equal(a, b, name) {
 }
 equal(cited, aux, 'Source/aux mismatch');
 equal(cited, printed, 'Cited/printed mismatch');
+const orphaned = [...bib.keys()].filter(key => !cited.has(key));
+const missingBib = [...cited].filter(key => !bib.has(key));
+console.log(`REFERENCIAS_BIB=${bib.size}`);
+console.log(`REFERENCIAS_HUERFANAS=${orphaned.length}`);
+console.log(`CLAVES_HUERFANAS=${orphaned.join(',')}`);
+console.log(`CLAVES_CITADAS_INEXISTENTES=${missingBib.join(',')}`);
+if (orphaned.length) errors.push('Orphan bibliography entries: ' + orphaned.join(', '));
+if (missingBib.length) errors.push('Cited keys missing from bibliography: ' + missingBib.join(', '));
 if (items.length !== printed.size) errors.push('Duplicate bibitems');
 if (!cited.size) errors.push('No citations found');
 const pdfText = read('main.text.txt');
@@ -41,6 +49,31 @@ const compact = text => text.replace(/[\s{}~\-\u00ad\u2010-\u2014]/g, '').toLowe
 function validIsbn(value) {
   const digits = value.replace(/-/g, '');
   return /^\d{13}$/.test(digits) && [...digits].reduce((sum, d, i) => sum + Number(d) * (i % 2 ? 3 : 1), 0) % 10 === 0;
+}
+function normalizeName(value) {
+  return value
+    .replace(/\\[a-zA-Z]+(?:\{([^}]*)\})?/g, '$1')
+    .replace(/[{}\\]/g, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+function authorSurnames(entry) {
+  const author = entry.match(/\bauthor\s*=\s*\{([\s\S]*?)\}(?=\s*,|\s*$)/)?.[1] || '';
+  return author.split(/\s+and\s+/i).map(authorPart => {
+    const commaParts = authorPart.split(',');
+    return normalizeName((commaParts.length > 1 ? commaParts[0] : authorPart).trim().split(/\s+/).pop());
+  }).filter(Boolean);
+}
+// This checks only explicit surname-to-citation constructions, not whether the
+// surrounding prose semantically describes the cited work correctly.
+const nominalCitations = /([A-ZÁÉÍÓÚÜÑ][\p{L}'-]+)~(?:\\emph\{et al\.\}~)?\\cite(?:\[[^\]]*\])?\{([^}]+)\}/gu;
+for (const match of tex.matchAll(nominalCitations)) {
+  const surname = normalizeName(match[1]);
+  for (const key of match[2].split(',').map(value => value.trim())) {
+    if (bib.has(key) && !authorSurnames(bib.get(key)).includes(surname)) {
+      errors.push(`Nominal attribution mismatch: ${match[1]} -> ${key}`);
+    }
+  }
 }
 const missing = [];
 console.log('CLAVES_CITADAS=' + [...cited].sort().join(','));
@@ -59,18 +92,6 @@ for (const [i, item] of items.entries()) {
   if (target && (bblText.split(target).length !== 2 || rendered.split(target).length !== 2)) errors.push('Identifier missing/duplicated: ' + key);
   console.log(`[${i + 1}] ${key} | ${type}: ${id} | BBL=${Boolean(target && bblText.includes(target))} PDF=${Boolean(target && rendered.includes(target))}`);
 }
-const wrong = [
- /Fielding[^\n]*\\cite\{li2021microservices\}/,
- /Newman[^\n]*\\cite\{li2021microservices\}/,
- /Jain[^\n]*\\cite\{baltes2022sampling\}/,
- /Wohlin[^\n]*\\cite\{verdecchia2023\}/,
- /(?:Ongaro|Ousterhout)[^\n]*\\cite\{huang2020tidb\}/,
- /Cooper[^\n]*\\cite\{taipalus2023dbms\}/,
- /RDD[^]*?\\cite\{wang2022spark\}/,
- /RFC 7519[^\n]*\\cite\{venckauskas2023jwt\}/,
- /(?:Brewer|Abadi)[^\n]*\\cite\{lee2023cap\}/,
-];
-for (const pattern of wrong) if (pattern.test(tex)) errors.push('Incorrect attribution: ' + pattern);
 const log = read('main.log');
 const blg = read('main.blg');
 const undefinedCitations = (log.match(/LaTeX Warning: Citation[^\n]*undefined/g) || []).length;
