@@ -107,6 +107,28 @@ class RealEvidenceTest(unittest.TestCase):
                 )
                 self.assertIn(f"${high} < {threshold}$ ms", answer)
 
+    def test_pi_questions_match_measured_reservas_population(self):
+        manuscript = MANUSCRIPT.read_text(encoding="utf-8")
+        pi1_start = manuscript.index(r"\textbf{PI1.}")
+        pi1_answer = manuscript.index(r"\textbf{Respuesta a PI1.}", pi1_start)
+        pi2_start = manuscript.index(r"\textbf{PI2.}", pi1_answer)
+        pi2_answer = manuscript.index(r"\textbf{Respuesta a PI2.}", pi2_start)
+
+        pi1_question = " ".join(manuscript[pi1_start:pi1_answer].split())
+        pi2_question = " ".join(manuscript[pi2_start:pi2_answer].split())
+        for question in (pi1_question, pi2_question):
+            self.assertIn("consultas autenticadas de solo lectura de Reservas", question)
+            self.assertNotIn("Reservas/Solicitudes", question)
+
+        pi1_section = manuscript[pi1_start:pi2_start]
+        for route in (r"\texttt{GET /api/v1/reservas}",
+                      r"\texttt{GET /api/v1/reservas/\{id\}}"):
+            self.assertIn(route, pi1_section)
+
+        pi2_section = manuscript[pi2_start:]
+        for term in ("XXC02", "licencia", "régimen", "descriptivo"):
+            self.assertIn(term, pi2_section)
+
     def test_canonical_backend_coverage_matches_manuscript(self):
         manuscript = MANUSCRIPT.read_text(encoding="utf-8")
         for service, label, covered, missed, threshold in (

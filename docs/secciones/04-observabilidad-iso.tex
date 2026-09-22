@@ -182,7 +182,8 @@ estrictamente menor que el umbral.
 
 \textbf{PI1.} ¿Al fijar como variable manipulada una carga nominal de 50
 usuarios concurrentes durante cinco minutos sobre las consultas autenticadas
-de solo lectura de Reservas/Solicitudes, los límites superiores de los IC95 de
+de solo lectura de Reservas, ejercitadas mediante
+\texttt{GET /api/v1/reservas} y \texttt{GET /api/v1/reservas/\{id\}}, los límites superiores de los IC95 de
 la latencia p95 y p99 observada por Locust permanecen por debajo de los
 umbrales previamente declarados de 500 ms y 750 ms, respectivamente, en las
 ocho repeticiones centrales r2--r9 del despliegue SCLI evaluado?
@@ -219,7 +220,8 @@ respuesta definitiva a toda la población declarada.
 
 \textbf{PI2.} ¿Al fijar como variable manipulada una carga nominal de 50
 usuarios concurrentes durante una hora sobre las consultas autenticadas de
-solo lectura de Reservas/Solicitudes, el límite superior del IC95 de la tasa
+solo lectura de Reservas, ejercitadas mediante
+\texttt{GET /api/v1/reservas} y \texttt{GET /api/v1/reservas/\{id\}}, el límite superior del IC95 de la tasa
 observada de respuestas HTTP 5xx permanece por debajo del umbral previamente
 declarado de 1\,\% en las ocho repeticiones centrales r2--r9 del despliegue
 SCLI evaluado, y qué comportamiento operacional adicional registra Locust?
