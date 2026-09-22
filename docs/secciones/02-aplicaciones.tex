@@ -147,13 +147,20 @@ descritos anteriormente.
 \begin{figure}[ht]
   \centering
   \begin{minipage}{0.94\linewidth}
-\begin{verbatim}
+\begin{lstlisting}[
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  numbers=none,
+  frame=single
+]
 Usuario -> Login React -> API Gateway -> auth-service
                                    <- Access + Refresh JWT
         -> sessionStorage -> rutas protegidas -> microservicios
         -> 401 -> /auth/refresh -> rotacion -> reintento
         -> logout -> /auth/logout -> revocacion -> limpieza -> /login
-\end{verbatim}
+\end{lstlisting}
   \end{minipage}
   \caption{Flujo funcional de autenticación de la aplicación web.}
   \label{fig:flujo-auth-web}

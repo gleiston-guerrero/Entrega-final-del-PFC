@@ -17,12 +17,19 @@ Los cinco servicios Spring exponen Actuator y Prometheus, y configuran
 instrumentación y exportación OTLP. El flujo implementado es el siguiente:
 
 \begin{center}
-\begin{verbatim}
+\begin{lstlisting}[
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  numbers=none,
+  frame=single
+]
 servicios -- metricas Prometheus ----------> Prometheus --\
          \-- trazas OTLP --> Collector --> Tempo ----------> Grafana
           \- logs OTLP ----> Collector --> Loki -----------/
 cAdvisor -- recursos de contenedores ------> Prometheus ---/
-\end{verbatim}
+\end{lstlisting}
 \end{center}
 
 Prometheus consulta cada quince segundos los cinco endpoints
