@@ -1,124 +1,143 @@
-# Evidencia de renormalizacion - Correccion #20
+# Evidencia de renormalizacion - estado actual de la correccion #20
 
-Fecha de auditoria: 2026-09-20
+Fecha de auditoria: 2026-09-22
 
 Base auditada: `origin/main`
 
-HEAD auditado: `0659e20f8434a9aaf6664bf08882f954eefba380`
+HEAD auditado: `b461d7fef67def578ef41fc23a45bb05af6cd301`
 
 ## Alcance
 
-El objetivo del punto #20 es asegurar que la verificacion de manifiestos sea
-reproducible independientemente de la politica local de finales de linea.
+El punto #20 verifica que los finales de linea y la verificacion de
+manifiestos sean reproducibles entre plataformas. Esta auditoria documental
+describe el estado de `main` en el HEAD indicado. No modifica evidencia, hashes,
+manifiestos ni `.gitattributes`.
 
-La correccion actual mantiene:
+## `.gitattributes` vigente
 
-- normalizacion general con `* text=auto eol=lf`;
-- manifiesto global `experimentos/resultados/SHA256SUMS` como texto LF;
-- evidencia raw protegida byte a byte con `experimentos/resultados/raw/** binary`;
-- evidencia Arbiter protegida con `experimentos/resultados/arbiter/campaign/** binary`;
-- evidencia Spark #17 protegida con `experimentos/evidencia-17/** binary`;
-- evidencia smoke E2 protegida con `experimentos/evidencia-e2/smoke-refresh-25m/** binary`;
-- `experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt` como texto LF,
-  diffable y mergeable.
+La configuracion actual mantiene la normalizacion general:
 
-No se modifico evidencia cruda y no fue necesario regenerar hashes.
+```text
+* text=auto eol=lf
+```
 
-## Normalizacion
+Las rutas de evidencia protegidas byte a byte son:
 
-La prueba segura de renormalizacion se ejecuto en un checkout temporal desde el
-HEAD auditado.
+- `experimentos/resultados/raw/**` como `binary`;
+- `experimentos/evidencia-17/**` como `binary`;
+- `experimentos/evidencia-e2/smoke-refresh-25m/**` como `binary`;
+- `experimentos/resultados/arbiter/campaign/**` como `binary`;
+- `experimentos/resultados/iso25010-correctiva-poblada.csv` como `-text`;
+- `experimentos/resultados/analisis-e3.json` como `-text`.
 
-Resultado:
+El manifiesto de smoke E2 se mantiene como texto LF, con `diff` y `merge`
+declarados:
 
-- `git add --renormalize .` produjo 0 archivos cambiados;
-- el arbol versionado ya estaba normalizado;
-- no hubo cambios sobre evidencia raw;
-- no hubo necesidad de actualizar manifiestos.
+```text
+experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt text eol=lf diff merge
+```
 
-El estado de finales de linea no presento archivos mixtos:
+Existe un pendiente residual de configuracion: 97 rutas unicas cubiertas por
+manifiestos siguen resolviendo a `text=auto`. Se concentran principalmente en
+`experimentos/resultados/evidencia-e3-canonica/**`,
+`experimentos/metrics/results/**`, `release/evidence/**`,
+`release/screenshots/**` y otros resultados. Estas rutas no se consideran
+danadas: verifican en clones limpios. Mientras sigan en `text=auto`, su
+preservacion byte a byte depende de que los archivos se generen en LF.
 
-- `i/mixed`: 0;
-- `w/mixed`: 0.
+## Poblacion actual de manifiestos
 
-## Verificacion de manifiestos
+El verificador descubre actualmente:
 
-La verificacion de lectura descubrio 37 manifiestos:
+- 56 manifiestos;
+- 3319 entradas;
+- 2172 rutas unicas.
 
-- entradas totales: 2657;
-- LF: 2657/2657 OK;
-- `core.autocrlf=true`: 2657/2657 OK;
-- fallos: 0.
+Distribucion de atributos por ruta unica:
 
-Tambien se compararon dos checkouts temporales del mismo commit:
+- 2071 rutas con `text=unset`/`binary`;
+- 97 rutas con `text=auto`;
+- 4 rutas con `text=set`.
 
-- checkout con `core.autocrlf=false`;
-- checkout con `core.autocrlf=true`;
-- archivos comparados: 3242;
-- diferencias de bytes: 0.
+Distribucion por entrada de manifiesto, incluyendo rutas repetidas:
 
-Estos resultados confirman que los manifiestos actuales son reproducibles sin
-regenerar checksums.
+- 3216 entradas con `text=unset`/`binary`;
+- 99 entradas con `text=auto`;
+- 4 entradas con `text=set`.
 
-## Evidencia Spark #17
+Por tanto, la cifra historica de 76 rutas `text=auto` ya no describe
+`main`.
 
-Ruta: `experimentos/evidencia-17/**`
+## Verificacion en clones limpios
 
-Estado:
+Se compararon dos clones temporales limpios del mismo HEAD:
 
-- protegida como `binary/-text`;
-- `comparacion.json` conserva bytes;
-- `config.json` conserva bytes;
-- `resumen.json` referencia los hashes correctos;
-- `provenance.json` conserva bytes;
-- manifiesto: 50/50 OK;
-- resultado LF: OK;
-- resultado con `core.autocrlf=true`: OK.
+| Configuracion | Manifiestos | Entradas | OK | FAILED | `git add --renormalize .` |
+|---|---:|---:|---:|---:|---:|
+| `core.autocrlf=false` | 56 | 3319 | 3319 | 0 | 0 cambios |
+| `core.autocrlf=true` | 56 | 3319 | 3319 | 0 | 0 cambios |
 
-El defecto original de Spark por transformacion CRLF/LF ya no se reproduce.
+Estos resultados muestran que los blobs y los clones limpios son reproducibles
+en ambos modos. No se regeneraron manifiestos ni hashes.
 
-## Smoke E2
+## Diferencia observada en el checkout Windows existente
 
-Ruta: `experimentos/evidencia-e2/smoke-refresh-25m/**`
+La ejecucion sobre el checkout Windows de trabajo existente obtuvo:
 
-Estado:
+- 56 manifiestos;
+- 3319 entradas;
+- 3268 OK;
+- 51 mismatches.
 
-- evidencia del directorio protegida como `binary/-text`;
-- `SHA256SUMS.txt` declarado explicitamente como `text eol=lf diff merge`;
-- `locust_stats.csv` conserva bytes;
-- `locust_failures.csv` conserva bytes;
-- `locust_exceptions.csv` conserva bytes;
-- manifiesto: 7/7 OK;
-- resultado LF: OK;
-- resultado con `core.autocrlf=true`: OK.
+Los 51 hashes esperados coinciden con los blobs Git correspondientes. La
+diferencia esta en los bytes del working tree existente, principalmente por
+finales CRLF en rutas que el blob almacena en LF. Por ello, el resultado es
+especifico de ese working tree y no implica corrupcion del repositorio.
 
-El defecto original de 4/7 archivos fallando ya no se reproduce.
+En ambos modos de los clones limpios, `git add --renormalize .` produjo cero
+cambios. En el checkout real tampoco se modifico el indice durante esta
+auditoria.
 
-## Ramas remotas
+## Casos historicos de CRLF
 
-La rama `origin/fix/issue-20-renormalizacion-isaias` corresponde a un enfoque
-antiguo/rechazado de renormalizacion. Sigue publicada temporalmente, pero no
-forma parte de `main` ni representa trabajo pendiente que deba integrarse para
-cerrar el punto #20.
+Los dos archivos historicos conservan sus bytes CRLF tanto en el blob Git como
+en el working tree:
 
-Su eliminacion remota queda como limpieza de cierre, no como requisito tecnico
-de reproducibilidad.
+- `experimentos/resultados/iso25010-correctiva-poblada.csv`: 11 finales CRLF;
+- `experimentos/resultados/analisis-e3.json`: 368 finales CRLF.
 
-La rama `origin/fix/eval2-32-iso25010-ivan` no se clasifica como obsoleta de
-#20. Contiene trabajo activo/valido de otro entregable y no forma parte de esta
-correccion.
+Ambos tienen `text=unset` (`-text` en `.gitattributes`), por lo que Git no los
+convierte automaticamente entre LF y CRLF. El hash SHA-256 del working tree
+coincide con el hash del contenido del blob en ambos casos.
 
-## Conclusion
+## Ramas relacionadas con #20
 
-El estado actual de `origin/main` cumple la reproducibilidad de finales de linea:
+Las ramas relacionadas que permanecen publicadas son historicas y estan detras
+de `main`, con cero commits por delante:
 
-- los manifiestos verifican en LF y con `core.autocrlf=true`;
-- no hay archivos `mixed`;
-- la evidencia cruda esta preservada byte a byte;
-- Spark #17 y smoke E2 verifican correctamente;
-- `git add --renormalize .` no produciria cambios.
+- `origin/fix/issue-20-renormalizacion-isaias-v2`;
+- `principal/fix/issue-20-renormalizacion-isaias`;
+- `principal/fix/issue-20-renormalizacion-isaias-v2`.
 
-La correccion de cierre elimina la regla inefectiva de `raw/*.txt` y declara
-explicitamente el tratamiento del manifiesto smoke E2 como texto LF,
-diffable y mergeable. Estas modificaciones no alteran evidencia cruda ni
-requieren regenerar manifiestos o hashes.
+No hay trabajo de #20 por delante de `main` pendiente de integrar.
+
+## Estado de la correccion
+
+La proteccion de `raw/**`, evidencia-17, smoke E2, Arbiter y los dos casos
+historicos CRLF esta vigente. La verificacion en clones limpios es reproducible
+con `core.autocrlf=false` y `core.autocrlf=true`: los 56 manifiestos y sus
+3319 entradas verificaron 3319/3319 en ambos entornos, y la prueba de
+`git add --renormalize .` produjo 0 cambios.
+
+Las 97 rutas que actualmente resuelven a `text=auto` fueron auditadas de forma
+explicita. No se encontro ninguna ruta que produjera diferencias de hash,
+perdida de bytes, divergencias entre clones limpios ni cambios durante la
+renormalizacion. Por tanto, no constituyen un defecto reproducible del estado
+actual del repositorio.
+
+Mantener reglas mas restrictivas para esas rutas podria reforzar de forma
+preventiva la preservacion byte a byte de evidencia futura, pero no es
+necesario para reproducir ni verificar la evidencia versionada actualmente.
+
+No se requiere regenerar manifiestos, modificar hashes, renormalizar archivos
+ni realizar cambios adicionales en `.gitattributes` para el estado auditado.
