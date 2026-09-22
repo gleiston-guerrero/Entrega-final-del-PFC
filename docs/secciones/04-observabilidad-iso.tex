@@ -114,10 +114,13 @@ Reservas expone las familias \texttt{app.mobile.http.latency} y
 \texttt{app\_mobile\_http\_latency\_seconds\_bucket} y el job
 \texttt{reservas-solicitudes-service}. La validación runtime final se ejecutó en la VM
 \texttt{pfc-pruebas-e1} sobre el SHA
-\texttt{1720c7745bf9573ecfba8231c71774eab0c1e5e0}. Tras tráfico real desde
-Android, Prometheus registró 408 observaciones acumuladas de latencia móvil y un p95
-de 0,151554183275 s en la consulta final de cinco minutos. Los resultados raw se conservan en
-\texttt{release/evidence/observabilidad/}.
+\texttt{1720c7745bf9573ecfba8231c71774eab0c1e5e0}. La captura muestra la serie
+móvil poblada. En exportaciones versionadas posteriores, Prometheus registró
+408 observaciones acumuladas de latencia móvil y un p95 de 0,151554183275 s en
+una consulta de cinco minutos; esos valores no se presentan como si
+correspondieran exactamente al instante de la captura. Los resultados raw y la
+distinción entre sondeos de presencia y consultas del panel se conservan en
+\texttt{release/evidence/observabilidad/README.md}.
 
 La Figura~\ref{fig:panel-monitoreo-carga-real} corresponde a la captura runtime
 final del dashboard en esa VM, con rango de 15 minutos y refresco de 5 s. Los
@@ -128,9 +131,16 @@ cAdvisor y p95 E2E móvil. La captura se acompaña de
 operacional no se atribuye a la campaña nominal de 50 usuarios y cinco minutos
 ni sustituye las diez repeticiones analizadas en la
 Sección~\ref{subsec:eficiencia-nominal}. Tempo y Loki también se verificaron en
-runtime: se correlacionó el trace ID
+runtime: la búsqueda Loki
+\texttt{22-loki-trace-correlated.json} no devolvió resultados y no se usa como
+prueba positiva. La correlación positiva se sostiene en
+\texttt{23-loki-business-http.json} y \texttt{24-tempo-correlated-trace.json},
+donde se correlacionó el trace ID
 \texttt{3302a606e9fb236618a03f4b06b5a6a7} para
 \texttt{GET /api/v1/laboratorios} con respuesta 200 y 12 batches de Tempo.
+La numeración histórica de estas exportaciones salta de
+\texttt{13-tempo-search.json} a \texttt{16-tempo-reservas-search.json}; no se
+han creado archivos \texttt{14} ni \texttt{15}.
 
 \begin{figure*}[htbp]
   \centering

@@ -27,6 +27,9 @@ Las fuentes modulares vigentes que consume el informe están en
 [`docs/secciones/`](secciones/). Los ADR, diagramas, evidencias técnicas, contratos
 OpenAPI e informes ISO son documentación complementaria trazable.
 
+El inventario interpretativo de las exportaciones de observabilidad está en
+[`release/evidence/observabilidad/README.md`](../release/evidence/observabilidad/README.md).
+
 ## Trabajo colaborativo
 
 Los [registros retrospectivos del equipo](actas/README.md) consolidan cinco
