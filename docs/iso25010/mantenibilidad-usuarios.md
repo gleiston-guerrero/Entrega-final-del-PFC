@@ -104,17 +104,18 @@ reconciliación posterior y no evidencia contemporánea adicional de E3.
 - **Comando exacto:** `npm run test:coverage` (equivalente a `vitest run --coverage`), ejecutado en `apps/web`.
 - **Alcance:** `apps/web/src/**/*.{ts,tsx}`.
 - **Threshold del gate:** 70 % mínimo en statements, branches, functions y lines (sin reducir).
-- **Procedencia:** [GitHub Actions CI #536, job `Test web`](https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293), SHA `00947b366b0484af7c5ea997e13d07e018484339`.
-- **Entorno y suite:** Node `22.22.2`, instalación con `npm ci`; 43/43 archivos y 296/296 pruebas en PASS, duración 22,53 s.
+- **Procedencia:** evidencia local versionada en [`experimentos/resultados/evidencia-web-vigente/`](../../experimentos/resultados/evidencia-web-vigente/), con `coverage-summary.json` y `SHA256SUMS`.
+- **Entorno y suite:** Node `24.15.0`, npm `11.12.1`; 43/43 archivos y 296/296 pruebas en PASS en cada una de las tres ejecuciones.
 
-El log de ese CI publica 81,89 / 70,21 / 78,43 / 84,87 % en statements,
-branches, functions y lines. La reproducción independiente del docente aporta
-1558/2219 ramas cubiertas, cuyo porcentaje a dos decimales coincide con 70,21 %.
-La cifra anterior de 70,25 % queda rectificada; no se ha demostrado la causa
-de la diferencia ni se atribuye a Node/V8. Ese run no conserva un artifact
-`coverage-summary.json`: el workflow queda configurado en esta corrección para
-publicarlo en ejecuciones futuras como `web-coverage-summary-${{ github.sha }}`.
-No se modificaron pruebas, timeouts ni umbrales.
+Las tres ejecuciones locales reproducibles producen 81,89 / 70,21 / 78,43 /
+84,87 % en statements, branches, functions y lines; las ramas son 1558/2219
+en las tres. La discrepancia previa se debía a que `MainPage.test.tsx` dejaba
+que `MainPage.tsx` leyera el día real del sistema; ahora la prueba fija
+explícitamente la fecha con timers falsos y los restaura después de cada caso.
+El resumen JSON y sus sumas SHA-256 se conservan en
+[`experimentos/resultados/evidencia-web-vigente/`](../../experimentos/resultados/evidencia-web-vigente/).
+Esta medición es local y no se presenta como resultado de CI remoto. No se
+modificaron `MainPage.tsx`, timeouts ni umbrales.
 
 ## Replicación histórica de la campaña E3
 

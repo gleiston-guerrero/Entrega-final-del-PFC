@@ -863,11 +863,13 @@ reconstruir retrospectivamente esa medición; el CI posterior es evidencia separ
 
 Comando exacto: \texttt{npm run test:coverage} (equivalente a \texttt{vitest run --coverage}).
 Alcance: \texttt{apps/web/src/**/*.\{ts,tsx\}}. Umbral mínimo del gate: 70\%
-para statements, branches, functions y lines (sin reducir). Procedencia:
-\href{https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293}{CI \#536, job Test web},
-SHA \texttt{00947b366b0484af7c5ea997e13d07e018484339}, Node 22.22.2,
-43/43 archivos y 296/296 pruebas en PASS. Esta medición de alcance completo
-es posterior y separada de la serie histórica E3; no reinterpreta sus resultados.
+para statements, branches, functions y lines (sin reducir). La medición se
+repitió tres veces en local con 43/43 archivos y 296/296 pruebas en PASS en
+cada ejecución, y las cuatro métricas fueron idénticas. La evidencia
+versionada, incluido \texttt{coverage-summary.json} y \texttt{SHA256SUMS}, se
+encuentra en \path{experimentos/resultados/evidencia-web-vigente/}. Esta
+medición de alcance completo es posterior y separada de la serie histórica E3;
+no reinterpreta sus resultados ni afirma una verificación de CI remoto.
 
 La decisión global experimental de mantenibilidad es \textbf{NO CUMPLE
 únicamente por Android}, cuya cobertura de líneas fue

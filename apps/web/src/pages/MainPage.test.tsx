@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as academico from '../services/academicoApi'
 import * as operational from '../services/operationalApi'
 import * as usuarios from '../services/usuariosApi'
@@ -32,6 +32,8 @@ vi.mock('../features/admin/AdminDashboard', () => ({
 
 describe('MainPage', () => {
   beforeEach(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+    vi.setSystemTime(new Date('2026-09-07T08:00:00'))
     vi.resetAllMocks()
     usuario = { perfilId: 'perfil-1', roles: ['DOCENTE'], permisos: [] }
     vi.mocked(academico.obtenerDocentePorPerfil).mockResolvedValue({
@@ -89,6 +91,10 @@ describe('MainPage', () => {
     vi.mocked(usuarios.obtenerMiContextoAcademico).mockResolvedValue({ id:'ctx',estudianteId:'e',carreraId:'c-1',periodoId:'p-1',nivel:7,activo:true,creadoEn:'' })
   })
 
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('muestra al docente únicamente su horario con nombres humanos', async () => {
     render(
       <MemoryRouter>
@@ -103,8 +109,6 @@ describe('MainPage', () => {
   })
 
   it('destaca las clases de hoy sin permitir editar la planificación base', async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true })
-    vi.setSystemTime(new Date('2026-09-07T08:00:00'))
     render(
       <MemoryRouter>
         <MainPage />
@@ -113,7 +117,6 @@ describe('MainPage', () => {
     expect(await screen.findByRole('heading', { name: 'Hoy' })).toBeInTheDocument()
     expect(screen.getByText('Programada')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Editar/ })).not.toBeInTheDocument()
-    vi.useRealTimers()
   })
 
   it('carga el contexto y horario aprobados para un estudiante', async () => {

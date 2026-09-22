@@ -124,14 +124,14 @@ corresponde.
 La configuración de Vitest/V8 en \texttt{vite.config.ts} instrumenta el conjunto
 de fuentes de la aplicación, incluyendo archivos no ejercitados por las pruebas;
 por ello el reporte conserva explícitamente archivos con cobertura cero en lugar
-de excluirlos del denominador. Sobre el árbol integrado evaluado, la ejecución
-reproducible de \texttt{npm run test:coverage} produjo 81.89\% de statements,
-70.21\% de branches, 78.43\% de functions y 84.87\% de lines. Estos valores
-superan el umbral configurado de 70\% en las cuatro métricas y corresponden al
-log de \href{https://github.com/gleiston-guerrero/Entrega-final-del-PFC/actions/runs/35564968302/job/106224985293}{CI \#536, job Test web},
-SHA \texttt{00947b366b0484af7c5ea997e13d07e018484339}, con Node 22.22.2:
-43/43 archivos y 296/296 pruebas aprobadas. Esta es la procedencia de la
-medición vigente.
+de excluirlos del denominador. Sobre el árbol integrado evaluado, las tres ejecuciones locales reproducibles
+de \texttt{npm run test:coverage} produjeron 81.89\% de statements, 70.21\%
+de branches, 78.43\% de functions y 84.87\% de lines, con 43/43 archivos y
+296/296 pruebas aprobadas en cada ejecución. Estos valores superan el umbral
+configurado de 70\% en las cuatro métricas. La evidencia versionada, incluido
+el resumen JSON y sus sumas SHA-256, se conserva en
+\path{experimentos/resultados/evidencia-web-vigente/}; esta es la procedencia
+de la medición local vigente y no se presenta como resultado de CI remoto.
 
 El pipeline ejecuta \texttt{npm run test:coverage} y \texttt{npm run build}; por
 tanto, una promoción solo continúa si los umbrales configurados y el build se
