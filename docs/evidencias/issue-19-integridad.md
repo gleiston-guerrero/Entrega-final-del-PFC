@@ -1,201 +1,284 @@
 # #19 — Integridad de evidencia
 
-Responsable: Iván. Base auditada: `1785bdd6ddf9ee651f59b31b00abca7d77a20536`
-(`origin/main` actualizado). Rama: `fix/eval2-19-manifests-ivan`; árbol inicial
-limpio. No se modifican datos históricos ni manifiestos anteriores.
+Base de esta corrección: `0aae3050bb363aaa0e6de0ae3875e1bcfdf9519d`.
+Rama: `fix/eval3-19-integridad-isaias`. Se auditan archivos rastreados y sus
+bytes en el árbol de trabajo. Al inicio había una modificación sin commit
+únicamente en `.gitattributes`. No se realiza stage, commit ni push.
 
 ## Verificación reproducible
 
-Desde la raíz, con Python >= 3.11 y Git:
+Desde la raíz del repositorio, en Windows, con el lanzador `py`:
 
-```sh
-python scripts/verificar-manifiestos.py
-python -m unittest discover -s scripts/tests -p 'test_verificar_manifiestos.py' -v
-python experimentos/verificar_manifiesto_evidencia17.py verificar --paquete experimentos/evidencia-17/20260916
-python -m unittest discover -s experimentos/tests -p 'test_verificar_manifiesto_evidencia17.py' -v
+```powershell
+git branch --show-current
+git rev-parse HEAD
+py scripts/verificar-manifiestos.py
+py -m unittest discover -s scripts/tests -p "test_verificar_manifiestos.py" -v
+git ls-files -- experimentos/ spark/ release/
+git ls-files -- '*.sha256'
+git check-attr -a -- experimentos/resultados/iso25010-correctiva-poblada.csv experimentos/resultados/analisis-e3.json
+git diff --check
+git status --short
+git diff --stat
+git diff -- .gitattributes docs/evidencias/issue-19-integridad.md
 ```
 
-Antes de incorporar los cuatro manifiestos nuevos a Git, ejecutar:
+El verificador descubre mediante `git ls-files -z --cached` los nombres
+`SHA256SUMS`, `SHA256SUMS.txt`, `MANIFEST-SHA256.txt`,
+`iso25010-eficiencia-poblada.sha256`, `dataset.csv.sha256` y
+`dataset-metadata.json.sha256`. Se conserva el soporte de eficiencia existente
+y se añaden únicamente los dos nombres de descriptores del preflight.
+`ROOT_BASED` no cambia: los descriptores se resuelven desde su propio directorio.
+Las bases son el directorio del manifiesto, salvo
+`experimentos/resultados/SHA256SUMS` y
+`experimentos/resultados/iso25010-eficiencia-poblada.sha256`, que parten de la raíz.
+El parser exige formato GNU SHA-256 y rechaza líneas inválidas, duplicados,
+manifiestos vacíos, autorreferencias y rutas que escapan de su base.
+`--include-untracked` amplía el descubrimiento; no es necesario para esta corrección.
 
-```sh
-python scripts/verificar-manifiestos.py --include-untracked
-```
-
-El modo predeterminado usa `git ls-files -z --cached`, sin un número fijo de
-manifiestos. Solo acepta los nombres `SHA256SUMS`, `SHA256SUMS.txt` y
-`MANIFEST-SHA256.txt`. La opción de revisión añade `--others --exclude-standard`;
-no modifica el índice. En este árbol sin stage, el modo predeterminado encuentra
-**21 manifiestos / 1412 entradas / 1412 OK / 0 FAILED**. La propuesta completa
-verifica **25 manifiestos / 1459 entradas / 1459 OK / 0 FAILED**. Tras versionar
-los nuevos archivos, el modo predeterminado de CI encontrará los 25.
-
-Todos los manifiestos actuales emplean SHA-256 en formato GNU:
-64 dígitos hexadecimales, espacio, indicador de texto (espacio) o binario (`*`),
-y ruta relativa. Se verifican también con `sha256sum --check` desde la base
-indicada en el inventario. No hace falta un formato especial. El parser rechaza
-líneas inválidas, manifiestos vacíos, duplicados, autorreferencias y rutas que
-escapan de su base; no interpreta silenciosamente formatos desconocidos.
-La única excepción explícita de base es `experimentos/resultados/SHA256SUMS`,
-cuyas rutas parten de la raíz del repositorio. Todos los demás parten de su
-directorio. No se elige otra base cuando un archivo falta o cambia su hash.
-
-Cada manifiesto muestra `MANIFEST | BASE | ENTRIES | OK | FAILED`; el cierre
-muestra `manifests`, `entries`, `ok`, `failed`. Los fallos de lectura, ausencia,
-hash, parser o descubrimiento dan exit 1. Los errores de manifiesto también se
-cuentan como fallos, aunque no pueda determinarse su número de entradas.
-`--root` y `--manifest` (repetible) permiten comprobar copias temporales; el modo
-explícito restringe el alcance y no sustituye el descubrimiento global de CI.
+Resultado final real: **54 manifiestos / 3314 entradas / 3314 OK / 0 FAILED**,
+exit code **0**. Las entradas pueden cubrir un mismo archivo desde varios
+manifiestos; no equivalen al número de archivos únicos del inventario.
+Pruebas del verificador: **13 ejecutadas, todas OK**, exit code **0**.
+La comprobación es local; no acredita una ejecución remota de GitHub Actions.
 
 ## Cobertura recalculada
 
-El [inventario por archivo](issue-19-cobertura.csv) enumera los **1516 archivos
-rastreados de la base** bajo `experimentos/`, `spark/` y `release/`, con clase,
-cobertura anterior, cobertura propuesta y manifiestos que los cubren. No existe
-un directorio raíz `arbiter/`: su evidencia está en
-`experimentos/resultados/arbiter/`. Se consideran solo artefactos entregados en
-Git, no el raw externo de la VM. El inventario no incorpora como datos nuevos
-los cuatro manifiestos añadidos por esta corrección.
+El [CSV por archivo](issue-19-cobertura.csv) contiene **2221 archivos rastreados**
+bajo `experimentos/`, `spark/` y `release/`, obtenidos mediante `git ls-files`.
+No incluye datos externos de la VM. Conserva el esquema
+`ruta,clase,cubierto_base,cubierto_propuesta,manifiestos_propuesta`.
+`cubierto_base` se recalcula con las entradas de los manifiestos del commit
+indicado arriba; `cubierto_propuesta` usa las del árbol corregido. La cobertura
+indica una referencia explícita desde un manifiesto descubierto, no transitividad
+ni autenticidad. La validación global comprueba además los hashes de esos bytes.
+Ambas columnas de sí/no coinciden porque los datos ya estaban cubiertos en la
+base. Se ajustan únicamente las listas `manifiestos_propuesta` de `dataset.csv`
+y `dataset-metadata.json` del preflight para incluir sus descriptores ahora
+descubiertos; no cambian rutas inventariadas, clases ni conteos de cobertura.
+Para la columna de base se usa el descubrimiento del verificador de ese commit,
+que todavía no incluía los dos descriptores absolutos.
 
-| Clase | Total | Cubiertos en la base | Cubiertos en la propuesta |
+| Clase | Total | Cubiertos en base | Cubiertos en propuesta |
 |---|---:|---:|---:|
-| A: código, scripts, consultas, configuración y documentación | 198 | 135 | 140 |
-| B: raw, registros instrumentales y capturas | 903 | 873 | 903 |
-| C: derivados | 197 | 192 | 197 |
-| D: manifiestos dentro de este alcance | 20 | 0 | 0 |
-| E: metadata preservada | 198 | 191 | 198 |
+| A_codigo_documentacion | 207 | 144 | 144 |
+| B_raw | 1152 | 1152 | 1152 |
+| C_derived | 259 | 259 | 259 |
+| D_manifest | 53 | 41 | 41 |
+| E_metadata | 550 | 550 | 550 |
 
-`RAW_TOTAL=903`, `RAW_COVERED=903`, `RAW_UNCOVERED=0` en la propuesta.
-Lista exacta final sin cobertura: **vacía**. Antes del cambio había 30 archivos
-de clase B sin cobertura: 22 de `rep-04` y ocho capturas de release. El CSV
-permite recuperar sus rutas exactas filtrando `clase=B_raw` y
-`cubierto_base=no`. Los 35 archivos del paquete incompleto no son todos raw:
-incluyen 22 raw, siete metadatos, un reporte derivado y cinco consultas PromQL.
-No se reproduce el antiguo conteo de 83 como si siguiera vigente.
+**RAW_TOTAL=1152, RAW_COVERED=1152, RAW_UNCOVERED=0**.
+Todos los derivados y metadatos del alcance están cubiertos.
+Hay **75 archivos sin checksum: 63 de código/documentación y 12 manifiestos**.
+Sus rutas exactas están en el CSV, filtrando `cubierto_propuesta=no`.
+No se exige checksum al código/documentación por existir, ni autorreferencia a
+los manifiestos. La lista vacía se refiere exclusivamente a raw sin cobertura,
+no a todos los archivos del repositorio.
 
-Criterio de clasificación: fuentes, notebooks, consultas `.promql`, fixtures,
-esquemas y Markdown son A. Los metadatos de entorno, deployment, contenedores,
-fases, timestamps, procedencia, configuración de corrida, `manifest.json`,
-`campaign.json`, `e3_study.json` y `checkpoint.json` son E. Análisis, comparaciones,
-equivalencia, matrices ISO, resúmenes, reportes HTML de Locust, estadísticas
-finales JSON y APK son C. Las mediciones exportadas por instrumentos (incluidos
-CSV de Locust y reportes fuente de cobertura), registros de benchmark, eventos,
-logs y capturas son B. La pertenencia a una carpeta llamada `raw` no convierte
-una consulta o metadata en una medición. Los manifiestos son D y no se exige
-autorreferencia. Las clases de cada archivo quedan explícitas en el CSV.
+Criterios de clasificación conservados:
 
-Los cuatro derivados señalados por la evaluación seguían sin cobertura:
+- A: fuentes, scripts, notebooks, consultas `.promql`, fixtures, esquemas,
+  configuración general, Markdown y marcadores `.gitkeep`/`.gitignore`.
+- B: mediciones instrumentales, CSV de Locust, reportes fuente de cobertura,
+  registros de benchmark, eventos, logs y capturas. Los nuevos snapshots
+  `dataset.csv`, respuestas de preflight, exportaciones de observabilidad,
+  mediciones de disco, escaneos y observaciones operativas pertenecen a B.
+- C: análisis, comparaciones, equivalencia, matrices ISO, resúmenes, reportes HTML
+  de Locust, estadísticas finales JSON y APK.
+- D: manifiestos; incluye los dos `.sha256` históricos del preflight, ahora
+  reconciliados a rutas relativas y descubiertos directamente.
+- E: metadata de entorno, deployment, contenedores, fases, timestamps, procedencia,
+  configuración de corrida, `manifest.json`, `campaign.json`, `e3_study.json` y
+  `checkpoint.json`. Incluye hashes de procedencia del dataset/harness, SHA del
+  software/evidencia, código de salida, duración y contexto de captura.
 
-- `experimentos/resultados/analisis-e3.json` y `iso25010-correctiva.csv`:
-  nuevo `experimentos/resultados/MANIFEST-SHA256.txt` (2 entradas).
-- `experimentos/metrics/results/comparacion.csv` y `comparacion.json`:
-  nuevo `experimentos/metrics/results/SHA256SUMS` (2 entradas).
+Para reproducir la clasificación se conservan las clases de las rutas existentes
+en el CSV de la base indicada y se aplican esos criterios a las rutas nuevas.
+En las nuevas rutas, los nombres de metadata son:
+`00-contexto-final.txt`, `dataset-metadata.json`, `dataset-sha256.txt`,
+`deployed-software-sha.txt`, `deployment-after.txt`, `deployment-before.txt`,
+`deployment-images.txt`, `deployment-state.txt`, `elapsed-seconds.txt`,
+`end_epoch.txt`, `end_utc.txt`, `environment.txt`, `evidence-git-sha.txt`,
+`harness-after-sha256.txt`, `harness-before-sha256.txt`, `harness-sha256.txt`,
+`locust-exit-code.txt`, `metadata.json`, `panel-monitoreo.metadata.txt`,
+`phase-boundaries.json`, `start_epoch.txt` y `start_utc.txt`.
+Los nuevos derivados son `http5xx-summary.json`,
+`iso25010-correctiva-poblada.csv`, `iso25010-eficiencia-poblada.csv`,
+`locust-final-stats.json`, `locust-report.html`, `rep-summary.json` y
+`smoke-summary.json`. Los nuevos `.py`, `.sh`, `.md` y `.gitkeep` son A;
+los manifiestos son D y el resto de las nuevas rutas son B.
+La carpeta `raw` por sí sola no determina la clase.
 
-Se añaden ocho capturas `*release.png` a `release/screenshots/SHA256SUMS.txt`.
-`panel-monitoreo.png` ya estaba cubierto por el manifiesto de entrega-3 y no se
-duplica. El quinto derivado antes sin cobertura es `rep-04/locust-report.html`;
-queda incluido en el manifiesto de ese paquete. Todos los 197 derivados y los
-198 metadatos de la base quedan cubiertos, sin modificar sus bytes.
+La cobertura se obtiene parseando cada manifiesto con `parse`, resolviendo su
+base con `manifest_base` y su destino con `safe_path`, del verificador actual.
+Se agrupan los destinos relativos a la raíz y se cruzan con `git ls-files`;
+los nombres de manifiesto se ordenan y separan con `;` en cada fila del CSV.
 
-## Nota de integridad del intento rep-04
+### Captura de monitoreo
 
-Ruta: `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04/`.
-Contenía **35 archivos versionados**, sin manifiesto propio. Se añade únicamente
-`SHA256SUMS` con esas 35 rutas relativas ordenadas, sin incluirse a sí mismo.
-Antes de calcularlo se compararon sus bytes físicos con los blobs de `HEAD`.
+`release/screenshots/panel-monitoreo.png` **no está referenciado** en
+`docs/entrega-3/SHA256SUMS.txt`. Su cobertura actual se comprueba en:
 
-El intento quedó abortado/incompleto por disco lleno:
-`console-disk-full.log` (nombre real, con guiones) conserva en las líneas 6–13
-`No space left on device` y `OSError: [Errno 28]`; al final declara ejecución
-experimental no completada. `metadata.json` está truncado y no es JSON válido:
-error en línea 30, columna 37, carácter 8191; termina con el literal parcial
-`"reservas_log_capture_succeeded": t`. **No se reparó ni modificó**.
+- `experimentos/resultados/SHA256SUMS` (ruta desde la raíz).
+- `release/screenshots/SHA256SUMS.txt` (ruta desde su directorio).
 
-El manifiesto solo fija los bytes actualmente preservados. No convierte este
-intento en una repetición válida, no completa su metadata y no cambia ninguna
-selección experimental. Esta nota se mantiene fuera del raw.
+```powershell
+rg -n 'panel-monitoreo.png' docs/entrega-3/SHA256SUMS.txt experimentos/resultados/SHA256SUMS release/screenshots/SHA256SUMS.txt
+```
 
-## Preservación, CI y límites
+## Auditoría de todos los archivos rastreados *.sha256
 
-- Smoke-refresh verifica **7/7**: los tres fallos históricos ya no están presentes.
-- Evidencia-17 verifica **50/50**, tanto globalmente como con su verificador
-  específico. No se regenera ninguno de estos dos manifiestos.
-- `.gitattributes` sigue aplicando `-text` a evidencia-17 y a los datos de smoke:
-  se preservan bytes. El manifiesto de smoke conserva su excepción `text eol=lf`.
-  No se cambia `.gitattributes` ni se renormalizan archivos.
-- `verify-experimental-manifest` ejecuta las pruebas y la verificación global
-  en los eventos push/PR ya definidos. `publish-release` mantiene sus tres
-  dependencias y añade este job. Sin éxito del gate no puede publicarse.
-  No se modifica otro aspecto de #15, OpenAPI, deployment o releases.
-- Las pruebas usan temporales: tres nombres soportados, base histórica,
-  descubrimiento múltiple, errores de lectura, ausencia, parser y una copia
-  real de los 50 archivos de #17. Una mutación de exactamente un byte produce
-  `MISMATCH` y exit distinto de cero; eliminarlo produce `MISSING`.
+Los dos descriptores históricos siguen rastreados bajo
+`experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight/`.
+Se reconciliaron cambiando únicamente sus rutas absolutas por rutas relativas
+al preflight: `/tmp/issue31-dataset-snapshot/dataset.csv` pasa a `dataset.csv`
+y `/tmp/issue31-dataset-snapshot/metadata.json` pasa a `dataset-metadata.json`.
+Los hashes internos y los finales de línea de ambos descriptores se conservan.
+No se modificaron `dataset.csv` ni `dataset-metadata.json`: su comparación
+binaria con HEAD coincide y `git diff --` sobre ambos produce salida vacía.
 
-Los checksums comprueban integridad respecto de los bytes fijados por el
-manifiesto; **no prueban por sí solos originalidad ni autenticidad histórica**.
-Cambiar a la vez datos y hashes podría producir una verificación correcta.
-La procedencia requiere además revisar historia, metadata, SHA experimental y
-las referencias internas existentes. En #17 se conservan `provenance.json`,
-`source_sha256` y las reconciliaciones históricas de hashes/EOL sin reescribirlas.
-La comprobación global complementa esas referencias y no las sustituye.
+| Archivo | Entradas GNU | Descubierto | Rutas |
+|---|---:|---|---|
+| `experimentos/resultados/iso25010-eficiencia-poblada.sha256` | 328 | Sí | Relativas a la raíz; todas verificadas |
+| `preflight/dataset.csv.sha256` (prefijo anterior) | 1 | Sí | `dataset.csv` |
+| `preflight/dataset-metadata.json.sha256` (prefijo anterior) | 1 | Sí | `dataset-metadata.json` |
 
-Se contrastaron las referencias adicionales de #17: los dos hashes internos
-de `resumen.json` coinciden con `comparacion.json` y `config.json` (2/2).
-Los cuatro `source_sha256` coinciden con los blobs del commit reconciliado
-`197ce3305c821a37c788f4c8f7a783996121f6cc` (4/4). No coinciden con el
-`git_head` histórico declarado en `provenance.json`, discrepancia ya explicada
-por `RECONCILIACION-PROVENANCE.md` de #17. Se preservan ambos documentos y no
-se presenta el gate de checksums como reparación de esa metadata histórica.
+Todos los `.sha256` rastreados tienen formato GNU, rutas relativas y se descubren
+y verifican directamente mediante `scripts/verificar-manifiestos.py`.
+La prueba de descubrimiento real exige explícitamente los dos descriptores;
+se conservan las pruebas existentes de bases relativas y rechazo de rutas absolutas.
 
-La validación aquí es local. Un workflow preparado y con sintaxis validada no
-equivale a una ejecución remota de GitHub Actions en verde.
+El `preflight/SHA256SUMS` actual usa rutas relativas y verifica **8/8 entradas**,
+incluidos `dataset.csv`, `dataset-metadata.json` y los bytes de ambos `.sha256`
+reconciliados. Sus nuevos bytes quedan protegidos por ese manifiesto y por
+`experimentos/resultados/SHA256SUMS`. Solo se actualizan las entradas de los
+descriptores y, en el global, la entrada dependiente del propio
+`preflight/SHA256SUMS`, cuyo contenido también cambió. No se regeneran manifiestos
+ni se cambian entradas ajenas a esta cadena de integridad.
 
-## Validación local realizada
+SHA-256 de los descriptores portables:
 
-- Verificador global: 25/1459/1459/0, exit 0 con `--include-untracked`;
-  modo exclusivamente rastreado: 21/1412/1412/0, exit 0.
-- Comprobación independiente con GNU `sha256sum --check`: los 25 manifiestos
-  pasan desde sus bases respectivas, 1459 entradas correctas.
-- Pruebas automatizadas: 12/12 del verificador global y 4/4 de evidencia-17.
-- Verificador específico de evidencia-17: 50/50, exit 0.
-- `analizar_iso25010.py`, tanto sobre `iso25010.csv` como sobre
-  `iso25010-correctiva.csv`: exit 0, solo lectura, sin regenerar resultados.
-- Workflow: YAML parseado y dependencias de publicación comprobadas por
-  aserciones. No se ejecutó GitHub Actions remotamente.
-- Manuscrito: `pdflatex`, `bibtex`, `pdflatex`, `pdflatex`, todos exit 0;
-  36 páginas, cero errores LaTeX, referencias indefinidas o citas indefinidas.
-  Se compiló una copia temporal en un contenedor con el repositorio montado
-  solo para lectura; no se deja PDF, log ni auxiliar en el árbol de trabajo.
+- `dataset.csv.sha256`: `c535fb5ebe68c8681d31a84fc67907e77b991666168bdae0bede3f98ee324ec9`.
+- `dataset-metadata.json.sha256`: `af5e7002bb87d13661e0fe96615fc934d77e6c02f3579e4fbadb669d05e8e40f`.
 
-## Inventario de manifiestos
+No quedan observaciones pendientes de las señaladas para #19 dentro del alcance
+auditado. Esto no modifica las limitaciones de procedencia descritas más abajo.
 
-El inventario siguiente comprende los 21 históricos y los cuatro nuevos.
-Todas las entradas usan SHA-256 GNU y admiten `sha256sum --check` desde BASE.
+## Reconciliación histórica de finales de línea
 
-| MANIFEST | BASE | ENTRADAS | OK | FAILED |
+`iso25010-correctiva-poblada.csv` y `analisis-e3.json` habían sido normalizados de
+CRLF a LF y sus manifiestos realineados. Se restauran exclusivamente los finales
+CRLF, sin modificar texto, valores, columnas, orden ni contenido lógico.
+Los hashes binarios finales coinciden con los históricos indicados:
+
+| Archivo en experimentos/resultados/ | SHA-256 final |
+|---|---|
+| `iso25010-correctiva-poblada.csv` | `60cd6afbbddd630c7d5364b4303aa356afbc1ae048b36e1acfe4afa3ddcc31dc` |
+| `analisis-e3.json` | `0a2d7fa3bcc98a23deb0cacbfae2db6b0d1208242c9ed1d3cf6fc675ba622ba0` |
+
+Se cambian únicamente sus respectivas entradas en `experimentos/resultados/SHA256SUMS`
+y `experimentos/resultados/MANIFEST-SHA256.txt`. Además, el global incorpora los
+ajustes vinculados a la reconciliación del preflight descritos arriba.
+`.gitattributes` declara `-text -eol` para ambos; `git check-attr -a` confirma
+`text: unset` y `eol: unset`, anulando para ellos la regla global `eol=lf`.
+El atributo local `whitespace=cr-at-eol` permite a `git diff --check` reconocer
+el CR histórico como parte del final de línea, sin transformar bytes ni desactivar
+la comprobación de espacios del resto del repositorio. La comprobación final
+`git diff --check` termina con exit code 0.
+
+Comprobación binaria y lógica ejecutable desde PowerShell:
+
+```powershell
+@'
+from pathlib import Path
+import hashlib, subprocess
+expected = {
+    "experimentos/resultados/iso25010-correctiva-poblada.csv":
+        "60cd6afbbddd630c7d5364b4303aa356afbc1ae048b36e1acfe4afa3ddcc31dc",
+    "experimentos/resultados/analisis-e3.json":
+        "0a2d7fa3bcc98a23deb0cacbfae2db6b0d1208242c9ed1d3cf6fc675ba622ba0",
+}
+for path, digest in expected.items():
+    before = subprocess.check_output(["git", "show", "HEAD:" + path])
+    after = Path(path).read_bytes()
+    assert hashlib.sha256(after).hexdigest() == digest
+    assert before.replace(b"\r\n", b"\n") == after.replace(b"\r\n", b"\n")
+    assert b"\n" not in after.replace(b"\r\n", b"")
+    print(path, digest, "ONLY_EOL=True")
+'@ | py -
+```
+
+## Preservación y límites
+
+Se conserva el intento abortado/incompleto `rep-04` de
+`experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/`, incluido su
+registro de disco lleno y su metadata truncada. Tener checksum no convierte
+ese intento en una repetición válida ni completa sus metadatos.
+No se altera la evidencia de #17, smoke, sus notas de procedencia ni las
+selecciones experimentales. Tampoco se regeneran manifiestos completos.
+
+Los checksums comprueban integridad de bytes respecto de un manifiesto;
+**no demuestran autenticidad absoluta ni procedencia histórica por sí solos**.
+Cambiar datos y hashes simultáneamente puede producir una verificación correcta.
+La procedencia requiere también historia, metadata y referencias experimentales.
+Aquí la equivalencia lógica con HEAD y la coincidencia con los hashes históricos
+aportados respaldan la restauración EOL concreta, no una autenticación universal.
+
+## Inventario actual de manifiestos verificados
+
+| MANIFEST | BASE | ENTRIES | OK | FAILED |
 |---|---|---:|---:|---:|
-| `docs/entrega-3/SHA256SUMS.txt` | `docs/entrega-3` | 21 | 21 | 0 |
-| `experimentos/evidencia-17/20260916/SHA256SUMS.txt` | `experimentos/evidencia-17/20260916` | 50 | 50 | 0 |
-| `experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt` | `experimentos/evidencia-e2/smoke-refresh-25m` | 7 | 7 | 0 |
-| `experimentos/metrics/results/SHA256SUMS` | `experimentos/metrics/results` | 2 | 2 | 0 |
-| `experimentos/resultados/MANIFEST-SHA256.txt` | `experimentos/resultados` | 2 | 2 | 0 |
-| `experimentos/resultados/SHA256SUMS` | `.` | 468 | 468 | 0 |
-| `experimentos/resultados/arbiter/campaign/SHA256SUMS` | `experimentos/resultados/arbiter/campaign` | 315 | 315 | 0 |
-| `experimentos/resultados/evidencia-e3-canonica/MANIFEST-SHA256.txt` | `experimentos/resultados/evidencia-e3-canonica` | 50 | 50 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-02/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-02` | 35 | 35 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-03/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-03` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01` | 35 | 35 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-02/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-02` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-03/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-03` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-02/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-02` | 35 | 35 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-03/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-03` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04` | 35 | 35 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-05/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-05` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06-attempt-02/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06-attempt-02` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06` | 35 | 35 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-07/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-07` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-08/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-08` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-09/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-09` | 36 | 36 | 0 |
-| `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-10/SHA256SUMS` | `experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-10` | 36 | 36 | 0 |
-| `release/apk/SHA256SUMS.txt` | `release/apk` | 1 | 1 | 0 |
-| `release/screenshots/SHA256SUMS.txt` | `release/screenshots` | 8 | 8 | 0 |
+| docs/entrega-3/SHA256SUMS.txt | docs/entrega-3 | 21 | 21 | 0 |
+| experimentos/evidencia-17/20260916/SHA256SUMS.txt | experimentos/evidencia-17/20260916 | 50 | 50 | 0 |
+| experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt | experimentos/evidencia-e2/smoke-refresh-25m | 7 | 7 | 0 |
+| experimentos/metrics/results/SHA256SUMS | experimentos/metrics/results | 2 | 2 | 0 |
+| experimentos/resultados/MANIFEST-SHA256.txt | experimentos/resultados | 2 | 2 | 0 |
+| experimentos/resultados/SHA256SUMS | . | 1339 | 1339 | 0 |
+| experimentos/resultados/arbiter/campaign/SHA256SUMS | experimentos/resultados/arbiter/campaign | 315 | 315 | 0 |
+| experimentos/resultados/evidencia-e3-canonica/MANIFEST-SHA256.txt | experimentos/resultados/evidencia-e3-canonica | 50 | 50 | 0 |
+| experimentos/resultados/iso25010-eficiencia-poblada.sha256 | . | 328 | 328 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/preflight/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/preflight | 2 | 2 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-01/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-01 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-02/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-02 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-03/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-03 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-04/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-04 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-05/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-05 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-06/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-06 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-07/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-07 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-08/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-08 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-09/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-09 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-10/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada/rep-10 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada_smoke/run-01/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada_smoke/run-01 | 25 | 25 | 0 |
+| experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada_smoke/run-02/SHA256SUMS | experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada_smoke/run-02 | 25 | 25 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-02/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-02 | 35 | 35 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-03/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01-attempt-03 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-01 | 35 | 35 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-02/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-02 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-03/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-03 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-02/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-02 | 35 | 35 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-03/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04-attempt-03 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-04 | 35 | 35 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-05/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-05 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06-attempt-02/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06-attempt-02 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-06 | 35 | 35 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-07/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-07 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-08/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-08 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-09/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-09 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-10/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh/rep-10 | 36 | 36 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight | 8 | 8 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight/dataset-metadata.json.sha256 | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight | 1 | 1 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight/dataset.csv.sha256 | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/preflight | 1 | 1 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-01/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-01 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-02/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-02 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-03/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-03 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-04/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-04 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-05/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-05 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-06/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-06 | 29 | 29 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-07/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-07 | 31 | 31 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-08/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-08 | 31 | 31 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-09/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-09 | 31 | 31 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-10/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada/rep-10 | 31 | 31 | 0 |
+| experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada_smoke/SHA256SUMS | experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada_smoke | 21 | 21 | 0 |
+| release/apk/SHA256SUMS.txt | release/apk | 1 | 1 | 0 |
+| release/evidence/observabilidad/SHA256SUMS.txt | release/evidence/observabilidad | 23 | 23 | 0 |
+| release/screenshots/SHA256SUMS.txt | release/screenshots | 10 | 10 | 0 |

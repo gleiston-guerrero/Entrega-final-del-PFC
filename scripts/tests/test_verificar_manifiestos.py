@@ -91,6 +91,12 @@ class ManifestTests(unittest.TestCase):
         self.assertIn("experimentos/evidencia-17/20260916/SHA256SUMS.txt", manifests)
         self.assertIn("experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt", manifests)
         self.assertIn("experimentos/resultados/iso25010-eficiencia-poblada.sha256", manifests)
+        preflight = (
+            "experimentos/resultados/raw/"
+            "fiabilidad_nominal_50u_1h_refresh_poblada/preflight/"
+        )
+        self.assertIn(preflight + "dataset.csv.sha256", manifests)
+        self.assertIn(preflight + "dataset-metadata.json.sha256", manifests)
 
     def test_root_based_historical_manifest(self):
         manifest = "experimentos/resultados/SHA256SUMS"
