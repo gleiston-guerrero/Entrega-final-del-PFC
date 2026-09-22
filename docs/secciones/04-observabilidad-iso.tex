@@ -302,6 +302,27 @@ la desviación se declara como amenaza a la comparabilidad.
 \subsection{Eficiencia nominal: 50 usuarios durante cinco minutos}
 \label{subsec:eficiencia-nominal}
 
+\subsubsection{Smokes previos de las campañas pobladas}
+
+Antes de las campañas oficiales pobladas se conservaron dos verificaciones
+smoke, independientes del análisis estadístico. La campaña
+\path{experimentos/resultados/raw/eficiencia_nominal_50u_5m_poblada_smoke/}
+incluye dos ejecuciones de 60 y 61 s, respectivamente, ambas con código de
+salida de Locust 0, sin fallos registrados y con sus manifiestos
+\texttt{SHA256SUMS} por ejecución; sus estadísticas registran 1\,389 y 1\,474
+solicitudes totales, incluidos 50 login en cada ejecución. La campaña
+\path{experimentos/resultados/raw/fiabilidad_nominal_50u_1h_refresh_poblada_smoke/}
+fue un smoke de pre-campaña de 930,277 s con 50 usuarios y
+\texttt{spawn-rate} 10 usuarios/s: registró 50 login, 50 refresh y 23\,076 GET
+de negocio, con código de salida 0, 0 HTTP 401 y 0 HTTP 5xx. Su evidencia
+incluye el manifiesto \texttt{SHA256SUMS}, y el resumen verifica 752 GET de
+negocio posteriores a 900 s, incluidos 532 listados y 220 consultas por id.
+Ambos smokes comprueban que el entorno y el harness estaban operativos antes
+de las campañas mayores; el segundo comprueba además la continuidad de sesión
+y de tráfico después del TTL. No sustituyen las diez repeticiones oficiales:
+la evidencia de la primera campaña queda separada de su análisis poblado y la
+segunda declara explícitamente \texttt{official: false}.
+
 \subsubsection{Cierre post-evaluación poblado}
 
 La respuesta oficial a PI1 de la
@@ -1018,7 +1039,7 @@ cubrir; aunque ARBITER S0--S4 fue ejecutado, Esc-1 conservó solo tres muestras
 analíticas válidas y el dataset experimental no representa toda la demanda de
 un campus real.
 
-\subsubsection{Validez de constructo}
+\subsubsection{Comparabilidad entre puntos de medición}
 
 \textbf{Amenaza:} Locust, Prometheus interno y la métrica móvil miden latencia
 en puntos diferentes. \textbf{Efecto:} tratarlas como equivalentes mezclaría
