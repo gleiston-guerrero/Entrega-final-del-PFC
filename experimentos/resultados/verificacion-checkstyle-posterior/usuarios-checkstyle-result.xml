@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/config/SecurityConfig.java">
+<error line="49" severity="warning" message="Line is longer than 120 characters (found 150)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="51" severity="warning" message="Line is longer than 120 characters (found 127)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="54" severity="warning" message="Line is longer than 120 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="55" severity="warning" message="Line is longer than 120 characters (found 134)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="57" severity="warning" message="Line is longer than 120 characters (found 122)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="65" severity="warning" message="Line is longer than 120 characters (found 123)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="66" severity="warning" message="Line is longer than 120 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/audit/Slf4jAuditLogger.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/audit/AuditLogger.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/client/AcademicoPeriodoClient.java">
+<error line="22" severity="warning" message="Line is longer than 120 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/client/AuthAdminClient.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/observer/LoggingPerfilEventListener.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/observability/HttpMetricsFilter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/observability/HttpRequestsMetricsRegistry.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/AdministradorRepositoryAdapter.java">
+<error line="27" severity="warning" message="Line is longer than 120 characters (found 122)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="41" severity="warning" message="Line is longer than 120 characters (found 182)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="44" severity="warning" message="Line is longer than 120 characters (found 134)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="46" severity="warning" message="Line is longer than 120 characters (found 146)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/specification/PerfilSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/EstudianteRepositoryAdapter.java">
+<error line="41" severity="warning" message="Line is longer than 120 characters (found 179)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="44" severity="warning" message="Line is longer than 120 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/converter/CampoCifradoConverter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/mapper/PerfilPersistenceMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/mapper/PageMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/mapper/PerfilRelacionadoPersistenceMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/generator/AssignedOrGeneratedUuidGenerator.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/generator/AssignedOrGeneratedUuid.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/ContextoAcademicoEstudianteRepository.java">
+<error line="5" column="17" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - java.util.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="9" severity="warning" message="Line is longer than 120 characters (found 123)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="11" severity="warning" message="Line is longer than 120 characters (found 140)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/AdministradorRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/AdscripcionInstitucionalRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/DocenteRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/PerfilRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/jpa/EstudianteRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/AdscripcionInstitucionalRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/DocenteRepositoryAdapter.java">
+<error line="41" severity="warning" message="Line is longer than 120 characters (found 176)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="44" severity="warning" message="Line is longer than 120 characters (found 128)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="46" severity="warning" message="Line is longer than 120 characters (found 122)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/Administrador.java">
+<error line="4" column="27" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/AdscripcionInstitucionalEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/ContextoAcademicoEstudianteEntity.java">
+<error line="4" column="27" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="19" column="32" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/Estudiante.java">
+<error line="4" column="27" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/Docente.java">
+<error line="4" column="27" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/entity/Perfil.java">
+<error line="3" column="27" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/persistence/PerfilRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/security/HmacIdentificacionService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/security/CifradoAesGcmService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/infrastructure/bootstrap/InitialProfilesBootstrap.java">
+<error line="4" column="62" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - ec.edu.scli.usuarios.infrastructure.persistence.entity.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="5" column="59" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - ec.edu.scli.usuarios.infrastructure.persistence.jpa.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="36" severity="warning" message="Line is longer than 120 characters (found 122)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="43" severity="warning" message="Line is longer than 120 characters (found 139)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="53" severity="warning" message="Line is longer than 120 characters (found 132)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="55" column="9" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="77" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="101" column="45" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="103" severity="warning" message="Line is longer than 120 characters (found 122)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="109" column="63" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="118" severity="warning" message="Line is longer than 120 characters (found 133)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="119" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="121" severity="warning" message="Line is longer than 120 characters (found 128)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="139" column="13" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="146" severity="warning" message="Line is longer than 120 characters (found 128)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="153" column="21" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="155" severity="warning" message="Line is longer than 120 characters (found 137)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="165" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="190" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="191" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="192" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="197" column="13" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="198" column="13" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="206" column="21" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="207" column="21" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="213" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="234" severity="warning" message="Line is longer than 120 characters (found 139)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="234" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="235" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="246" severity="warning" message="Line is longer than 120 characters (found 133)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="247" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="249" severity="warning" message="Line is longer than 120 characters (found 128)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="254" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="255" severity="warning" message="Line is longer than 120 characters (found 128)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="257" severity="warning" message="Line is longer than 120 characters (found 143)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="258" severity="warning" message="Line is longer than 120 characters (found 147)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="259" severity="warning" message="Line is longer than 120 characters (found 296)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/UsuariosServiceApplication.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/ContextoEstudianteResumenResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/EstudianteInternoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/ContextoAcademicoEstudianteResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/EstudianteResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/ContextoAcademicoEstudianteRequest.java">
+<error line="2" column="38" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.validation.constraints.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/estudiante/EstudianteRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/docente/DocenteResponse.java">
+<error line="32" severity="warning" message="Line is longer than 120 characters (found 144)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/docente/DocenteRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/docente/DocenteInternoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/docente/DocenteResumenResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilMeUpdateRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/ContextoInstitucionalResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilCreateRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilEstadoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilExistsResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilUpdateRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/perfil/PerfilAuthResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/administrador/AdministradorResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/administrador/AdministradorRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/AuthUsuarioCreateRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/AuthUsuarioResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/UsuarioAuthResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/AsociacionRolResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/UsuarioInstitucionalUpdateRequest.java">
+<error line="22" severity="warning" message="Line is longer than 120 characters (found 241)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/UsuarioInstitucionalCreateRequest.java">
+<error line="21" severity="warning" message="Line is longer than 120 characters (found 239)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/AsociacionRolRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/dto/usuarios/AuthUsuarioUpdateRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/AsociacionRolController.java">
+<error line="9" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/DocenteController.java">
+<error line="17" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/InternalAdministradorController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/PerfilController.java">
+<error line="18" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="48" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/UsuarioInstitucionalAdminController.java">
+<error line="9" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/AdministradorController.java">
+<error line="12" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/InternalDocenteController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/EstudianteController.java">
+<error line="12" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/ContextoAcademicoEstudianteController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/DocentePlanificacionController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/InternalEstudianteController.java">
+<error line="9" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="28" severity="warning" message="Line is longer than 120 characters (found 196)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="33" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="40" severity="warning" message="Line is longer than 120 characters (found 126)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="42" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="44" severity="warning" message="Line is longer than 120 characters (found 176)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="47" severity="warning" message="Line is longer than 120 characters (found 136)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="49" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="50" severity="warning" message="Line is longer than 120 characters (found 136)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="51" severity="warning" message="Line is longer than 120 characters (found 123)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/controller/InternalPerfilController.java">
+<error line="23" column="47" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="58" severity="warning" message="Line is longer than 120 characters (found 249)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="59" severity="warning" message="Line is longer than 120 characters (found 140)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="60" severity="warning" message="Line is longer than 120 characters (found 257)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="61" severity="warning" message="Line is longer than 120 characters (found 135)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="66" severity="warning" message="Line is longer than 120 characters (found 203)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="71" severity="warning" message="Line is longer than 120 characters (found 179)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="95" severity="warning" message="Line is longer than 120 characters (found 242)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="96" severity="warning" message="Line is longer than 120 characters (found 144)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="97" severity="warning" message="Line is longer than 120 characters (found 139)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="102" severity="warning" message="Line is longer than 120 characters (found 193)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="107" severity="warning" message="Line is longer than 120 characters (found 179)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="125" severity="warning" message="Line is longer than 120 characters (found 132)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/exception/GlobalExceptionHandler.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/presentation/exception/ApiError.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/usecase/PerfilService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/usecase/AdministradorService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/usecase/EstudianteService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/usecase/DocenteService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/usecase/ContextoInstitucionalService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/AsociacionRolService.java">
+<error line="36" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="45" column="5" severity="warning" message="Cyclomatic Complexity is 13 (max allowed is 10)." source="com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck"/>
+<error line="66" severity="warning" message="Line is longer than 120 characters (found 134)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="88" severity="warning" message="Line is longer than 120 characters (found 163)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="89" severity="warning" message="Line is longer than 120 characters (found 166)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/UsuarioInstitucionalAdminService.java">
+<error line="6" column="54" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - ec.edu.scli.usuarios.presentation.dto.usuarios.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="21" severity="warning" message="Line is longer than 120 characters (found 127)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="34" severity="warning" message="Line is longer than 120 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="45" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="46" column="14" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="58" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="59" severity="warning" message="Line is longer than 120 characters (found 166)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="59" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="60" severity="warning" message="Line is longer than 120 characters (found 160)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/ContextoInstitucionalServiceImpl.java">
+<error line="52" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="53" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="56" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="69" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/AdministradorServiceImpl.java">
+<error line="123" severity="warning" message="Line is longer than 120 characters (found 143)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/PerfilServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/EstudianteServiceImpl.java">
+<error line="99" severity="warning" message="Line is longer than 120 characters (found 140)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/PageableMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/DocenteServiceImpl.java">
+<error line="96" severity="warning" message="Line is longer than 120 characters (found 137)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/CompensacionAuthTransaccional.java">
+<error line="39" column="21" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/application/service/ContextoAcademicoEstudianteService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/observability/OpenTelemetryLogBridge.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/security/JwtTokenProvider.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/security/package-info.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/security/JwtPrincipal.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/security/JwtAuthenticationFilter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/Administrador.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/TipoAmbitoInstitucional.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/Estudiante.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/AdscripcionInstitucional.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/Docente.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/Perfil.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/ContextoInstitucional.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/model/TipoPerfil.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/event/PerfilEventListener.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/event/PerfilEvent.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/exception/ConflictException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/exception/BusinessRuleException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/exception/ResourceNotFoundException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/port/AdscripcionInstitucionalRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/port/EstudianteRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/port/DocenteRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/port/PerfilRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/port/AdministradorRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/pagination/PageCriteria.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/pagination/SortOrder.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/usuarios-service/src/main/java/ec/edu/scli/usuarios/domain/pagination/PageResult.java">
+</file>
+</checkstyle>
