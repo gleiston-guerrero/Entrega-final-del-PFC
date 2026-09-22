@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/config/SecurityConfig.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/audit/Slf4jAuditLogger.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/audit/AuditLogger.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/client/ContextoInstitucionalResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/client/UsuariosContextoClient.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/PrometheusQueryClient.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/dto/PrometheusRangeData.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/dto/PrometheusRangeResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/dto/PrometheusSerieCruda.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/HttpMetricsFilter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/LaboratorioEstadoMetricsRegistry.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/observability/HttpRequestsMetricsRegistry.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/FacultadJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/TipoEquipoJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/PisoJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/CarreraJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/PeriodoLectivoJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/BloqueJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/LaboratorioJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/CampusJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/EquipoJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/MateriaJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/repository/HorarioAcademicoJpaRepository.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/CarreraJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/PeriodoLectivoJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/TipoEquipoJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/FacultadJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/LaboratorioJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/EquipoJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/CampusJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/BloqueJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/MateriaJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/specification/PisoJpaSpecification.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/TipoEquipoEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/HorarioAcademicoEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/FacultadEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/PisoEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/PeriodoLectivoEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/CarreraEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/LaboratorioEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/EquipoEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/CampusEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/BloqueEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/mapper/MateriaEntityMapper.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/generator/AssignedOrGeneratedUuidGenerator.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/generator/AssignedOrGeneratedUuid.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/HorarioAcademicoRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/LaboratorioRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/BloqueRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/EquipoRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/PeriodoLectivoRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/PisoRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/TipoEquipoRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/CampusRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/MateriaRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/FacultadRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/adapter/CarreraRepositoryAdapter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/HorarioAcademicoEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/MateriaEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/CarreraEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/EquipoEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/LaboratorioEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/FacultadEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/PisoEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/TipoEquipoEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/PeriodoLectivoEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/CampusEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/persistence/entity/BloqueEntity.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/infrastructure/bootstrap/InitialAcademicDataBootstrap.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/enums/DiaSemana.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/enums/EstadoPeriodo.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/enums/EstadoEquipo.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/enums/EstadoLaboratorio.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/AcademicoLaboratoriosServiceApplication.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/dto/internal/CarreraEstadoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/dto/internal/LaboratorioDisponibilidadBaseResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/dto/internal/MateriaContextoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/dto/internal/ExisteResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/piso/PisoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/piso/PisoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/campus/CampusRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/campus/CampusResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/LaboratorioEstadoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/SerieEstadoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/LaboratorioDetalleCompletoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/PuntoSerieResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/LaboratorioResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/laboratorio/LaboratorioRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/materia/MateriaResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/materia/MateriaRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/bloque/BloqueResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/bloque/BloqueRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/carrera/CarreraRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/carrera/CarreraResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/tipoequipo/TipoEquipoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/tipoequipo/TipoEquipoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/periodolectivo/PeriodoLectivoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/periodolectivo/PeriodoLectivoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/horario/HorarioAcademicoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/horario/HorarioAcademicoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/facultad/FacultadRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/facultad/FacultadEstadoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/facultad/FacultadResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/equipo/EquipoEstadoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/equipo/EquipoRequest.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/dto/equipo/EquipoResponse.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/PeriodoLectivoController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/MateriaController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/BloqueController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/PisoController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/CarreraController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/TipoEquipoController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/EquipoController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/HorarioAcademicoController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/LaboratorioController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/InternalController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/CampusController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/controller/FacultadController.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/exception/GlobalExceptionHandler.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/presentation/exception/ApiError.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/facade/impl/LaboratorioDetalleFacadeImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/facade/LaboratorioDetalleFacade.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/EquipoService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/PeriodoLectivoService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/FacultadService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/LaboratorioService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/BloqueService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/MateriaService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/CarreraService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/TipoEquipoService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/CampusService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/EquipoServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/HorarioAcademicoServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/LaboratorioServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/CampusServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/BloqueServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/PisoServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/CarreraServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/FacultadServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/TipoEquipoServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/PeriodoLectivoServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/impl/MateriaServiceImpl.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/PisoService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/application/service/HorarioAcademicoService.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/observability/OpenTelemetryLogBridge.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/security/PoliticaAmbitoAcademico.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/security/JwtTokenProvider.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/security/JwtPrincipal.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/security/JwtAuthenticationFilter.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Campus.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Piso.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Carrera.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Bloque.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Equipo.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Facultad.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/TipoEquipo.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Materia.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/PeriodoLectivo.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/HorarioAcademico.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/model/Laboratorio.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/exception/ConflictException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/exception/BusinessRuleException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/exception/ResourceNotFoundException.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/LaboratorioRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/CampusRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/CarreraRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/HorarioAcademicoRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/PisoRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/PeriodoLectivoRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/FacultadRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/EquipoRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/BloqueRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/TipoEquipoRepositoryPort.java">
+</file>
+<file name="/home/ubuntu/PFC-E32/services/academico-laboratorios-service/src/main/java/ec/edu/scli/academico/domain/port/MateriaRepositoryPort.java">
+</file>
+</checkstyle>
