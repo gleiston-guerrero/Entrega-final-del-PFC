@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -109,12 +109,24 @@ describe('UsuariosPage administrativa', () => {
     vi.mocked(usuarios.crearUsuarioInstitucionalCompleto).mockResolvedValue(perfil)
     renderPage()
     await screen.findByText('No existen usuarios para los filtros seleccionados.')
-    await user.type(screen.getByLabelText('Identificación'), '0102030405')
-    await user.type(screen.getByLabelText('Nombres'), 'Ana')
-    await user.type(screen.getByLabelText('Apellidos'), 'Gómez')
-    await user.type(screen.getByLabelText('Correo institucional'), 'ana@uteq.edu.ec')
-    await user.type(screen.getByLabelText('Nombre de usuario'), 'ana.gomez')
-    await user.type(screen.getByLabelText('Contraseña inicial'), 'ClaveSegura1!')
+    fireEvent.change(screen.getByLabelText('Identificación'), {
+      target: { value: '0102030405' },
+    })
+    fireEvent.change(screen.getByLabelText('Nombres'), {
+      target: { value: 'Ana' },
+    })
+    fireEvent.change(screen.getByLabelText('Apellidos'), {
+      target: { value: 'Gómez' },
+    })
+    fireEvent.change(screen.getByLabelText('Correo institucional'), {
+      target: { value: 'ana@uteq.edu.ec' },
+    })
+    fireEvent.change(screen.getByLabelText('Nombre de usuario'), {
+      target: { value: 'ana.gomez' },
+    })
+    fireEvent.change(screen.getByLabelText('Contraseña inicial'), {
+      target: { value: 'ClaveSegura1!' },
+    })
     const roles = screen.getAllByLabelText('Rol')
     await user.selectOptions(roles[roles.length - 1], 'ADMINISTRADOR_PISO')
     await user.selectOptions(screen.getByLabelText('Piso'), 'piso-2')
