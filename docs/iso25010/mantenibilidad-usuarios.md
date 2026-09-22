@@ -78,6 +78,20 @@ puntuación de calidad. El prerregistro contempló Checkstyle, pero el paquete E
 canónico no preserva una salida cuantitativa con exit code para reconstruirlo;
 el CI actual, si se cita, es evidencia posterior separada.
 
+Como reconciliación posterior del punto #32, `metricas.csv` se conserva como
+captura derivada histórica generada originalmente desde los contadores de
+`jacoco.xml`. Los `jacoco.xml` backend originales no se conservaron, por lo
+que no se reescribe retroactivamente ese artefacto ni se afirma que su valor
+fuera incorrecto. La fuente cuantitativa actualmente reproducible son los
+`jacoco.csv` manifestados: Usuarios `84,0523509452254 %` en
+`metricas.csv` frente a `1735/(1735+329) = 84,06007751937985 %`, una
+desalineación de `0,00772657415445` puntos porcentuales; Reservas
+`84,35857805255023 %` frente a `2730/(2730+506) = 84,36341161928307 %`,
+una desalineación de `0,00483356673284` puntos porcentuales. Esta diferencia
+entre artefactos derivados históricos no cambia ninguna decisión de umbral:
+Usuarios sigue superando 70 % y Reservas sigue superando 80 %. La nota es una
+reconciliación posterior y no evidencia contemporánea adicional de E3.
+
 ## MEDICIÓN WEB VIGENTE
 
 | Métrica | Resultado | Umbral | Decisión |
