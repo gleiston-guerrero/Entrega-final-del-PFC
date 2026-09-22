@@ -15,10 +15,10 @@ Validaciones runtime:
 - CockroachDB: 3 nodos vivos, 0 rangos no disponibles
 - Métricas CRDB custom: presentes
 - Recursos cAdvisor CPU/RAM: poblados
-- Mobile E2E: 17 observaciones; p95=0.1096111439 s
+- Mobile E2E: la captura muestra la serie poblada; las exportaciones versionadas posteriores documentan 408 observaciones y p95=0.151554183275 s (12-panel6-mobile-p95.json y 11-panel6-mobile-count.json), no valores atribuidos exactamente al momento de la captura
 - Tempo: trazas runtime presentes
 - Loki: logs runtime presentes
-- Correlación Loki/Tempo: OK
+- Correlación Loki/Tempo: la búsqueda 22-loki-trace-correlated.json no devolvió resultados; la correlación positiva se sostiene en 23-loki-business-http.json y 24-tempo-correlated-trace.json
 - Trace correlacionado: 3302a606e9fb236618a03f4b06b5a6a7
 - Operación correlacionada: GET /api/v1/laboratorios -> 200
 - Tempo batches correlacionados: 12
