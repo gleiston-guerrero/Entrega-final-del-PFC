@@ -2204,10 +2204,11 @@ release/evidence/observabilidad/24-tempo-correlated-trace.json,B_raw,si,si,relea
 release/evidence/observabilidad/SHA256SUMS.txt,D_manifest,no,no,
 release/screenshots/.gitkeep,A_codigo_documentacion,no,no,
 release/screenshots/SHA256SUMS.txt,D_manifest,no,no,
-release/screenshots/mobile-incidentes-release.png,B_raw,si,si,release/screenshots/SHA256SUMS.txt
-release/screenshots/mobile-inicio-release.png,B_raw,si,si,release/screenshots/SHA256SUMS.txt
+release/screenshots/mobile-incidentes-release.jpg,B_raw,si,si,release/screenshots/SHA256SUMS.txt
+release/screenshots/mobile-inicio-release.jpg,B_raw,si,si,release/screenshots/SHA256SUMS.txt
 release/screenshots/mobile-qr-release.png,B_raw,si,si,release/screenshots/SHA256SUMS.txt
-release/screenshots/mobile-reservas-release.png,B_raw,si,si,release/screenshots/SHA256SUMS.txt
+release/screenshots/mobile-reservas-release.jpg,B_raw,si,si,release/screenshots/SHA256SUMS.txt
+release/screenshots/mobile-release.metadata.txt,E_metadata,si,si,release/screenshots/SHA256SUMS.txt
 release/screenshots/panel-monitoreo.metadata.txt,E_metadata,si,si,release/screenshots/SHA256SUMS.txt
 release/screenshots/panel-monitoreo.png,B_raw,si,si,experimentos/resultados/SHA256SUMS;release/screenshots/SHA256SUMS.txt
 release/screenshots/web-dashboard-release.png,B_raw,si,si,release/screenshots/SHA256SUMS.txt
