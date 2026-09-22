@@ -18,6 +18,8 @@ NAMES = frozenset({
     "SHA256SUMS.txt",
     "MANIFEST-SHA256.txt",
     "iso25010-eficiencia-poblada.sha256",
+    "dataset.csv.sha256",
+    "dataset-metadata.json.sha256",
 })
 # Única excepción histórica: sus rutas parten de la raíz, no de su carpeta.
 ROOT_BASED = frozenset({

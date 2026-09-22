@@ -9,3 +9,5 @@ experimentos/resultados/raw/** binary
 experimentos/evidencia-e2/smoke-refresh-25m/** binary
 experimentos/evidencia-e2/smoke-refresh-25m/SHA256SUMS.txt text eol=lf diff merge
 experimentos/evidencia-17/** binary
+experimentos/resultados/iso25010-correctiva-poblada.csv -text -eol whitespace=cr-at-eol
+experimentos/resultados/analisis-e3.json -text -eol whitespace=cr-at-eol
