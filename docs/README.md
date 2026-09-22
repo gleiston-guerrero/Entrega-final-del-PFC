@@ -4,9 +4,9 @@
 
 La única fuente oficial y acumulativa del informe final es [`docs/main.tex`](main.tex).
 El workflow [`docs.yml`](../.github/workflows/docs.yml) la compila desde `docs/`
-en los pushes a `feature/entrega-4` o mediante ejecución manual
-(`workflow_dispatch`), y publica `main.pdf` como artifact `informe-final-scli`.
-Un push a `main` no activa ese workflow ni genera automáticamente ese artifact.
+en los pushes a `main` o `feature/entrega-4`, en los pull requests dirigidos a
+`main` o mediante ejecución manual (`workflow_dispatch`), y publica `main.pdf`
+como artifact `informe-final-scli`.
 En [`ci-cd.yml`](../.github/workflows/ci-cd.yml), el job
 `build-release-documentation` compila el manuscrito solo para tags `v*` y publica
 `SCLI-PFC-<tag>.pdf` como artifact `release-manuscript-<sha>`; el job

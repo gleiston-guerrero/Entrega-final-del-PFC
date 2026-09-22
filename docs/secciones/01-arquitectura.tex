@@ -39,7 +39,7 @@ convertir configuraciones o pruebas no ejecutadas en resultados experimentales.
 \label{subsec:limites-servicio}
 
 El sistema adopta una descomposición por capacidades, formalizada en el
-ADR-002\footnote{Evidencia interna: \path{../adr/ADR-002-microservicios.md}.}.
+ADR-002\footnote{Evidencia interna: \path{adr/ADR-002-microservicios.md}.}.
 \texttt{auth-service} gestiona autenticación, emisión de tokens y sesiones de
 renovación; \texttt{usuarios-service} administra perfiles institucionales;
 \texttt{academico-laboratorios-service} mantiene los catálogos académicos y el
@@ -63,8 +63,8 @@ infraestructura de soporte. El flujo observable es: cliente, Gateway, servicio
 propietario del caso de uso y persistencia. En paralelo, los servicios exportan
 telemetría hacia la infraestructura de observabilidad. Los diagramas C4 de
 contexto y contenedores existentes\footnote{Evidencia interna:
-\path{../diagrams/c4-nivel1.png} y
-\path{../diagrams/c4-nivel2.png}.} documentan estos límites; se referencian sin
+\path{diagrams/c4-nivel1.png} y
+\path{diagrams/c4-nivel2.png}.} documentan estos límites; se referencian sin
 duplicarlos dentro del nuevo informe.
 
 La descomposición no elimina los compromisos propios de un sistema distribuido.
@@ -80,13 +80,13 @@ arquitectura real y no defectos ocultos por la representación C4.
 
 Los ADR preservan el contexto y las consecuencias de decisiones que el código
 por sí solo no explica. El ADR-001\footnote{Evidencia interna:
-\path{../adr/ADR-001-arquitectura.md}.} registra la reorganización por capas de
+\path{adr/ADR-001-arquitectura.md}.} registra la reorganización por capas de
 \texttt{academico-laboratorios-service}; el ADR-002 fija los límites de los
 microservicios y la propiedad de sus datos. El ADR-005\footnote{Evidencia
-interna: \path{../adr/ADR-005-patrones-gof.md}.} identifica los patrones que
+interna: \path{adr/ADR-005-patrones-gof.md}.} identifica los patrones que
 participan en rutas reales y también documenta deuda arquitectónica. Por último,
 el ADR-006\footnote{Evidencia interna:
-\path{../adr/ADR-006-eleccion-movil.md}.} justifica Kotlin y Jetpack Compose,
+\path{adr/ADR-006-eleccion-movil.md}.} justifica Kotlin y Jetpack Compose,
 MVVM, Room y las integraciones nativas como base del cliente móvil.
 
 Los ADR-003 y ADR-004 no se presentan como resultados de esta entrega: sus
