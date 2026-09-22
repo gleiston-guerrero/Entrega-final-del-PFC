@@ -17,67 +17,58 @@ public class GatewayRoutes {
         @Bean
         public RouterFunction<ServerResponse> authApiRoute(
                         @Value("${AUTH_SERVICE_URL:http://auth-service:8081}") String authServiceUrl) {
-                return route("auth_api")
-                            .route(request -> acepta(request) && esRutaAuth(request.path()), http())
-                                .before(uri(authServiceUrl))
-                                .build();
+                return rutaContratada("auth_api", authServiceUrl, path -> esRutaAuth(path), 0);
         }
 
     @Bean
     public RouterFunction<ServerResponse> authServiceRoute(
             @Value("${AUTH_SERVICE_URL:http://auth-service:8081}") String authServiceUrl) {
-        return route("auth_service")
-            .route(request -> acepta(request) && request.path().startsWith("/auth-service/"), http())
-                .before(uri(authServiceUrl))
-                .before(stripPrefix(1))
-                .build();
+        return rutaContratada("auth_service", authServiceUrl, path -> path.startsWith("/auth-service/"), 1);
     }
 
     @Bean
     public RouterFunction<ServerResponse> usuariosServiceRoute(
             @Value("${USUARIOS_SERVICE_URL:http://usuarios-service:8082}") String usuariosServiceUrl) {
-        return route("usuarios_service")
-            .route(request -> acepta(request) && esRutaUsuariosLegacy(request.path()), http())
-                .before(uri(usuariosServiceUrl))
-                .before(stripPrefix(1))
-                .build();
+        return rutaContratada("usuarios_service", usuariosServiceUrl, path -> esRutaUsuariosLegacy(path), 1);
     }
 
     @Bean
     public RouterFunction<ServerResponse> usuariosApiRoute(
             @Value("${USUARIOS_SERVICE_URL:http://usuarios-service:8082}") String usuariosServiceUrl) {
-        return route("usuarios_api")
-            .route(request -> acepta(request) && esRutaUsuarios(request.path()), http())
-                .before(uri(usuariosServiceUrl))
-                .build();
+        return rutaContratada("usuarios_api", usuariosServiceUrl, path -> esRutaUsuarios(path), 0);
     }
 
     @Bean
     public RouterFunction<ServerResponse> reservasSolicitudesServiceRoute(
             @Value("${RESERVAS_SOLICITUDES_SERVICE_URL:http://reservas-solicitudes-service:8084}")
             String reservasSolicitudesServiceUrl) {
-        return route("reservas_solicitudes_service")
-            .route(request -> acepta(request) && esRutaReservas(request.path()), http())
-                .before(uri(reservasSolicitudesServiceUrl))
-                .build();
+        return rutaContratada("reservas_solicitudes_service", reservasSolicitudesServiceUrl, path -> esRutaReservas(path), 0);
     }
 
         @Bean
         public RouterFunction<ServerResponse> academicoServiceRoute(
                         @Value("${ACADEMICO_SERVICE_URL:http://academico-laboratorios-service:8083}")
                         String academicoServiceUrl) {
-                return route("academico_service")
-                    .route(request -> acepta(request) && esRutaAcademica(request.path()), http())
-                                .before(uri(academicoServiceUrl))
-                                .build();
+                return rutaContratada("academico_service", academicoServiceUrl, path -> esRutaAcademica(path), 0);
         }
 
     private boolean esRutaReservas(String path) {
         return esRutaReservasCanonica(path);
     }
 
-    private static boolean acepta(org.springframework.web.servlet.function.ServerRequest request) {
-        return GatewayRouteCatalog.accepts(request.method().name(), request.path());
+    /** Constructor unico; scope solo recibe el path y no puede alterar el resultado del catalogo.
+     * Acceso de paquete para probar el router real sin llamadas de red.
+     */
+    static RouterFunction<ServerResponse> rutaContratada(
+            String nombre, String url, java.util.function.Predicate<String> scope, int segmentos) {
+        var builder = route(nombre)
+                .route(request -> GatewayRouteCatalog.accepts(request.method().name(), request.path())
+                        && scope.test(request.path()), http())
+                .before(uri(url));
+        if (segmentos > 0) {
+            builder.before(stripPrefix(segmentos));
+        }
+        return builder.build();
     }
 
     static boolean esRutaAuth(String path) {

@@ -31,23 +31,21 @@ incluida \texttt{POST /api/v1/observabilidad/mobile/http-latency}, 8 alias de
 Auth y 34 alias de Usuarios. El archivo \texttt{gateway-route-catalog.json}
 actúa como lista blanca ejecutable: el Gateway solo acepta una petición si
 \texttt{GatewayRouteCatalog.accepts(método, ruta)} reconoce ese par
-método+ruta en el catálogo. Todas las rutas productivas actuales de
-\texttt{GatewayRoutes} pasan por el helper \texttt{acepta(...)} y este delega
-en \texttt{GatewayRouteCatalog.accepts(...)} antes de enrutar. La prueba de
-completitud envía cada operación esperada a los routers reales y comprueba el
-backend elegido y la reescritura de los alias. Además,
-\texttt{RouterFunctionCatalogGuardTest} inspecciona con ASM todas las clases
-compiladas de producción, sin enumerar clases de configuración ni URLs. Exige
-que cada método \texttt{@Bean} con retorno \texttt{RouterFunction} alcance una
-llamada a \texttt{GatewayRouteCatalog.accepts}, incluyendo lambdas y llamadas
-entre clases. Detecta nuevos beans productivos que omitan por completo el
-catálogo, independientemente de su ruta. Esta garantía arquitectónica comprueba
-que no existan \texttt{RouterFunction} productivos que evadan el catálogo; la
-revisión de los routers actuales confirma que esa consulta condiciona su
-enrutamiento. La completitud de la fachada se define, por tanto, como las 225
-operaciones método+ruta publicadas por el snapshot del Gateway, coincidentes
-con el conjunto del catálogo ejecutable, más la ausencia demostrada de rutas
-productivas que puedan enrutar fuera de esa lista blanca.
+método+ruta en el catálogo. Los seis beans de
+\texttt{GatewayRoutes} delegan la construcción completa en
+\texttt{rutaContratada}, que aplica obligatoriamente la conjunción del catálogo
+con el alcance del servicio. El alcance solo recibe el path y no puede alterar
+el resultado del catálogo. Se conservan los destinos y la reescritura de alias.
+\texttt{RouterFunctionCatalogGuardTest} inspecciona bytecode con ASM: exige
+la delegación en ese helper, rechaza construcciones o composiciones de routers
+Spring fuera de él, incluso mediante llamadas indirectas, y verifica que el
+helper alcanza \texttt{GatewayRouteCatalog.accepts}. No analiza operadores
+booleanos ni deduce su semántica por mera alcanzabilidad.
+\texttt{ContractedRouteTest} comprueba el router real: una ruta
+\path{/api/v1/sin-contrato/recurso} es rechazada aunque el alcance devuelva
+verdadero; una operación catalogada es aceptada con alcance compatible y
+rechazada con alcance falso. La prueba de completitud comprueba los destinos
+y las reescrituras para las operaciones documentadas.
 
 \subsection{Seguridad contractual}
 
@@ -148,11 +146,18 @@ sea un array con referencia al tipo de elemento \texttt{T}. El Gateway no tiene
 DTO propios equivalentes en esta verificación; su contrato se deriva de los
 servicios y su completitud se valida por rutas, alias y catálogo ejecutable.
 Esta validación no pretende demostrar reglas de negocio, ejemplos,
-descripciones ni toda posible restricción semántica de OpenAPI. Las cinco
-copias de \texttt{SchemaContractVerifier} (canónica y cuatro servicios) se
-mantienen idénticas, y el generador Python conserva pruebas unitarias propias
-para mappings de tipos, anotaciones complejas, records anidados y required
-contextual.
+descripciones ni toda posible restricción semántica de OpenAPI. La única fuente canónica de \texttt{SchemaContractVerifier} se encuentra en
+\path{tests/openapi-runtime/src/main/java/ec/edu/scli/contracts/SchemaContractVerifier.java}.
+Los cuatro servicios incorporan esa carpeta como fuente de pruebas con
+\texttt{build-helper-maven-plugin:add-test-source} en
+\texttt{generate-test-sources}, sin copias ni symlinks. También se eliminan las
+cuatro copias locales idénticas de \texttt{RuntimeContractVerifier} para evitar
+clases duplicadas al compilar la carpeta compartida.
+El job \texttt{validate-openapi-contracts} ejecuta las pruebas Python del
+generador además de la validación estructural y condiciona
+\texttt{publish-release} mediante \texttt{needs}, conservando sus dependencias
+anteriores. El trigger de push incluye tags \texttt{v*} y el job OpenAPI no
+tiene una condición que los excluya.
 
 La validación previa acreditó cuatro mutaciones negativas, todas revertidas:
 (1) un objeto paginado con propiedades falsas; (2) eliminar
@@ -168,3 +173,12 @@ a partir de esta corrección. La estructura general del contrato se valida con
 las comprobaciones OpenAPI y de consistencia del snapshot; la afirmación
 independiente adicional cubre los contratos HTTP y sus DTO publicados, sin
 extenderse a semántica funcional ni reglas de negocio.
+
+La validación local de este cierre, en Windows y Java 21, ejecutó 41 pruebas
+correctas del Gateway y una prueba \texttt{OpenApiSchemaContractTest} correcta
+por cada servicio, compilando la fuente compartida. Las cinco pruebas Python
+del generador pasaron y el validador estructural terminó sin errores.
+Dos mutaciones temporales de producción, una construcción alternativa con
+consulta al catálogo y otra sin helper, hicieron fallar el guard con los
+nombres \texttt{bypassDocenteTemporal} y \texttt{sinHelperTemporal}.
+Ambas se retiraron antes de la ejecución final satisfactoria.

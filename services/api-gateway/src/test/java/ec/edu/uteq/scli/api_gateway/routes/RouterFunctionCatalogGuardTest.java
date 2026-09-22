@@ -25,41 +25,60 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Garantia por construccion (arquitectura), no por lista de rutas: analiza el
- * bytecode YA COMPILADO de las clases de configuracion del Gateway y
- * comprueba que TODO metodo {@code @Bean} que devuelve {@code RouterFunction}
- * invoca, directa o transitivamente (incluyendo lambdas y metodos privados
- * de las clases de produccion), {@code GatewayRouteCatalog.accepts(...)}.
- *
- * No depende de conocer de antemano ningun path: cualquier RouterFunction
- * futuro, con cualquier ruta nueva, que omita esa consulta hace fallar este
- * test porque su grafo de llamadas internas nunca alcanza el catalogo.
+ * Inspecciona bytecode de produccion: los beans delegan en el constructor contratado
+ * y no alcanzan construcciones/composiciones alternativas fuera de ese limite.
+ * La semantica del constructor se comprueba ademas con pruebas del router real.
  */
 class RouterFunctionCatalogGuardTest {
 
+    private static final String HELPER = "ec/edu/uteq/scli/api_gateway/routes/GatewayRoutes#rutaContratada(Ljava/lang/String;Ljava/lang/String;Ljava/util/function/Predicate;I)Lorg/springframework/web/servlet/function/RouterFunction;";
     private static final String CATALOG_OWNER = "ec/edu/uteq/scli/api_gateway/routes/GatewayRouteCatalog";
     private static final String CATALOG_METHOD = "accepts";
     private static final String BEAN_ANNOTATION_DESC = "Lorg/springframework/context/annotation/Bean;";
     private static final String ROUTER_FUNCTION_DESC_FRAGMENT = "Lorg/springframework/web/servlet/function/RouterFunction;";
 
     @Test
-    void todosLosBeansRouterFunctionConsultanElCatalogoDeFormaTransitiva() throws IOException, URISyntaxException {
-        Path clasesProduccion = Path.of(GatewayRoutes.class.getProtectionDomain()
-                .getCodeSource().getLocation().toURI());
-        MethodGraph grafo = MethodGraph.leer(clasesProduccion);
+    void todosLosBeansDeleganSinConstruccionesAlternativas() throws IOException, URISyntaxException {
+        MethodGraph grafo = MethodGraph.leer(Path.of(GatewayRoutes.class.getProtectionDomain()
+                .getCodeSource().getLocation().toURI()));
         assertThat(grafo.metodosBeanRouterFunction).as("beans RouterFunction de produccion").isNotEmpty();
-        List<String> incumplimientos = new ArrayList<>();
-        for (String beanMethod : grafo.metodosBeanRouterFunction) {
-            if (!grafo.invocaCatalogo(beanMethod)) {
-                incumplimientos.add(beanMethod);
-            }
-        }
-        assertThat(incumplimientos)
-                .as("beans RouterFunction que no consultan GatewayRouteCatalog.accepts(...) "
-                        + "ni directa ni transitivamente")
+        assertThat(grafo.incumplimientos()).as("beans RouterFunction que omiten rutaContratada o construyen rutas fuera del helper")
                 .isEmpty();
+        assertThat(grafo.invocaCatalogo(HELPER)).as("rutaContratada alcanza GatewayRouteCatalog.accepts").isTrue();
     }
 
+    @Test
+    void detectaBeanQueConsultaCatalogoPeroConstruyeRutaDirecta() throws IOException {
+        MethodGraph grafo = new MethodGraph();
+        try (InputStream entrada = BypassFixture.class.getResourceAsStream("RouterFunctionCatalogGuardTest$BypassFixture.class")) {
+            new ClassReader(entrada).accept(grafo.new Visitor(), 0);
+        }
+        assertThat(grafo.incumplimientos()).hasSize(2);
+        assertThat(grafo.incumplimientos()).anyMatch(method -> method.contains("#bypassDocente("))
+                .anyMatch(method -> method.contains("#sinHelper("));
+    }
+
+    static class BypassFixture {
+        @org.springframework.context.annotation.Bean
+        public org.springframework.web.servlet.function.RouterFunction<org.springframework.web.servlet.function.ServerResponse> sinHelper() {
+            return construccionIndirecta();
+        }
+
+        private org.springframework.web.servlet.function.RouterFunction<org.springframework.web.servlet.function.ServerResponse> construccionIndirecta() {
+            return org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route("sinHelper")
+                    .route(request -> true,
+                            org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http()).build();
+        }
+
+        @org.springframework.context.annotation.Bean
+        public org.springframework.web.servlet.function.RouterFunction<org.springframework.web.servlet.function.ServerResponse> bypassDocente() {
+            GatewayRoutes.rutaContratada("ignorada", "http://localhost", path -> true, 0);
+            return org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route("bypass")
+                    .route(request -> GatewayRouteCatalog.accepts(request.method().name(), request.path())
+                            || request.path().startsWith("/api/v1/sin-contrato/"),
+                            org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http()).build();
+        }
+    }
     /** Grafo de todas las clases de produccion; excluye target/test-classes. */
     private static final class MethodGraph {
         private final Set<String> metodosBeanRouterFunction = new HashSet<>();
@@ -77,6 +96,32 @@ class RouterFunctionCatalogGuardTest {
                 }
             }
             return grafo;
+        }
+
+        List<String> incumplimientos() {
+            List<String> fallos = new ArrayList<>();
+            for (String bean : metodosBeanRouterFunction) {
+                Deque<String> pendientes = new ArrayDeque<>();
+                Set<String> visitados = new HashSet<>();
+                boolean contratado = false;
+                boolean alternativa = false;
+                pendientes.add(bean);
+                while (!pendientes.isEmpty()) {
+                    String actual = pendientes.poll();
+                    if (!visitados.add(actual)) continue;
+                    if (HELPER.equals(actual)) {
+                        contratado = true;
+                        continue; // La construccion solo se permite dentro de este limite confiable.
+                    }
+                    if (actual.startsWith("org/springframework/")
+                            && (actual.contains("RouterFunction") || actual.contains("#route("))) {
+                        alternativa = true;
+                    }
+                    pendientes.addAll(llamadasInternas.getOrDefault(actual, Set.of()));
+                }
+                if (!contratado || alternativa) fallos.add(bean);
+            }
+            return fallos;
         }
 
         boolean invocaCatalogo(String metodo) {

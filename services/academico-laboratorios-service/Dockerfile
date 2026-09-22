@@ -13,7 +13,7 @@ RUN mvn dependency:go-offline -B
 
 COPY src/ src/
 
-RUN mvn clean package -DskipTests -B
+RUN mvn clean package -Dmaven.test.skip=true -B
 
 # =====================================================================
 # ETAPA 2: runtime (imagen final, liviana, solo con el JRE y el .jar)
