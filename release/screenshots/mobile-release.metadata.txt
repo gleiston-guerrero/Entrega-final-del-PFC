@@ -1,0 +1,33 @@
+Capturas móviles de release
+================================
+
+Este archivo documenta únicamente datos comprobables en el repositorio. Los
+hashes corresponden a los bytes actuales de cada archivo.
+
+| Archivo | Formato real | Dimensiones | SHA-256 | Qué demuestra |
+| --- | --- | --- | --- | --- |
+| mobile-inicio-release.jpg | JPEG | 738 x 1600 | a515c5eed133c414c3da7f472d916cc609628424bba7e6c8959490c2324c8cb1 | Estado visual de inicio/dashboard del cliente móvil. |
+| mobile-reservas-release.jpg | JPEG | 738 x 1600 | 60df3f287694e7426b812f175e4d78053a584a87c08a4da1e16ec0809e3d9477 | Estado visual de reservas del cliente móvil. |
+| mobile-incidentes-release.jpg | JPEG | 738 x 1600 | 1954fc63f4d59c9bbe6997a4a94aaa962656619b369f22267e9d73df7dc6829a | Estado visual de incidentes del cliente móvil. |
+| mobile-qr-release.png | PNG | 738 x 1600 | 7132d8c5695f42bf46daf6b8ad97f929df3564ad08e600fbbbd3aaf2f8001d2f | Resultado visual posterior a un escaneo QR. |
+
+## Procedencia respaldada
+
+- El manuscrito asocia el conjunto de capturas móviles con la release oficial
+  `v1.0.1` y documenta el APK publicado
+  `scli-mobile-v1.0.1-release.apk`, cuyo SHA-256 publicado es
+  `a6504201aa9d7aaf16299c6417ff33d8f1b42f129508ce708335b859dd454ad8`.
+  Esta es una asociación documental del conjunto; no demuestra de forma
+  independiente qué APK originó cada archivo de imagen.
+- Los bytes actuales de `mobile-inicio-release.jpg`,
+  `mobile-reservas-release.jpg` y `mobile-incidentes-release.jpg` fueron
+  incorporados en el commit `50252a9cbe571c6777e36b82049a0520373f6e10`.
+- Los bytes actuales de `mobile-qr-release.png` fueron incorporados en el
+  commit `8747574a579a335fb6f3ee6464db98d04e56f761`.
+- `docs/evidencias/qr-e2e-2026-09-20.md` documenta explícitamente la
+  validación E2E QR del 2026-09-20 y respalda el significado de la captura QR.
+
+No hay metadata embebida ni evidencia versionada suficiente para demostrar por
+separado la fecha de captura, el dispositivo, el entorno o el APK exacto de
+las tres capturas de inicio, reservas e incidentes. Esos datos quedan como no
+verificables aquí.
